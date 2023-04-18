@@ -1,16 +1,16 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, maxlenght: 50 },
-  email: { type: String, required: true, maxlenght: 50 },
-  followers: { type: Number, required: true },
-  settings: { type: String, required: true },
-  password: { type: String, required: true, minlength: 8, maxlenght: 20 },
-  groupes: { type: Number, required: true },
-  chats: { type: String, required: true },
-  posts: { type: String, required: true },
-  otherinfo: { type: String, required: true, maxlenght: 50 },
-});
-const userModel = mongoose.model("Users", userSchema);
+    name: { type: String, required: true, maxlenght: 50 },
+    email: { type: String, required: true, maxlenght: 50 },
+    followers: { type: Array, required: true },
+    settings: { type: Object, required: true },
+    password: { type: String, required: true, minlength: 8, maxlength: 99 },
+    groupes: { type: Array, required: true },
+    chats: { type: Array, required: true },
+    posts: { type: Array, required: true },
+    otherInfo: { type: Object, required: true, maxlength: 50 },
+})
+const userModel = mongoose.model('Users', userSchema, 'Users')
 
 export default userModel
