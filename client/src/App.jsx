@@ -1,11 +1,13 @@
-import { Box } from '@mui/material'
-
+import { useState } from 'react'
 function App() {
-  return (
-    <Box>
-      Hello World
-    </Box>
-  );
+	const [count, setCount] = useState(0)
+
+	return (
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+			<div>{count}</div>
+			<div onClick={() => setCount(count + 1)} >Counter</div>
+		</div>
+	)
 }
 
-export default App;
+export default App
