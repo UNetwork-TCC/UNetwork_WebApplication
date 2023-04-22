@@ -25,7 +25,7 @@
     "rules": {
         "indent": [
             "error",
-            "tab"
+            4
         ],
         "react-refresh/only-export-components": "warn",
         "linebreak-style": [
