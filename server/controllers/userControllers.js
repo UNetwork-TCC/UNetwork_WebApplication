@@ -96,3 +96,13 @@ export const updateUser = async (req, res) => {
         res.status(404).send({message: error.message})
     }
 }
+
+export const getFollowers = async (req, res) => {
+    try {
+        const {id} = req.params
+        const user = await User.findById(id)
+        res.status(200).send(user.followers)
+    } catch (error) {
+        res.status(404).send({message: error.message})
+    }
+}

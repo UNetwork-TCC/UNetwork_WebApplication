@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import userRouter from './routes/userRouter.js'
+import messageRouter from './routes/messageRouter.js'
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
 app.use('/user', userRouter)
+app.use('/message', messageRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001
