@@ -55,6 +55,7 @@ export const createUser = async (req, res) => {
                 city: '',
                 state: '',
                 country: '',
+                grade: 1
             }
         })
 
