@@ -1,7 +1,7 @@
 import { User } from '../models/index.js'
 import bcrypt from 'bcrypt'
 
-export const fetchUsers = async (req, res) => {
+export const fetchUsers = async (_req, res) => {
     try {
         const users = await User.find().select('-password')
         res.status(200).send(users)

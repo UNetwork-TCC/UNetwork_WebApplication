@@ -6,5 +6,4 @@ import Group from './groupModel.js'
 import Message from './messageModel.js'
 import Chat from './chatModel.js'
 
-
 export { User, Class, Post, News, Group, Message, Chat }
