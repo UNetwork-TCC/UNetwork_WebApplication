@@ -5,6 +5,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import userRouter from './routes/userRouter.js'
 import messageRouter from './routes/messageRouter.js'
+import chatRouter from './routes/chatRouter.js'
+
 
 dotenv.config()
 
@@ -16,6 +18,7 @@ app.use(cors())
 
 app.use('/user', userRouter)
 app.use('/message', messageRouter)
+app.use('/chat', chatRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001

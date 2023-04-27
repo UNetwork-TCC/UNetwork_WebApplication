@@ -1,4 +1,4 @@
-import { Message } from '../models'
+import { Message } from '../models/index.js'
 
 export const getMessages = async (req, res) => {
     try {
