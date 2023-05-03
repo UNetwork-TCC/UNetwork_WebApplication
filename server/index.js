@@ -6,6 +6,9 @@ import dotenv from 'dotenv'
 import userRouter from './routes/userRouter.js'
 import messageRouter from './routes/messageRouter.js'
 import chatRouter from './routes/chatRouter.js'
+import postRouter from './routes/postRouter.js'
+import groupRouter from './routes/groupRouter.js'
+
 
 
 dotenv.config()
@@ -19,6 +22,8 @@ app.use(cors())
 app.use('/user', userRouter)
 app.use('/message', messageRouter)
 app.use('/chat', chatRouter)
+app.use('/post', postRouter)
+app.use('/group', groupRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001
