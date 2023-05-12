@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     chats: { type: Array, required: true },
     posts: { type: Array, required: true },
     otherInfo: { type: Object, required: true, maxlength: 50 },
+    icon: { type: String, default: "random_icon.png" }
 })
 const userModel = mongoose.model('Users', userSchema, 'Users')
 

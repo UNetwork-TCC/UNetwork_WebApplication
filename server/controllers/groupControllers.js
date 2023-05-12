@@ -60,10 +60,10 @@ export const updateGroup = async (req, res) => {
             return res.status(400).send({message: 'Preencha todos os campos obrigatórios!'})
         }
         
-        const groupUpdates = {...title, description, usersOnGroup}
+        const groupUpdates = {title, description, usersOnGroup}
         const groupUptaded = await Group.findByIdAndUpdate(id, groupUpdates)
 
-        res.status(200).send({groupUptaded, message: 'Grupo atualizado com sucesso!'})
+        return res.status(200).send({groupUptaded, message: 'Grupo atualizado com sucesso!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }

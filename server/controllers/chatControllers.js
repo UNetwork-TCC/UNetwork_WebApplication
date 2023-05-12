@@ -6,7 +6,7 @@ export const getChatById = async (req, res) => {
         const chat = await Chat.findById(id)
 
         if (!chat) {
-            res.status(404).send({message: 'Chat não econtrado!'})
+            return res.status(404).send({message: 'Chat não econtrado!'})
         }
         return res.status(200).send({ chat, message: 'Chat encontrado!'})
     } catch (error) {
@@ -20,7 +20,7 @@ export const deleteChat = async (req, res) => {
         const chat = await Chat.findById(id)
 
         if (!chat) {
-            res.status(404).send({message: 'Chat não econtrado!'})
+            return res.status(404).send({message: 'Chat não econtrado!'})
         }
 
         const deletedChat = await Chat.findOneAndDelete(id)
@@ -33,18 +33,18 @@ export const deleteChat = async (req, res) => {
 export const updateChat = async (req, res) => {
     try {
         const {id} = req.params
-        const { messages } = req.body
+        const { messages, users } = req.body
         const chat = await Chat.findById(id)
 
         if (!chat) {
             return res.status(404).send({message: 'Chat não econtrado!'})
         }
 
-        if (!messages) {
-            return res.status(400).send({message: 'Mensagem sem conteúdo!'})
+        if (!messages || !users) {
+            return res.status(400).send({message: 'Nem todos os campos foram preenchidos!'})
         }
         
-        const chatUpdates = {...messages}
+        const chatUpdates = {...messages, ...users}
         const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
 
         res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})

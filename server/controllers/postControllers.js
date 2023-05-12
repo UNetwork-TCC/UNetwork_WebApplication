@@ -59,12 +59,12 @@ export const getById = async (req, res) => {
 export const updatePost = async (req, res) => {
     try {
         const { id } = req.params
-        const {name, description, content} = req.body
+        const {name, description, content, views, likes, comments} = req.body
 
-        const postUpdates = {...name, description, content}
+        const postUpdates = {name, description, content, views, likes, comments }
         const postUpdated = await Post.findByIdAndUpdate(id, postUpdates)
 
-        res.status(200).send({postUpdated, message: 'Post atualizado!'})
+        return res.status(200).send({postUpdated, message: 'Post atualizado!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }
