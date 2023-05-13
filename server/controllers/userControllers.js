@@ -1,7 +1,7 @@
 import { User } from '../models/index.js'
 import bcrypt from 'bcrypt'
 
-export const fetchUsers = async (req, res) => {
+export const fetchUsers = async (_req, res) => {
     try {
         const users = await User.find().select('-password')
         res.status(200).send(users)
@@ -92,6 +92,16 @@ export const updateUser = async (req, res) => {
         const userUptaded = await User.findByIdAndUpdate(id, userUpdates)
 
         res.status(200).send({userUptaded, message: 'Usuário atualizado com sucesso!'})
+    } catch (error) {
+        res.status(404).send({message: error.message})
+    }
+}
+
+export const getFollowers = async (req, res) => {
+    try {
+        const {id} = req.params
+        const user = await User.findById(id)
+        res.status(200).send(user.followers)
     } catch (error) {
         res.status(404).send({message: error.message})
     }
