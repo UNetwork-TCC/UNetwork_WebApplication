@@ -9,11 +9,3 @@ export const getById = async (req, res) => {
         res.status(404).send({message: error.message})
     }
 }
-
-export const CreateMessage = (req, res) => {
-    try {
-        
-    } catch (error) {
-        res.status(404).send({message: error.message})
-    }
-}

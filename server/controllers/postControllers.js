@@ -18,8 +18,6 @@ export const createPost = async (req, res) => {
             return res.status(400).send({message: 'Campos obrigatórios não foram preenchidos!'})
         }
 
-        
-
         const postUpdates = Post({
             name, 
             description,
@@ -33,7 +31,6 @@ export const createPost = async (req, res) => {
         })
 
         await postUpdates.save()
-
 
         res.status(200).send({postUpdates, message: 'Post criado!'})
     } catch (error) {
@@ -59,9 +56,14 @@ export const getById = async (req, res) => {
 export const updatePost = async (req, res) => {
     try {
         const { id } = req.params
-        const {name, description, content, views, likes, comments} = req.body
+        const { views, likes, comments } = req.body
+        const existingPost = await Post.findById(id)
 
-        const postUpdates = {name, description, content, views, likes, comments }
+        if (!existingPost) {
+            return res.status(400).send({message: 'Post não encontrado!'})
+        }
+
+        const postUpdates = { views, likes, comments }
         const postUpdated = await Post.findByIdAndUpdate(id, postUpdates)
 
         return res.status(200).send({postUpdated, message: 'Post atualizado!'})

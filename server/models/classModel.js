@@ -11,9 +11,10 @@ const classSchema = new mongoose.Schema({
     messages: { type: Array },
     voiceChannels: { type: Array },
     chatChannels: { type: Array },
-    icon: { type: String, default: "random_icon.png" }
+    icon: { type: String, default: 'random_icon.png' }
 
 })
+
 const classModel = mongoose.model('Classes', classSchema, 'Classes')
 
 export default classModel

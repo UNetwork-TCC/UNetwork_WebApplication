@@ -31,7 +31,6 @@ export const createGroup = async (req, res) => {
         })
 
         await newGroup.save() 
-       
 
         res.status(201).send({newGroup, message: 'Grupo criado com sucesso!'})
 
@@ -55,6 +54,11 @@ export const updateGroup = async (req, res) => {
     try {
         const {id} = req.params
         const { title, description, usersOnGroup } = req.body
+        const existingGroup = await Group.findById(id)
+
+        if (!existingGroup) {
+            return res.status(404).send({message: 'Grupo não econtrado!'})
+        }
         
         if (!title || !description || !usersOnGroup) {
             return res.status(400).send({message: 'Preencha todos os campos obrigatórios!'})

@@ -3,7 +3,16 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { User, Class, Post, News, Group, Message, Chat } from './routes/index.js'
+
+import { 
+    chatRouter,
+    classRouter,
+    groupRouter,
+    messageRouter,
+    newsRouter,
+    postRouter,
+    userRouter
+} from './routes/index.js'
 
 
 dotenv.config()
@@ -14,13 +23,13 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
-
-
-app.use('/user', User)
-app.use('/message', Class)
-app.use('/chat', Post)
-app.use('/post', News)
-app.use('/group', Group)
+app.use('/user', userRouter)
+app.use('/message', classRouter)
+app.use('/chat', postRouter)
+app.use('/post', newsRouter)
+app.use('/group', groupRouter)
+app.use('/message', messageRouter)
+app.use('/chat', chatRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001

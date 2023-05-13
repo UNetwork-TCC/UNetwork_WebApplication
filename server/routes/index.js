@@ -1,9 +1,17 @@
-import User from './userRouter.js'
-import Class from './classRouter.js'
-import Post from './postRouter.js'
-import News from './newsRouter.js'
-import Group from './groupRouter.js'
-import Message from './messageRouter.js'
-import Chat from './chatRouter.js'
+import userRouter from './userRouter.js'
+import classRouter from './classRouter.js'
+import postRouter from './postRouter.js'
+import newsRouter from './newsRouter.js'
+import groupRouter from './groupRouter.js'
+import messageRouter from './messageRouter.js'
+import chatRouter from './chatRouter.js'
 
-export { User, Class, Post, News, Group, Message, Chat }
+export { 
+    userRouter,
+    classRouter,
+    postRouter,
+    newsRouter,
+    groupRouter,
+    messageRouter,
+    chatRouter
+}

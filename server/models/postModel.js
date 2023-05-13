@@ -10,8 +10,9 @@ const postSchema = new mongoose.Schema({
     comments: { type: Array, required: true },
     likes: { type: Object, required: true },
     views: { type: Object, required: true },
-    icon: { type: String, default: "random_icon.png" }
+    icon: { type: String, default: 'random_icon.png' }
 })
+
 const postModel = mongoose.model('Posts', postSchema, 'Posts')
 
 export default postModel

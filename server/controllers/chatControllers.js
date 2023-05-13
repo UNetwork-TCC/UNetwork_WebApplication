@@ -41,10 +41,10 @@ export const updateChat = async (req, res) => {
         }
 
         if (!messages || !users) {
-            return res.status(400).send({message: 'Nem todos os campos foram preenchidos!'})
+            return res.status(400).send({message: 'Todos os campos precisam ser preenchidos!'})
         }
         
-        const chatUpdates = {...messages, ...users}
+        const chatUpdates = {messages: [...messages], users: [...users]}
         const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
 
         res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})
