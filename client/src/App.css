@@ -1,0 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+
+body{
+
+    /* nao sei qual cor vcs vao usar, eu coloquei as tres cores mais parecidas entre os hexas dos slides, e dos protipos!!!! */
+
+    /* background-color: #B4DCE7; */
+    /* background-color: #D6EAF8; */
+    background-color: rgb(166, 184, 208); /*Só essa cor que nao tem nada haver com a cor que aparace nos slides, mas estava lá ent copiei*/
+    
+}

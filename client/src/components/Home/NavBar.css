@@ -1,0 +1,15 @@
+.NavBar{
+    max-width: 185px;
+    height: 85vh;
+    background-color: #fff;
+    padding-left: 15px;
+    display: flex;
+    
+}
+
+.icons{
+    padding-top: 10px;
+    
+    
+}
+

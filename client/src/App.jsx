@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import NavBar from './components/Home/NavBar.jsx'
+import './App.css'
+import Header from './layout/Header.jsx'
+
 function App() {
-    const [count, setCount] = useState(0)
+    
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <div>{count}</div>
-            <div onClick={() => setCount(count + 1)} >Counter</div>
+        <div>
+            <Header/>
+            <NavBar/>
+            
         </div>
     )
 }
