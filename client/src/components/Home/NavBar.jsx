@@ -1,10 +1,10 @@
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Button from '@mui/material/Button'
-import './NavBar.css'
 import ChatIcon from '@mui/icons-material/Chat'
 import GroupIcon from '@mui/icons-material/Group'
 import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined'
 import BookmarksOutlinedIcon from '@mui/icons-material/BookmarksOutlined'
+import { Box } from '@mui/material'
 
 
 function NavBar() {
@@ -19,14 +19,19 @@ function NavBar() {
 
     return (
         
-        <div className='NavBar'>
-            
+        <Box sx={{
+            maxWidth: '185px',
+            height: '85vh',
+            bgcolor: 'gray',
+            paddingLeft: '15px',
+            display: 'flex'
+        }}>
 
-            <div className="buttons">
+            <Box>
                 <ButtonGroup style={{alignItems: 'start'}} size='large' orientation="vertical" aria-label="vertical contained button group" variant="">{buttons}</ButtonGroup>
-            </div>
+            </Box>
 
-        </div>
+        </Box>
     )
 }
 

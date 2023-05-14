@@ -1,101 +1,115 @@
-import './Header.css'
 import logo from '../Logo.png'
-
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-import Grow from '@mui/material/Grow'
-import Paper from '@mui/material/Paper'
-import Popper from '@mui/material/Popper'
-import MenuItem from '@mui/material/MenuItem'
-import MenuList from '@mui/material/MenuList'
-
 import IconButton from '@mui/material/IconButton'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import {
+    Box,
+    Badge,
+    Button,
+    Tooltip,
+    Divider,
+    Popover,
+    Typography,
+
+}from '@mui/material'
+import { useState } from 'react'
 
 
 
 function Header() {
+    // notificação
+    const [open, setOpen] = useState(null)
 
-    const options = ['opcoes...', 'Squash and merge', 'Rebase and merge']
+    const handleOpen = (event) => {
+        setOpen(event.currentTarget)
+    }
+
+    const handleClose = () => {
+        setOpen(null)
+    }
+
+    const handleMarkAllAsRead = () => {
+        
+    }
+    // fim da notificação
+
     
-    const [open, setOpen] = React.useState(false)
-    const anchorRef = React.useRef(null)
-    const [selectedIndex, setSelectedIndex] = React.useState(1)
 
-    const handleClick = () => {
-        console.info(`You clicked ${options[selectedIndex]}`)
-    }
 
-    const handleMenuItemClick = (event, index) => {
-        setSelectedIndex(index)
-        setOpen(false)
-    }
-
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen)
-    }
-
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return
-        }
-
-        setOpen(false)
-    }        
 
     return(
-        <header>
-            <img src={logo} alt="Logo" />
+        <Box sx={{
+            height: '15vh',
+            width: '100vw',
+            bgcolor: '#0367A0',
+            display: 'flex',
+            justifyContent: 'space-between'
+        }}>
 
-            <div className='search'>
+            <img src={logo} alt="Logo" style={{
+                width: '7vw',
+                marginLeft: '50px'
+            }}/>
+
+            <Box className='search'>
                 <input type="text" placeholder='O que voçê esta procurando?'/>
-            </div>
+            </Box>
             
-            <div>
+            <Box>
+                {/* noticicação */}
                 <IconButton size='large'>
-                    <NotificationsIcon fontSize="inherit"/>
+                    <Badge badgeContent={'x'} color="error">
+                        <NotificationsIcon fontSize="inherit" onClick={handleOpen} sx={{color: 'white'}}/>
+                    </Badge>
                 </IconButton>
-                <React.Fragment>
+                
+                <Popover
+                    open={Boolean(open)}
+                    anchorEl={open}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    PaperProps={{
+                        sx: {
+                            mt: 1.5,
+                            ml: 0.75,
+                            width: 360,
+                        },
+                    }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
+                        <Box sx={{ flexGrow: 1 }}>
+                            <Typography variant="subtitle1">Notifications</Typography>
+                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            You have {'X'} unread messages
+                            </Typography>
+                        </Box>
 
-                    <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
-                        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
-                        <Button size="small" aria-controls={open ? 'split-button-menu' : undefined} aria-expanded={open ? 'true' : undefined} aria-label="select merge strategy" aria-haspopup="menu" onClick={handleToggle}
-                        ><ArrowDropDownIcon />
-                        </Button>
-                    </ButtonGroup>
-                    <Popper
-                        sx={{ zIndex: 1,
-                        }}
-                        open={open}
-                        anchorEl={anchorRef.current}
-                        role={undefined}
-                        transition
-                        disablePortal
-                    >
-                        {({ TransitionProps, placement }) => (<Grow
-                            {...TransitionProps}
-                            style={{ transformOrigin:
-                                placement === 'bottom' ? 'center top' : 'center bottom',
-                            }}
-                        >
-                            <Paper> <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList id="split-button-menu" autoFocusItem> {options.map((option, index) => (
-                                    <MenuItem key={option} disabled={index === 2} selected={index === selectedIndex} onClick={(event) => handleMenuItemClick(event, index)}
-                                    >{option}
-                                    </MenuItem>
-                                ))}
-                                </MenuList>
-                            </ClickAwayListener>
-                            </Paper>
-                        </Grow>
+                        {1 > 0 && (
+                            <Tooltip title=" Mark all as read">
+                                <IconButton color="primary" onClick={handleMarkAllAsRead}>
+                                    
+                                </IconButton>
+                            </Tooltip>
                         )}
-                    </Popper>
-                </React.Fragment>
-            </div>
-        </header>
+                    </Box>
+
+                    <Divider sx={{ borderStyle: 'dashed' }} />
+
+                    
+
+                    <Divider sx={{ borderStyle: 'dashed' }} />
+
+                    <Box sx={{ p: 1 }}>
+                        <Button fullWidth disableRipple>
+                            View All
+                        </Button>
+                    </Box>
+                </Popover>
+                {/* fim da notificação */}
+
+                
+
+            </Box>
+        </Box>
         
     )
 }
