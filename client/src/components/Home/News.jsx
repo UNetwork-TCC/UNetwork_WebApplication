@@ -1,10 +1,10 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 
-function Noticia() {
+export default function News() {
     return(
         
         <Box sx={{bgcolor: 'gray'}} >
-            <p style={{color: 'black'}}>Noticias</p>
+            <Typography style={{color: 'black'}}>News</Typography>
             
             <Box></Box>
             <Box></Box>
@@ -13,5 +13,3 @@ function Noticia() {
         </Box>
     )
 }
-
-export default Noticia

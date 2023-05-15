@@ -1,4 +1,4 @@
-import logo from '../Logo.png'
+import logo from '../assets/img/Logo.png'
 import IconButton from '@mui/material/IconButton'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import {
@@ -9,34 +9,31 @@ import {
     Divider,
     Popover,
     Typography,
-
-}from '@mui/material'
+    TextField
+} from '@mui/material'
 import { useState } from 'react'
 
 
 
 function Header() {
     // notificação
-    const [open, setOpen] = useState(null)
+    const [open, setOpen] = useState(false)
 
     const handleOpen = (event) => {
         setOpen(event.currentTarget)
     }
 
     const handleClose = () => {
-        setOpen(null)
+        setOpen(false)
     }
 
     const handleMarkAllAsRead = () => {
-        
+
     }
-    // fim da notificação
 
-    
+    // fim da notificação    
 
-
-
-    return(
+    return (
         <Box sx={{
             height: '15vh',
             width: '100vw',
@@ -48,20 +45,22 @@ function Header() {
             <img src={logo} alt="Logo" style={{
                 width: '7vw',
                 marginLeft: '50px'
-            }}/>
+            }} />
 
             <Box className='search'>
-                <input type="text" placeholder='O que voçê esta procurando?'/>
+                <TextField type="text" placeholder='O que você está procurando?' />
             </Box>
-            
+
             <Box>
-                {/* noticicação */}
+
+                {/* notificação */}
+
                 <IconButton size='large'>
                     <Badge badgeContent={'x'} color="error">
-                        <NotificationsIcon fontSize="inherit" onClick={handleOpen} sx={{color: 'white'}}/>
+                        <NotificationsIcon fontSize="inherit" onClick={handleOpen} sx={{ color: 'white' }} />
                     </Badge>
                 </IconButton>
-                
+
                 <Popover
                     open={Boolean(open)}
                     anchorEl={open}
@@ -77,40 +76,36 @@ function Header() {
                     }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
                         <Box sx={{ flexGrow: 1 }}>
-                            <Typography variant="subtitle1">Notifications</Typography>
+                            <Typography variant="subtitle1">Notificações</Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            You have {'X'} unread messages
+                                Você tem {'X'} mensagens não lidas
                             </Typography>
                         </Box>
 
                         {1 > 0 && (
-                            <Tooltip title=" Mark all as read">
+                            <Tooltip title="Marcar tudo como lida">
                                 <IconButton color="primary" onClick={handleMarkAllAsRead}>
-                                    
+
                                 </IconButton>
                             </Tooltip>
                         )}
                     </Box>
 
                     <Divider sx={{ borderStyle: 'dashed' }} />
-
-                    
-
                     <Divider sx={{ borderStyle: 'dashed' }} />
 
-                    <Box sx={{ p: 1 }}>
+                    <Box p={1}>
                         <Button fullWidth disableRipple>
-                            View All
+                            Ver tudo
                         </Button>
                     </Box>
                 </Popover>
-                {/* fim da notificação */}
 
-                
+                {/* fim da notificação */}
 
             </Box>
         </Box>
-        
+
     )
 }
 

@@ -7,7 +7,7 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import Home from './pages/Home'
+import { Home } from './pages'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
@@ -24,7 +24,6 @@ function App() {
                 </GoogleOAuthProvider>
             </themeContext.Provider>
         </Router>
-
     )
 }
 
