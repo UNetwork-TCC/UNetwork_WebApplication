@@ -1,3 +1,4 @@
+
 import { CssBaseline } from '@mui/material'
 import GoogleAuth from './components/GoogleAuth'
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
@@ -6,6 +7,7 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
+import { Home } from './pages'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
@@ -17,6 +19,7 @@ function App() {
                     <CssBaseline />
                     <Routes>
                         <Route path="/" element={<GoogleAuth />} />
+                        <Route path="/Home" element={<Home />} />
                     </Routes>
                 </GoogleOAuthProvider>
             </themeContext.Provider>
