@@ -1,10 +1,10 @@
-import { createNews, deleteNews, findById, updateNews } from "../controllers/newsControllers.js"; 
-import { Router } from "express";
+import { createNews, deleteNews, getNewsById, updateNews } from '../controllers/newsControllers.js' 
+import { Router } from 'express'
 
 const router = Router()
 
-router.get("/:id/findbyid", findById)
-router.post("/create", createNews)
+router.get('/:id', getNewsById)
+router.post('/create', createNews)
 router.patch('/:id/update', updateNews)
 router.delete('/:id/delete', deleteNews)
 

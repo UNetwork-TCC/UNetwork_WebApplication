@@ -57,7 +57,6 @@ export const createUser = async (req, res) => {
                 country: '',
                 grade: 1
             },
-            icon
         })
 
         await newUser.save()
