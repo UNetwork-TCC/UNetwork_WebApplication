@@ -1,4 +1,5 @@
 import userRouter from './userRouter.js'
+// import classRouter from './classRouter.js'
 import classRouter from './classRouter.js'
 import postRouter from './postRouter.js'
 import newsRouter from './newsRouter.js'
@@ -8,10 +9,11 @@ import chatRouter from './chatRouter.js'
 
 export { 
     userRouter,
-    classRouter,
+    // classRouter,
     postRouter,
     newsRouter,
     groupRouter,
     messageRouter,
-    chatRouter
+    chatRouter,
+    classRouter
 }

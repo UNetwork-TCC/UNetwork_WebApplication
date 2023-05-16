@@ -9,8 +9,8 @@ const classSchema = new mongoose.Schema({
     usersOnClass: { type: Array, required: true },
     createdAt: { type: String, required: true, default: new Date().getDate() },
     messages: { type: Array },
-    voiceChannels: { type: Array },
-    chatChannels: { type: Array },
+    voiceChannels: { type: Array, default: [] },
+    chatChannels: { type: Array, default: [] },
     icon: { type: String, default: 'random_icon.png' }
 
 })

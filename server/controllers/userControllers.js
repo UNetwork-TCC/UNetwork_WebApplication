@@ -56,14 +56,15 @@ export const createUser = async (req, res) => {
                 state: '',
                 country: '',
                 grade: 1
-            }
+            },
+            icon
         })
 
         await newUser.save()
         res.status(201).send({user: newUser, message: 'Usuário criado com sucesso!'})
 
     } catch (error) {
-        res.status(400).send({message: error.message})
+        res.status(404).send({message: error.message})
     }
 }
 
