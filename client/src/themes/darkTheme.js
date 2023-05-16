@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material'
+import { CSSBaselineStyles } from '../styles'
 
 export const darkTheme = createTheme({
     palette: {
@@ -9,6 +10,9 @@ export const darkTheme = createTheme({
     },
 
     components: {
+        MuiCssBaseline: {
+            styleOverrides: { ...CSSBaselineStyles }
+        }
         /* Se quiser mudar o estilo de algum componente, é só colocar aqui:
         EX:
         
