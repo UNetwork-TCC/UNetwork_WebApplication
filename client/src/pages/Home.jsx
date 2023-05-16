@@ -1,19 +1,17 @@
-import NavBar from '../components/Home/NavBar'
-import Header from '../layout/Header'
-import Noticia from '../components/Home/Noticia'
+import { Header, Layout } from '../layout'
 import { Box } from '@mui/material'
+import { NavBar, News } from '../components'
 
-
-function Home() {  
+function Home() {
 
     return (
-        <Box>
-            <Header/>
-            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-                <NavBar/>
-                <Noticia sx={{alignSelf: 'end'}} />           
+        <Layout>
+            <Header />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <NavBar />
+                <News sx={{ alignSelf: 'end' }} />
             </Box>
-        </Box>
+        </Layout>
 
     )
 }
