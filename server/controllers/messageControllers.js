@@ -2,8 +2,11 @@ import { Message } from '../models/index.js'
 
 export const fetchMessages = async (req, res) => {
     try {
-        const messages = await Message.find()
-        res.status(200).send({ messages })
+        const fetched = await Message.find().limit(40)
+        if (!fetched) {
+            return res.status(400).send({message: "As mensagens não foram encontradas!"})
+        }
+        res.status(200).send({ fetched })
     } catch (error) {
         res.status(404).send({ message: error.message })
     }
@@ -51,6 +54,29 @@ export const createMessage = async (req, res) => {
 
 export const deleteMessage = async (req, res) => {
     try {
+        
+    } catch (error) {
+        res.status(404).send({message: error.message})
+    }
+}
+
+export const updateMessage = async (req, res) => {
+    try {
+        const {id} = req.params
+        const oldMessage = Message.findById(id)
+
+        if (!oldMessage) {
+            res.status(400).send({message: "Mensagem não encontrada!"})
+        }
+
+        const { content } = req.body
+
+        if (!content) {
+            res.status(400).send({message: "Preencha todos os campos!"})
+        }
+
+        const updatedMessage = await Message.findByIdAndUpdate(id, content) 
+        res.status(200).send({ updatedMessage, message: 'Mensagem atualizada com sucesso!' })
         
     } catch (error) {
         res.status(404).send({message: error.message})

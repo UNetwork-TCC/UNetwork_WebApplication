@@ -1,5 +1,17 @@
 import { Chat } from '../models/index.js'
 
+export const fetchChats = async (req, res) => {
+    try {
+        const fetched = await Chat.find().limit(20)
+        if (!fetched) {
+            return res.status(400).send({message: "Os chats não foram encontrados!"})
+        }
+        res.status(200).send({fetched, message: "Chats encontrados com sucesso!"})
+    } catch (error) {
+        res.status(404).send({message: error.message})
+    }
+}
+
 export const getChatById = async (req, res) => {
     try {
         const {id} = req.params

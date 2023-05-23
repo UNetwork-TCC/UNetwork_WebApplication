@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { createClass, deleteClass, getClassById, updateClass } from '../controllers/classControllers.js'
+import { createClass, deleteClass, fetchClasses, getClassById, updateClass } from '../controllers/classControllers.js'
 
 const router = Router()
 
+router.get('/', fetchClasses)
 router.get('/:id', getClassById)
 router.post('/create', createClass)
 router.patch('/:id/update', updateClass)

@@ -5,5 +5,6 @@ import News from './newsModel.js'
 import Group from './groupModel.js'
 import Message from './messageModel.js'
 import Chat from './chatModel.js'
+import Forum from './forumModel.js'
 
-export { User, Class, Post, News, Group, Message, Chat }
+export { User, Class, Post, News, Group, Message, Chat, Forum }

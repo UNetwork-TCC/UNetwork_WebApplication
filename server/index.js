@@ -6,13 +6,13 @@ import dotenv from 'dotenv'
 
 import { 
     chatRouter,
-    // classRouter,
     groupRouter,
     messageRouter,
     newsRouter,
     postRouter,
     userRouter,
-    classRouter
+    classRouter,
+    forumRouter
 } from './routes/index.js'
 
 
@@ -25,13 +25,13 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
 app.use('/user', userRouter)
-// app.use('/message', classRouter)
 app.use('/news', newsRouter)
 app.use('/group', groupRouter)
 app.use('/message', messageRouter)
 app.use('/chat', chatRouter)
 app.use('/post', postRouter)
 app.use('/class', classRouter)
+app.use('/forum', forumRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001

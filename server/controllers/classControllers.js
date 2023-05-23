@@ -2,8 +2,11 @@ import { Class } from '../models/index.js'
 
 export const fetchClasses = async (req, res) => {
     try {
-        const classes = await Class.find()
-        res.status(200).send({ classes })
+        const fetched = await Class.find().limit(20)    
+        if (!fetched) {
+            return res.status(400).send({message: "As classes não foram encontradas!"})
+        }
+        res.status(200).send({ fetched, messages: "As classes foram encontradas!" })
     } catch (error) {
         res.status(404).send({ message: error.message })
     }
@@ -25,7 +28,7 @@ export const getClassById = async (req, res) => {
 
 export const createClass = async (req, res) => {
     try {
-        const {name, title, description, theme, usersOnClass, icon, voiceChannels, chatChannels} = req.body
+        const {name, title, description, theme, usersOnClass} = req.body
         
         if (!name || !title || !description || !theme || !usersOnClass) {
             return res.status(400).send({message: 'Preencha todos os campos!'})

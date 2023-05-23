@@ -2,9 +2,11 @@ import { Post } from '../models/index.js'
 
 export const fetchPosts = async (req, res) => {
     try {
-        const fetch = await Post.find().limit(20)
-
-        res.status(200).send({fetch, message: 'Post encontrado!'})
+        const fetched = await Post.find().limit(20)
+        if (!fetched) {
+            return res.status(400).send({message: "Os posts não foram encontrados!"})
+        }
+        res.status(200).send({fetched, message: 'Post encontrado!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }

@@ -6,7 +6,6 @@ const messageSchema = new mongoose.Schema({
     sendedAt: { type: String, required: true, default: new Date().getDate() },
     sendedIn: { type: String, required: true, default: 'chat' },
     type: { type: String, required: true, default: 'text' }, 
-    icon: { type: String, default: 'random_icon.png' }
 })
 
 const messageModel = mongoose.model('Messages', messageSchema, 'Messages')
