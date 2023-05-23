@@ -24,6 +24,7 @@ export default function NavBar() {
         <Button key="four" sx={buttonStyles} 
             startIcon={<BookmarksOutlined sx={buttonStyles} />}
         >Salvo</Button>
+        
     ]
 
     return (

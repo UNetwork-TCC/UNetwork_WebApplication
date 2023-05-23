@@ -1,3 +1,3 @@
-import CSSBaselineStyles from "./CSSBaselineStyles";
+import CSSBaselineStyles from './CSSBaselineStyles'
 
 export { CSSBaselineStyles }
