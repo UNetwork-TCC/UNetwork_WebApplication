@@ -19,7 +19,7 @@ function App() {
                     <CssBaseline />
                     <Routes>
                         <Route path="/" element={<GoogleAuth />} />
-                        <Route path="/Home" element={<Home />} />
+                        <Route path="/home" element={<Home />} />
                     </Routes>
                 </GoogleOAuthProvider>
             </themeContext.Provider>
