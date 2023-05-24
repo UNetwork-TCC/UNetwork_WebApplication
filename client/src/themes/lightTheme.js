@@ -1,5 +1,6 @@
 /* eslint-disable quotes */
-import { createTheme } from '@mui/material'
+import { createTheme, darkScrollbar } from '@mui/material'
+
 export const lightTheme = createTheme({
     palette: {
         mode: 'light',
@@ -51,7 +52,35 @@ export const lightTheme = createTheme({
                     color: 'primary.main',
                 }
             }
+        },
+
+        MuiCssBaseline: {
+            styleOverrides: {
+                '*': {
+                    overflowX: 'hidden'
+                },
+
+                // Custom Scrollbar
+
+                '::-webkit-scrollbar': {
+                    width: '10px'
+                },
+
+'                ::-webkit-scrollbar-track:': {
+                    background: '#fafafa'
+                },
+
+                '::-webkit-scrollbar-thumb': {
+                    background: '#888',
+                    borderRadius: '10px'
+                },
+
+                '::-webkit-scrollbar-thumb:hover': {
+                    background: '#555',
+                }
+            }
         }
+
         /* Se quiser mudar o estilo de algum componente, é só colocar aqui:
         EX:
         z

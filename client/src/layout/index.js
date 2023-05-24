@@ -1,4 +1,4 @@
 import Header from "./Header";
-import Layout from "./Layout";
+import Layout from "./ThemeStore";
 
 export { Header, Layout }

@@ -3,14 +3,12 @@ import { Box, ThemeProvider } from '@mui/material'
 import { useContext } from 'react'
 import { themeContext } from '../contexts'
 
-export default function Layout({ children, sx }) {
+export default function ThemeStore({ children }) {
     const { theme } = useContext(themeContext)
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ bgcolor: 'background.paper', minHeight: '100vh', overflowX: 'hidden', ...sx }}>
-                {children}
-            </Box>
+            {children}
         </ThemeProvider>
     )
 }

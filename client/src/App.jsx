@@ -1,13 +1,13 @@
 
 import { CssBaseline } from '@mui/material'
-import GoogleAuth from './components/GoogleAuth'
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import { Home } from './pages'
+import { Home, ErrorPage } from './pages'
+import ThemeStore from './layout/ThemeStore'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
@@ -15,12 +15,15 @@ function App() {
     return (
         <Router>
             <themeContext.Provider value={{ theme, setTheme }}>
-                <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID} >
-                    <CssBaseline />
-                    <Routes>
-                        <Route path="/" element={<GoogleAuth />} />
-                        <Route path="/home" element={<Home />} />
-                    </Routes>
+                <GoogleOAuthProvider clientId={ GOOGLE_CLIENT_ID }>
+                    <ThemeStore>
+                        <CssBaseline />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/error" element={<ErrorPage />} />
+                            <Route path='*' element={<Navigate to='/error' />} />
+                        </Routes>
+                    </ThemeStore>
                 </GoogleOAuthProvider>
             </themeContext.Provider>
         </Router>
