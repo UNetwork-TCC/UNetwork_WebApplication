@@ -3,8 +3,11 @@ import bcrypt from 'bcrypt'
 
 export const fetchUsers = async (_req, res) => {
     try {
-        const users = await User.find().select('-password')
-        res.status(200).send(users)
+        const fetched= await User.find().select('-password')
+        if (!fetched) {
+            return res.status(400).send({message: "Os usuários não foram encontrados!"})
+        }
+        res.status(200).send({fetched, message: "Os usuários foram encontrados!"})
     } catch (error) {
         res.status(404).send({message: error.message})
     }
@@ -56,14 +59,14 @@ export const createUser = async (req, res) => {
                 state: '',
                 country: '',
                 grade: 1
-            }
+            },
         })
 
         await newUser.save()
         res.status(201).send({user: newUser, message: 'Usuário criado com sucesso!'})
 
     } catch (error) {
-        res.status(400).send({message: error.message})
+        res.status(404).send({message: error.message})
     }
 }
 

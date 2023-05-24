@@ -3,10 +3,10 @@ import { createUser, deleteUser, fetchUsers, getFollowers, getUserById, updateUs
 
 const router = Router()
 
-router.get('/fetch', fetchUsers)
+router.get('/', fetchUsers)
 router.get('/:id', getUserById)
 router.get('/:id/followers', getFollowers)
-router.post('/', createUser)
+router.post('/create', createUser)
 router.delete('/:id/delete', deleteUser)
 router.patch('/:id/update', updateUser)
 

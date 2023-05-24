@@ -8,7 +8,6 @@ const newsSchema = new mongoose.Schema({
     comments: { type: Array, required: true },
     likes: { type: Object, required: true },
     views: { type: Object, required: true },
-    icon: { type: String, default: 'random_icon.png' }
 })
 
 const newsModel = mongoose.model('News', newsSchema, 'News')
