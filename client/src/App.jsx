@@ -8,6 +8,7 @@ import { lightTheme } from './themes'
 import { themeContext } from './contexts'
 import { Home, ErrorPage } from './pages'
 import ThemeStore from './layout/ThemeStore'
+import ChatPage from './pages/Chat'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
@@ -21,6 +22,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/error" element={<ErrorPage />} />
+                            <Route path="/chat" element={<ChatPage />} />
                             <Route path='*' element={<Navigate to='/error' />} />
                         </Routes>
                     </ThemeStore>
