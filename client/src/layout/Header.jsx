@@ -1,10 +1,10 @@
 import { Box, Button, Divider, Link, Typography } from '@mui/material'
-import { DarkMode, LightMode} from '@mui/icons-material';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { darkTheme, lightTheme } from '../themes';
-import { themeContext } from '../contexts';
+import { DarkMode, LightMode} from '@mui/icons-material'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { darkTheme, lightTheme } from '../themes'
+import { themeContext } from '../contexts'
 import Image from 'mui-image'
-import useStyles from '../styles';
+import useStyles from '../styles'
 
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
@@ -19,7 +19,7 @@ export default function Header() {
         
     }, [])
 
-    function StyledLink({ name }) {
+    function StyledLink( name ) {
         return (
             <Link className={`${classes.navLinks}`} href={`#${name}`}>
                 <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>

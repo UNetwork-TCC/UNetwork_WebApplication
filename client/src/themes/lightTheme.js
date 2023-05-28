@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-import { createTheme, darkScrollbar } from '@mui/material'
+import { createTheme } from '@mui/material'
 
 export const lightTheme = createTheme({
     palette: {
@@ -65,7 +65,7 @@ export const lightTheme = createTheme({
                     width: '10px'
                 },
 
-'                ::-webkit-scrollbar-track:': {
+                '::-webkit-scrollbar-track:': {
                     background: '#fafafa'
                 },
 

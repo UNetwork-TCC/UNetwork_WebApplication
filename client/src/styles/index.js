@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-import CSSBaselineStyles from './CSSBaselineStyles'
-=======
-import { makeStyles } from "@mui/styles";
->>>>>>> 1ef3f844e2b5670b922c9d5d6999e9139a6096bf
+
+import { makeStyles } from '@mui/styles'
+
 
 const useStyles = makeStyles({
     navLinks: {

@@ -6,7 +6,7 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import { Home } from './pages'
+import { Home, Chat } from './pages'
 
 function App() {
     const [theme, setTheme] = useState(lightTheme)
