@@ -1,19 +1,19 @@
 import { Box, Button, Card, Typography } from "@mui/material";
+import Image from "mui-image";
+import { useNavigate } from "react-router-dom";
+import '../styles/resetOverflow.css'
 
 // Svg imports
 import topDecoration from '../assets/svg/TopDecoration.svg'
 import bottomDecoration from '../assets/svg/BottomDecoration.svg'
 import errorSvg from '../assets/svg/ErrorSvg.svg'
 
-import Image from "mui-image";
-import '../styles/resetOverflow.css'
-import { useNavigate } from "react-router-dom";
 
 function ErrorPage() {
     const navigate = useNavigate()
 
     return (
-        <Box height='100vh' display='flex' justifyContent='center' alignItems={'center'} flexDirection='column'>
+        <Box  height='100vh' display='flex' justifyContent='center' alignItems={'center'} flexDirection='column'>
             <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' position='absolute'>
                 <Image duration={0.3} src={topDecoration} />
             </Box>
@@ -32,7 +32,7 @@ function ErrorPage() {
                             <Typography m variant="h5">Você pode ficar e relaxar aqui ou voltar ao começo.</Typography>
                         </Box>
                         <Box>
-                            <Button onClick={() => navigate('/')} sx={{ marginLeft: '8px', marginTop: '25px' }} variant="contained">Volte para o início</Button>
+                            <Button onClick={() => navigate('/')} sx={{ marginLeft: '8px', marginTop: '25px', borderRadius: '15px' }} variant="contained">Volte para o início</Button>
                         </Box>
                     </Box>
                 </Box>
