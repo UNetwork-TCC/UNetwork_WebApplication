@@ -27,9 +27,7 @@ export const darkTheme = createTheme({
             dark: '#e91e63',
         },
 
-        otherElements: {
-            tinyElements: 'rgba(255, 255, 255, 0.38)',
-        }
+        tinyElements: 'rgba(255, 255, 255, 0.38)',
     },
 
     typography: {

@@ -27,9 +27,7 @@ export const lightTheme = createTheme({
             dark: '#ad1467',
         },
 
-        otherElements: {
-            tinyElements: 'rgba(0, 0, 0, 0.38)',
-        }
+        tinyElements: 'rgba(0, 0, 0, 0.38)',
     },
 
     typography: {
@@ -60,6 +58,7 @@ export const lightTheme = createTheme({
                     overflowX: 'hidden'
                 },
 
+                scrollBehavior: 'smooth',
                 // Custom Scrollbar
 
                 '::-webkit-scrollbar': {
