@@ -6,7 +6,8 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import { Home, Chat } from './pages'
+import { Home, ErrorPage, ChatPage } from './pages'
+import ThemeStore from './layout/ThemeStore'
 
 function App() {
     const [theme, setTheme] = useState(lightTheme)
@@ -14,13 +15,16 @@ function App() {
     return (
         <Router>
             <themeContext.Provider value={{ theme, setTheme }}>
-                <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                    <CssBaseline />
-                    <Routes>
-                        <Route path="/" element={<GoogleAuth />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/chat" element={<Chat />} />
-                    </Routes>
+                <GoogleOAuthProvider clientId={ GOOGLE_CLIENT_ID }>
+                    <ThemeStore>
+                        <CssBaseline />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/chat" element={<Chat />} />
+                            <Route path="/error" element={<ErrorPage />} />
+                            <Route path='*' element={<Navigate to='/error' />} />
+                        </Routes>
+                    </ThemeStore>
                 </GoogleOAuthProvider>
             </themeContext.Provider>
         </Router>
