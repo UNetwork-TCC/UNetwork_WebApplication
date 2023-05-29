@@ -5,9 +5,7 @@ import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
-// import InputAdornment from '@mui/material/InputAdornment'
 import InputBase from '@mui/material/InputBase'
-// import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 
 export default function Chat() {
@@ -36,10 +34,10 @@ export default function Chat() {
                         onChange={e => setText(e.target.value)}
                         
                     />
-                    <IconButton sx={{}} aria-label="File" >
+                    <IconButton aria-label="File" >
                         <ImageOutlinedIcon />
                     </IconButton>
-                    <IconButton type="button" sx={{ }} aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='small'>
+                    <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='small'>
                         <EmojiEmotionsIcon />
                     </IconButton>
                     <IconButton color="primary" sx={{ p: '10px', ml: '5px' , bgcolor: 'purple', borderRadius: '0 20px 20px 0', color: 'white', ':hover': {bgcolor:'#A020F0'}}} aria-label="SendButton" size='small'>

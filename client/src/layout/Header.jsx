@@ -13,13 +13,7 @@ export default function Header() {
     const { theme, setTheme } = useContext(themeContext)
     const classes = useStyles(theme.palette)
 
-    useEffect(() => {
-        const links = document.querySelectorAll(`.${classes.navLinks.split(' ')[0]}`)
-
-        
-    }, [])
-
-    function StyledLink( name ) {
+    function StyledLink({ name }) {
         return (
             <Link className={`${classes.navLinks}`} href={`#${name}`}>
                 <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>

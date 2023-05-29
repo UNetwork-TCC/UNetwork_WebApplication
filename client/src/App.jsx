@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material'
 import GoogleAuth from './components/GoogleAuth'
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
@@ -20,7 +20,7 @@ function App() {
                         <CssBaseline />
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/chat" element={<Chat />} />
+                            <Route path="/chat" element={<ChatPage />} />
                             <Route path="/error" element={<ErrorPage />} />
                             <Route path='*' element={<Navigate to='/error' />} />
                         </Routes>

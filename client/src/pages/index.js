@@ -1,5 +1,5 @@
 import Home from './Home'
 import ErrorPage from './ErrorPage'
-import Chat from './Chat'
+import ChatPage from './ChatPage'
 
-export { Home, ErrorPage, Chat}
+export { Home, ErrorPage, ChatPage}
