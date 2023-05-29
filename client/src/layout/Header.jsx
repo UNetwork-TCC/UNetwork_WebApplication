@@ -1,9 +1,33 @@
-import { Box, Button, Link, Typography } from '@mui/material'
-import logo from '../assets/img/Logo.png'
+import { Box, Button, Divider, Link, Typography } from '@mui/material'
+import { DarkMode, LightMode} from '@mui/icons-material'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { darkTheme, lightTheme } from '../themes'
+import { themeContext } from '../contexts'
 import Image from 'mui-image'
-import { Settings } from '@mui/icons-material';
+import useStyles from '../styles'
+
+import logo from '../assets/img/Logo.png'
+import lightLogo from '../assets/img/LightLogo.png'
 
 export default function Header() {
+    const { theme, setTheme } = useContext(themeContext)
+    const classes = useStyles(theme.palette)
+
+    function StyledLink({ name }) {
+        return (
+            <Link className={`${classes.navLinks}`} href={`#${name}`}>
+                <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>
+            </Link>
+        )
+    }
+
+    const setAppTheme = () => {
+        if (theme.palette.mode === 'light')
+            setTheme(darkTheme)
+        else
+            setTheme(lightTheme)
+    }      
+
     return (
         <Box
             display='flex'
@@ -12,23 +36,32 @@ export default function Header() {
             p={2.5}
         >
             <Box>
-                <Image width={75} height={75} src={logo} alt="Logo" />
+                { theme?.palette.mode === 'light' ?
+                    <img width={75} height={75} src={logo} alt="Logo" />
+                    :                    
+                    <img width={75} height={75} src={lightLogo} alt="Logo" />
+                }
                 <Typography>UNetwork</Typography>
             </Box>
             <Box display='flex' width={500} gap={5} p>
-                <Link href='#inicio'><Typography>Início</Typography></Link>
-                <Link href='#descubra'><Typography>Descubra</Typography></Link>
-                <Link href='#comunidade'><Typography>Comunidade</Typography></Link>
-                <Link href='#forum'><Typography>Fórum</Typography></Link>
+                <StyledLink name='início' />
+                <StyledLink name='descubra' />
+                <StyledLink name='comunidade' />
+                <StyledLink name='fórum' />
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
                     <Button>Entre</Button>
                     <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'>Cadastrar</Button>
                 </Box>
-                <Box height={40} border='1px solid rgba(0, 0, 0, 0.38)'></Box>
-                <Box display='flex' justifyContent='center' alignItems='center' m>
-                    <Settings sx={{ height: '30px', width: '50px' }} />
+                {/* <Box height={40} border='1px solid'></Box> */}
+                <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                    { theme?.palette.mode === 'light' ?
+                        <DarkMode onClick={setAppTheme} sx={{ height: '30px', width: '50px', cursor: 'pointer' }} />
+                        :
+                        <LightMode onClick={setAppTheme} sx={{ height: '30px', width: '50px', cursor: 'pointer' }} />
+                    }
                 </Box>
             </Box>
         </Box>

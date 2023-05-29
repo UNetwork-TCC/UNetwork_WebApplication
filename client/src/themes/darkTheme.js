@@ -10,26 +10,24 @@ export const darkTheme = createTheme({
         },
 
         primary: {
-            main: '#311b92',
+            main: '#d1c4e9',
+            light: '#311b92',
             dark: '#673ab7',
-            light: '#d1c4e9',
         },
 
         secondary: {
-            main: '#006064',
+            main: '#b2ebf2',
+            light: '#006064',
             dark: '#00bcd4',
-            light: '#b2ebf2',
         },
 
         contrast: {
-            main: '#ad1467',
+            main: '#f8bbd0',
+            light: '#ad1467',
             dark: '#e91e63',
-            light: '#f8bbd0',
         },
 
-        otherElements: {
-            tinyElements: 'rgba(0, 0, 0, 0.38)',
-        }
+        tinyElements: 'rgba(255, 255, 255, 0.38)',
     },
 
     typography: {

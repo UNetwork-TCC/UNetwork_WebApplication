@@ -1,4 +1,6 @@
-import News from './Home/News'
-import NavBar from './Home/NavBar'
+import DiscoverSection from './Home/DiscoverSection'
+import ForumSection from './Home/ForumSection'
+import ComunitySection from './Home/ComunitySection'
+import Chat from './Chat/Chat'
 
-export { News, NavBar }
+export { DiscoverSection, ForumSection, ComunitySection, Chat}
