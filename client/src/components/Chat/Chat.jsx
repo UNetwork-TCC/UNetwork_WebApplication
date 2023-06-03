@@ -40,7 +40,7 @@ export default function Chat() {
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='small'>
                         <EmojiEmotionsIcon />
                     </IconButton>
-                    <IconButton color="primary" sx={{ p: '10px', ml: '5px' , bgcolor: 'purple', borderRadius: '0 20px 20px 0', color: 'white', ':hover': {bgcolor:'#A020F0'}}} aria-label="SendButton" size='small'>
+                    <IconButton color="primary" sx={{ p: '10px', ml: '5px' , bgcolor: '#673AB7', borderRadius: '0 20px 20px 0', color: 'white', ':hover': {bgcolor:'#A020F0'}}} aria-label="SendButton" size='small'>
                         <SendIcon fontSize='small'   />
                     </IconButton>
                 </Box>
