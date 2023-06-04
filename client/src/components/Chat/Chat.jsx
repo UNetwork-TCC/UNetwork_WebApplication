@@ -7,18 +7,14 @@ import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
 import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
-
 export default function Chat() {
-
     const [text, setText] = useState('')
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-
     const onEmojiClick = (emojiObject) => {
         console.log(emojiObject)
         setText(prevInput => prevInput + emojiObject.emoji)
         setShowEmojiPicker(false)
     }
-
     return (
         <Box>
             <Container sx={{ display: 'flex', position: 'relative'}}>
@@ -52,9 +48,3 @@ export default function Chat() {
         </Box>
     )
 }
-
-
-
-
-    
-
