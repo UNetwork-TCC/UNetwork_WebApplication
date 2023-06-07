@@ -1,6 +1,6 @@
 
 import { makeStyles } from '@mui/styles'
-
+import useMobileStyles from './useMobileStyles.js'
 
 const useStyles = makeStyles({
     navLinks: {
@@ -44,4 +44,4 @@ const useStyles = makeStyles({
     }
 })
 
-export default useStyles
+export { useStyles, useMobileStyles }
