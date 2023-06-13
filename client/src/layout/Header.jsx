@@ -12,7 +12,6 @@ import lightLogo from '../assets/img/LightLogo.png'
 export default function Header() {
     const { theme, setTheme } = useContext(themeContext)
     const classes = useStyles(theme.palette)
-    const { navBarStyle } = classes.mobileStyles
 
     function StyledLink({ name }) {
         return (

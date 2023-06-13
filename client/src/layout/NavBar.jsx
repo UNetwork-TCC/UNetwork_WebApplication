@@ -29,14 +29,14 @@ export default function NavBar() {
     const navigate = useNavigate()
 
     return (
-        <Box height={'100vh'} width={'200px'} sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Box display={'flex'} sx={{ width: '170px', mt: '10px', height: '70px', bgcolor: 'white', borderRadius: '0 10px 10px 0px' }}>
-                <Box sx={{ bgcolor: '#673AB7', width: '60px', borderRadius: '0 10px 10px 0px', m: '5px 0' }}>
-                    <IconButton sx={{ position: 'absolute', left: '15px', top: '77.5px' }}>
-                        <AccountCircle sx={{ fontSize: '60px', color: 'white' }} />
+        <Box height={'100vh'} width={'200px'} sx={{ display: 'flex', flexDirection: 'column', mt:'3vh', }}>
+            <Box display={'flex'} sx={{ width: '170px', mt: '10px', height: '75px', bgcolor: 'white', borderRadius: '0 10px 10px 0px', mb:'2vh' }}>
+                <Box sx={{ bgcolor: '#673AB7', width: '60px', borderRadius: '0 8px 8px 0px', m: '5px 0', }}>
+                    <IconButton size='small'>
+                        <AccountCircle sx={{ fontSize: '60px', color: 'white', position: 'absolute', left: '15px', top: '-7.5px', margin:'0'}} />
                     </IconButton>
                 </Box>
-                <Box sx={{ width: '120px', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                <Box sx={{ width: '120px', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
                     <Typography sx={{ fontSize: '10px', fontWeight: 'bold' }}>USERNAME</Typography>
                     <Typography sx={{ fontSize: '10px' }}>Estudante</Typography>
                     <Typography sx={{ fontSize: '10px' }}>X Conexões</Typography>
@@ -76,11 +76,7 @@ export default function NavBar() {
                 </Box>
 
             </Box>
-            <Box sx={{ mt: '20px', ml: '20px' }}>
-                <IconButton>
-                    <ClearOutlined fontSize='large' />
-                </IconButton>
-            </Box>
+            
 
         </Box>
     )

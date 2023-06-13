@@ -1,34 +1,47 @@
-import { 
+import {
     BottomNavigation,
     BottomNavigationAction,
     Box,
-    Paper
-} from "@mui/material";
+    Paper,
+
+} from '@mui/material'
+
+
 
 import {
     Restore,
     Favorite,
-    Archive
+    Archive,
+    AccountCircle,
+    MenuBook,
+    Chat,
+    Bookmark,
+    Groups,
+    Newspaper,
+    ClearOutlined
 } from '@mui/icons-material'
 
-import { useState } from "react";
+import { useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 export default function MobileNavBar() {
-    const [value, setValue] = useState(0);
-
+    const [value, setValue] = useState(0)
+    const navigate = useNavigate()
     return (
-        <Box sxicon={{ pb: 7 }}>
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+        <Box sx={{}} >
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0,}} elevation={3}>
                 <BottomNavigation
                     showLabels
                     value={value}
                     onChange={(event, newValue) => {
-                        setValue(newValue);
+                        setValue(newValue)
                     }}
                 >
-                <BottomNavigationAction label="Recents" icon={<Restore />} />
-                <BottomNavigationAction label="Favorites" icon={<Favorite />} />
-                <BottomNavigationAction label="Archive" icon={<Archive />} />
+                    <BottomNavigationAction label="Materiais" icon={<MenuBook />} onClick={() => navigate('/Materials')}/>
+                    <BottomNavigationAction label="Conversas" icon={<Chat />} onClick={() => navigate('/Chat')}/>
+                    <BottomNavigationAction label="Favoritos" icon={<Bookmark />} onClick={() => navigate('/Favorites')} />
+                    <BottomNavigationAction label="Classes" icon={<Groups />} onClick={() => navigate('/Classes')}/>
+                    <BottomNavigationAction label="Notícias" icon={<Newspaper />} onClick={() => navigate('/News')}/>
                 </BottomNavigation>
             </Paper>
         </Box>
