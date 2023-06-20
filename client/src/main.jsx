@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 import reducers from './lib/redux/reducers'
 import { legacy_createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
+import { RouterProvider } from 'react-router-dom'
 
 const store = legacy_createStore(reducers, compose(applyMiddleware(thunk)))
 

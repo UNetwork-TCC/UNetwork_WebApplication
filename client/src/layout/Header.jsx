@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
 import Image from 'mui-image'
-import useStyles from '../styles'
+import { useStyles } from '../styles'
 
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
