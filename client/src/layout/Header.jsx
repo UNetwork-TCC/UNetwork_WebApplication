@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Button, Divider, Link, Typography } from '@mui/material'
 import { DarkMode, LightMode} from '@mui/icons-material'
 import { useContext, useEffect, useRef, useState } from 'react'
