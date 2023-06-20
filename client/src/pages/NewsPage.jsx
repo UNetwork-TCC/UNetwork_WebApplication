@@ -23,7 +23,7 @@ export default function NewsPage() {
                     </Box>
                     <Box sx={{ bgcolor: 'lightGray', width: '25vw', height: '35vh', m: '0 0 3vw 2vw', borderRadius: '10px 10px 10px 10px' }} />
 
-                    <Notice cor={'673Ab7'} description={"Tiroteio e Massacre no dia 20 de junho na Escola Técnica Uirapuru"} />
+                    <Notice cor={'673Ab7'} description={'Tiroteio e Massacre no dia 20 de junho na Escola Técnica Uirapuru'} />
                     <Notice cor={'2196F3'} description={'Israel Junior Pacheco, historiador formado na USP, assume ser maconheiro'} />
                 </Box>
             </Box>
