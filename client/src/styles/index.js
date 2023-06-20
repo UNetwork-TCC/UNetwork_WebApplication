@@ -1,6 +1,7 @@
 
 import { makeStyles } from '@mui/styles'
-
+import useMobileStyles from './useMobileStyles.js'
+import useChatPageStyles from './useChatPageStyles.js'
 
 const useStyles = makeStyles({
     navLinks: {
@@ -42,6 +43,8 @@ const useStyles = makeStyles({
             background: palette => palette.primary.main  
         }
     }
+
+    
 })
 
-export default useStyles
+export { useStyles, useMobileStyles, useChatPageStyles}

@@ -8,9 +8,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SearchIcon from '@mui/icons-material/Search'
 import { useNavigate } from 'react-router-dom'
 
-export default function Header2() {
+export default function MobileHeader2() {
     const icon = {
-        marginRight: '20px',
+        marginRight: '10px',
     }
 
     const navigate = useNavigate()
@@ -24,29 +24,11 @@ export default function Header2() {
                 <Typography sx={{ fontSize: '25px', fontWeight: '600' }}>Social</Typography>
             </Box>
             {/* Search */}
-            <Box>
-                <Container sx={{ display: 'flex', position: 'relative' }}>
-                    <Box
-                        component="form"
-                        sx={{ p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 600, border: '1px gray solid', borderRadius: '20px' }}
-                    >
-                        <InputBase
-                            sx={{ ml: 1, flex: 1 }}
-                            placeholder="Pesquise..."
-                            value={text}
-                            onChange={e => setText(e.target.value)}
-                        />
-
-                        <IconButton color="primary" sx={{ p: '10px', ml: '5px', bgcolor: '#673AB7', borderRadius: '0 20px 20px 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" size='small'>
-                            <SearchIcon fontSize='small' />
-                        </IconButton>
-                    </Box>
-                </Container>
-            </Box>
-
-
-
-            <Box sx={{ display: 'flex' }} alignItems={'center'}>
+            
+            <Box sx={{ display: 'flex', }} alignItems={'center'}>
+                <IconButton sx={icon}>
+                    <SearchIcon fontSize='small' />
+                </IconButton>
                 <IconButton sx={icon}>
                     <ForumIcon />
                 </IconButton>
@@ -57,7 +39,6 @@ export default function Header2() {
                 <IconButton>
                     <AccountCircleIcon />
                 </IconButton>
-                <Typography sx={{ fontSize: '10px' }}>USERNAME</Typography>
             </Box>
         </Box>
     )

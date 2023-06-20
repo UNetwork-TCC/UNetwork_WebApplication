@@ -1,13 +1,18 @@
 import IconButton from '@mui/material/IconButton'
 import SendIcon from '@mui/icons-material/Send'
-import { Container } from '@mui/material'
+import { Container, useMediaQuery } from '@mui/material'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
 import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
+
+
 export default function Chat() {
+
+    const matches = useMediaQuery('(min-width: 600px)')
+
     const [text, setText] = useState('')
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const onEmojiClick = (emojiObject) => {
@@ -20,7 +25,7 @@ export default function Chat() {
             <Container sx={{ display: 'flex', position: 'relative'}}>
                 <Box
                     component="form"
-                    sx={{p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 700, border: '1px gray solid',borderRadius: '20px'}}
+                    sx={matches ? {p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 700, border: '1px gray solid',borderRadius: '20px'}: {p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid',borderRadius: '20px'}}
                 >
                     <InputBase
                         sx={{ ml: 1, flex: 1}}
