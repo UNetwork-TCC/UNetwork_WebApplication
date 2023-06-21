@@ -1,12 +1,17 @@
-import  jwt  from 'jsonwebtoken'
+import  jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const checkToken = (req, res, next) => {
     try {
-        let token = req.headers.authorization
-        if (!token) { return res.status(401).send({ message: 'Token invalido!'}) }
-        token = token.split(' ')[1]
-        const verify = jwt.verify(token, process.env.SECRET)
-        if (verify == false) { return res.status(401).send({ message: 'Por favor, logue para isto!'}) }
+        const token = req.headers.authorization?.split(' ')[1]
+        if (!token) return res.status(401).send({ message: 'Token não existe!'})
+
+        jwt.verify(token, process.env.SECRET, (err) => {
+            if (err) return res.status(401).send({ message: 'Token inválido'})
+        })
+
         next()
     } catch (error) {
         res.status(404).send({message: error.message})

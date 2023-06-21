@@ -115,7 +115,7 @@ export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body
         const existingUser = await User.findOne({ email })
-
+        
         if (!(email && password )) return res.status(400).send({message: 'Por favor, insira todos os campos'})
         if (email !== existingUser.email) return res.status(400).send({ message: 'Email incorreto! Revise as informações!'})
         if (!existingUser) return res.status(400).send({message: 'Email não encontrado! Por favor insira um usuário válido'})
@@ -128,7 +128,7 @@ export const loginUser = async (req, res) => {
             { id: existingUser._id, email },
             process.env.SECRET,
             {
-                expiresIn: '5h',
+                expiresIn: '20s',
             }
         )
 
