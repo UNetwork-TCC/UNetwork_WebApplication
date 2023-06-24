@@ -28,8 +28,9 @@ export default function Chat() {
                     sx={matches ? {p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 700, border: '1px gray solid',borderRadius: '20px'}: {p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid',borderRadius: '20px'}}
                 >
                     <InputBase
+                        
                         sx={{ ml: 1, flex: 1}}
-                        placeholder="Digite sua mensagem..."
+                        placeholder={matches ? 'Digite sua mensagem...': 'Digite'}
                         value={text}
                         inputProps={{ 'aria-label': 'search google maps' }}
                         onChange={e => setText(e.target.value)}

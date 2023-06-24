@@ -11,11 +11,11 @@ export default function MaterialsPage() {
         <Box>
             {matches ? <Header2 /> : <MobileHeader2 />}
             <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px' }} variant="middle" />
-            <Box classname='tudo' sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex' }}>
                 {matches && (
-                    <NavBar />
+                    <NavBar buttonStyle={'Materials'}/>
                 )}
-                <Divider sx={{ bgcolor: 'gray', width: '1px', m: '30px 5px 5px 5px', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />                
                 <Box className="Conversas" sx={{ mr: '5px' }}>
                     Seus Materiais
                 </Box>

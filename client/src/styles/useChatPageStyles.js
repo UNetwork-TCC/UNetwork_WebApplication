@@ -1,4 +1,4 @@
-import { makeStyles } from "@mui/styles"
+import { makeStyles } from '@mui/styles'
 
 const useChatPageStyles = makeStyles({
     mobileTitleContacts: {
