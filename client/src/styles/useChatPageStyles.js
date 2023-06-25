@@ -13,7 +13,6 @@ const useChatPageStyles = makeStyles({
         fontSize:'3rem', color: '#673AB7', fontWeight: 'bold', marginRight: '5px'
     },
 
-
 })
 
 export default useChatPageStyles
