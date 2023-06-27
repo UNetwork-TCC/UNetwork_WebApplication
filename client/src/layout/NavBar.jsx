@@ -53,7 +53,7 @@ export default function NavBar({ buttonStyle, navStyle }) {
     }
 
     const navigate = useNavigate()
-    navStyle = "true"
+    navStyle = 'true'
     return (
 
         <Box height={'90vh'} width={'20vw'} sx={{ display: 'flex', flexDirection: 'column', mt: '3vh', }}>

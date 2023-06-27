@@ -41,7 +41,7 @@ export default function SideBar({ buttonStyle }) {
         <Box height={'100vh'} width={'6vw'} sx={{mt:'20px'}}>        
             <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px', width: '20vw', ml: '10px' }}>
                 <Box sx={{ml:'5px', mb:'2vh', color:'rgba(0, 0, 0, 0.54)'}}>
-                        <AccountCircle sx={{fontSize:'2.8rem'}} />
+                    <AccountCircle sx={{fontSize:'2.8rem'}} />
                 </Box>
                 <Box >
                     <IconButton onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)} >
