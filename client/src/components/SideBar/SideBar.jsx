@@ -11,22 +11,26 @@ import {
     Groups,
     Newspaper,
     Menu,
+    BorderBottom,
 } from '@mui/icons-material'
+import { NavBar } from '../../layout'
 
 export default function SideBar({ buttonStyle }) {
 
-    const navType = true
+    const navType = NavBar.navType
 
     const notStylized = {
         borderRadius: '20px',
-        mb:'4vh'
+        mb:'6vh',
+        ml:'5px',
     }
 
     const Stylized = {
         borderRadius: '40px 40px 40px 40px',
         bgcolor: '#673AB7',
         color: 'white',
-        mb:'4vh',
+        mb:'6vh',
+        p:'11.43px 12.80px',
         ':hover': {
             borderRadius: '40px 40px 40px 40px',
             bgcolor: '#673AB7',
@@ -39,12 +43,12 @@ export default function SideBar({ buttonStyle }) {
 
     return (
         <Box height={'100vh'} width={'6vw'} sx={{mt:'20px'}}>        
-            <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px', width: '20vw', ml: '10px' }}>
-                <Box sx={{ml:'5px', mb:'2vh', color:'rgba(0, 0, 0, 0.54)'}}>
-                    <AccountCircle sx={{fontSize:'2.8rem'}} />
+            <Box sx={{ display: 'flex', flexDirection: 'column',  mt: '10px', width: '20vw', ml: '7.93px' }}>
+                <Box sx={{ml:'7px', mb:'6vh', color:'rgba(0, 0, 0, 0.54)'}}>
+                    <AccountCircle sx={{fontSize:'3rem'}} />
                 </Box>
-                <Box >
-                    <IconButton onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)} >
+                <Box>
+                    <IconButton onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)}>
                         <MenuBook fontSize='large' />
                     </IconButton>
                 </Box>
@@ -73,6 +77,7 @@ export default function SideBar({ buttonStyle }) {
                         <Menu fontSize='large' />
                     </IconButton>
                 </Box>
+                
 
             </Box>
 

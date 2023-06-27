@@ -7,7 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function ChatArea() {
     return (
-        <Box sx={{ height: '100vh', width: '59vw', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
+        <Box sx={{ height: '100%', width: '75%', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
             <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '20px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', ml: '10px' }}>
                     <IconButton >

@@ -15,7 +15,24 @@ import {
 
 export default function NavBar({ buttonStyle, navStyle }) {
 
-    const navType = true
+    const SideBarNotStylized = {
+        borderRadius: '20px',
+        mb:'4vh'
+    }
+
+    const SideBarStylized = {
+        borderRadius: '40px 40px 40px 40px',
+        bgcolor: '#673AB7',
+        color: 'white',
+        mb:'4vh',
+        ':hover': {
+            borderRadius: '40px 40px 40px 40px',
+            bgcolor: '#673AB7',
+            color: 'white',
+            mr: '0',
+        }
+    }
+
 
     const notStylized = {
         pl: '20px',
@@ -53,7 +70,8 @@ export default function NavBar({ buttonStyle, navStyle }) {
     }
 
     const navigate = useNavigate()
-    navStyle = 'true'
+    
+    navStyle = 'sideBar'
     return (
 
         <Box height={'90vh'} width={'20vw'} sx={{ display: 'flex', flexDirection: 'column', mt: '3vh', }}>
@@ -64,9 +82,9 @@ export default function NavBar({ buttonStyle, navStyle }) {
                     </IconButton>
                 </Box>
                 <Box sx={{ width: '120px', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                    <Typography sx={{ fontSize: '10px', fontWeight: 'bold' }}>USERNAME</Typography>
-                    <Typography sx={{ fontSize: '10px' }}>Estudante</Typography>
-                    <Typography sx={{ fontSize: '10px' }}>X Conexões</Typography>
+                    {navStyle && <Typography sx={{ fontSize: '10px', fontWeight: 'bold' }}>USERNAME</Typography>}
+                    {navStyle && <Typography sx={{ fontSize: '10px' }}>Estudante</Typography>}
+                    {navStyle && <Typography sx={{ fontSize: '10px' }}>X Conexões</Typography>}
                 </Box>
             </Box>
 
@@ -74,38 +92,39 @@ export default function NavBar({ buttonStyle, navStyle }) {
                 <Box >
                     <IconButton onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)} >
                         <MenuBook fontSize='large' />
-                        <Typography sx={textButtons}>Materiais</Typography>
+                        {navStyle && <Typography sx={textButtons}>Materiais</Typography>}
                     </IconButton>
                 </Box>
                 <Box>
                     <IconButton onClick={() => navigate('/Chat')} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
                         <Chat fontSize='large' />
-                        <Typography sx={textButtons}>Conversas</Typography>
+                        {navStyle && <Typography sx={textButtons}>Conversas</Typography>}
                     </IconButton>
                 </Box>
                 <Box>
                     <IconButton onClick={() => navigate('/Classes')} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
                         <Groups fontSize='large' />
-                        <Typography sx={textButtons}>Classes</Typography>
+                        {navStyle && <Typography sx={textButtons}>Classes</Typography>}
                     </IconButton>
                 </Box>
                 <Box>
                     <IconButton onClick={() => navigate('/Favorites')} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
                         <Bookmark fontSize='large' />
-                        <Typography sx={textButtons}>Favoritos</Typography>
+                        {navStyle && <Typography sx={textButtons}>Favoritos</Typography>}
                     </IconButton>
                 </Box>
                 <Box>
                     <IconButton onClick={() => navigate('/News')} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
                         <Newspaper fontSize='large' />
-                        <Typography sx={textButtons}>Notícias</Typography>
+                        {navStyle && <Typography sx={textButtons}>Notícias</Typography>}
                     </IconButton>
                 </Box>
                 <Box>
-                    <IconButton sx={{ pl: '20px', borderRadius: '20px' }} onClick={() => navStyle = 'false'} >
+                    <IconButton sx={{pl: '20px', borderRadius: '20px' }} onClick={() => navStyle = 'false'} >
                         <Close fontSize='large' />
                     </IconButton>
                 </Box>
+                
             </Box>
 
         </Box>

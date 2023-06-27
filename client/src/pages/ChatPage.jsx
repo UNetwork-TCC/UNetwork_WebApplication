@@ -16,6 +16,7 @@ export default function ChatPage() {
         m: '5px 0 0 0',
     }
 
+    const navStyle = NavBar.navStyle
 
 
     return (
@@ -24,8 +25,9 @@ export default function ChatPage() {
 
             <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px' }} variant="middle" />
             <Box sx={{ display: 'flex' }}>
-                {matches &&
-                    <NavBar buttonStyle={'Chat'}/>
+                { 
+                <SideBar buttonStyle={'Chat'} />
+                
                 }
                 <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={matches ? ({ mr: '5px', width: '20vw' }) : ({ width: '40vw' })}>
