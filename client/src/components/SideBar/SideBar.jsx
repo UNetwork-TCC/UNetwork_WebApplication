@@ -21,7 +21,7 @@ export default function SideBar({ buttonStyle }) {
 
     const notStylized = {
         borderRadius: '20px',
-        mb:'6vh',
+        mb:'5vh',
         ml:'5px',
     }
 
@@ -43,8 +43,8 @@ export default function SideBar({ buttonStyle }) {
 
     return (
         <Box height={'100vh'} width={'6vw'} sx={{mt:'20px'}}>        
-            <Box sx={{ display: 'flex', flexDirection: 'column',  mt: '10px', width: '20vw', ml: '7.93px' }}>
-                <Box sx={{ml:'7px', mb:'6vh', color:'rgba(0, 0, 0, 0.54)'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column',  mt: '10px', width: '20vw', ml: '8px' }}>
+                <Box sx={{ml:'7px', mb:'5vh', color:'rgba(0, 0, 0, 0.54)'}}>
                     <AccountCircle sx={{fontSize:'3rem'}} />
                 </Box>
                 <Box>

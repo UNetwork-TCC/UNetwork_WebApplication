@@ -24,9 +24,9 @@ export default function ChatPage() {
             {matches ? <Header2 /> : <MobileHeader2 />}
 
             <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px' }} variant="middle" />
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex' ,}}>
                 { 
-                <SideBar buttonStyle={'Chat'} />
+                    <SideBar buttonStyle={'Chat'} />
                 
                 }
                 <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />

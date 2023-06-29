@@ -1,5 +1,5 @@
 import { Box, Divider, useMediaQuery } from '@mui/material'
-import { Chat } from '../components'
+import { Chat, SideBar } from '../components'
 import Header2 from '../layout/Header2'
 import NavBar from '../layout/NavBar'
 import { MobileHeader2, MobileNavBar } from '../layout'

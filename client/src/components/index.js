@@ -2,6 +2,9 @@ import DiscoverSection from './Home/DiscoverSection'
 import ForumSection from './Home/ForumSection'
 import ComunitySection from './Home/ComunitySection'
 import Chat from './Chat/Chat'
-import Notice from './News/Notice'
+import Notice from './News/LittleNotice'
 import SideBar from './SideBar/SideBar'
-export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar}
+import Folder from './Materials/Folder'
+import File from './Materials/File'
+import Contact from './Chat/Contact'
+export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact}
