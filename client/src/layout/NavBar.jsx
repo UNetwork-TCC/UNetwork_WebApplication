@@ -15,57 +15,33 @@ import {
 
 export default function NavBar({ buttonStyle, navStyle }) {
 
-    const SideBarNotStylized = {
-        borderRadius: '20px',
-        mb:'4vh'
-    }
-
-    const SideBarStylized = {
-        borderRadius: '40px 40px 40px 40px',
-        bgcolor: '#673AB7',
-        color: 'white',
-        mb:'4vh',
-        ':hover': {
-            borderRadius: '40px 40px 40px 40px',
-            bgcolor: '#673AB7',
-            color: 'white',
-            mr: '0',
-        }
-    }
-
-
     const notStylized = {
-        pl: '20px',
+        width:'100%',
         borderRadius: '20px',
         mb: '7vh',
+        pr:'0',
         ':hover': {
-            pl: '20px',
             borderRadius: '20px 0 0 20px',
-            pr: '100vw',
-            mr: '0',
         }
     }
     const textButtons = {
         fontSize: '18px',
         ml: '10px',
-        pr: '20px'
+        pr: '70px',        
     }
 
     const Stylized = {
-        pl: '20px',
+        width:'100%',
         borderRadius: '20px 0 0 20px',
         bgcolor: '#673AB7',
         color: 'white',
-        pr: '100vw',
-        mr: '0',
+        
+        pr:'0',
         mb: '7vh',
         ':hover': {
-            pl: '20px',
             borderRadius: '20px 0 0 20px',
             bgcolor: '#673AB7',
-            color: 'white',
-            pr: '100vw',
-            mr: '0',
+            color: 'white',    
         }
     }
 
@@ -88,38 +64,38 @@ export default function NavBar({ buttonStyle, navStyle }) {
                 </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px', height: '60vh', width: '20vw', ml: '10px' }}>
-                <Box >
+            <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px', height: '60vh', width: '20vw', ml: '4.5%',}}>
+                <Box sx={{width:'95.5%'}}>
                     <IconButton onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)} >
                         <MenuBook fontSize='large' />
                         {navStyle && <Typography sx={textButtons}>Materiais</Typography>}
                     </IconButton>
                 </Box>
-                <Box>
+                <Box sx={{width:'95.5%'}}>
                     <IconButton onClick={() => navigate('/Chat')} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
                         <Chat fontSize='large' />
                         {navStyle && <Typography sx={textButtons}>Conversas</Typography>}
                     </IconButton>
                 </Box>
-                <Box>
+                <Box sx={{width:'95.5%'}}>
                     <IconButton onClick={() => navigate('/Classes')} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
                         <Groups fontSize='large' />
                         {navStyle && <Typography sx={textButtons}>Classes</Typography>}
                     </IconButton>
                 </Box>
-                <Box>
+                <Box sx={{width:'95.5%'}}>
                     <IconButton onClick={() => navigate('/Favorites')} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
                         <Bookmark fontSize='large' />
                         {navStyle && <Typography sx={textButtons}>Favoritos</Typography>}
                     </IconButton>
                 </Box>
-                <Box>
+                <Box sx={{width:'95.5%'}}>
                     <IconButton onClick={() => navigate('/News')} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
                         <Newspaper fontSize='large' />
                         {navStyle && <Typography sx={textButtons}>Notícias</Typography>}
                     </IconButton>
                 </Box>
-                <Box>
+                <Box sx={{width:'95.5%'}}>
                     <IconButton sx={{pl: '20px', borderRadius: '20px' }} onClick={() => navStyle = 'false'} >
                         <Close fontSize='large' />
                     </IconButton>

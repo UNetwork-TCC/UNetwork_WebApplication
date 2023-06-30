@@ -4,6 +4,7 @@ import NavBar from '../layout/NavBar'
 import { Link, Route } from 'react-router-dom'
 import { Notice } from '../components'
 import { MobileHeader2, MobileNavBar } from '../layout'
+import BigNotice from '../components/News/BigNotice'
 
 
 export default function NewsPage() {
@@ -12,19 +13,28 @@ export default function NewsPage() {
         <Box>
             {matches ? <Header2 /> : <MobileHeader2 />}
             <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px', }} variant="middle" />
-            <Box classname='tudo' sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex' }}>
                 {matches && (
-                    <NavBar buttonStyle={'News'}/>
+                    <NavBar buttonStyle={'News'} />
                 )}
                 <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />
-                <Box sx={{ mr: '5px' }}>
-                    <Box sx={{ m: '3vh 0 2vh 2vw' }}>
-                        <Typography sx={{ fontSize: '3vw', color: '#673AB7' }}>UNews</Typography>
+                <Box sx={{ m: '2vw 0 0 1vh', }}>
+                    <Box sx={{ mr: '5px' }}>
+                        <Box display={'flex'} width={'58.5vw'} sx={{ justifyContent: 'space-between' }}>
+                            <BigNotice Title={'CULTURA'} description={'Bahia, um dos maiores centros religiosos do Brasil'} />
+                            <BigNotice Title={'ATUALIDADE'} description={'FIm do Dólar? Colapso Financeiro? Entenda a Nova Ordem Mundial'} />
+                        </Box>
+                        <Box sx={{display:'flex', mt:'3vh'}}>
+                            <Box>
+                                <Notice title={'URGENTE'} description={'Tiroteio e Massacre no dia 20 de junho na Escola Técnica Uirapuru'} cor={'673Ab7'}/>
+                                <Notice title={'FOFOCA'} description={'Israel Junior Pacheco, historiador formado na USP, assume ser maconheiro'} cor={'2196F3'}/>
+                            </Box>
+                            <Box>
+                                <Notice title={'TECNOLOGIA'} description={'Meta lança modelo de IA especialista em gerar músicas'}  cor={'673Ab7'}/>
+                                <Notice title={'FOFOCA'} description={'Israel Junior Pacheco, historiador formado na USP, assume ser maconheiro'} cor={'2196F3'}/>
+                            </Box>
+                        </Box>
                     </Box>
-                    <Box sx={{ bgcolor: 'lightGray', width: '25vw', height: '35vh', m: '0 0 3vw 2vw', borderRadius: '10px 10px 10px 10px' }} />
-
-                    <Notice cor={'673Ab7'} description={'Tiroteio e Massacre no dia 20 de junho na Escola Técnica Uirapuru'} />
-                    <Notice cor={'2196F3'} description={'Israel Junior Pacheco, historiador formado na USP, assume ser maconheiro'} />
                 </Box>
             </Box>
             {!matches && (
