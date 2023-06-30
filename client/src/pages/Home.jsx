@@ -8,7 +8,7 @@ import { Circle } from '@mui/icons-material'
 
 function Home() {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
+        <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <Header />
             <Box>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='63%' bottom={90} position='absolute'>
@@ -30,7 +30,7 @@ function Home() {
                 <Box width='40%'>
                 </Box>
             </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' height='40vh' width='100%'>
+            <Box display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
                 <Box p m={5} display='flex' justifyContent='center' alignItems='center' width='75%'>
                     <Box overflow='hidden' m='0 50px'>
                         <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={350}>
@@ -38,14 +38,14 @@ function Home() {
                             <Typography variant='h6' color='text.secondary'>Descubra um mundo de conexões.</Typography>
                         </Animation>
                     </Box>
-                    <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem variant='middle'/>
+                    <Divider orientation='vertical' flexItem variant='middle'/>
                     <Box overflow='hidden' m='0 50px'>
                         <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={450}>
                             <Typography mb={2} variant='h5' fontWeight={900} color='secondary.main'><Circle/> Conheça!</Typography>
                             <Typography variant='h6' color='text.secondary'>Faça amigos, navegue, curta.</Typography>
                         </Animation>
                     </Box>
-                    <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem variant='middle'/>
+                    <Divider orientation='vertical' flexItem variant='middle'/>
                     <Box overflow='hidden' m='0 50px'>
                         <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={550}>
                             <Typography mb={2} variant='h5' fontWeight={900} color='secondary.main'><Circle/> Cresça!</Typography>
@@ -53,6 +53,9 @@ function Home() {
                         </Animation>
                     </Box>
                 </Box>
+            </Box>
+            <Box id="descubra">
+
             </Box>
         </Box>
     )
