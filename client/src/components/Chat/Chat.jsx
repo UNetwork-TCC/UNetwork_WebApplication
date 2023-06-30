@@ -49,7 +49,7 @@ export default function Chat() {
                 </Box>
 
             </Container>
-            <Box sx={{ }}>
+            <Box sx={{ position: 'absolute', bottom: '11%' }}>
                 {showEmojiPicker && <EmojiPicker defaultSkinTone='' emojiStyle='twitter' onEmojiClick={onEmojiClick} />}
             </Box>
         </Box>
