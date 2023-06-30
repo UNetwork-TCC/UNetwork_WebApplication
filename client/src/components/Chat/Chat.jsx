@@ -48,8 +48,8 @@ export default function Chat() {
                 </Box>
                 
             </Container>
-            <Box>
-                {showEmojiPicker && <EmojiPicker defaultSkinTone=''  emojiStyle='twitter' onEmojiClick={onEmojiClick} />}
+            <Box sx={{ position: 'absolute', bottom: '11%' }}>
+                {showEmojiPicker && <EmojiPicker defaultSkinTone='' emojiStyle='twitter' onEmojiClick={onEmojiClick} />}
             </Box>
         </Box>
     )
