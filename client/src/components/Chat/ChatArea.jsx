@@ -1,4 +1,4 @@
-import VideocamIcon from '@mui/icons-material/Videocam'
+import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Chat } from '../../components'
@@ -7,7 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function ChatArea() {
     return (
-        <Box sx={{ height: '100%', width: '75%', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
+        <Box sx={{ height: '100%', width: '58.5%', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
             <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '20px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', ml: '10px' }}>
                     <IconButton >
@@ -20,7 +20,7 @@ export default function ChatArea() {
                 </Box>
                 <Box>
                     <IconButton>
-                        <VideocamIcon />
+                        <VideocamOutlinedIcon />
                     </IconButton>
                     <IconButton>
                         <LocalPhoneIcon />
@@ -30,7 +30,7 @@ export default function ChatArea() {
                     </IconButton>
                 </Box>
             </Box>
-            <Divider sx={{ bgcolor: 'gray', height: '1px', m: '5px 0', p: '0' }} flexItem />
+            <Divider sx={{ bgcolor: 'gray', m: '5px 0', p: '0' }} flexItem />
             <Box sx={{ height: '63vh' }}>
 
             </Box>

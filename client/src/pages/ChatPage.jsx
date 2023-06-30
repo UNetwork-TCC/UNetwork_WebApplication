@@ -1,12 +1,11 @@
 import { Box, Divider, IconButton, Typography, useMediaQuery } from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit'
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined'
 import SearchIcon from '@mui/icons-material/Search'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { MobileNavBar, MobileHeader2, NavBar, Header2 } from '../layout'
 import ChatArea from '../components/Chat/ChatArea'
 import MobileChatArea from '../components/Chat/MobileChatArea'
 import { useChatPageStyles } from '../styles'
-import { SideBar } from '../components'
+import { Contact, SideBar } from '../components'
 
 export default function ChatPage() {
     const classes = useChatPageStyles()
@@ -25,9 +24,9 @@ export default function ChatPage() {
 
             <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px' }} variant="middle" />
             <Box sx={{ display: 'flex' ,}}>
-                { 
-                    <SideBar buttonStyle={'Chat'} />
-                
+                {matches && ( 
+                    <NavBar buttonStyle={'Chat'} />
+                    )
                 }
                 <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={matches ? ({ mr: '5px', width: '20vw' }) : ({ width: '40vw' })}>
@@ -35,7 +34,7 @@ export default function ChatPage() {
                         <Typography sx={!matches ? { fontSize: '15px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '35px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px' }}>Conversas</Typography>
                         <Box sx={{ ml: '5px' }}>
                             <IconButton size='small' sx={icon}>
-                                <EditIcon fontSize='small' />
+                                <GroupAddOutlinedIcon fontSize='small' />
                             </IconButton>
                             <IconButton size='small' sx={icon}>
                                 <SearchIcon fontSize='small' />
@@ -44,41 +43,11 @@ export default function ChatPage() {
                     </Box>
 
                     <Box>
-                        <IconButton sx={{ mb: '15px', }}>
-                            <AccountCircleIcon sx={matches ? { fontSize: '70px' } : { fontSize: '45px', }} />
-                            <Box sx={{ display: 'flex', flexDirection: 'column', ml: '10px' }}>
-                                <Typography sx={matches ? { fontSize: '12px', fontWeight: 'bold', color: 'black' } : { fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Usuario XXX</Typography>
-                                <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
-                            </Box>
-                        </IconButton>
-                        <IconButton sx={{ mb: '15px' }}>
-                            <AccountCircleIcon sx={matches ? { fontSize: '70px' } : { fontSize: '45px', }} />
-                            <Box sx={{ display: 'flex', flexDirection: 'column', ml: '10px' }}>
-                                <Typography sx={matches ? { fontSize: '12px', fontWeight: 'bold', color: 'black' } : { fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Usuario XXX</Typography>
-                                <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
-                            </Box>
-                        </IconButton>
-                        <IconButton sx={{ mb: '15px' }}>
-                            <AccountCircleIcon sx={matches ? { fontSize: '70px' } : { fontSize: '45px', }} />
-                            <Box sx={{ display: 'flex', flexDirection: 'column', ml: '10px' }}>
-                                <Typography sx={matches ? { fontSize: '12px', fontWeight: 'bold', color: 'black' } : { fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Usuario XXX</Typography>
-                                <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
-                            </Box>
-                        </IconButton>
-                        <IconButton sx={{ mb: '15px' }}>
-                            <AccountCircleIcon sx={matches ? { fontSize: '70px' } : { fontSize: '45px', }} />
-                            <Box sx={{ display: 'flex', flexDirection: 'column', ml: '10px' }}>
-                                <Typography sx={matches ? { fontSize: '12px', fontWeight: 'bold', color: 'black' } : { fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Usuario XXX</Typography>
-                                <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
-                            </Box>
-                        </IconButton>
-                        <IconButton sx={{ mb: '15px' }}>
-                            <AccountCircleIcon sx={matches ? { fontSize: '70px' } : { fontSize: '45px', }} />
-                            <Box sx={{ display: 'flex', flexDirection: 'column', ml: '10px' }}>
-                                <Typography sx={matches ? { fontSize: '12px', fontWeight: 'bold', color: 'black' } : { fontSize: '12px', fontWeight: 'bold', color: 'black' }}>Usuario XXX</Typography>
-                                <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
-                            </Box>
-                        </IconButton>
+                        <Contact username={'Usuario XXX'}/>
+                        <Contact username={'Usuario XXX'}/>
+                        <Contact username={'Usuario XXX'}/>
+                        <Contact username={'Usuario XXX'}/>
+
                     </Box>
 
                 </Box>
