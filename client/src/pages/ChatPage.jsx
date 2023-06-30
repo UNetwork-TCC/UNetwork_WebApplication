@@ -19,7 +19,7 @@ export default function ChatPage() {
 
 
     return (
-        <Box sx={!matches && ({ fontSize: '10px' })}>
+        <Box>
             {matches ? <Header2 /> : <MobileHeader2 />}
 
             <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px' }} variant="middle" />
@@ -28,7 +28,7 @@ export default function ChatPage() {
                     <NavBar buttonStyle={'Chat'} />
                     )
                 }
-                <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{ bgcolor: 'gray', mr: '5px', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={matches ? ({ mr: '5px', width: '20vw' }) : ({ width: '40vw' })}>
                     <Box sx={{ display: 'flex', alignItems: 'center', m: '10px 0 10px 10px' }}>
                         <Typography sx={!matches ? { fontSize: '15px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '35px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px' }}>Conversas</Typography>
@@ -51,7 +51,7 @@ export default function ChatPage() {
                     </Box>
 
                 </Box>
-                <Divider sx={{ bgcolor: 'gray', width: '1px', m: '0 0px 0 5px', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{ bgcolor: 'gray', m: '0 0px 0 5px', }} variant="middle" orientation='vertical' flexItem />
                 {matches ? <ChatArea /> : <MobileChatArea />}
             </Box>
             {!matches && (
