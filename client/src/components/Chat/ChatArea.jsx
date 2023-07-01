@@ -30,8 +30,8 @@ export default function ChatArea() {
                     </IconButton>
                 </Box>
             </Box>
-            <Divider sx={{ bgcolor: 'gray', m: '5px 0', p: '0' }} flexItem />
-            <Box sx={{ height: '63vh' }}>
+            <Divider sx={{ m: '5px 0', p: '0', }} flexItem />
+            <Box sx={{ height: '61vh' }}>
 
             </Box>
             <Box sx={{ height: '9vh', display: 'flex', justifyContent: 'center', pt: '5px', }}>

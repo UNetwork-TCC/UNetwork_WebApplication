@@ -1,4 +1,4 @@
-/* eslint-disable quotes */
+ 
 import { createTheme } from '@mui/material'
 import defaultThemeProps from './defaultThemeProps'
 

@@ -7,4 +7,5 @@ import SideBar from './SideBar/SideBar'
 import Folder from './Materials/Folder'
 import File from './Materials/File'
 import Contact from './Chat/Contact'
-export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact}
+import Classes from './Classes/Classes'
+export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact, Classes}
