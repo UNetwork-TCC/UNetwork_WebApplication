@@ -28,9 +28,9 @@ export default function ChatPage() {
                     <NavBar buttonStyle={'Chat'} />
                 )
                 }
-                <Divider sx={{ bgcolor: 'gray', m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={matches ? ({ mr: '5px', width: '20vw' }) : ({ width: '40vw', })}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', m: '10px 0 10px 10px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', m: '15px 0 10px 10px' }}>
                         <Typography sx={!matches ? { fontSize: '15px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '35px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px' }}>Conversas</Typography>
                         <Box sx={{ ml: '5px' }}>
                             <IconButton size='small' sx={icon}>
@@ -51,7 +51,7 @@ export default function ChatPage() {
                     </Box>
 
                 </Box>
-                <Divider sx={{ bgcolor: 'gray', m: '0 0px 0 5px', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{}} variant="middle" orientation='vertical' flexItem />
                 {matches ? <ChatArea /> : <MobileChatArea />}
             </Box>
             {!matches && (

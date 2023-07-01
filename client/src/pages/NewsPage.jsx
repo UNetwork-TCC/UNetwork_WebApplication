@@ -17,7 +17,7 @@ export default function NewsPage() {
                 {matches && (
                     <NavBar buttonStyle={'News'} />
                 )}
-                <Divider sx={{ bgcolor: 'gray', m: '0 5px 0 0', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={{ m: '2vw 0 0 1vh', }}>
                     <Box sx={{ mr: '5px' }}>
                         <Box display={'flex'} width={'58.5vw'} sx={{ justifyContent: 'space-between' }}>

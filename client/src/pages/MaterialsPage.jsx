@@ -19,9 +19,9 @@ export default function MaterialsPage() {
                 {matches && (
                     <NavBar buttonStyle={'Materials'} />
                 )}
-                <Divider sx={{ width: '2px'}} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{}} variant="middle" orientation='vertical' flexItem />
                 <Box sx={{ width: '75vw', }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 25px', alignItems: 'center', }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 15px', alignItems: 'center', }}>
                         <Typography sx={!matches ? { fontSize: '15px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '30px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px' }}>Seus Materiais</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', }}>
                             <FilterList sx={{ color: '#D1C4E9', cursor:'pointer' }} />

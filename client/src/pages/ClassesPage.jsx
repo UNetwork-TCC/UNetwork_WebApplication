@@ -16,10 +16,10 @@ export default function ClassesPage() {
                 {matches && (
                     <NavBar buttonStyle={'Classes'} />
                 )}
-                <Divider sx={{m: '10px 5px 0 0' }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={{ mr: '5px' }}>
                     <Box sx={{ width: '75vw', }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 25px', alignItems: 'center', }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 15px', alignItems: 'center', }}>
                             <Typography sx={!matches ? { fontSize: '15px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '30px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px' }}>Suas Classes</Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', }}>
                                 <FilterList sx={{ color: '#D1C4E9', cursor: 'pointer' }} />
