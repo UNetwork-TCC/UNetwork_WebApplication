@@ -14,7 +14,7 @@ export default function Classes({ material, description }) {
                 icones das pessoas
             </Box>
             
-                <Box sx={{ display: 'flex', justifyContent: 'center', border: '1.5px solid #673AB7', fontSize: '10px', fontWeight: 'bold', borderRadius: '30px', color: '#673AB7', padding: '3px 12px', ':hover': { cursor: 'pointer', color: 'white', bgcolor: '#673AB7' } }}>ENTRAR NA CLASSES</Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', border: '1.5px solid #673AB7', fontSize: '10px', fontWeight: 'bold', borderRadius: '30px', color: '#673AB7', padding: '3px 12px', ':hover': { cursor: 'pointer', color: 'white', bgcolor: '#673AB7' } }}>ENTRAR NA CLASSES</Box>
             
 
         </Box>

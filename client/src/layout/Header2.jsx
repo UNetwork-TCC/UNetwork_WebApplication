@@ -19,7 +19,7 @@ export default function Header2() {
 
     return (
         <Box sx={{ width: '100vw', height: '9vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '0px 30px' }} >
-            <Box display={'flex'} alignItems={'center'} sx={{}} onClick={() => navigate('/')}>
+            <Box display={'flex'} alignItems={'center'} sx={{}} onClick={() => navigate('/timeline')}>
                 <img width={50} height={50} src={Logo} alt="Logo" />
                 <Typography sx={{ fontSize: '25px', fontWeight: '600' }}>Social</Typography>
             </Box>

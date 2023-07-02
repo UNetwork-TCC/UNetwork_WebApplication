@@ -8,4 +8,6 @@ import Folder from './Materials/Folder'
 import File from './Materials/File'
 import Contact from './Chat/Contact'
 import Classes from './Classes/Classes'
-export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact, Classes}
+import Post from './Timeline/Post'
+import Comment from './Timeline/Comment'
+export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact, Classes, Post, Comment}

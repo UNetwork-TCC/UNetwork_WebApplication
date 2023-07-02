@@ -17,8 +17,8 @@ export default function NavBar({ buttonStyle, navStyle }) {
 
     const notStylized = {
         width: '100%',
-        borderRadius: '20px',
-        mb: '4vh',
+        borderRadius: '20px 0 0 20px',
+        mb: '3.5vh',
         p: '10px 0',
         pl: '20px',
         display: 'flex',
@@ -57,8 +57,8 @@ export default function NavBar({ buttonStyle, navStyle }) {
     navStyle = 'sideBar'
     return (
 
-        <Box height={'100%'} width={'20vw'} sx={{ mt: '3vh', }}>
-            <Box display={'flex'} sx={{ width: '170px', height: '75px', bgcolor: 'white', borderRadius: '0 10px 10px 0px', mb: '2vh' }}>
+        <Box height={'100%'} width={'20vw'} sx={{ mt: '3vh' }}>
+            <Box display={'flex'} sx={{ width: '170px', height: '75px', bgcolor: 'white', borderRadius: '0 10px 10px 0px', mb: '2vh'}}>
                 <Box sx={{ bgcolor: '#673AB7', width: '60px', borderRadius: '0 8px 8px 0px', m: '5px 0', }}>
                     <IconButton size='small'>
                         <AccountCircle sx={{ fontSize: '60px', color: 'white', position: 'absolute', left: '15px', top: '-7.5px', margin: '0' }} />
