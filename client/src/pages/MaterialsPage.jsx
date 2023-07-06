@@ -12,21 +12,21 @@ import { File, Folder } from '../components'
 export default function MaterialsPage() {
     const matches = useMediaQuery('(min-width: 600px)')
     return (
-        <Box>
+        <Box sx={{overflow:'hidden'}}>
             {matches ? <Header2 /> : <MobileHeader2 />}
-            <Divider sx={{ bgcolor: '#673AB7', height: '5px', mt: '5px' }} variant="middle" />
+            <Divider sx={{ bgcolor: '#673AB7', height: '5px', m: '5px 2% 0 2%', borderRadius:'30px' }} variant="middle" />
             <Box sx={{ display: 'flex' }}>
                 {matches && (
                     <NavBar buttonStyle={'Materials'} />
                 )}
                 <Divider sx={{}} variant="middle" orientation='vertical' flexItem />
-                <Box sx={{ width: '75vw', }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 15px', alignItems: 'center', }}>
-                        <Typography sx={!matches ? { fontSize: '15px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '30px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px' }}>Seus Materiais</Typography>
+                <Box sx={{ width: '80vw', height:'89vh', }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '30px 5px 15px 50px', alignItems: 'center', }}>
+                        <Typography sx={!matches ? { fontSize: '2.3vh', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '4.6vh', color: '#673AB7', fontWeight: 'bold',  }}>Seus Materiais</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                            <FilterList sx={{ color: '#D1C4E9', cursor:'pointer' }} />
-                            <BuildOutlined sx={{ color: '#D1C4E9', ml: '10px', transform: 'scaleX(-1)', cursor:'pointer'}} />
-                            <Box sx={{ height: '50%', bgcolor: '#673AB7', fontSize: '10px', borderRadius: '30px', color: 'white', padding: '3px 15px', ml: '10px', ':hover': { cursor: 'pointer' } }}>CRIAR PASTA</Box>
+                            <FilterList sx={{ color: '#D1C4E9', cursor:'pointer', fontSize:'4.1vh' }} />
+                            <BuildOutlined sx={{ color: '#D1C4E9', ml: '30px', fontSize:'3.1vh',transform: 'scaleX(-1)', cursor:'pointer'}} />
+                            <Box sx={{ height: '75%', bgcolor: '#673AB7', fontSize: '1.6vh', borderRadius: '30px', color: 'white', padding: '3px 15px', ml: '30px', ':hover': { cursor: 'pointer' } }}>CRIAR PASTA</Box>
                         </Box>
                     </Box >
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 50px', alignItems: 'center', }}>
@@ -35,7 +35,13 @@ export default function MaterialsPage() {
                         <Folder FolderName={'nome_pasta'}/>
                         <Folder FolderName={'nome_pasta'}/>
                     </Box>
-                    <Box sx={{ml:'50px', mt:'4%'}}>
+                    <Box sx={{ml:'5.1vh', mt:'2%', maxHeight:'55%', overflow:'scroll', '::-webkit-scrollbar': { display: 'none' }}}>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
                         <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
                         <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
                         <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>

@@ -20,33 +20,44 @@ export default function Chat() {
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
         
+
     }
+
+    const close = () => {
+
+        if (onClick) {
+            setShowEmojiPicker(val => false)
+        }
+
+    }
+
 
     return (
 
         <Box>
-            <Container sx={{ display: 'flex', width: '90%' }}>
+            <Container sx={{ display: 'flex', width: '110vh', height:'5vh' }}>
                 <Box
+
                     component="form"
-                    sx={matches ? { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 700, border: '1px gray solid', borderRadius: '20px' } : { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
+                    sx={matches ? { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: '110vh', height:'5vh', border: '1px gray solid', borderRadius: '30px' } : { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
                 >
                     <InputBase
 
-                        sx={{ ml: 1, flex: 1 }}
+                        sx={{ ml: 1, flex: 1, fontSize:'2.1vh' }}
                         placeholder={matches ? 'Digite sua mensagem...' : 'Digite'}
                         value={text}
                         onChange={e => setText(e.target.value)}
 
                     />
-                    <IconButton aria-label="File" >
-                        <ImageOutlinedIcon />
+                    <IconButton aria-label="File" size='large'>
+                        <ImageOutlinedIcon sx={{fontSize:'3.1vh'}}/>
                     </IconButton>
-                    <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='small'>
-                        <EmojiEmotionsIcon />
+                    <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='large'>
+                        <EmojiEmotionsIcon sx={{fontSize:'3.1vh'}}/>
                     </IconButton>
-                    <IconButton color="primary" sx={{ p: '10px', ml: '5px', bgcolor: '#673AB7', borderRadius: '0 20px 20px 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" size='small'>
-                        <SendIcon fontSize='small' />
-                    </IconButton>
+                    <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '10px', bgcolor: '#673AB7', borderRadius: '0 20px 20px 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" size='small'>
+                        <SendIcon sx={{fontSize:'3vh'}} />
+                    </Box>
                 </Box>
 
             </Container>

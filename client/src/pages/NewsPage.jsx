@@ -12,7 +12,7 @@ export default function NewsPage() {
     return (
         <Box>
             {matches ? <Header2 /> : <MobileHeader2 />}
-            <Divider sx={{ bgcolor: '#673AB7', height: '5px', mt: '5px', }} variant="middle" />
+            <Divider sx={{ bgcolor: '#673AB7', height: '5px', m: '5px 2% 0 2%', borderRadius:'30px' }} variant="middle" />
             <Box sx={{ display: 'flex' }}>
                 {matches && (
                     <NavBar buttonStyle={'News'} />
@@ -20,8 +20,9 @@ export default function NewsPage() {
                 <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={{ m: '2vw 0 0 1vh', }}>
                     <Box sx={{ mr: '5px' }}>
-                        <Box display={'flex'} width={'58.5vw'} sx={{ justifyContent: 'space-between' }}>
+                        <Box display={'flex'} width={'78vw'} sx={{ justifyContent: 'space-between', }}>
                             <BigNotice Title={'CULTURA'} description={'Bahia, um dos maiores centros religiosos do Brasil'} />
+                            <BigNotice Title={'ATUALIDADE'} description={'FIm do Dólar? Colapso Financeiro? Entenda a Nova Ordem Mundial'} />
                             <BigNotice Title={'ATUALIDADE'} description={'FIm do Dólar? Colapso Financeiro? Entenda a Nova Ordem Mundial'} />
                         </Box>
                         <Box sx={{display:'flex', mt:'3vh'}}>
