@@ -3,9 +3,9 @@ import Image from 'mui-image'
 import { useNavigate } from 'react-router-dom'
 
 // Svg imports
-import topDecoration from '../assets/svg/TopDecoration.svg'
-import bottomDecoration from '../assets/svg/BottomDecoration.svg'
-import errorSvg from '../assets/svg/ErrorSvg.svg'
+import topDecoration from '../assets/svg/Error/TopDecoration.svg'
+import bottomDecoration from '../assets/svg/Error/BottomDecoration.svg'
+import errorSvg from '../assets/svg/Error/ErrorSvg.svg'
 
 function ErrorPage() {
     const navigate = useNavigate()

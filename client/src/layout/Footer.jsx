@@ -1,5 +1,9 @@
+import { Box } from "@mui/material";
+
 export default function Footer() {
     return (
-        <div>Footer</div>
+        <Box sx={{ minHeight: '40vh' }}>
+
+        </Box>
     )
 }

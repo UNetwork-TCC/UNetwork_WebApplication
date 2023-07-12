@@ -10,4 +10,7 @@ import Contact from './Chat/Contact'
 import Classes from './Classes/Classes'
 import Post from './Timeline/Post'
 import Comment from './Timeline/Comment'
-export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact, Classes, Post, Comment}
+import Login from './Auth/Login'
+import Register from './Auth/Register'
+
+export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact, Classes, Post, Comment, Login, Register}
