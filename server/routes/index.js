@@ -6,6 +6,7 @@ import messageRouter from './messageRouter.js'
 import chatRouter from './chatRouter.js'
 import classRouter from './classRouter.js'
 import forumRouter from './forumRouter.js'
+import pictureRouter from './pictureRouter.js'
 
 export { 
     userRouter,
@@ -15,5 +16,6 @@ export {
     messageRouter,
     chatRouter,
     classRouter,
-    forumRouter
+    forumRouter,
+    pictureRouter
 }

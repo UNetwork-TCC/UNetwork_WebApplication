@@ -6,5 +6,6 @@ import Group from './groupModel.js'
 import Message from './messageModel.js'
 import Chat from './chatModel.js'
 import Forum from './forumModel.js'
+import Picture from './pictureModel.js'
 
-export { User, Class, Post, News, Group, Message, Chat, Forum }
+export { User, Class, Post, News, Group, Message, Chat, Forum, Picture }
