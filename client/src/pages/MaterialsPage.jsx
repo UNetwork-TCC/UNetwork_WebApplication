@@ -7,45 +7,48 @@ import {
     BuildOutlined
 } from '@mui/icons-material'
 import { File, Folder } from '../components'
+import { Link } from 'react-router-dom'
 
 
 export default function MaterialsPage() {
     const matches = useMediaQuery('(min-width: 600px)')
     return (
-        <Box sx={{overflow:'hidden'}}>
+        <Box sx={{ overflow: 'hidden' }}>
             {matches ? <Header2 /> : <MobileHeader2 />}
-            <Divider sx={{ bgcolor: '#673AB7', height: '5px', m: '5px 2% 0 2%', borderRadius:'30px' }} variant="middle" />
+            <Divider sx={{ bgcolor: '#673AB7', height: '.6vh', m: '5px 2% 0 2%', borderRadius: '3.1vh' }} variant="middle" />
             <Box sx={{ display: 'flex' }}>
                 {matches && (
                     <NavBar buttonStyle={'Materials'} />
                 )}
                 <Divider sx={{}} variant="middle" orientation='vertical' flexItem />
-                <Box sx={{ width: '80vw', height:'89vh', }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '30px 5px 15px 50px', alignItems: 'center', }}>
-                        <Typography sx={!matches ? { fontSize: '2.3vh', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '4.6vh', color: '#673AB7', fontWeight: 'bold',  }}>Seus Materiais</Typography>
+                <Box sx={{ width: '80vw', height: '88.5vh', }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '3.1vh .5vh 1.6vh 5.1vh', alignItems: 'center', }}>
+                        <Typography sx={!matches ? { fontSize: '2.3vh', color: '#673AB7', fontWeight: 'bold', marginRight: '.6vh', marginTop: '.6vh', } : { fontSize: '4.6vh', color: '#673AB7', fontWeight: 'bold', }}>Seus Materiais</Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                            <FilterList sx={{ color: '#D1C4E9', cursor:'pointer', fontSize:'4.1vh' }} />
-                            <BuildOutlined sx={{ color: '#D1C4E9', ml: '30px', fontSize:'3.1vh',transform: 'scaleX(-1)', cursor:'pointer'}} />
-                            <Box sx={{ height: '75%', bgcolor: '#673AB7', fontSize: '1.6vh', borderRadius: '30px', color: 'white', padding: '3px 15px', ml: '30px', ':hover': { cursor: 'pointer' } }}>CRIAR PASTA</Box>
+                            <FilterList sx={{ color: '#D1C4E9', cursor: 'pointer', fontSize: '4.1vh' }} />
+                            <BuildOutlined sx={{ color: '#D1C4E9', ml: '3.1vh', fontSize: '3.1vh', transform: 'scaleX(-1)', cursor: 'pointer' }} />
+                            <Link>
+                                <Box sx={{ height: '75%', bgcolor: '#673AB7', fontSize: '1.6vh', borderRadius: '3.1vh', color: 'white', padding: '.4vh 1.6vh', ml: '3.1vh', ':hover': { cursor: 'pointer' } }}>CRIAR PASTA</Box>                          
+                            </Link>
                         </Box>
                     </Box >
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '20px 0 10px 50px', alignItems: 'center', }}>
-                        <Folder FolderName={'nome_pasta'}/>
-                        <Folder FolderName={'nome_pasta'}/>
-                        <Folder FolderName={'nome_pasta'}/>
-                        <Folder FolderName={'nome_pasta'}/>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '2.1vh 0 1.1vh 5.1vh', alignItems: 'center', }}>
+                        <Folder FolderName={'nome_pasta'} />
+                        <Folder FolderName={'nome_pasta'} />
+                        <Folder FolderName={'nome_pasta'} />
+                        <Folder FolderName={'nome_pasta'} />
                     </Box>
-                    <Box sx={{ml:'5.1vh', mt:'2%', maxHeight:'55%', overflow:'scroll', '::-webkit-scrollbar': { display: 'none' }}}>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
-                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'}/>
+                    <Box sx={{ ml: '5.1vh', mt: '2%', maxHeight: '55%', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
+                        <File description={'Descrição do arquivos(opcional)'} fileName={'arquivo_nome'} />
                     </Box>
 
                 </Box>

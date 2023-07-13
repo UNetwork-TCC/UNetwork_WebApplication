@@ -7,14 +7,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function ChatArea() {
     return (
-        <Box sx={{ height: '100%', width: '62vw', display: 'flex', flexDirection: 'column', m: '7.5px 0', }}>
-            <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '20px' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', ml: '15px' }}>
+        <Box sx={{ height: '100%', width: '62vw', display: 'flex', flexDirection: 'column', m: '0.76vh 0',}}>
+            <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '2.1vh' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', ml: '1.6vh' }}>
                     <IconButton >
                         <AccountCircleIcon sx={{ fontSize: '11vh', }} />
                     </IconButton>
                     <Box sx={{ ml: '0.5vh', display: 'flex', flexDirection: 'column', }}>
-                        <Typography sx={{ fontSize: '3.1vh', fontWeight: 'bold', color: 'black', m: '0', }}>Usuario XXX</Typography>
+                        <Typography sx={{ fontSize: '3.1vh', fontWeight: 'bold', color: 'black', }}>Usuario XXX</Typography>
                         <Typography sx={{ fontSize: '1.9vh' }}>Serie</Typography>
                     </Box>
                 </Box>
@@ -34,8 +34,8 @@ export default function ChatArea() {
             <Box sx={{ height: '65vh' }}>
 
             </Box>
-            <Divider sx={{ m: '0px 0', p: '0', }} flexItem />
-            <Box sx={{ height: '5vh', display: 'flex', justifyContent: 'center', mt: '15px',}}>
+            <Divider sx={{ }} flexItem />
+            <Box sx={{ height: '5vh', display: 'flex', justifyContent: 'center', mt: '1.6vh',}}>
                 <Chat />
             </Box>
             

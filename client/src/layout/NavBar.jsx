@@ -20,7 +20,7 @@ export default function NavBar({ buttonStyle, navStyle }) {
         borderRadius: '35px 0 0 35px',
         mb: '4vh',
         p: '2.1vh 0',
-        pl: '2.1vh',
+        pl: '2.5vh',
         display: 'flex',
         color:'#979797',
         ':hover': {
@@ -43,7 +43,7 @@ export default function NavBar({ buttonStyle, navStyle }) {
         color: 'white',
         display: 'flex',
         p: '2.1vh 0',
-        pl: '2.1vh',
+        pl: '2.5vh',
         color:'white',
         mb: '4vh',
         ':hover': {
@@ -62,8 +62,8 @@ export default function NavBar({ buttonStyle, navStyle }) {
         <Box height={'100%'} width={'15vw'} sx={{ mt: '4vh'}}>
             <Box display={'flex'} sx={{ width: '25.6vh', height: '10.1vh', bgcolor: 'white', borderRadius: '0 1.1vh 1.1vh 0px', mb: '4vh', }}>
                 <Box sx={{ bgcolor: '#673AB7', width: '9.1vh', borderRadius: '0 0.9vh 0.9vh 0px', m: '0.6vh 0', }}>
-                    <IconButton size='small'>
-                        <AccountCircle sx={{ fontSize: '9.1vh', color: 'white', position: 'absolute', left: '3.6vh', top: '-0.9vh', margin: '0' }} />
+                    <IconButton >
+                        <AccountCircle sx={{ fontSize: '9.1vh', color: 'white', position: 'absolute', left: '3.6vh', top: '-0.6vh', margin: '0' }} />
                     </IconButton>
                 </Box>
                 <Box sx={{ width: '18.1vh', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
@@ -117,7 +117,7 @@ export default function NavBar({ buttonStyle, navStyle }) {
                     </Box>
                 </Box>
                 <Box sx={{ width: '95.5%' }}>
-                    <Box sx={{ pl: '2.1vh', borderRadius: '20px', color:'#979797' }} onClick={() => navStyle = 'false'} >
+                    <Box sx={{ pl: '2.5vh', borderRadius: '20px', color:'#979797' }} onClick={() => navStyle = 'false'} >
                         <Close sx={{fontSize:'4.2vh'}} />
                     </Box>
                 </Box>
