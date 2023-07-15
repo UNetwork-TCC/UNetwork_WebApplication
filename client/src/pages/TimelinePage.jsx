@@ -28,9 +28,9 @@ export default function TimelinePage() {
 
                     <CarouselProvider totalSlides={12} naturalSlideWidth={0}  orientation='horizontal' style={{ display: 'flex', }} step={5} touchEnabled isIntrinsicHeight dragEnabled>
 
-                        {/* mensagem para o totalSlides: a quantida de totalSlides vai ser a quantidade total de tag 'Slide' que tem no carousel,
+                        {/* mensagem para o totalSlides: a quantia de totalSlides tem que ser a quantidade total da tag 'Slide' que tem no carrosel,
                          depois tirar 9 (que é a quantidade de slides padrão que vai aparecer nos clips naturalmente), e adicionar +1 (que vai 
-                         servir pra ficar um espaço idelal no final) */}
+                         servir pra aparecer o ultimo 'clips') */}
 
                         <ButtonBack style={{ height: '5vh', marginTop: '5vh', borderRadius: '10.1vh', padding: '0 1vh' }}><ArrowBackIosNew /></ButtonBack>
 
