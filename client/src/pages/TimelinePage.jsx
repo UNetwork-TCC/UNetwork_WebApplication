@@ -1,9 +1,8 @@
 import { Box, Divider, Typography, useMediaQuery } from '@mui/material'
-import { Chat, Classes, Post, SideBar } from '../components'
+import { Post } from '../components'
 import Header2 from '../layout/Header2'
 import NavBar from '../layout/NavBar'
 import { MobileHeader2, MobileNavBar } from '../layout'
-import { BuildOutlined, FilterList } from '@mui/icons-material'
 import Clips from '../components/Timeline/Clips'
 import Suggestion from '../components/Timeline/Suggestion'
 

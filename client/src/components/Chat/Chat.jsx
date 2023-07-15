@@ -23,15 +23,6 @@ export default function Chat() {
 
     }
 
-    const close = () => {
-
-        if (onClick) {
-            setShowEmojiPicker(val => false)
-        }
-
-    }
-
-
     return (
 
         <Box>

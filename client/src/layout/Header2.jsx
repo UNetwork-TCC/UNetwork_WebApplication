@@ -1,7 +1,6 @@
-import { Box, Divider, IconButton, Typography, Container, InputBase } from '@mui/material'
+import { Box, Divider, Typography, InputBase } from '@mui/material'
 import React, { useState } from 'react'
 import Logo from '../assets/img/Logo.png'
-import { Chat } from '../components'
 import ForumIcon from '@mui/icons-material/Forum'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -12,7 +11,6 @@ export default function Header2() {
     
     const navigate = useNavigate()
     const [text, setText] = useState('')
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
     return (
         <Box sx={{ width: '100vw', height: '10vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: '0 4vh' }} >

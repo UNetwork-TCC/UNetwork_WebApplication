@@ -1,5 +1,4 @@
 import { Box, Button, Link, Typography } from '@mui/material'
-import React from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
 export default function Folder({ FolderName, id }) {

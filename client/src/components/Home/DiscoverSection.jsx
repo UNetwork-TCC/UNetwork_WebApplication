@@ -1,14 +1,12 @@
-import { Box, Typography } from "@mui/material";
-import { useContext } from "react";
-import { themeContext } from "../../contexts";
-import CustomDivider from "../../layout/CustomBar";
-import Image from "mui-image";
+import { Box, Typography } from '@mui/material'
+import CustomDivider from '../../layout/CustomBar'
+import Image from 'mui-image'
 import ScrollAnimation from 'react-animate-on-scroll'
 import discoverFeature from '../../assets/svg/Home/DiscoverFeature.svg'
 import discoverFeature2 from '../../assets/svg/Home/DiscoverFeature2.svg'
 import discoverFeature3 from '../../assets/svg/Home/DiscoverFeature3.svg'
 import discoverFeature3Decoration from '../../assets/svg/Home/DiscoverFeature3Decoration.svg'
-import Topic from "../../layout/Topic";
+import Topic from '../../layout/Topic'
 
 export default function DiscoverSection() {
     return (

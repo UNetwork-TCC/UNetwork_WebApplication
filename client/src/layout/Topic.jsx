@@ -1,5 +1,5 @@
-import { Circle } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { Circle } from '@mui/icons-material'
+import { Box, Typography } from '@mui/material'
 
 export default function Topic({ title, text, boxStyle, titleStyle, textStyle, fontSize, circleStyle }) {
     return (

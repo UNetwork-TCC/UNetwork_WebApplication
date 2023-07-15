@@ -1,7 +1,6 @@
-import { Box, Divider, Typography, useMediaQuery, } from '@mui/material'
+import { Box, Divider, useMediaQuery, } from '@mui/material'
 import Header2 from '../layout/Header2'
 import NavBar from '../layout/NavBar'
-import { Link, Route } from 'react-router-dom'
 import { Notice } from '../components'
 import { MobileHeader2, MobileNavBar } from '../layout'
 import BigNotice from '../components/News/BigNotice'

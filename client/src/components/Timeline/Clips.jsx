@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
 import { AccountCircle } from '@mui/icons-material'
 
 export default function Clips({username}) {

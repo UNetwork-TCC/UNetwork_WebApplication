@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography, useMediaQuery } from '@mui/material'
+import { Box, Divider, Typography, useMediaQuery } from '@mui/material'
 import Header2 from '../layout/Header2'
 import NavBar from '../layout/NavBar'
 import { MobileHeader2, MobileNavBar } from '../layout'

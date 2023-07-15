@@ -1,6 +1,5 @@
 import { Image } from '@mui/icons-material'
 import { Box, Button, Link, Typography } from '@mui/material'
-import React from 'react'
 
 export default function BigNotice({ description, id, Title }) {
     return (

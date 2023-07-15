@@ -1,5 +1,4 @@
-import { Box, IconButton, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function Contact({ username }) {

@@ -1,24 +1,14 @@
-import { Box, Divider, IconButton, Typography, useMediaQuery } from '@mui/material'
-import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined'
+import { Box, Divider, Typography, useMediaQuery } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { MobileNavBar, MobileHeader2, NavBar, Header2 } from '../layout'
 import ChatArea from '../components/Chat/ChatArea'
 import MobileChatArea from '../components/Chat/MobileChatArea'
-import { useChatPageStyles } from '../styles'
-import { Contact, SideBar } from '../components'
+import { Contact,  } from '../components'
 import { GroupAddOutlined } from '@mui/icons-material'
 
 export default function ChatPage() {
-    const classes = useChatPageStyles()
     const matches = useMediaQuery('(min-width: 600px)')
-
-    const icon = {
-        m: '10px 0 0 0',
-    }
-
-    const navStyle = NavBar.navStyle
-
-
+    
     return (
         <Box sx={{ overflow: 'hidden'}}>
             {matches ? <Header2 /> : <MobileHeader2 />}

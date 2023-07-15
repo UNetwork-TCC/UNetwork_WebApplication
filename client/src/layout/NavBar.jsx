@@ -1,7 +1,5 @@
-import React from 'react'
-
 import { useNavigate } from 'react-router-dom'
-import { Box, IconButton, Menu, Typography } from '@mui/material'
+import { Box, IconButton, Typography } from '@mui/material'
 
 import {
     AccountCircle,
@@ -47,9 +45,6 @@ export default function NavBar({ buttonStyle, navStyle }) {
         color:'white',
         mb: '4vh',
         ':hover': {
-            borderRadius: '35px 0 0 35px',
-            bgcolor: '#673AB7',
-            color: 'white',
             cursor:'pointer',
         }
     }

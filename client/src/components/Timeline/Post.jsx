@@ -1,8 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material'
-import React from 'react'
 import { AccountCircle, MoreHoriz, FavoriteBorder, Reply, ChatBubbleOutline } from '@mui/icons-material'
 import Comment from './Comment'
-import Image from 'mui-image'
 
 export default function Post({ username, data, date, description }) {
     return (

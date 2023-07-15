@@ -1,6 +1,4 @@
-import { Image } from '@mui/icons-material'
 import { Box, Typography } from '@mui/material'
-import React from 'react'
 
 export default function File({fileName, description}) {
     return (

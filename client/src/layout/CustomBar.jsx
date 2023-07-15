@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
-import { themeContext } from "../contexts";
-import { useContext } from "react";
+import { Box } from '@mui/material'
+import { themeContext } from '../contexts'
+import { useContext } from 'react'
 
 export default function CustomDivider() {
     const { theme } = useContext(themeContext)

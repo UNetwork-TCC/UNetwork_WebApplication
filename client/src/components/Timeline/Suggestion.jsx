@@ -1,6 +1,5 @@
 import { AccountCircle, Favorite, PhotoLibrary } from '@mui/icons-material'
 import { Box, IconButton, Typography } from '@mui/material'
-import React from 'react'
 
 export default function Suggestion({username}) {
     return (

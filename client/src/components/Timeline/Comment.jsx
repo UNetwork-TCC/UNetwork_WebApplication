@@ -1,6 +1,6 @@
 import IconButton from '@mui/material/IconButton'
 import SendIcon from '@mui/icons-material/Send'
-import { Container, useMediaQuery } from '@mui/material'
+import {useMediaQuery } from '@mui/material'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import EmojiPicker from 'emoji-picker-react'
