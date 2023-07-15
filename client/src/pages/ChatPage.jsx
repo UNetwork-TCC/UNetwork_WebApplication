@@ -3,18 +3,20 @@ import SearchIcon from '@mui/icons-material/Search'
 import { MobileNavBar, MobileHeader2, NavBar, Header2 } from '../layout'
 import ChatArea from '../components/Chat/ChatArea'
 import MobileChatArea from '../components/Chat/MobileChatArea'
-import { Contact,  } from '../components'
+import { Contact, } from '../components'
 import { GroupAddOutlined } from '@mui/icons-material'
+
+
 
 export default function ChatPage() {
     const matches = useMediaQuery('(min-width: 600px)')
-    
+
     return (
-        <Box sx={{ overflow: 'hidden'}}>
+        <Box sx={{ overflow: 'hidden' }}>
             {matches ? <Header2 /> : <MobileHeader2 />}
 
             <Divider sx={{ bgcolor: '#673AB7', height: '5px', m: '5px 2% 0 2%', borderRadius: '30px' }} variant="middle" />
-            <Box sx={{ display: 'flex',  }}>
+            <Box sx={{ display: 'flex', }}>
                 {matches && (
                     <NavBar buttonStyle={'Chat'} />
                 )
