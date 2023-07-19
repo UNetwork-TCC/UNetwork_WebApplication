@@ -5,8 +5,8 @@ const forumSchema = new mongoose.Schema({
     description: { type: String, required: true, maxlenght: 100 },
     theme: { type: String, required: true },
     createdAt: { type: String, required: true, default: new Date().getDate() },
-    messages: { type: Array, required: true, default: [""] },
-    closedAt: { type: String, default: "Em aberto" },
+    messages: { type: Array, required: true, default: [''] },
+    closedAt: { type: String, default: 'Em aberto' },
     icon: { type: String, default: 'random_icon.png' }
 })
 

@@ -4,9 +4,9 @@ export const fetchNews = async (req, res) => {
     try {
         const fetched = await News.find()
         if (!fetched) {
-            return res.status(400).send({message: "As notícias não foram encontradas!"})
+            return res.status(400).send({message: 'As notícias não foram encontradas!'})
         }
-        res.status(200).send({ fetched, message: "As notícias foram encontradas!" })
+        res.status(200).send({ fetched, message: 'As notícias foram encontradas!' })
     } catch (error) {
         res.status(404).send({ message: error.message })
     }

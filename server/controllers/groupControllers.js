@@ -4,9 +4,9 @@ export const fetchGroupes = async (req, res) => {
     try {
         const fetched = await Group.find().limit(20)
         if (!fetched) {
-            return res.status(400).send({message: "Os grupos não foram encontrados!"})
+            return res.status(400).send({message: 'Os grupos não foram encontrados!'})
         }
-        res.status(200).send({ fetched, message: "Grupos encontrados com sucesso!" })
+        res.status(200).send({ fetched, message: 'Grupos encontrados com sucesso!' })
     } catch (error) {
         res.status(404).send({ message: error.message })
     }

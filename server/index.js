@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
-
+ 
 import { 
     chatRouter,
     groupRouter,
@@ -12,7 +12,8 @@ import {
     postRouter,
     userRouter,
     classRouter,
-    forumRouter
+    forumRouter,
+    pictureRouter
 } from './routes/index.js'
 
 
@@ -24,6 +25,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
+app.use('/pictures', pictureRouter)
 app.use('/user', userRouter)
 app.use('/news', newsRouter)
 app.use('/group', groupRouter)

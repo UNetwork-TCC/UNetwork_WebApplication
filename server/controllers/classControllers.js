@@ -4,9 +4,9 @@ export const fetchClasses = async (req, res) => {
     try {
         const fetched = await Class.find().limit(20)    
         if (!fetched) {
-            return res.status(400).send({message: "As classes não foram encontradas!"})
+            return res.status(400).send({message: 'As classes não foram encontradas!'})
         }
-        res.status(200).send({ fetched, messages: "As classes foram encontradas!" })
+        res.status(200).send({ fetched, messages: 'As classes foram encontradas!' })
     } catch (error) {
         res.status(404).send({ message: error.message })
     }

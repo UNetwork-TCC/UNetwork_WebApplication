@@ -4,7 +4,7 @@ export const fetchPosts = async (req, res) => {
     try {
         const fetched = await Post.find().limit(20)
         if (!fetched) {
-            return res.status(400).send({message: "Os posts não foram encontrados!"})
+            return res.status(400).send({message: 'Os posts não foram encontrados!'})
         }
         res.status(200).send({fetched, message: 'Post encontrado!'})
     } catch (error) {

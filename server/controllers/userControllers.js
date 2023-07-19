@@ -1,13 +1,14 @@
 import { User } from '../models/index.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export const fetchUsers = async (_req, res) => {
     try {
         const fetched= await User.find().select('-password')
         if (!fetched) {
-            return res.status(400).send({message: "Os usuários não foram encontrados!"})
+            return res.status(400).send({message: 'Os usuários não foram encontrados!'})
         }
-        res.status(200).send({fetched, message: "Os usuários foram encontrados!"})
+        res.status(200).send({fetched, message: 'Os usuários foram encontrados!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }
@@ -74,7 +75,7 @@ export const deleteUser = async (req, res) => {
     try {
         const {id} = req.params
         
-        const deletedUser = await User.findOneAndDelete(id)
+        const deletedUser = await User.findByIdAndDelete(id)
         res.status(200).send({deletedUser, message: 'Usuário deletado!'})
     } catch (error) {
         res.status(404).send({message: error.message})
@@ -89,7 +90,7 @@ export const updateUser = async (req, res) => {
         if (!email || !password) {
             return res.status(400).send({message: 'Todos campos devem ser preenchidos!'})
         }
-        const hashedPassword = bcrypt.hashSync(password, 10)
+        const hashedPassword = bcrypt.hashSync(password)
         
         const userUpdates = {...req.body, password: hashedPassword}
         const userUptaded = await User.findByIdAndUpdate(id, userUpdates)
@@ -109,3 +110,33 @@ export const getFollowers = async (req, res) => {
         res.status(404).send({message: error.message})
     }
 }
+
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body
+        const existingUser = await User.findOne({ email })
+        
+        if (!(email && password )) return res.status(400).send({message: 'Por favor, insira todos os campos'})
+        if (email !== existingUser.email) return res.status(400).send({ message: 'Email incorreto! Revise as informações!'})
+        if (!existingUser) return res.status(400).send({message: 'Email não encontrado! Por favor insira um usuário válido'})
+    
+        const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password)
+
+        if (!isPasswordCorrect) return res.status(400).send({ message: 'Senha incorreta! Revise as informações!'})
+
+        const token = jwt.sign(
+            { id: existingUser._id, email },
+            process.env.SECRET,
+            {
+                expiresIn: '20s',
+            }
+        )
+
+        existingUser.token = token
+      
+        res.status(200).send({email: email, id: existingUser._id, message: 'O login foi efetuado com sucesso!', token})
+    } catch (error) {
+        res.status(404).send({message: error.message})
+    }
+}
+
