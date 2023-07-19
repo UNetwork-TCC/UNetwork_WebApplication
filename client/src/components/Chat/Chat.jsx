@@ -23,15 +23,6 @@ export default function Chat() {
 
     }
 
-    const close = () => {
-
-        if (onClick) {
-            setShowEmojiPicker(val => false)
-        }
-
-    }
-
-
     return (
 
         <Box>
@@ -39,11 +30,11 @@ export default function Chat() {
                 <Box
 
                     component="form"
-                    sx={matches ? { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: '110vh', height:'5vh', border: '1px gray solid', borderRadius: '30px' } : { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
+                    sx={matches ? { p: '0 0 0 0.7vh', display: 'flex', alignItems: 'center', width: '110vh', height:'5vh', border: '0.1vh gray solid', borderRadius: '3.1vh' } : { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
                 >
                     <InputBase
 
-                        sx={{ ml: 1, flex: 1, fontSize:'2.1vh' }}
+                        sx={{ ml: '1vh', flex: 1, fontSize:'2.1vh' }}
                         placeholder={matches ? 'Digite sua mensagem...' : 'Digite'}
                         value={text}
                         onChange={e => setText(e.target.value)}
@@ -55,7 +46,7 @@ export default function Chat() {
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='large'>
                         <EmojiEmotionsIcon sx={{fontSize:'3.1vh'}}/>
                     </IconButton>
-                    <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '10px', bgcolor: '#673AB7', borderRadius: '0 20px 20px 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" size='small'>
+                    <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '1.1vh', bgcolor: '#673AB7', borderRadius: '0 2.1vh 2.1vh 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" >
                         <SendIcon sx={{fontSize:'3vh'}} />
                     </Box>
                 </Box>

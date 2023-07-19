@@ -10,7 +10,6 @@ import discoverFeature3Decoration from '../../assets/svg/Home/DiscoverFeature3De
 
 import { Animation } from "react-animate-style";
 
-
 export default function DiscoverSection() {
     return (
         <Box minHeight='100vh'>

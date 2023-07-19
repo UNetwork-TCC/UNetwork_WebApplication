@@ -1,4 +1,4 @@
-import { Header } from "../layout";
+import { Header } from '../layout'
 
 export default function Auth() {
     return (

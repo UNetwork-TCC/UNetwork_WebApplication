@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material'
 import { DarkMode, LightMode} from '@mui/icons-material'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
 import { useStyles } from '../styles'

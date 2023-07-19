@@ -4,7 +4,6 @@ import peopleVector from '../assets/svg/Home/PeopleVector.svg'
 import Image from 'mui-image'
 import { Box, Divider, Typography } from '@mui/material'
 import { Animation } from 'react-animate-style'
-import { Circle } from '@mui/icons-material'
 import { DiscoverSection } from '../components'
 import Topic from '../layout/Topic'
 
