@@ -1,14 +1,15 @@
-import { Header } from '../layout'
-import liquidBg from '../assets/svg/LiquidBg.svg'
-import peopleVector from '../assets/svg/PeopleVector.svg'
+import { Footer, Header } from '../layout'
+import liquidBg from '../assets/svg/Home/LiquidBg.svg'
+import peopleVector from '../assets/svg/Home/PeopleVector.svg'
 import Image from 'mui-image'
 import { Box, Divider, Typography } from '@mui/material'
 import { Animation } from 'react-animate-style'
-import { Circle } from '@mui/icons-material'
+import { DiscoverSection } from '../components'
+import Topic from '../layout/Topic'
 
 function Home() {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
+        <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <Header />
             <Box>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='63%' bottom={90} position='absolute'>
@@ -30,29 +31,41 @@ function Home() {
                 <Box width='40%'>
                 </Box>
             </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' height='40vh' width='100%'>
+            <Box display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
                 <Box p m={5} display='flex' justifyContent='center' alignItems='center' width='75%'>
                     <Box overflow='hidden' m='0 50px'>
                         <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={350}>
-                            <Typography mb={2} variant='h5' fontWeight={900} color='secondary.main'><Circle/> Descubra!</Typography>
-                            <Typography variant='h6' color='text.secondary'>Descubra um mundo de conexões.</Typography>
+                            <Topic 
+                                title='Decubra!'
+                                text='Descubra um mundo de conexões.'
+                            />
                         </Animation>
                     </Box>
-                    <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem variant='middle'/>
+                    <Divider orientation='vertical' flexItem variant='middle'/>
                     <Box overflow='hidden' m='0 50px'>
                         <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={450}>
-                            <Typography mb={2} variant='h5' fontWeight={900} color='secondary.main'><Circle/> Conheça!</Typography>
-                            <Typography variant='h6' color='text.secondary'>Faça amigos, navegue, curta.</Typography>
+                            <Topic 
+                                title='Conheça!'
+                                text='Faça amigos, navegue, curta.'
+                            />
                         </Animation>
                     </Box>
-                    <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem variant='middle'/>
+                    <Divider orientation='vertical' flexItem variant='middle'/>
                     <Box overflow='hidden' m='0 50px'>
                         <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={550}>
-                            <Typography mb={2} variant='h5' fontWeight={900} color='secondary.main'><Circle/> Cresça!</Typography>
-                            <Typography variant='h6' color='text.secondary'>Impulsione seu aprendizado.</Typography>
+                            <Topic 
+                                title='Cresça!'
+                                text='Impulsione seu aprendizado.'
+                            />
                         </Animation>
                     </Box>
                 </Box>
+            </Box>
+            <Box id="descubra">
+                <DiscoverSection />
+            </Box>
+            <Box>
+                <Footer />
             </Box>
         </Box>
     )

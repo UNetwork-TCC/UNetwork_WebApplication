@@ -1,10 +1,11 @@
-import { Box, Button, Divider, Link, Typography } from '@mui/material'
+/* eslint-disable react/prop-types */
+import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material'
 import { DarkMode, LightMode} from '@mui/icons-material'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
-import Image from 'mui-image'
 import { useStyles } from '../styles'
+import { Link, Navigate } from 'react-router-dom'
 
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
@@ -15,9 +16,9 @@ export default function Header() {
 
     function StyledLink({ name }) {
         return (
-            <Link className={`${classes.navLinks}`} href={`#${name}`}>
+            <MuiLink className={`${classes.navLinks}`} href={`#${name}`}>
                 <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>
-            </Link>
+            </MuiLink>
         )
     }
 
@@ -35,7 +36,7 @@ export default function Header() {
             alignItems='center'
             p={2.5}
         >
-            <Box>
+            <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer' }}>
                 { theme?.palette.mode === 'light' ?
                     <img width={75} height={75} src={logo} alt="Logo" />
                     :                    
@@ -51,8 +52,8 @@ export default function Header() {
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
-                    <Button>Entre</Button>
-                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'>Cadastrar</Button>
+                    <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth'>Entre</Link></Button>
+                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText}} to='/auth'>Cadastrar</Link></Button>
                 </Box>
                 {/* <Box height={40} border='1px solid'></Box> */}
                 <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />

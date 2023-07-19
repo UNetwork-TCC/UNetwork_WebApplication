@@ -1,4 +1,4 @@
-import VideocamIcon from '@mui/icons-material/Videocam'
+import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Chat } from '../../components'
@@ -7,34 +7,35 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function ChatArea() {
     return (
-        <Box sx={{ height: '100vh', width: '65vw', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
-            <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '20px' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', ml: '10px' }}>
+        <Box sx={{ height: '100%', width: '62vw', display: 'flex', flexDirection: 'column', m: '0.76vh 0',}}>
+            <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '2.1vh' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', ml: '1.6vh' }}>
                     <IconButton >
-                        <AccountCircleIcon sx={{ fontSize: '70px', }} />
+                        <AccountCircleIcon sx={{ fontSize: '11vh', }} />
                     </IconButton>
-                    <Box sx={{ ml: '5px', display: 'flex', flexDirection: 'column', }}>
-                        <Typography sx={{ fontSize: '20px', fontWeight: 'bold', color: 'black', m: '0', }}>Usuario XXX</Typography>
-                        <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
+                    <Box sx={{ ml: '0.5vh', display: 'flex', flexDirection: 'column', }}>
+                        <Typography sx={{ fontSize: '3.1vh', fontWeight: 'bold', color: 'black', }}>Usuario XXX</Typography>
+                        <Typography sx={{ fontSize: '1.9vh' }}>Serie</Typography>
                     </Box>
                 </Box>
-                <Box>
-                    <IconButton>
-                        <VideocamIcon />
-                    </IconButton>
-                    <IconButton>
-                        <LocalPhoneIcon />
-                    </IconButton>
-                    <IconButton>
-                        <SettingsIcon />
-                    </IconButton>
+                <Box sx={{display:'flex', alignItems:'center', width:'20vh', height:'4vh'}}>
+                    <Box sx={{mr:'3vh'}}>
+                        <VideocamOutlinedIcon sx={{fontSize:'4.7vh', color:'gray'}}/>
+                    </Box>
+                    <Box sx={{mr:'3vh'}}>
+                        <LocalPhoneIcon sx={{fontSize:'3.6vh', color:'gray'}}/>
+                    </Box>
+                    <Box sx={{mr:'3vh'}}>
+                        <SettingsIcon sx={{fontSize:'3.6vh', color:'gray'}}/>
+                    </Box>
                 </Box>
             </Box>
-            <Divider sx={{ bgcolor: 'gray', height: '1px', m: '5px 0', p: '0' }} flexItem />
-            <Box sx={{ height: '63vh' }}>
+            <Divider sx={{ m: '0 0', p: '0', }} flexItem />
+            <Box sx={{ height: '65vh' }}>
 
             </Box>
-            <Box sx={{ height: '9vh', display: 'flex', justifyContent: 'center', pt: '5px', }}>
+            <Divider sx={{ }} flexItem />
+            <Box sx={{ height: '5vh', display: 'flex', justifyContent: 'center', mt: '1.6vh',}}>
                 <Chat />
             </Box>
             

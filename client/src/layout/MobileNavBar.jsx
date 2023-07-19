@@ -6,23 +6,16 @@ import {
 
 } from '@mui/material'
 
-
-
 import {
-    Restore,
-    Favorite,
-    Archive,
-    AccountCircle,
     MenuBook,
     Chat,
     Bookmark,
     Groups,
     Newspaper,
-    ClearOutlined
 } from '@mui/icons-material'
 
 import { useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function MobileNavBar() {
     const [value, setValue] = useState(0)

@@ -9,12 +9,12 @@ export default function FavoritesPage() {
     return (
         <Box>
             {matches ? <Header2 /> : <MobileHeader2 />}
-            <Divider sx={{ bgcolor: '#673AB7', height: '10px', mt: '5px' }} variant="middle" />
-            <Box classname='tudo' sx={{ display: 'flex' }}>
+            <Divider sx={{ bgcolor: '#673AB7', height: '5px', m: '5px 2% 0 2%', borderRadius:'30px' }} variant="middle" />
+            <Box sx={{ display: 'flex' }}>
                 {matches && (
-                    <NavBar />
+                    <NavBar buttonStyle={'Favorites'} />
                 )}
-                <Divider sx={{ bgcolor: 'gray', width: '1px', m: '30px 5px 5px 5px', }} variant="middle" orientation='vertical' flexItem />
+                <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box className="Conversas" sx={{ mr: '5px' }}>
                     Favoritos
                 </Box>

@@ -1,5 +1,6 @@
-/* eslint-disable quotes */
+ 
 import { createTheme } from '@mui/material'
+import defaultThemeProps from './defaultThemeProps'
 
 export const darkTheme = createTheme({
     palette: {
@@ -31,10 +32,12 @@ export const darkTheme = createTheme({
     },
 
     typography: {
-        fontFamily: "'Public Sans', sans-serif"
+        ...defaultThemeProps.typography
     },
 
     components: {
+        ...defaultThemeProps.components,
+
         MuiTextField: {
             styleOverrides: {
                 root: {
@@ -51,18 +54,5 @@ export const darkTheme = createTheme({
                 }
             }
         }
-        /* Se quiser mudar o estilo de algum componente, é só colocar aqui:
-        EX:
-        
-        MuiAlert: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: '#e2e9fe'
-                }
-            }
-        }
-        
-        Evitem de usar CSS!!
-        */
     }
 })
