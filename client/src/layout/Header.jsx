@@ -34,6 +34,7 @@ export default function Header() {
             display='flex'
             justifyContent={'space-evenly'}
             alignItems='center'
+            position='sticky'
             p={2.5}
         >
             <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer' }}>

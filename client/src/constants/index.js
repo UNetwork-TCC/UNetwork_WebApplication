@@ -6,6 +6,7 @@ export const ActionTypes = {
     FETCH_ALL: 'FETCH_ALL',
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
+    GET: 'GET',
     AUTH: 'AUTH',
     CREATE: 'CREATE',
     UPDATE: 'UPDATE',
