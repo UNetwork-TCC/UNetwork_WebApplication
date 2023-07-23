@@ -7,7 +7,6 @@ import { Contact, } from '../components'
 import { GroupAddOutlined } from '@mui/icons-material'
 
 
-
 export default function ChatPage() {
     const matches = useMediaQuery('(min-width: 600px)')
 
@@ -15,8 +14,8 @@ export default function ChatPage() {
         <Box sx={{ overflow: 'hidden' }}>
             {matches ? <Header2 /> : <MobileHeader2 />}
 
-            <Divider sx={{ bgcolor: '#673AB7', height: '5px', m: '5px 2% 0 2%', borderRadius: '30px' }} variant="middle" />
-            <Box sx={{ display: 'flex', }}>
+            <Divider sx={{ bgcolor: '#673AB7', height: '.6vh', m: '.6vh 2% 0 2%', borderRadius: '3.1vh' }} variant="middle" />
+            <Box sx={{ display: 'flex', width: '100vw' }}>
                 {matches && (
                     <NavBar buttonStyle={'Chat'} />
                 )
@@ -26,13 +25,13 @@ export default function ChatPage() {
                     <Box sx={{ display: 'flex', alignItems: 'center', m: '0px 0 0px 1.5vh', height: '12.5%', }}>
                         <Typography sx={!matches ? { fontSize: '22.5px', color: '#673AB7', fontWeight: 'bold', marginRight: '5px', marginTop: '5px', } : { fontSize: '5vh', color: '#673AB7', fontWeight: 'bold', marginRight: '0' }}>Conversas</Typography>
                         <Box sx={{ ml: '7%', display: 'flex', height: '50%', alignItems: 'center', mt: '4%' }}>
-                            <GroupAddOutlined sx={{ fontSize: '3vh', color: 'gray', mr: '1.3vw' }} />
-                            <SearchIcon sx={{ fontSize: '3vh', color: 'gray' }} />
+                            <GroupAddOutlined sx={{ fontSize: '30px', color: 'gray', mr: '1.3vw' }} />
+                            <SearchIcon sx={{ fontSize: '30px', color: 'gray' }} />
                         </Box>
                     </Box>
                     <Divider sx={{}} flexItem />
 
-                    <Box sx={{ maxHeight: '90%', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' }, scrollBehavior: 'smooth', pt: '2%' }}>
+                    <Box sx={{ maxHeight: '90%', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' }, scrollBehavior: 'smooth', pt: '2%', }}>
 
                         <Contact username={'Usuario XXX'} />
                         <Contact username={'Usuario XXX'} />

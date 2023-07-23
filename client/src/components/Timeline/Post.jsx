@@ -7,10 +7,10 @@ export default function Post({ username, data, date, description }) {
         <Box sx={{ width: '100%', mb:'2%'}}>
             <Box sx={{ width: '100%', height: '15%', display: 'flex' }}>
                 <Box sx={{ display: 'flex', width: '100%' }}>
-                    <AccountCircle sx={{ fontSize: '9.1vh', color:'gray'}} />
-                    <Box sx={{ mt: '1.9vh', ml: '1.6vh' }}>
-                        <Typography sx={{ fontSize: '2.3vh', fontWeight: 'bold' }}>{username}</Typography>
-                        <Typography sx={{ fontSize: '1.6vh', color: 'rgba(0,0,0,.50)' }}>{data} • {date}</Typography>
+                    <AccountCircle sx={{ fontSize: '90px', color:'gray', width:'100px',}} />
+                    <Box sx={{ mt: '15px', ml: '1.5%' }}>
+                        <Typography sx={{ fontSize: '22px', fontWeight: 'bold' }}>{username}</Typography>
+                        <Typography sx={{ fontSize: '15px', color: 'rgba(0,0,0,.50)' }}>{data} • {date}</Typography>
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', }}>
@@ -18,23 +18,30 @@ export default function Post({ username, data, date, description }) {
                 </Box>
             </Box>
             <Box sx={{ml:'1.1vh'}}>
-                <Box sx={{ width: '100%', mt: '.6vh' }}>
-                    <Box sx={{ mb: '1%', }}>
-                        <Typography sx={{fontSize:'3.1vh'}}>AAAAAAA</Typography>
-                        <Typography sx={{fontSize:'3.1vh'}}>AAAAAAA</Typography>
-                        <Typography sx={{fontSize:'3.1vh'}}>AAAAAAA</Typography>
-                        <Typography sx={{fontSize:'3.1vh'}}>AAAAAAA</Typography>
-                        <Typography sx={{fontSize:'3.1vh'}}>TESTE PARA SABER SE É</Typography>
-                        <Typography sx={{fontSize:'3.1vh'}}>FLEXIVEL!!!!!!</Typography>
+                <Box sx={{ width: '100%', mt: '.6vh', }}>
+                    <Box sx={{ mb: '1%', maxWidth:'100em' , display:'flex', flexDirection:'column'}}>
+                        <Typography sx={{fontSize:'35px', wordWrap:'break-word', }}>
+                        AAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        dadada
+                        dua
+                        idad
+                        dada
+                        auda
+                        da
+                        dadada </Typography>
+                        
+
+                        
+                        
                     </Box>
                 </Box>
                 <Box sx={{ width: '100%', height: '8%', mb: '1%' }}>
-                    <FavoriteBorder sx={{ fontSize: '3.6vh', mr: '3.1vh', cursor: 'pointer', color: '#A0A9D0' }} />
-                    <ChatBubbleOutline sx={{ fontSize: '3.6vh', mr: '3.1vh', cursor: 'pointer', color: '#A0A9D0' }} />
-                    <Reply sx={{ transform: 'scaleX(-1)', fontSize: '3.8vh', pb: '.3vh', cursor: 'pointer', color: '#A0A9D0', }} />
+                    <FavoriteBorder sx={{ fontSize: '35px', mr: '3.1vh', cursor: 'pointer', color: '#A0A9D0' }} />
+                    <ChatBubbleOutline sx={{ fontSize: '35px', mr: '3.1vh', cursor: 'pointer', color: '#A0A9D0' }} />
+                    <Reply sx={{ transform: 'scaleX(-1)', fontSize: '37px', pb: '.3vh', cursor: 'pointer', color: '#A0A9D0', }} />
                 </Box>
                 <Box sx={{ width: '100%', height: '25%', display: 'flex', mb: '1.5%' }}>
-                    <Typography sx={{ fontSize: '1.9vh', color: 'rgba(0,0,0,.70)' }}><b>{username}</b>: {description}</Typography>
+                    <Typography sx={{ fontSize: '18px', color: 'rgba(0,0,0,.70)' }}><b>{username}</b>: {description}</Typography>
                 </Box>
 
                 <Comment />
