@@ -20,7 +20,8 @@ function App() {
                     <ThemeStore>
                         <CssBaseline />
                         <Routes>
-                            <Route path="/" element={<Home />} />
+                            <Route path="/" element={<Navigate to='/home/br' />} />
+                            <Route path="/home/:lang" element={<Home />} />
                             <Route path="/chat" element={<ChatPage />} />
                             <Route path="/auth" element={<Auth />} />
                             <Route path="/classes" element={<ClassesPage />} />
@@ -29,7 +30,7 @@ function App() {
                             <Route path="/timeline" element={<TimelinePage />} />
                             <Route path="/news" element={<NewsPage />} />
                             <Route path="/error" element={<ErrorPage />} />
-                            <Route path='*' element={<Navigate to='/error' />} />
+                            <Route path='/app/*' element={<Navigate to='/error' />} />
                         </Routes>
                     </ThemeStore>
                 </GoogleOAuthProvider>

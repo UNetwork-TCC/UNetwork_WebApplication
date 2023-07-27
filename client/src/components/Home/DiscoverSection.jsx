@@ -1,6 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material'
 import Image from 'mui-image'
-import Topic from '../../layout/Topic'
+import { Topic } from '../../layout'
 
 import discoverFeature from '../../assets/svg/Home/DiscoverFeature.svg'
 import discoverFeature2 from '../../assets/svg/Home/DiscoverFeature2.svg'
@@ -49,7 +49,7 @@ export default function DiscoverSection() {
                             fontSize='1.7rem'
                         />
                     </Box>
-                    <Box mb={5} sx={{ width: '80%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
+                    <Box mb={5} sx={{ width: '50%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
                         <Image style={{ userSelect: 'none' }} height={600} width={700} src={discoverFeature2} />
                     </Box>
                 </AnimateOnScroll>
@@ -68,7 +68,7 @@ export default function DiscoverSection() {
                         <Image style={{ userSelect: 'none', marginLeft: '100px', marginTop: '20px', zIndex: 2 }} height={700} width={1100} src={discoverFeature3} />
                         <Box position='relative' top={300} display='flex' justifyContent='center' alignItems='center'>
                             <Box>
-                                <Typography color='secondary.dark' variant='h3'>+480M</Typography>
+                                <Typography color='secondary.dark' variant='h3'>+5K</Typography>
                                 <Box display='flex'>
                                     <Person sx={{ m: '5px 10px 0 0' }} />
                                     <Typography variant='h5'>Membros</Typography>
@@ -76,7 +76,7 @@ export default function DiscoverSection() {
                             </Box>
                             <Divider sx={{ m: '0 75px' }} />
                             <Box>
-                                <Typography color='secondary.dark' variant='h3'>+18K</Typography>
+                                <Typography color='secondary.dark' variant='h3'>+200</Typography>
                                 <Box display='flex'>
                                     <Group sx={{ m: '5px 10px 0 0' }} />
                                     <Typography variant='h5'>Classes</Typography>

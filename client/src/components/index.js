@@ -1,5 +1,5 @@
 import DiscoverSection from './Home/DiscoverSection'
-import ForumSection from './Home/ForumSection'
+import AboutSection from './Home/AboutSection'
 import ComunitySection from './Home/ComunitySection'
 import Chat from './Chat/Chat'
 import Notice from './News/LittleNotice'
@@ -12,11 +12,10 @@ import Post from './Timeline/Post'
 import Comment from './Timeline/Comment'
 import Login from './Auth/Login'
 import Register from './Auth/Register'
-import WhatsNewSection from './Home/WhatsNewSection'
 
 export { 
     DiscoverSection,
-    ForumSection,
+    AboutSection,
     ComunitySection,
     Chat,
     Notice,
@@ -29,5 +28,4 @@ export {
     Comment,
     Login,
     Register,
-    WhatsNewSection
 }

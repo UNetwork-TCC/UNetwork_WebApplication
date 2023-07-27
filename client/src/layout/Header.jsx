@@ -49,7 +49,7 @@ export default function Header() {
                 <StyledLink name='início' />
                 <StyledLink name='descubra' />
                 <StyledLink name='comunidade' />
-                <StyledLink name='fórum' />
+                <StyledLink name='sobre' />
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>

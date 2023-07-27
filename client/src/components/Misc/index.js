@@ -1,3 +1,3 @@
-import AnimateOnScroll from "./AnimateOnScroll"
+import AnimateOnScroll from './AnimateOnScroll'
 
 export { AnimateOnScroll }
