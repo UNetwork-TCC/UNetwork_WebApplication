@@ -12,5 +12,22 @@ import Post from './Timeline/Post'
 import Comment from './Timeline/Comment'
 import Login from './Auth/Login'
 import Register from './Auth/Register'
+import WhatsNewSection from './Home/WhatsNewSection'
 
-export { DiscoverSection, ForumSection, ComunitySection, Chat, Notice, SideBar, Folder, File, Contact, Classes, Post, Comment, Login, Register}
+export { 
+    DiscoverSection,
+    ForumSection,
+    ComunitySection,
+    Chat,
+    Notice,
+    SideBar,
+    Folder,
+    File,
+    Contact,
+    Classes,
+    Post,
+    Comment,
+    Login,
+    Register,
+    WhatsNewSection
+}

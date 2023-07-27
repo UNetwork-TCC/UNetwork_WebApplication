@@ -3,10 +3,10 @@ import { Box } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Animation } from 'react-animate-style'
 
-export default function AnimateOnScroll({ children, animation, delay, duration, style }) {
+export default function AnimateOnScroll({ children, animation, delay, duration, style, animateOnce }) {
+    const animationDelay = delay ? delay : 0
     const ref = useRef()
     const [ isVisible, setIsVisible ] = useState(false)
-    const [ count, setCount ] = useState(0)
 
     const observer = new IntersectionObserver(entries => {
 
@@ -14,17 +14,16 @@ export default function AnimateOnScroll({ children, animation, delay, duration, 
             if (entry.isIntersecting) {
                 setIsVisible(true)
                 
-                setCount(count + 1)
                 setTimeout(() => {
                     ref.current.style.visibility = 'initial'
-                }, delay)
+                }, animationDelay)
             } else {
-                if (count === 0) {
+                if (!animateOnce) {
                     setIsVisible(false)
                     
                     setTimeout(() => {
                         ref.current.style.visibility = 'hidden'
-                    }, delay)
+                    }, animationDelay)
                 }
             }
         })
@@ -36,7 +35,7 @@ export default function AnimateOnScroll({ children, animation, delay, duration, 
 
     return (
         <Box visibility='hidden' ref={ref}>
-            <Animation className={isVisible ? `animate__animated animate__${animation}` : ''} style={{ display: 'flex', ...style }} isVisible animationInDuration={duration} animationInDelay={delay}>
+            <Animation className={isVisible ? `animate__animated animate__${animation}` : ''} style={{ display: 'flex', ...style }} isVisible animationInDuration={duration} animationInDelay={animationDelay}>
                 {children}
             </Animation>
         </Box>

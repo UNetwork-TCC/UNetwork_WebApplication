@@ -24,7 +24,18 @@ const defaultThemeProps = {
         MuiCssBaseline: {
             styleOverrides: {
                 scrollBehavior: 'smooth',
+
+                html: {
+                    fontSize: {
+                        phone: '32px'
+                    }
+                },
+                
                 // Custom Scrollbar
+                
+                body: {
+                    backgroundColor: '#fafafa',
+                },
 
                 '::-webkit-scrollbar': {
                     width: '10px'

@@ -5,5 +5,6 @@ import MobileHeader2 from './MobileHeader2'
 import MobileNavBar from './MobileNavBar'
 import NavBar from './NavBar'
 import Header2 from './Header2'
+import CustomDivider from './CustomDivider'
 
-export { Header, Layout, Footer, MobileHeader2, MobileNavBar, NavBar, Header2}
+export { Header, Layout, Footer, MobileHeader2, MobileNavBar, NavBar, Header2, CustomDivider}

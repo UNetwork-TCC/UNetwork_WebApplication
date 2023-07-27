@@ -12,7 +12,7 @@ import lightLogo from '../assets/img/LightLogo.png'
 
 export default function Header() {
     const { theme, setTheme } = useContext(themeContext)
-    const classes = useStyles(theme.palette)
+    const classes = useStyles(theme)
 
     function StyledLink({ name }) {
         return (
@@ -32,20 +32,20 @@ export default function Header() {
     return (
         <Box
             display='flex'
-            justifyContent={'space-evenly'}
+            justifyContent='space-around'
             alignItems='center'
             position='sticky'
             p={2.5}
         >
-            <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer' }}>
+            <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 { theme?.palette.mode === 'light' ?
                     <img width={75} height={75} src={logo} alt="Logo" />
                     :                    
                     <img width={75} height={75} src={lightLogo} alt="Logo" />
                 }
-                <Typography>UNetwork</Typography>
+                <Typography variant='inherit' sx={{ letterSpacing: '2px', mt: 1 }}>UNetwork</Typography>
             </Box>
-            <Box display='flex' width={500} gap={5} p>
+            <Box display='flex' width={300} gap={5} p>
                 <StyledLink name='início' />
                 <StyledLink name='descubra' />
                 <StyledLink name='comunidade' />
