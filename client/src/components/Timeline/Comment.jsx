@@ -26,27 +26,28 @@ export default function Comment() {
     return (
         <Box sx={{width:'100%'}}>
             <Box sx={{ display: 'flex', alignItems:'center' }}>
-                <AccountCircle sx={{fontSize:'5.3vh', mr:'1%', color:'gray'}}/>
+                <AccountCircle sx={{fontSize:'52px', mr:'1%', color:'gray'}}/>
                 <Box
                     component="form"
-                    sx={matches ? { p: '0 0 0 1.1vh', display: 'flex', width: '90%', height:'4vh' ,border: '.2vh gray solid', borderRadius: '2.1vh' } : { p: '0 0 0 6px', display: 'flex', width: 400, border: '1px gray solid', borderRadius: '20px' }}
+                    sx={matches ? { p: '0 0 0 1.1vh', display: 'flex', width: '90%', height:'40px', minHeight:'30px' ,border: '.2vh gray solid', borderRadius: '2.1vh' } : { p: '0 0 0 6px', display: 'flex', width: 400, border: '1px gray solid', borderRadius: '20px' }}
                 >
                     <InputBase
 
-                        sx={{flex: 1, pl:'.3vh', fontSize:'2.1vh'}}
+                        sx={{flex: 1, pl:'.3vh', fontSize:'20px'}}
                         placeholder={matches ? 'Adicione um comentário...' : 'Digite'}
                         value={text}
                         onChange={e => setText(e.target.value)}
+                        
 
                     />
                     <IconButton aria-label="File" >
-                        <ImageOutlinedIcon sx={{fontSize:'3.4vh'}}/>
+                        <ImageOutlinedIcon sx={{fontSize:'33px'}}/>
                     </IconButton>
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} >
-                        <EmojiEmotionsIcon sx={{fontSize:'3.4vh'}}/>
+                        <EmojiEmotionsIcon sx={{fontSize:'33px'}}/>
                     </IconButton>
                     <IconButton color="primary" sx={{ p: '.7vh', ml: '.6vh', bgcolor: '#673AB7', borderRadius: '0 2.1vh 2.1vh 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" >
-                        <SendIcon sx={{fontSize:'2.5vh'}} />
+                        <SendIcon sx={{fontSize:'24px'}} />
                     </IconButton>
                 </Box>
 
