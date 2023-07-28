@@ -2,18 +2,25 @@ import { Footer, Header } from '../layout'
 import liquidBg from '../assets/svg/Home/LiquidBg.svg'
 import peopleVector from '../assets/svg/Home/PeopleVector.svg'
 import Image from 'mui-image'
-import { Box, Button, Divider, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { Animation } from 'react-animate-style'
 import { ComunitySection, DiscoverSection, AboutSection } from '../components'
-import Topic from '../layout/Topic'
 import { useTheme } from '@emotion/react'
 import { Link, useParams } from 'react-router-dom'
 import { Book, Token, WorkHistory } from '@mui/icons-material'
 import { AnimateOnScroll } from '../components/Misc'
+import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 function Home() {
     const theme = useTheme()
     const { lang } = useParams()
+
+    const { t } = useTranslation()
+
+    useEffect(() => {
+        localStorage.setItem('lang', lang)
+    }, [])
 
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
@@ -29,15 +36,15 @@ function Home() {
             <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
                 <Box p='25px' m='25px' width='45%'>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true}>
-                        <Typography mb={4} variant='h1' fontWeight={900}>Desperte seu potencial na UNetwork</Typography>
+                        <Typography mb={4} variant='h1' fontWeight={900}>{t('header.title')}</Typography>
                     </Animation>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true} animationInDelay={250}>
-                        <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>Conecte-se com mentores, colegas e amigos em uma comunidade que impulsiona seu crescimento.</Typography>
+                        <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
                         <Box mt={5} display='flex'>
                             <Button variant='contained'>
-                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>Comece Já!</Link>
+                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('header.btn')}</Link>
                             </Button>
-                            <Typography color='primary.main' ml={5} width='30%'>+5000 pessoas como você estão usando esta rede social!</Typography>
+                            <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
                         </Box>
                     </Animation>
                 </Box>
@@ -49,24 +56,24 @@ function Home() {
                     <Box width='50%' overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={350}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><WorkHistory sx={{ mb: '-3px', mr: '5px' }}/>Impulsione seu aprendizado!</Typography>
-                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>Com a UNetowrk, você pode aprender até 50% mais rápido do que em um ambiente de aprendizado comum! Cresça com o conhecimento!</Typography>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><WorkHistory sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature1.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature1.content')}</Typography>
                             </Box>
                         </AnimateOnScroll>
                     </Box>
                     <Box overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={450}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Book sx={{ mb: '-3px', mr: '5px' }}/>Conheça e desfrute da comunidade!</Typography>
-                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>Troque conhecimento com outros estudantes! Conheça-os e faça novos amigos!</Typography>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Book sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature2.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature2.content')}</Typography>
                             </Box>
                         </AnimateOnScroll>
                     </Box>
                     <Box overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={550}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Token sx={{ mb: '-3px', mr: '5px' }}/>Design de interface de usuário inovador!</Typography>
-                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>Troque conhecimento com outros estudantes! Conheça-os e faça novos amigos!</Typography>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Token sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature3.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature3.title')}</Typography>
                             </Box>
                         </AnimateOnScroll>
                     </Box>

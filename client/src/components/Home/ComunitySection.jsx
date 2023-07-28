@@ -5,15 +5,18 @@ import ComunityFeature from '../../assets/img/Home/ComunityFeature_Shadow.png'
 import Image from 'mui-image'
 import { Topic } from '../../layout'
 import ComunityFeatureVideo from '../../assets/video/ComunityFeatureVideo.mp4'
+import { useTranslation } from 'react-i18next'
 
 export default function ComunitySection() {
     const theme = useTheme()
+
+    const { t } = useTranslation()
 
     return (
         <Box position='relative' bottom={400} display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
             <Box id='comunidade' display='flex' justifyContent='center' alignItems='center' flexDirection='column' m={2.5}>
                 <AnimateOnScroll style={{ flexDirection: 'column' }}  animateOnce animation='fadeInUp'>
-                    <Typography variant="h3">Comunidade</Typography>
+                    <Typography variant="h3">{t('community.title')}</Typography>
                     <CustomDivider />
                 </AnimateOnScroll>
             </Box>
@@ -21,8 +24,8 @@ export default function ComunitySection() {
                 <AnimateOnScroll animateOnce animation='fadeInUp'>
                     <Topic
                         boxStyle={{ textAlign: 'center' }}
-                        title='Estreando o sistema de Clips!'
-                        text='Com os Clips, você pode compartilhar quaisquer momentos instantaneamente, com apenas um clique! '
+                        title={t('community.feature1.title')}
+                        text={t('community.feature1.content')}
                     />
                 </AnimateOnScroll>
             </Box>
@@ -42,7 +45,7 @@ export default function ComunitySection() {
             </Box>
             <Box mt={20} width='60%' display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
                 <Typography mb fontSize='1.3rem' variant="body1" >Xing Ling - <Box fontWeight={900} color='primary.main' component='span'>@LittleXing</Box></Typography>
-                <Typography mt fontSize='1rem' variant="body2" textAlign='center'>"Desde que me juntei a UNetwork, fui imersa em uma comunidade acadêmica vibrante e apaixonada. Encontrei estudantes de diferentes áreas de estudo, todos prontos para compartilhar suas experiênicas, dúvidas, e conquistas. As discussões nos fóruns da UNetwork são enriquecedoras, desafiando meu pensamento e expandindo meus horizontes."</Typography>
+                <Typography mt fontSize='1rem' variant="body2" textAlign='center'>{t('community.content')}</Typography>
             </Box>
         </Box>
     )

@@ -9,6 +9,7 @@ import { themeContext } from './contexts'
 import { Home, ErrorPage, ChatPage, ClassesPage, FavoritesPage, MaterialsPage, NewsPage, TimelinePage} from './pages'
 import ThemeStore from './layout/ThemeStore'
 import Auth from './pages/Auth'
+import './utils/languages'
 
 function App() {
     const [theme, setTheme] = useState(lightTheme)

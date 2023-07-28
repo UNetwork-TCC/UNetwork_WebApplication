@@ -3,13 +3,17 @@ import { CustomDivider, Topic } from "../../layout";
 import { AnimateOnScroll } from "../Misc";
 import Image from "mui-image";
 import { Diversity3, Forum, Newspaper } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 export default function AboutSection() {
+    
+    const { t } = useTranslation()
+
     return (
         <Box>  
             <Box id='sobre' display='flex' justifyContent='center' alignItems='center' flexDirection='column' m={2.5}>
                 <AnimateOnScroll style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}  animateOnce animation='fadeInUp'>
-                    <Typography variant="h3">Sobre</Typography>
+                    <Typography variant="h3">{t('about.title')}</Typography>
                     <CustomDivider sx={{ width: '50%' }} />
                 </AnimateOnScroll>
             </Box>
@@ -17,8 +21,8 @@ export default function AboutSection() {
                 <Box mt={10} display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
                     <Topic 
                         boxStyle={{ textAlign: 'center' }}
-                        title='O que há de novo?'
-                        text='A UNetork vem para mudar o conceito de rede social, trazendo aspectos novos e melhorando os antigos.'
+                        title={t('about.feature1.title')}
+                        text={t('about.feature1.content')}
                     />
                 </Box>
             </AnimateOnScroll>
@@ -29,8 +33,8 @@ export default function AboutSection() {
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
-                            title='Classes'
-                            text='Classes são como grupos, porém são públicos e são voltados para algum tópico acadêmico específico!'
+                            title={t('about.feature2.title')}
+                            text={t('about.feature2.content')}
                             boxStyle={{ width: '70%' }}
                             fontSize='1.7rem'
                         />
@@ -41,8 +45,8 @@ export default function AboutSection() {
                 <AnimateOnScroll animateOnce animation='fadeInRight' duration={1500}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
-                            title='Fóruns'
-                            text='Nos fóruns você pode tirar todas suas dúvidas relacionadas a qualquer matéria!'
+                            title={t('about.feature3.title')}
+                            text={t('about.feature3.content')}
                             boxStyle={{ width: '70%' }}
                             fontSize='1.7rem'
                         />
@@ -59,8 +63,8 @@ export default function AboutSection() {
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
-                            title='Notícias'
-                            text='Quer ficar por dentro do que anda acontecendo na escola? Fica ligado nas notícias!'
+                            title={t('about.feature4.title')}
+                            text={t('about.feature4.content')}
                             boxStyle={{ width: '70%' }}
                             fontSize='1.7rem'
                         />

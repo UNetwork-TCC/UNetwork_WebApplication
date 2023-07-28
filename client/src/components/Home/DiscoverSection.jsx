@@ -12,14 +12,17 @@ import { AnimateOnScroll } from '../Misc'
 
 import { Person, Group } from '@mui/icons-material'
 import { CustomDivider } from '../../layout'
+import { useTranslation } from 'react-i18next'
 
 export default function DiscoverSection() {
+    const { t } = useTranslation()
+
     return (
         <Box>
             <Box m={2.5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box>
                     <Animation animationIn='fadeInUp' isVisible animationInDelay={300}>
-                        <Typography variant="h3">Descubra</Typography>
+                        <Typography variant="h3">{t('discover.title')}</Typography>
                         <CustomDivider />
                     </Animation>
                 </Box>
@@ -31,8 +34,8 @@ export default function DiscoverSection() {
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
-                            title='Conexões e Conhecimentos'
-                            text='Conecte-se instantaneamente com pessoas afins na UNetwork! Encontre novos amigos, compartilhe conhecimentos e crie laços!'
+                            title={t('discover.feature1.title')}
+                            text={t('discover.feature1.content')}
                             boxStyle={{ width: '70%' }}
                             fontSize='1.7rem'
                         />
@@ -43,8 +46,8 @@ export default function DiscoverSection() {
                 <AnimateOnScroll animateOnce animation='fadeInRight' duration={1500}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
-                            title='Compartilhe Momentos'
-                            text='Compartilhe, inspire e conecte-se com outros apaixonados por momentos inesquecíveis'
+                            title={t('discover.feature2.title')}
+                            text={t('discover.feature2.content')}
                             boxStyle={{ width: '70%' }}
                             fontSize='1.7rem'
                         />
@@ -58,8 +61,8 @@ export default function DiscoverSection() {
                 <AnimateOnScroll animateOnce style={{ flexDirection: 'column' }} animation='fadeInUp' duration={1500}>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
-                            title='Fique atualizado diariamente!'
-                            text='Sua timeline estará sempre atualizada de acordo com seus interesses.'
+                            title={t('discover.feature3.title')}
+                            text={t('discover.feature3.content')}
                             boxStyle={{ textAlign: 'center' }}
                             fontSize='1.7rem'
                         />
@@ -71,7 +74,7 @@ export default function DiscoverSection() {
                                 <Typography color='secondary.dark' variant='h3'>+5K</Typography>
                                 <Box display='flex'>
                                     <Person sx={{ m: '5px 10px 0 0' }} />
-                                    <Typography variant='h5'>Membros</Typography>
+                                    <Typography variant='h5'>{t('discover.content1')}</Typography>
                                 </Box>
                             </Box>
                             <Divider sx={{ m: '0 75px' }} />
@@ -79,7 +82,7 @@ export default function DiscoverSection() {
                                 <Typography color='secondary.dark' variant='h3'>+200</Typography>
                                 <Box display='flex'>
                                     <Group sx={{ m: '5px 10px 0 0' }} />
-                                    <Typography variant='h5'>Classes</Typography>
+                                    <Typography variant='h5'>{t('discover.content2')}</Typography>
                                 </Box>
                             </Box>
                         </Box>
