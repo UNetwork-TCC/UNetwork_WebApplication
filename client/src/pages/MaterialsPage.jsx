@@ -16,7 +16,7 @@ export default function MaterialsPage() {
         <Box sx={{ overflow: 'hidden' }}>
             {matches ? <Header2 /> : <MobileHeader2 />}
             <Divider sx={{ bgcolor: '#673AB7', height: '.6vh', m: '.6vh 2% 0 2%', borderRadius: '3.1vh' }} variant="middle" />
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', height:'88vh' }}>
                 {matches && (
                     <NavBar buttonStyle={'Materials'} />
                 )}

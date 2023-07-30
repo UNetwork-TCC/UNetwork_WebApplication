@@ -1,9 +1,9 @@
-import { Box, Typography } from "@mui/material";
-import { CustomDivider, Topic } from "../../layout";
-import { AnimateOnScroll } from "../Misc";
-import Image from "mui-image";
-import { Diversity3, Forum, Newspaper } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
+import { Box, Typography } from '@mui/material'
+import { CustomDivider, Topic } from '../../layout'
+import { AnimateOnScroll } from '../Misc'
+import Image from 'mui-image'
+import { Diversity3, Forum, Newspaper } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
 
 export default function AboutSection() {
     
