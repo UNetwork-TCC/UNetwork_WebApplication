@@ -47,4 +47,4 @@ const useStyles = makeStyles(theme => ({
     
 }))
 
-export { useStyles, useMobileStyles, useChatPageStyles}
+export { useStyles, useMobileStyles, useChatPageStyles }

@@ -9,4 +9,4 @@ import TimelinePage from './TimelinePage'
 import Clips from '../components/Timeline/Clips'
 import Suggestion from '../components/Timeline/Suggestion'
 
-export { Home, ErrorPage, ChatPage, ClassesPage, FavoritesPage, MaterialsPage, NewsPage, TimelinePage, Clips, Suggestion}
+export { Home, ErrorPage, ChatPage, ClassesPage, FavoritesPage, MaterialsPage, NewsPage, TimelinePage, Clips, Suggestion }

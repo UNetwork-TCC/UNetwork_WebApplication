@@ -9,7 +9,7 @@ export default function BigNotice({ description, id, Title }) {
                 <Typography sx={{ fontSize: '16px', mt: '1.5em', color: 'gray', mb: '2%' }}>{Title}</Typography>
                 <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>{description}</Typography>
                 <Link href={`#${id}`}>
-                    <Button sx={{ fontSize: '14px', float: 'right', border: '1px solid #673AB7', borderRadius: '3.1vh', padding: '.3vh 10%', margin: '3% 3%',':hover':{ bgcolor:'#673AB7', color:'white'} }}>Leia Mais</Button>
+                    <Button sx={{ fontSize: '14px', float: 'right', border: '1px solid #673AB7', borderRadius: '3.1vh', padding: '.3vh 10%', margin: '3% 3%',':hover':{ bgcolor:'#673AB7', color:'white' } }}>Leia Mais</Button>
                 </Link>
 
             </Box>

@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 import { ThemeProvider } from '@mui/material'
 import { useContext } from 'react'
 import { themeContext } from '../contexts'

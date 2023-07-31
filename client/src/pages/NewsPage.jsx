@@ -13,25 +13,25 @@ export default function NewsPage() {
 
     
     return (
-        <Box>
+        <Box sx={{ overflow: 'hidden' }}>
             {matches ? <Header2 /> : <MobileHeader2 />}
             <Divider sx={{ bgcolor: '#673AB7', height: '.6vh', m: '.6vh 2% 0 2%', borderRadius: '3.1vh' }} variant="middle" />
-            <Box sx={{ display: 'flex', width:'100vw' }}>
+            <Box sx={{ display: 'flex', height:'88vh' }}>
                 {matches && (
                     <NavBar buttonStyle={'News'} />
                 )}
                 <Divider sx={{ m: '1.1vh .6vh 1.1vh 0', }} variant="middle" orientation='vertical' flexItem />
-                <Box sx={{ m: '2vw 0 0 1vh', width: '100%',}}>
+                <Box sx={{ m: '2vw 0 0 1vh', width: '100%', }}>
                     <Box sx={{ mr: '.6vh', width:'100%',  }}>
                         <Box sx={{ maxWidth:'80%', }}>
-                            <CarouselProvider totalSlides={3} orientation='horizontal' style={{ display: 'flex', maxWidth:'100%', minWidth:'83%'}} step={1} touchEnabled isIntrinsicHeight dragEnabled>
+                            <CarouselProvider totalSlides={3} orientation='horizontal' style={{ display: 'flex', maxWidth:'100%', minWidth:'83%' }} step={1} touchEnabled isIntrinsicHeight dragEnabled>
 
                                 {/* mensagem para o parametro de totalSlides: a quantia de totalSlides tem que ser a quantidade total da tag 'Slide' que tem no carrosel,
 depois tirar 9 (que é a quantidade de slides padrão que vai aparecer nos clips naturalmente), e adicionar +1 (que vai 
 servir pra aparecer o ultimo 'clips') */}
 
                                 <ButtonBack style={{ height: '6%', marginTop: '12.5vh', border: '0px solid gray', borderRadius: '10.1vh', padding: '0 0', background: 'none' }} ><ArrowBackIosNew sx={{ fontSize: '2.7vh' }} /></ButtonBack>
-                                <Box sx={{maxWidth: '100%', height: '50%', pt: '1.5%', display: 'flex', '::-webkit-scrollbar': { display: 'none' }, overflowX: 'scroll' }}>
+                                <Box sx={{ maxWidth: '100%', height: '50%', pt: '1.5%', display: 'flex', '::-webkit-scrollbar': { display: 'none' }, overflowX: 'scroll' }}>
                                     {/* para fazer com que o scroll do componente volte a funcionar (ou nao funcionar), é so trocar na box acima, o oveflow para scroll (mas ai vai quebrar la no final dos 'clips'), (e hidden para não funcionar a rolagem) */}
                                     <Slider><Slide index={0}><BigNotice Title={'CULTURA'} description={'Bahia, um dos maiores centros religiosos do Brasil'} /></Slide></Slider>
                                     <Slider><Slide index={1}><BigNotice Title={'ATUALIDADE'} description={'FIm do Dólar? Colapso Financeiro? Entenda a Nova Ordem Mundial'} /></Slide></Slider>

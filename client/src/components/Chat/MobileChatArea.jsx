@@ -2,12 +2,12 @@ import VideocamIcon from '@mui/icons-material/Videocam'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { Chat } from '../../components'
-import { Box, Divider, IconButton, Typography} from '@mui/material'
+import { Box, Divider, IconButton, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 export default function MobileChatArea() {
     return (
-        <Box sx={{ height: '85vh', width: '60vw', display: 'flex', flexDirection: 'column', m: '5px 0'}}>
+        <Box sx={{ height: '85vh', width: '60vw', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
             <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '20px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', ml: '0px' }}>
                     <IconButton >
@@ -18,7 +18,7 @@ export default function MobileChatArea() {
                         <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
                     </Box>
                 </Box>
-                <Box sx={{display:'flex', flexDirection:'column'}}>
+                <Box sx={{ display:'flex', flexDirection:'column' }}>
                     <IconButton sx={{}}>
                         <VideocamIcon />
                     </IconButton>
