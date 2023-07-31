@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Box, Button, IconButton, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 
 import {
     AccountCircle,
@@ -11,9 +12,8 @@ import {
     Close,
     Menu
 } from '@mui/icons-material'
-import { useEffect, useState } from 'react'
 
-export default function NavBar({ buttonStyle}) {
+export default function NavBar({ buttonStyle }) {
 
     const notStylized = {
         width: '100%',

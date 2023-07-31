@@ -2,6 +2,7 @@ import { Box, Divider, useMediaQuery } from '@mui/material'
 import Header2 from '../layout/Header2'
 import NavBar from '../layout/NavBar'
 import { MobileHeader2, MobileNavBar } from '../layout'
+import AddIcon from '@mui/icons-material/Add'
 
 
 export default function FavoritesPage() {
@@ -16,8 +17,12 @@ export default function FavoritesPage() {
                 )}
                 <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box className="Conversas" sx={{ mr: '5px' }}>
-                    Favoritos
+                    <Box className="Conversas" sx={{ mr: '5px'}}>
+                        <AddIcon sx={{ color:'gray', padding:''}}/> 
+                    </Box>
+                    <Divider sx={{m: '10px 5px 10px 0', }} variant="middle" orientation='horizontal' flexItem/> 
                 </Box>
+                
             </Box>
             {!matches && (
                 <MobileNavBar />

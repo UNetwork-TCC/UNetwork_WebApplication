@@ -22,14 +22,16 @@ const resources = {
     'ru': RU,
     'zh': ZH,
     'jp': JP,
-    'ar': AR
+    'ar': AR,
 }
+let lng = navigator.language
+lng = lng.split('-')[1].toLowerCase()
 
 i18next
     .use(initReactI18next)
     .init({
         resources,
-        lng: localStorage.getItem('lang'),
+        lng,
         interpolation: {
             escapeValue: false
         }
