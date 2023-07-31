@@ -8,73 +8,75 @@ import {
     Bookmark,
     Groups,
     Newspaper,
-    Menu,       
+    Menu,
 } from '@mui/icons-material'
 import { NavBar } from '../../layout'
 
 export default function SideBar({ buttonStyle }) {
 
-    const navType = NavBar.navType
+    
 
     const notStylized = {
-        borderRadius: '20px',
-        mb:'5vh',
-        ml:'5px',
+        borderRadius: '2.1vh',
+        mb: '6vh',
+        ml: '2.5vh',
+        color:'gray',
     }
 
     const Stylized = {
-        borderRadius: '40px 40px 40px 40px',
+        width:'9vh',
+        borderRadius: '10vh 10vh 10vh 10vh',
         bgcolor: '#673AB7',
         color: 'white',
-        mb:'6vh',
-        p:'11.43px 12.80px',
+        mb: '6vh',
+        p: '1.2vh 1.75vh',
+        ml: '0.75vh',
         ':hover': {
-            borderRadius: '40px 40px 40px 40px',
             bgcolor: '#673AB7',
             color: 'white',
-            mr: '0',
+            
         }
     }
 
     const navigate = useNavigate()
 
     return (
-        <Box height={'100vh'} width={'6vw'} sx={{mt:'20px'}}>        
-            <Box sx={{ display: 'flex', flexDirection: 'column',  mt: '10px', width: '20vw', ml: '8px' }}>
-                <Box sx={{ml:'7px', mb:'5vh', color:'rgba(0, 0, 0, 0.54)'}}>
-                    <AccountCircle sx={{fontSize:'3rem'}} />
+        <Box sx={{ mt: '2.1vh', height:'100%', width:'6vw'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', mt: '1.1vh', width: '20vw', ml: '0.8vh' }}>
+                <Box sx={{ ml: '0.7vh', mb: '4vh', color: 'rgba(0, 0, 0, 0.54)' }}>
+                    <AccountCircle sx={{ fontSize: '9.0vh' }} />
                 </Box>
                 <Box>
-                    <IconButton onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)}>
-                        <MenuBook fontSize='large' />
-                    </IconButton>
+                    <Box onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)}>
+                        <MenuBook sx={{ fontSize: '5.5vh' }} />
+                    </Box>
                 </Box>
                 <Box>
-                    <IconButton onClick={() => navigate('/Chat')} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
-                        <Chat fontSize='large' />
-                    </IconButton>
+                    <Box onClick={() => navigate('/Chat')} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
+                        <Chat sx={{ fontSize: '5.5vh' }} />
+                    </Box>
                 </Box>
                 <Box>
-                    <IconButton onClick={() => navigate('/Classes')} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
-                        <Groups fontSize='large' />
-                    </IconButton>
+                    <Box onClick={() => navigate('/Classes')} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
+                        <Groups sx={{ fontSize: '5.5vh' }} />
+                    </Box>
                 </Box>
                 <Box>
-                    <IconButton onClick={() => navigate('/Favorites')} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
-                        <Bookmark fontSize='large' />
-                    </IconButton>
+                    <Box onClick={() => navigate('/Favorites')} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
+                        <Bookmark sx={{ fontSize: '5.5vh' }} />
+                    </Box>
                 </Box>
                 <Box>
-                    <IconButton onClick={() => navigate('/News')} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
-                        <Newspaper fontSize='large' />
-                    </IconButton>
+                    <Box onClick={() => navigate('/News')} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
+                        <Newspaper sx={{ fontSize: '5.5vh' }} />
+                    </Box>
                 </Box>
                 <Box>
-                    <IconButton sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
-                        <Menu fontSize='large' />
-                    </IconButton>
+                    <Box sx={{ borderRadius: '2.1vh', mb: '0vh', ml: '2.5vh', color:'gray'}} >
+                        <Menu sx={{ fontSize: '5.5vh' }} />
+                    </Box>
                 </Box>
-                
+
 
             </Box>
 

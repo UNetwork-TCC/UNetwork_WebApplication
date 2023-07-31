@@ -2,12 +2,26 @@ import { Footer, Header } from '../layout'
 import liquidBg from '../assets/svg/Home/LiquidBg.svg'
 import peopleVector from '../assets/svg/Home/PeopleVector.svg'
 import Image from 'mui-image'
-import { Box, Divider, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { Animation } from 'react-animate-style'
-import { DiscoverSection } from '../components'
-import Topic from '../layout/Topic'
+import { ComunitySection, DiscoverSection, AboutSection } from '../components'
+import { useTheme } from '@emotion/react'
+import { Link, useParams } from 'react-router-dom'
+import { Book, Token, WorkHistory } from '@mui/icons-material'
+import { AnimateOnScroll } from '../components/Misc'
+import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 function Home() {
+    const theme = useTheme()
+    const { lang } = useParams()
+
+    const { t } = useTranslation()
+
+    useEffect(() => {
+        localStorage.setItem('lang', lang)
+    }, [])
+
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <Header />
@@ -20,49 +34,55 @@ function Home() {
                 </Box>
             </Box>
             <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
-                <Box p='25px' m='25px' width='40%'>
+                <Box p='25px' m='25px' width='45%'>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true}>
-                        <Typography mb={4} variant='h2' fontWeight={900}>Desperte seu potencial na UNetwork</Typography>
+                        <Typography mb={4} variant='h1' fontWeight={900}>{t('header.title')}</Typography>
                     </Animation>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true} animationInDelay={250}>
-                        <Typography mt={4} variant='h4' color='text.secondary' fontWeight={900}>Conecte-se com mentores, colegas e amigos em uma comunidade que impulsiona seu crescimento.</Typography>
+                        <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
+                        <Box mt={5} display='flex'>
+                            <Button variant='contained'>
+                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('header.btn')}</Link>
+                            </Button>
+                            <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
+                        </Box>
                     </Animation>
                 </Box>
-                <Box width='40%'>
+                <Box sx={{ pointerEvents: 'none' }} width='40%'>
                 </Box>
             </Box>
-            <Box display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
-                <Box p m={5} display='flex' justifyContent='center' alignItems='center' width='75%'>
-                    <Box overflow='hidden' m='0 50px'>
-                        <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={350}>
-                            <Topic 
-                                title='Decubra!'
-                                text='Descubra um mundo de conexões.'
-                            />
-                        </Animation>
+            <Box mt={10} mb={20} display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
+                <Box gap={20} p m={5} display='flex' justifyContent='space-evenly' alignItems='center' width='80%'>
+                    <Box width='50%' overflow='hidden'>
+                        <AnimateOnScroll animation="fadeInUp" animateOnce delay={350}>
+                            <Box>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><WorkHistory sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature1.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature1.content')}</Typography>
+                            </Box>
+                        </AnimateOnScroll>
                     </Box>
-                    <Divider orientation='vertical' flexItem variant='middle'/>
-                    <Box overflow='hidden' m='0 50px'>
-                        <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={450}>
-                            <Topic 
-                                title='Conheça!'
-                                text='Faça amigos, navegue, curta.'
-                            />
-                        </Animation>
+                    <Box overflow='hidden'>
+                        <AnimateOnScroll animation="fadeInUp" animateOnce delay={450}>
+                            <Box>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Book sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature2.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature2.content')}</Typography>
+                            </Box>
+                        </AnimateOnScroll>
                     </Box>
-                    <Divider orientation='vertical' flexItem variant='middle'/>
-                    <Box overflow='hidden' m='0 50px'>
-                        <Animation animationIn="fadeInUp" animationOut="fadeOut" isVisible={true} animationInDelay={550}>
-                            <Topic 
-                                title='Cresça!'
-                                text='Impulsione seu aprendizado.'
-                            />
-                        </Animation>
+                    <Box overflow='hidden'>
+                        <AnimateOnScroll animation="fadeInUp" animateOnce delay={550}>
+                            <Box>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Token sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature3.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature3.title')}</Typography>
+                            </Box>
+                        </AnimateOnScroll>
                     </Box>
                 </Box>
             </Box>
-            <Box id="descubra">
+            <Box mb={50} id="descubra">
                 <DiscoverSection />
+                <ComunitySection />
+                <AboutSection />
             </Box>
             <Box>
                 <Footer />

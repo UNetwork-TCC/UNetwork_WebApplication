@@ -1,8 +1,8 @@
  
-import { createTheme } from '@mui/material'
+import { createTheme, responsiveFontSizes } from '@mui/material'
 import defaultThemeProps from './defaultThemeProps'
 
-export const lightTheme = createTheme({
+let lightTheme = createTheme({
     palette: {
         mode: 'light',
 
@@ -39,3 +39,7 @@ export const lightTheme = createTheme({
         ...defaultThemeProps.components
     }
 })
+
+lightTheme = responsiveFontSizes(lightTheme)
+
+export { lightTheme }

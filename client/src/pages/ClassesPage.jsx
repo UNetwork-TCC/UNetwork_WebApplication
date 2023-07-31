@@ -12,18 +12,18 @@ export default function ClassesPage() {
         <Box sx={{}}>
             {matches ? <Header2 /> : <MobileHeader2 />}
             <Divider sx={{ bgcolor: '#673AB7', height: '.6vh', m: '.6vh 2% 0 2%', borderRadius: '3.1vh' }} variant="middle" />
-            <Box sx={{ display: 'flex', overflow: 'hidden', }}>
+            <Box sx={{ display: 'flex', overflow: 'hidden', height:'88vh' }}>
                 {matches && (
                     <NavBar buttonStyle={'Classes'} />
                 )}
                 <Divider sx={{ m: '1.1vh .6vh 1.1vh 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={{ mr: '.6vh', height: '86vh', }}>
                     <Box sx={{ height: '100%' }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '3.1vh .6vh 1.6vh 5.1vh', alignItems: 'center', }}>
-                            <Typography sx={!matches ? { fontSize: '2.35vh', color: '#673AB7', fontWeight: 'bold', marginRight: '.6vh', marginTop: '.6vh', } : { fontSize: '5vh', color: '#673AB7', fontWeight: 'bold', }}>Suas Classes</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', m: '3.1vh 9vh 1.6vh 5.1vh', alignItems: 'center', }}>
+                            <Typography sx={!matches ? { fontSize: '2.35vh', color: '#673AB7', fontWeight: 'bold', marginRight: '.6vh', marginTop: '.6vh', } : { fontSize: '50px', color: '#673AB7', fontWeight: 'bold', }}>Suas Classes</Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                                <FilterList sx={{ color: '#D1C4E9', cursor: 'pointer', fontSize: '4vh' }} />
-                                <BuildOutlined sx={{ color: '#D1C4E9', ml: '3.1vh', fontSize: '3.5vh', transform: 'scaleX(-1)', cursor: 'pointer' }} />
+                                <FilterList sx={{ color: '#D1C4E9', cursor: 'pointer', fontSize: '40px' }} />
+                                <BuildOutlined sx={{ color: '#D1C4E9', ml: '3.1vh', fontSize: '34px', transform: 'scaleX(-1)', cursor: 'pointer' }} />
                                 <Box sx={{ height: '75%', bgcolor: '#673AB7', fontSize: '1.5vh', borderRadius: '3.1vh', color: 'white', padding: '.4vh 1.6vh', ml: '3.1vh', mr:'3.1vh' ,':hover': { cursor: 'pointer' } }}>CRIAR CLASSE</Box>
                             </Box>
                         </Box >

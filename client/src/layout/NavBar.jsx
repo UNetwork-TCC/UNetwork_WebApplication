@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Box, IconButton, Typography } from '@mui/material'
+import { Box, Button, IconButton, Typography } from '@mui/material'
 
 import {
     AccountCircle,
@@ -9,111 +9,141 @@ import {
     Groups,
     Newspaper,
     Close,
+    Menu
 } from '@mui/icons-material'
+import { useEffect, useState } from 'react'
 
-export default function NavBar({ buttonStyle, navStyle }) {
+export default function NavBar({ buttonStyle }) {
 
     const notStylized = {
         width: '100%',
         borderRadius: '35px 0 0 35px',
-        mb: '4vh',
-        p: '2.1vh 0',
-        pl: '2.5vh',
+        mb: '2em',
+        p: '1em 0',
+        pl: '1.5em',
         display: 'flex',
-        color:'#979797',
+        color: '#979797',
         ':hover': {
-            borderRadius: '20px 0 0 20px',
-            color:'#979797',
-            cursor:'pointer',
+            color: '#979797',
+            cursor: 'pointer',
         }
     }
     const textButtons = {
-        fontSize: '2.8vh',
-        ml: '1.6vh',
-        
-        
+        fontSize: '2em',
+        pl: '0.7em',
     }
 
     const Stylized = {
-        width: '75%',
+        width: '100%',
         borderRadius: '3.6vh 0 0 3.6vh',
         bgcolor: '#673AB7',
         color: 'white',
         display: 'flex',
-        p: '2.1vh 0',
-        pl: '2.5vh',
-        color:'white',
-        mb: '4vh',
+        p: '1em 0',
+        pl: '1.5em',
+        color: 'white',
+        mb: '2em',
         ':hover': {
-            cursor:'pointer',
+            cursor: 'pointer',
+        }
+    }
+
+    const notStylizedClosed = {
+        borderRadius: '2.1vh',
+        mb: '2.5em',
+        pl: '1em',
+        color: 'gray',
+    }
+
+    const StylizedClosed = {
+        width: '100%',
+        color: '#673AB7',
+        mb: '2.5em',
+        pl: '1em',
+        ':hover': {
+            
+            cursor:'pointer'
+
         }
     }
 
     const navigate = useNavigate()
 
-    navStyle = 'sideBar'
+    const [navStyle, setNavStyle] = useState(true)
+
     return (
 
-        <Box height={'100%'} width={'15vw'} sx={{ mt: '4vh'}}>
-            <Box display={'flex'} sx={{ width: '25.6vh', height: '10.1vh', bgcolor: 'white', borderRadius: '0 1.1vh 1.1vh 0px', mb: '4vh', }}>
-                <Box sx={{ bgcolor: '#673AB7', width: '9.1vh', borderRadius: '0 0.9vh 0.9vh 0px', m: '0.6vh 0', }}>
-                    <IconButton >
-                        <AccountCircle sx={{ fontSize: '9.1vh', color: 'white', position: 'absolute', left: '3.6vh', top: '-0.6vh', margin: '0' }} />
-                    </IconButton>
+        <Box sx={navStyle ? { mt: '4vh', width: '12.8%', height: '100%', fontSize: '10px',} : { mt: '2.1vh', height: '100%', width: '6%', }}>
+            <Box display={'flex'} sx={{ width: '100%', height: '11.5%', bgcolor: 'white', borderRadius: '0 1.1vh 1.1vh 0px', mb: '2vh', }}>
+                <Box sx={navStyle ? { bgcolor: '#673AB7', width: '9em', borderRadius: '0 0.9vh 0.9vh 0px', m: '0.6vh 0', } : {}}>
+                    <Box >
+                        <AccountCircle sx={navStyle ? { fontSize: '8.9vh', color: 'white', position: 'absolute', left: '35px', margin: '0' } : {  mb: '2vh', color: 'rgba(0, 0, 0, 0.54)', fontSize: '9.0vh' }} />
+                    </Box>
                 </Box>
-                <Box sx={{ width: '18.1vh', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-                    {navStyle && <Typography sx={{ fontSize: '1.6vh', fontWeight: 'bold' }}>USERNAME</Typography>}
-                    {navStyle && <Typography sx={{ fontSize: '1.6vh' }}>Estudante</Typography>}
-                    {navStyle && <Typography sx={{ fontSize: '1.6vh' }}>X Conexões</Typography>}
-                </Box>
+                {navStyle && (
+                    <Box sx={{ width: '18.1vh', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column', height:'100%'}}>
+                        <Typography sx={{ fontSize: '1.6em', fontWeight: 'bold' }}>USERNAME</Typography>
+                        <Typography sx={{ fontSize: '1.6em' }}>Estudante</Typography>
+                        <Typography sx={{ fontSize: '1.6em' }}>X Conexões</Typography>
+                    </Box>
+                )}
+
             </Box>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', mt: '20px', height: '60vh', width: '20vw', ml: '4.5%', }}>
-                <Box sx={{ width: '95.5%',}}>
-                    <Box onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)} >
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <MenuBook sx={{fontSize:'4.5vh'}} />
-                            {navStyle && <Typography sx={textButtons}>Materiais</Typography>}
-                        </Box>
-                    </Box>
-                </Box>
-                <Box sx={{ width: '95.5%' }}>
-                    <Box onClick={() => navigate('/Chat')} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', pl: '4.5%', }}>
+                <Box sx={{height:'70%', width:'100%', }}>
+                    <Box sx={{ width: '100%' }}>
+                        <Box onClick={() => navigate('/materials')} sx={navStyle ? buttonStyle !== 'Materials' ? (notStylized) : (Stylized) : buttonStyle !== 'Materials' ? (notStylizedClosed) : (StylizedClosed)} >
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Chat sx={{fontSize:'4.2vh'}} />
+                                <MenuBook sx={navStyle ? { fontSize: '4.5em' } : { fontSize: '3em' }} />
+                                {navStyle && <Typography sx={textButtons}>Materiais</Typography>}
                             </Box>
-                            {navStyle && <Typography sx={textButtons}>Conversas</Typography>}
+                        </Box>
+                    </Box>
+                    <Box sx={{width:'100%'}}>
+                        <Box onClick={() => navigate('/chat')} sx={navStyle ? buttonStyle !== 'Chat' ? (notStylized) : (Stylized) : buttonStyle !== 'Chat' ? (notStylizedClosed) : (StylizedClosed)} >
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Chat sx={navStyle ? { fontSize: '4.5em' } : { fontSize: '3em' }} />
+                                {navStyle && <Typography sx={textButtons}>Conversas</Typography>}
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box sx={{ width: '100%' }}>
+                        <Box onClick={() => navigate('/Classes')} sx={navStyle ? buttonStyle !== 'Classes' ? (notStylized) : (Stylized) : buttonStyle !== 'Classes' ? (notStylizedClosed) : (StylizedClosed)} >
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Groups sx={navStyle ? { fontSize: '4.5em' } : { fontSize: '3em' }} />
+                                {navStyle && <Typography sx={textButtons}>Classes</Typography>}
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box sx={{ width: '100%' }}>
+                        <Box onClick={() => navigate('/Favorites')} sx={navStyle ? buttonStyle !== 'Favorites' ? (notStylized) : (Stylized) : buttonStyle !== 'Favorites' ? (notStylizedClosed) : (StylizedClosed)} >
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Bookmark sx={navStyle ? { fontSize: '4.5em' } : { fontSize: '3em' }} />
+                                {navStyle && <Typography sx={textButtons}>Favoritos</Typography>}
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box sx={{ width: '100%' }}>
+                        <Box onClick={() => navigate('/News')} sx={navStyle ? buttonStyle !== 'News' ? (notStylized) : (Stylized) : buttonStyle !== 'News' ? (notStylizedClosed) : (StylizedClosed)} >
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Newspaper sx={navStyle ? { fontSize: '4.5em' } : { fontSize: '3em' }} />
+                                {navStyle && <Typography sx={textButtons}>Notícias</Typography>}
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ width: '95.5%' }}>
-                    <Box onClick={() => navigate('/Classes')} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Groups sx={{fontSize:'4.2vh'}} />
-                            {navStyle && <Typography sx={textButtons}>Classes</Typography>}
-                        </Box>
-                    </Box>
-                </Box>
-                <Box sx={{ width: '95.5%' }}>
-                    <Box onClick={() => navigate('/Favorites')} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Bookmark sx={{fontSize:'4.2vh'}} />
-                            {navStyle && <Typography sx={textButtons}>Favoritos</Typography>}
-                        </Box>
-                    </Box>
-                </Box>
-                <Box sx={{ width: '95.5%' }}>
-                    <Box onClick={() => navigate('/News')} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Newspaper sx={{fontSize:'4.2vh'}} />
-                            {navStyle && <Typography sx={textButtons}>Notícias</Typography>}
-                        </Box>
-                    </Box>
-                </Box>
-                <Box sx={{ width: '95.5%' }}>
-                    <Box sx={{ pl: '2.5vh', borderRadius: '20px', color:'#979797' }} onClick={() => navStyle = 'false'} >
-                        <Close sx={{fontSize:'4.2vh'}} />
+                <Box sx={{ width: '100%', display: 'flex', height:'20%' }} >
+                    <Box sx={{  borderRadius: '20px', color: '#979797', }} >
+                        {navStyle === true ? (
+                            <Close sx={{ fontSize: '4.2em', ml: '0.5em' }} onClick={() => setNavStyle(false)} />
+                        )
+                            :
+                            (
+                                <Menu sx={{ fontSize: '3.5em', ml: '0.2em'}} onClick={() => setNavStyle(true)} />
+                            )
+                        }
                     </Box>
                 </Box>
 

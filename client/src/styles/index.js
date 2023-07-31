@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 import useMobileStyles from './useMobileStyles.js'
 import useChatPageStyles from './useChatPageStyles.js'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     navLinks: {
         '&': {
             position: 'relative',
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
             transformOrigin: '0% 100%',
             left: 0,
             bottom: 0,
-            background: palette => palette.primary.main  
+            background: theme.palette.primary.main  
         }
     },
 
@@ -40,11 +40,11 @@ const useStyles = makeStyles({
             transform: 'scale(1, 1)',
             left: 0,
             bottom: 0,
-            background: palette => palette.primary.main  
+            background: theme.palette.primary.main  
         }
     }
 
     
-})
+}))
 
 export { useStyles, useMobileStyles, useChatPageStyles}
