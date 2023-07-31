@@ -1,6 +1,6 @@
 import { ActionTypes } from '../../../constants'
 
-const { FETCH_ALL, CREATE, LOGOUT, LOGIN} = ActionTypes
+const { FETCH_ALL, CREATE, LOGOUT, LOGIN } = ActionTypes
 
 export default (state=[], action) => {
     switch (action.type) {

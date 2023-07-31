@@ -4,23 +4,23 @@ import Comment from './Comment'
 
 export default function Post({ username, data, date, description }) {
     return (
-        <Box sx={{ width: '100%', mb:'2%'}}>
+        <Box sx={{ width: '100%', mb:'2%' }}>
             <Box sx={{ width: '100%', height: '15%', display: 'flex' }}>
                 <Box sx={{ display: 'flex', width: '100%' }}>
-                    <AccountCircle sx={{ fontSize: '90px', color:'gray', width:'100px',}} />
+                    <AccountCircle sx={{ fontSize: '90px', color:'gray', width:'100px', }} />
                     <Box sx={{ mt: '15px', ml: '1.5%' }}>
                         <Typography sx={{ fontSize: '22px', fontWeight: 'bold' }}>{username}</Typography>
                         <Typography sx={{ fontSize: '15px', color: 'rgba(0,0,0,.50)' }}>{data} • {date}</Typography>
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                    <MoreHoriz sx={{fontSize:'3.1vh'}}/>
+                    <MoreHoriz sx={{ fontSize:'3.1vh' }}/>
                 </Box>
             </Box>
-            <Box sx={{ml:'1.1vh'}}>
+            <Box sx={{ ml:'1.1vh' }}>
                 <Box sx={{ width: '100%', mt: '.6vh', }}>
-                    <Box sx={{ mb: '1%', maxWidth:'100em' , display:'flex', flexDirection:'column'}}>
-                        <Typography sx={{fontSize:'35px', wordWrap:'break-word', }}>
+                    <Box sx={{ mb: '1%', maxWidth:'100em' , display:'flex', flexDirection:'column' }}>
+                        <Typography sx={{ fontSize:'35px', wordWrap:'break-word', }}>
                         AAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                         dadada
                         dua
@@ -46,7 +46,7 @@ export default function Post({ username, data, date, description }) {
 
                 <Comment />
             </Box>
-            <Divider sx={{mt:'2%', width:'100%'}} flexItem />
+            <Divider sx={{ mt:'2%', width:'100%' }} flexItem />
         </Box>
     )
 }

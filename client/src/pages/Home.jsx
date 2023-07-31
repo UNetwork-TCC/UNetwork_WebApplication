@@ -30,7 +30,7 @@ function Home() {
                     <Image src={liquidBg} duration={1000} />
                 </Box>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='56%' bottom={5} position='absolute'>
-                    <Image src={peopleVector} duration={1000}  />
+                    <Image src={peopleVector} duration={1000} />
                 </Box>
             </Box>
             <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
@@ -56,7 +56,7 @@ function Home() {
                     <Box width='50%' overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={350}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><WorkHistory sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature1.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><WorkHistory sx={{ mb: '-3px', mr: '5px' }} />{t('header.feature1.title')}</Typography>
                                 <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature1.content')}</Typography>
                             </Box>
                         </AnimateOnScroll>
@@ -64,7 +64,7 @@ function Home() {
                     <Box overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={450}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Book sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature2.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Book sx={{ mb: '-3px', mr: '5px' }} />{t('header.feature2.title')}</Typography>
                                 <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature2.content')}</Typography>
                             </Box>
                         </AnimateOnScroll>
@@ -72,7 +72,7 @@ function Home() {
                     <Box overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={550}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Token sx={{ mb: '-3px', mr: '5px' }}/>{t('header.feature3.title')}</Typography>
+                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Token sx={{ mb: '-3px', mr: '5px' }} />{t('header.feature3.title')}</Typography>
                                 <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature3.title')}</Typography>
                             </Box>
                         </AnimateOnScroll>

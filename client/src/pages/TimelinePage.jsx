@@ -19,13 +19,13 @@ export default function TimelinePage() {
         <Box sx={{ overflow: 'hidden', }}>
             {matches ? <Header2 /> : <MobileHeader2 />}
             <Divider sx={{ bgcolor: '#673AB7', height: '6px', m: '.6vh 2% 0 2%', borderRadius: '3.1vh' }} variant="middle" />
-            <Box sx={{ display: 'flex', width: '100vw', height:'88vh' }}>
+            <Box sx={{ display: 'flex', width: '100vw', height: '88vh' }}>
                 {matches && (
                     <NavBar />
                 )}
                 <Divider sx={{ m: '10px 0 10px 0' }} variant="middle" orientation='vertical' flexItem />
 
-                <Box sx={{ width: '100%', minWidth:'55%', height: '88vh', }}>
+                <Box sx={{ width: '100%', minWidth: '55%', height: '88vh', }}>
                     <Box sx={{ m: '0 1%', overflow: 'scroll', maxHeight: '100%', '::-webkit-scrollbar': { display: 'none' } }}>
                         <CarouselProvider totalSlides={11} naturalSlideWidth={0} orientation='horizontal' style={{ display: 'flex', }} step={5} touchEnabled isIntrinsicHeight dragEnabled>
 
@@ -56,7 +56,6 @@ export default function TimelinePage() {
                                 <Slider><Slide index={17} style={slides}><Clips username={'18'} /></Slide></Slider>
                                 <Slider><Slide index={17} style={slides}><Clips username={'19'} /></Slide></Slider>
                                 <Slider><Slide index={17} style={slides}><Clips username={'20'} /></Slide></Slider>
-
                             </Box>
                             <ButtonNext style={{ height: '4vh', marginTop: '60px', border: '0px solid gray', borderRadius: '10.1vh', padding: '0 0 0 1%', background: 'none' }}><ArrowForwardIos sx={{ fontSize: '27px' }} /></ButtonNext>
                         </CarouselProvider>
@@ -71,9 +70,9 @@ export default function TimelinePage() {
 
                 <Divider sx={{ m: '1.1vh 0px 1.1vh 0', }} variant="middle" orientation='vertical' flexItem />
                 <Box sx={{ minWidth: '25%', height: '88vh', position: 'relative', zIndex: '2', pt: '3.1vh', }}>
-                    <Box sx={{width:'100%', height:'100%', overflowY: 'scroll' ,'::-webkit-scrollbar': { display: 'none' }}}>
+                    <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
                         <Typography sx={{ color: '#673AB7', fontSize: '22px', mb: '1.6vh', ml: '.8vh', fontWeight: 'bold' }}>Sugestões para você</Typography>
-                        <Box sx={{ height:'100%',maxHeight: '94%', }}>
+                        <Box sx={{ height: '100%', maxHeight: '94%', }}>
                             <Suggestion username={'USERNAME'} />
                             <Suggestion username={'USERNAME'} />
                             <Suggestion username={'USERNAME'} />

@@ -43,13 +43,13 @@ export default function Header2() {
 
             <Box sx={{ display: 'flex', }} alignItems={'center'}>
 
-                <ForumIcon sx={{ fontSize: '3.6vh',  mr: '2.1vh', color:'gray'}} />
+                <ForumIcon sx={{ fontSize: '3.6vh',  mr: '2.1vh', color:'gray' }} />
 
-                <NotificationsIcon sx={{ fontSize: '3.6vh', mr: '2.1vh',color:'gray'}} />
+                <NotificationsIcon sx={{ fontSize: '3.6vh', mr: '2.1vh',color:'gray' }} />
 
                 <Divider orientation="vertical" flexItem variant="middle" sx={{ mr: '2.1vh' }} />
 
-                <AccountCircleIcon sx={{ fontSize: '5.1vh', mr: '1vh', color:'gray'}} />
+                <AccountCircleIcon sx={{ fontSize: '5.1vh', mr: '1vh', color:'gray' }} />
 
                 <Typography sx={{ fontSize: '1.6vh' }}>USERNAME</Typography>
             </Box>

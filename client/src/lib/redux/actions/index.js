@@ -1,7 +1,7 @@
 import { ActionTypes } from '../../../constants'
 import * as api from '../../api'
 
-const { FETCH_ALL, CREATE, GET, UPDATE, DELETE} = ActionTypes
+const { FETCH_ALL, CREATE, GET, UPDATE, DELETE } = ActionTypes
 
 export const fetchUsersAction = () => async dispatch => {
     const { data } = await api.fetchUsers()

@@ -41,7 +41,7 @@ export default function SideBar({ buttonStyle }) {
     const navigate = useNavigate()
 
     return (
-        <Box sx={{ mt: '2.1vh', height:'100%', width:'6vw'}}>
+        <Box sx={{ mt: '2.1vh', height:'100%', width:'6vw' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', mt: '1.1vh', width: '20vw', ml: '0.8vh' }}>
                 <Box sx={{ ml: '0.7vh', mb: '4vh', color: 'rgba(0, 0, 0, 0.54)' }}>
                     <AccountCircle sx={{ fontSize: '9.0vh' }} />
@@ -72,7 +72,7 @@ export default function SideBar({ buttonStyle }) {
                     </Box>
                 </Box>
                 <Box>
-                    <Box sx={{ borderRadius: '2.1vh', mb: '0vh', ml: '2.5vh', color:'gray'}} >
+                    <Box sx={{ borderRadius: '2.1vh', mb: '0vh', ml: '2.5vh', color:'gray' }} >
                         <Menu sx={{ fontSize: '5.5vh' }} />
                     </Box>
                 </Box>

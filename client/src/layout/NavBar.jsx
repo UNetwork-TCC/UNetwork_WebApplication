@@ -73,7 +73,7 @@ export default function NavBar({ buttonStyle }) {
 
     return (
 
-        <Box sx={navStyle ? { mt: '4vh', width: '12.8%', height: '100%', fontSize: '10px',} : { mt: '2.1vh', height: '100%', width: '6%', }}>
+        <Box sx={navStyle ? { mt: '4vh', width: '12.8%', height: '100%', fontSize: '10px', } : { mt: '2.1vh', height: '100%', width: '6%', }}>
             <Box display={'flex'} sx={{ width: '100%', height: '11.5%', bgcolor: 'white', borderRadius: '0 1.1vh 1.1vh 0px', mb: '2vh', }}>
                 <Box sx={navStyle ? { bgcolor: '#673AB7', width: '9em', borderRadius: '0 0.9vh 0.9vh 0px', m: '0.6vh 0', } : {}}>
                     <Box >
@@ -81,7 +81,7 @@ export default function NavBar({ buttonStyle }) {
                     </Box>
                 </Box>
                 {navStyle && (
-                    <Box sx={{ width: '18.1vh', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column', height:'100%'}}>
+                    <Box sx={{ width: '18.1vh', textAlign: 'center', display: 'flex', justifyContent: 'center', flexDirection: 'column', height:'100%' }}>
                         <Typography sx={{ fontSize: '1.6em', fontWeight: 'bold' }}>USERNAME</Typography>
                         <Typography sx={{ fontSize: '1.6em' }}>Estudante</Typography>
                         <Typography sx={{ fontSize: '1.6em' }}>X Conexões</Typography>
@@ -92,7 +92,7 @@ export default function NavBar({ buttonStyle }) {
 
 
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', pl: '4.5%', }}>
-                <Box sx={{height:'70%', width:'100%', }}>
+                <Box sx={{ height:'70%', width:'100%', }}>
                     <Box sx={{ width: '100%' }}>
                         <Box onClick={() => navigate('/materials')} sx={navStyle ? buttonStyle !== 'Materials' ? (notStylized) : (Stylized) : buttonStyle !== 'Materials' ? (notStylizedClosed) : (StylizedClosed)} >
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -101,7 +101,7 @@ export default function NavBar({ buttonStyle }) {
                             </Box>
                         </Box>
                     </Box>
-                    <Box sx={{width:'100%'}}>
+                    <Box sx={{ width:'100%' }}>
                         <Box onClick={() => navigate('/chat')} sx={navStyle ? buttonStyle !== 'Chat' ? (notStylized) : (Stylized) : buttonStyle !== 'Chat' ? (notStylizedClosed) : (StylizedClosed)} >
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Chat sx={navStyle ? { fontSize: '4.5em' } : { fontSize: '3em' }} />
@@ -141,7 +141,7 @@ export default function NavBar({ buttonStyle }) {
                         )
                             :
                             (
-                                <Menu sx={{ fontSize: '3.5em', ml: '0.2em'}} onClick={() => setNavStyle(true)} />
+                                <Menu sx={{ fontSize: '3.5em', ml: '0.2em' }} onClick={() => setNavStyle(true)} />
                             )
                         }
                     </Box>

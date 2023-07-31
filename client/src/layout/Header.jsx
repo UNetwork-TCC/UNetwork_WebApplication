@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
+ 
 import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material'
-import { DarkMode, LightMode} from '@mui/icons-material'
+import { DarkMode, LightMode } from '@mui/icons-material'
 import { useContext } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
@@ -57,7 +57,7 @@ export default function Header() {
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
                     <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth'>{t('nav.btn5')}</Link></Button>
-                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText}} to='/auth'>{t('nav.btn6')}</Link></Button>
+                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('nav.btn6')}</Link></Button>
                 </Box>
                 {/* <Box height={40} border='1px solid'></Box> */}
                 <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />

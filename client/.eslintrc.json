@@ -27,7 +27,9 @@
             "error",
             4
         ],
+        "object-curly-spacing": [2, "always"],
         "react-refresh/only-export-components": "warn",
+        "react/prop-types": 0,
         "linebreak-style": [
             "error",
             "windows"

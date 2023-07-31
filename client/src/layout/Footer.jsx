@@ -62,7 +62,7 @@ export default function Footer() {
                                 navigate(`/home/${e.target.value}`)
                                 window.location.reload()
                                 localStorage.setItem('lang', e.target.value)
-                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50}} defaultValue='br' value={localStorage.getItem('lang')}>
+                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue='br' value={localStorage.getItem('lang')}>
                                 <MenuItem value='br' >
                                     <Box display='flex' position='relative' bottom={3}>
                                         <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagBR}/>
