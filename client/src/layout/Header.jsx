@@ -1,73 +1,36 @@
- 
-import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material'
-import { DarkMode, LightMode } from '@mui/icons-material'
-import { useContext } from 'react'
-import { darkTheme, lightTheme } from '../themes'
-import { themeContext } from '../contexts'
-import { useStyles } from '../styles'
-import { Link, Navigate } from 'react-router-dom'
-
+import { Avatar, Box, TextField, Typography } from '@mui/material'
 import logo from '../assets/img/Logo.png'
-import lightLogo from '../assets/img/LightLogo.png'
-import { useTranslation } from 'react-i18next'
+import { Email, Search } from '@mui/icons-material'
+import CustomLink from './CustomLink'
+import CustomInput from './CustomInput'
 
 export default function Header() {
-    const { theme, setTheme } = useContext(themeContext)
-    const classes = useStyles(theme)
-
-    const { t } = useTranslation()
-
-    function StyledLink({ name }) {
-        return (
-            <MuiLink className={`${classes.navLinks}`} href={`#${name}`}>
-                <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>
-            </MuiLink>
-        )
-    }
-
-    const setAppTheme = () => {
-        if (theme.palette.mode === 'light')
-            setTheme(darkTheme)
-        else
-            setTheme(lightTheme)
-    }      
-
     return (
-        <Box
-            display='flex'
-            justifyContent='space-around'
-            alignItems='center'
-            position='sticky'
-            p={2.5}
-        >
-            <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                { theme?.palette.mode === 'light' ?
-                    <img width={75} height={75} src={logo} alt="Logo" />
-                    :                    
-                    <img width={75} height={75} src={lightLogo} alt="Logo" />
-                }
-                <Typography variant='inherit' sx={{ letterSpacing: '2px', mt: 1 }}>UNetwork</Typography>
+        <Box position='sticky' p='1rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
+            <Box sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
+                <img height={50} width={50} src={logo}></img>
+                <Typography ml>UNetwork</Typography>
             </Box>
-            <Box display='flex' width={300} gap={5} p>
-                <StyledLink name={t('nav.btn1')} />
-                <StyledLink name={t('nav.btn2')} />
-                <StyledLink name={t('nav.btn3')} />
-                <StyledLink name={t('nav.btn4')} />
+            <Box display='flex' width='33%'>
+                <CustomInput 
+                    width='100%'
+                    bgcolor='grey.100'
+                    color='white'
+                    placeholder='Pesquise...'
+                    icon={<Search />}
+                />
             </Box>
-            <Box display='flex' height='100%'>
-                <Box mr='25px'>
-                    <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth'>{t('nav.btn5')}</Link></Button>
-                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('nav.btn6')}</Link></Button>
-                </Box>
-                {/* <Box height={40} border='1px solid'></Box> */}
-                <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />
-                <Box display='flex' justifyContent='center' alignItems='center'>
-                    { theme?.palette.mode === 'light' ?
-                        <DarkMode onClick={setAppTheme} sx={{ height: '30px', width: '50px', cursor: 'pointer' }} />
-                        :
-                        <LightMode onClick={setAppTheme} sx={{ height: '30px', width: '50px', cursor: 'pointer' }} />
-                    }
-                </Box>
+            <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
+                <CustomLink name='Chats'/>
+                <CustomLink name='Classes'/>
+                <CustomLink name='Materiais'/>
+                <CustomLink name='Notícias'/>
+            </Box>
+            <Box gap={5} display='flex'>
+                <Avatar>
+                    <Email />
+                </Avatar>
+                <Avatar sx={{ background: 'white', color: 'grey.400' }} />
             </Box>
         </Box>
     )

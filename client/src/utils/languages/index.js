@@ -12,6 +12,8 @@ import AR from './ar.json'
 import { initReactI18next } from 'react-i18next'
 import i18next from 'i18next'
 
+const lang = navigator.language.split('-')[1].toLowerCase()
+
 const resources = {
     'br': BR,
     'us': US,
@@ -29,7 +31,7 @@ i18next
     .use(initReactI18next)
     .init({
         resources,
-        lng: localStorage.getItem('lang'),
+        lng: localStorage.getItem('lang') || lang,
         interpolation: {
             escapeValue: false
         }

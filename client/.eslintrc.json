@@ -28,6 +28,12 @@
             4
         ],
         "object-curly-spacing": [2, "always"],
+        "array-bracket-spacing": [2, "always"],
+        "space-infix-ops": "error",
+        "camelcase": "error",
+        "arrow-spacing": "error",
+        "space-before-blocks": "error",
+        "block-spacing": "error",
         "react-refresh/only-export-components": "warn",
         "react/prop-types": 0,
         "linebreak-style": [

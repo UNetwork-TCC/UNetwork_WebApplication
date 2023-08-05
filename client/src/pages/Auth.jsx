@@ -1,7 +1,7 @@
-import { Header } from '../layout'
+import { LandingPageHeader } from '../layout'
 
 export default function Auth() {
     return (
-        <Header />
+        <LandingPageHeader />
     )
 }

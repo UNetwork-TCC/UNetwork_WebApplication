@@ -14,9 +14,9 @@ export default function Comment() {
 
     const matches = useMediaQuery('(min-width: 600px)')
 
-    const [text, setText] = useState('')
+    const [ text, setText ] = useState('')
 
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
