@@ -19,6 +19,9 @@ export default function Footer() {
     const lang = navigator.language.split('-')[1].toLowerCase()
     const { t } = useTranslation()
 
+    let lng = navigator.language
+    lng = lng.split('-')[1].toLowerCase()
+
     return (
         <Box sx={{ background: `url(${FooterBackground})`, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '180vh', height: '70vh', width: '100%' }}>
             <Box display='flex' width='100%' height='100%' justifyContent='space-around' alignItems='center'>
@@ -57,8 +60,7 @@ export default function Footer() {
                         <Box>
                             <Select onChange={e => {
                                 localStorage.setItem('lang', e.target.value)
-                                window.location.href = `/${e.target.value}`
-                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue={lang || 'br'} value={localStorage.getItem('lang')}>
+                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50}} defaultValue={lng} value={localStorage.getItem('lang')}>
                                 <MenuItem value='br' >
                                     <Box display='flex' position='relative' bottom={3}>
                                         <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagBR}/>
