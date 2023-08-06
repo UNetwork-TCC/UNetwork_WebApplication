@@ -62,11 +62,8 @@ const useStyles = makeStyles(theme => ({
     wrapper: {
         display: 'flex',
         flexDirection: 'column',
-        height: '95vh',
-        width: '95vw',
         overflowX: 'hidden',
-        background: 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3))',
-        borderRadius: '1rem',
+        background: 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3))',
         boxShadow: '5px 5px 10px',
         transition: '.3s ease-in-out'
     },
@@ -106,6 +103,44 @@ const useStyles = makeStyles(theme => ({
             background: theme.palette?.primary.main,
         }
     },
+
+    sideBarLinks: {
+        '&': {
+            display: 'flex',
+            position: 'relative',
+            border: 'none',
+            transition: '.3s ease-in-out',
+            borderRadius: '15px',
+            cursor: 'pointer',
+        },
+
+        '&:hover': { 
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText
+        },
+
+        '&:hover::after': {
+            transform: 'scale(1, 1)',
+            borderRadius: '15px',
+        },
+        
+
+        '&::after': {
+            content: '""',
+            position: 'absolute',
+            transition: 'ease .3s',
+            height: '100%',
+            borderRadius: '15px',
+            zIndex: -1,
+            marginLeft: '20px',
+            width: '80%',
+            transform: 'scale(0, 1)',
+            transformOrigin: '0% 100%',
+            left: 0,
+            bottom: 0,
+            background: theme.palette.primary.main  
+        }
+    }
 
     
 }))

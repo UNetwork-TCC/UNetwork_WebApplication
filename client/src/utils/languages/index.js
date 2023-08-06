@@ -31,7 +31,7 @@ i18next
     .use(initReactI18next)
     .init({
         resources,
-        lng,
+        lng: localStorage.getItem('lang') || lng,
         interpolation: {
             escapeValue: false
         }

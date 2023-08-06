@@ -18,10 +18,6 @@ function LandingPage() {
 
     const { t } = useTranslation()
 
-    useEffect(() => {
-        localStorage.setItem('lang', lang)
-    }, [])
-
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <LandingPageHeader />
