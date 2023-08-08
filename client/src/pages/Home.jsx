@@ -10,10 +10,10 @@ export default function Feed() {
 
     return (
         <AppLayout withSidebars>
-            <Box display='flex'justifyContent='start' alignItems='center' flexDirection='column' p={3} width='70%' height='100%'>
+            <Box display='flex'justifyContent='start' alignItems='center' flexDirection='column' p={3} mt={5} width='70%' height='100%'>
                 <Box width='100%'>
                     <CustomInput
-                        sx={{ boxShadow: theme.shadows[2] }} 
+                        sx={{ boxShadow: theme.shadows[5] }} 
                         fullWidth
                         width='100%'
                         bgcolor='white'

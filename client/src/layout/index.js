@@ -6,5 +6,6 @@ import CustomDivider from './CustomDivider'
 import Topic from './Topic'
 import SideBar from './SideBar'
 import NavBar from './NavBar'
+import LoadingBackdrop from './LoadingBackdrop'
 
-export { LandingPageHeader, Layout, Footer, Header, CustomDivider, Topic, SideBar, NavBar }
+export { LandingPageHeader, LoadingBackdrop, Layout, Footer, Header, CustomDivider, Topic, SideBar, NavBar }
