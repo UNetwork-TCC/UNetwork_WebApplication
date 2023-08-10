@@ -6,7 +6,7 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import { LandingPage, ErrorPage } from './pages'
+import { LandingPage, ErrorPage, FavoritesPage } from './pages'
 import ThemeStore from './layout/ThemeStore'
 import Auth from './pages/Auth'
 import './utils/languages'
@@ -28,7 +28,9 @@ function App() {
                             <Route path="/auth" element={<Auth />} />
                             <Route path="/error" element={<ErrorPage />} />
                             <Route path='/app' element={<Home />} />
+                            <Route path='/app/favorites' element={<FavoritesPage />} />
                             <Route path='/app/*' element={<Navigate to='/error' />} />
+                            
                         </Routes>
                     </ThemeStore>
                 </GoogleOAuthProvider>

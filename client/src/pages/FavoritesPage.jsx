@@ -1,35 +1,28 @@
-import { Avatar, Box, Divider, Typography, useMediaQuery, Card, Grid, Modal } from '@mui/material'
-import NavBar from '../layout/NavBar'
-import { Add } from '@mui/icons-material'
+import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button } from '@mui/material'
+import { Add, DisabledByDefault, Send } from '@mui/icons-material'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
-import { grey } from '@mui/material/colors'
 import { useState } from 'react'
 import { Folder } from '../components'
+import AppLayout from '../layout/AppLayout'
+import { grey } from '@mui/material/colors'
 
 export default function FavoritesPage() {
-    const matches = useMediaQuery('(min-width: 600px)')
     const [ folderArr, setFolderArr ] = useState([])
     const [ open, setOpen ] = useState(false)
     
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-
-
-    // eslint-disable-next-line no-unused-vars
     function addFolder() { 
         setFolderArr([ ...folderArr, <Folder key={folderArr.length} /> ])
     }
 
     return (
-        <>
+        <AppLayout withSidebars>
             <Box sx={{ overflow: 'hidden' }}> 
                 <Divider sx={{ bgcolor: '#673AB7', height: '.6vh', m: '.6vh 2% 0 2%', borderRadius:'3.1vh' }} variant="middle" />
                 <Box sx={{ display: 'flex', height:'88vh' }}>
-                    {matches && (
-                        <NavBar buttonStyle={'Favorites'} />
-                    )}
                     <Divider sx={{ m: '10px 5px 10px 0', }} variant="middle" orientation='vertical' flexItem />
                     <Box display={'flex'} flexDirection={'column'}></Box>
                     <Box p={1} sx={{ mr: '5px' }}>
@@ -41,7 +34,7 @@ export default function FavoritesPage() {
                         </Box> 
                         <Box>
                             <Card sx={{
-                                bgcolor: grey[200],
+                                bgcolor: 'gless',
                                 height: '70rem',
                                 width: '65rem',
                                 display: 'flex',
@@ -53,16 +46,6 @@ export default function FavoritesPage() {
                                 <Grid container rowSpacing={1} columnSpacing={3} gap={3} columns={4} width={'auto'}>
                                     <Stack spacing={2} display={'flex'} alignItems={'start'}>
                                         <Folder/>
-                                        <Skeleton variant="rounded" width={210} height={60} />
-                                        <Skeleton variant="rounded" width={210} height={60} />
-                                    </Stack> 
-                                    <Stack spacing={2} display={'flex'} alignItems={'end'}>
-                                        <Skeleton variant="rounded" width={210} height={60} />
-                                        <Skeleton variant="rounded" width={210} height={60} />
-                                        <Skeleton variant="rounded" width={210} height={60} />
-                                    </Stack> 
-                                    <Stack spacing={2} display={'flex'} alignItems={'end'}>
-                                        <Skeleton variant="rounded" width={210} height={60} />
                                         <Skeleton variant="rounded" width={210} height={60} />
                                         <Skeleton variant="rounded" width={210} height={60} />
                                     </Stack> 
@@ -83,19 +66,27 @@ export default function FavoritesPage() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box display='flex' justifyContent='center' alignItems='center' height={'100vh'}> 
-                    <Box sx={{ height: 500, width: 500, bgcolor:'background.paper' }}>
+                <Box display='flex' justifyContent='center' alignItems='center' height={'100vh'}>
+                    <Box p sx={{ height: 300, width: 400, bgcolor:'background.paper'}} >
+                        <Box sx={{ cursor:'pointer' }}  display='flex' justifyContent='end'>
+                            <DisabledByDefault onClick={handleClose} sx={{ width: '2rem', height: '1.5rem'}} />
+                        </Box>
+                       
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
+                            Title
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        <Box display={'flex'}>
+                            <Button variant="outlined" sx={{ bgcolor: grey[200], width: '6rem', height: '1.5rem'}}>
+                                Salvar
+                                
+                            </Button>
+                        <Send sx={{ width: '1rem', height: '1rem' }}/>
+                        </Box>
                     </Box>
                 </Box>
             </Modal>
 
-        </>
+        </AppLayout>
 
     )
 }
