@@ -1,3 +1,5 @@
+import { grey } from "@mui/material/colors"
+
 const defaultThemeProps = {
     typography: {
         fontFamily: '\'Public Sans\', sans-serif'
@@ -10,6 +12,20 @@ const defaultThemeProps = {
                     color: 'rgba(0, 0, 0, 0.42)'
                 }
             }
+        },
+
+        MuiAvatar: {
+            variants: [
+                {
+                    props: { variant: 'iconWrapper' },
+                    style: {
+                        borderRadius: '15px',
+                        border: `${grey[300]} 1px solid`,
+                        background: grey[100],
+                        color: grey[400]
+                    }
+                }
+            ]
         },
 
         MuiLink: {

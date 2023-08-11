@@ -1,6 +1,7 @@
 import { Avatar, Box, MenuItem, Select, Typography } from '@mui/material'
 import FooterBackground from '../assets/svg/Home/FooterBackground.svg'
 import { FacebookRounded, Instagram, Language, LinkedIn, Twitter } from '@mui/icons-material'
+import { useEffect } from 'react'
 
 import FlagBR from '../assets/svg/Flags/BR.svg'
 import FlagUS from '../assets/svg/Flags/US.svg'
@@ -8,19 +9,40 @@ import FlagDE from '../assets/svg/Flags/DE.svg'
 import FlagFR from '../assets/svg/Flags/FR.svg'
 import FlagES from '../assets/svg/Flags/ES.svg'
 import FlagRU from '../assets/svg/Flags/RU.svg'
-import FlagAR from '../assets/svg/Flags/AR.svg'
+import FlagSA from '../assets/svg/Flags/SA.svg'
 import FlagCN from '../assets/svg/Flags/CN.svg'
 import FlagJP from '../assets/svg/Flags/JP.svg'
 import FlagIN from '../assets/svg/Flags/IN.svg'
 
-
-import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router-dom'
 
 export default function Footer() {
-    const navigate = useNavigate()
-
+    const { lang: language } = useParams()
+    const lang = navigator.language.split('-')[1].toLowerCase()
     const { t } = useTranslation()
+
+    useEffect(() => {
+        if (localStorage.getItem('lang') && language !== localStorage.getItem('lang')) {
+
+            if (
+                language !== 'br'
+                && language !== 'us'
+                && language !== 'fr'
+                && language !== 'de'
+                && language !== 'es'
+                && language !== 'hi'
+                && language !== 'ru'
+                && language !== 'zh'
+                && language !== 'jp'
+                && language !== 'ar'
+            ) localStorage.setItem('lang', 'br') 
+
+            localStorage.setItem('lang', language)
+            window.location.reload()
+        }
+    }, [ language ])
+
 
     return (
         <Box sx={{ background: `url(${FooterBackground})`, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '180vh', height: '70vh', width: '100%' }}>
@@ -59,10 +81,9 @@ export default function Footer() {
                     <Box>
                         <Box>
                             <Select onChange={e => {
-                                navigate(`/home/${e.target.value}`)
-                                window.location.reload()
                                 localStorage.setItem('lang', e.target.value)
-                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50}} defaultValue='br' value={localStorage.getItem('lang')}>
+                                window.location.href = '/' + e.target.value
+                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue={'br'} value={localStorage.getItem('lang') || lang}>
                                 <MenuItem value='br' >
                                     <Box display='flex' position='relative' bottom={3}>
                                         <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagBR}/>
@@ -113,7 +134,7 @@ export default function Footer() {
                                 </MenuItem>
                                 <MenuItem value='ar' >
                                     <Box display='flex' position='relative' bottom={3}>
-                                        <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagAR}/>
+                                        <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagSA}/>
                                         <Typography position='relative' top={8}>
                                             AR
                                         </Typography>

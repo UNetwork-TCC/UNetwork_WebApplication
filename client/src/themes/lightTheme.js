@@ -36,7 +36,7 @@ let lightTheme = createTheme({
     },
 
     components: {
-        ...defaultThemeProps.components
+        ...defaultThemeProps.components,
     }
 })
 

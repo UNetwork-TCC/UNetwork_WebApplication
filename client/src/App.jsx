@@ -6,32 +6,31 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import { Home, ErrorPage, ChatPage, ClassesPage, FavoritesPage, MaterialsPage, NewsPage, TimelinePage} from './pages'
+import { LandingPage, ErrorPage, FavoritesPage } from './pages'
 import ThemeStore from './layout/ThemeStore'
 import Auth from './pages/Auth'
 import './utils/languages'
+import { Home } from './pages'
 
 function App() {
-    const [theme, setTheme] = useState(lightTheme)
+    const [ theme, setTheme ] = useState(lightTheme)
+    const lang = navigator.language.split('-')[1].toLowerCase()
 
     return (
         <Router>
             <themeContext.Provider value={{ theme, setTheme }}>
-                <GoogleOAuthProvider clientId={ GOOGLE_CLIENT_ID }>
+                <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
                     <ThemeStore>
                         <CssBaseline />
                         <Routes>
-                            <Route path="/" element={<Navigate to='/home/br' />} />
-                            <Route path="/home/:lang" element={<Home />} />
-                            <Route path="/chat" element={<ChatPage />} />
+                            <Route path="/" element={<Navigate to={'/' + lang} />} />
+                            <Route path="/:lang" element={<LandingPage />} />
                             <Route path="/auth" element={<Auth />} />
-                            <Route path="/classes" element={<ClassesPage />} />
-                            <Route path="/favorites" element={<FavoritesPage />} />
-                            <Route path="/materials" element={<MaterialsPage />} />
-                            <Route path="/timeline" element={<TimelinePage />} />
-                            <Route path="/news" element={<NewsPage />} />
                             <Route path="/error" element={<ErrorPage />} />
+                            <Route path='/app' element={<Home />} />
+                            <Route path='/app/favorites' element={<FavoritesPage />} />
                             <Route path='/app/*' element={<Navigate to='/error' />} />
+                            
                         </Routes>
                     </ThemeStore>
                 </GoogleOAuthProvider>

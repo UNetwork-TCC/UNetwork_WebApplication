@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+ 
 import { Box } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { Animation } from 'react-animate-style'

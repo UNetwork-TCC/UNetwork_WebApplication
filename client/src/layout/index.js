@@ -1,11 +1,11 @@
-import Header from './Header'
+import LandingPageHeader from './LandingPageHeader'
 import Layout from './ThemeStore'
 import Footer from './Footer'
-import MobileHeader2 from './MobileHeader2'
-import MobileNavBar from './MobileNavBar'
-import NavBar from './NavBar'
-import Header2 from './Header2'
+import Header from './Header'
 import CustomDivider from './CustomDivider'
 import Topic from './Topic'
+import SideBar from './SideBar'
+import NavBar from './NavBar'
+import LoadingBackdrop from './LoadingBackdrop'
 
-export { Header, Layout, Footer, MobileHeader2, MobileNavBar, NavBar, Header2, CustomDivider, Topic}
+export { LandingPageHeader, LoadingBackdrop, Layout, Footer, Header, CustomDivider, Topic, SideBar, NavBar }

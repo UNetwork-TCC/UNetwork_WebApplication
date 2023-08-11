@@ -13,9 +13,9 @@ export default function Chat() {
 
     const matches = useMediaQuery('(min-width: 600px)')
 
-    const [text, setText] = useState('')
+    const [ text, setText ] = useState('')
 
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
@@ -41,13 +41,13 @@ export default function Chat() {
 
                     />
                     <IconButton aria-label="File" size='large'>
-                        <ImageOutlinedIcon sx={{fontSize:'3.1vh'}}/>
+                        <ImageOutlinedIcon sx={{ fontSize:'3.1vh' }}/>
                     </IconButton>
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='large'>
-                        <EmojiEmotionsIcon sx={{fontSize:'3.1vh'}}/>
+                        <EmojiEmotionsIcon sx={{ fontSize:'3.1vh' }}/>
                     </IconButton>
                     <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '1.1vh', bgcolor: '#673AB7', borderRadius: '0 2.1vh 2.1vh 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" >
-                        <SendIcon sx={{fontSize:'3vh'}} />
+                        <SendIcon sx={{ fontSize:'3vh' }} />
                     </Box>
                 </Box>
 
