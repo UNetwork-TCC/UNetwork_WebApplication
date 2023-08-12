@@ -4,6 +4,8 @@ import { Post } from '../components'
 import { Add } from '@mui/icons-material'
 import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
+import roubo from '../assets/img/paraPiada/roubo.jpg'
+
 
 export default function Feed() {
     const theme = useTheme()
@@ -24,7 +26,9 @@ export default function Feed() {
                     />
                 </Box>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
-                    <Post />
+                    <Post title={'Roubos gerais'} name={'Filhos do jonatas'} date={'3 horas atrás'} content={'aaaaaaaaaaaaaaaaaa teste de tudoaaaaaaaaaaaa FLExivelllllllllllllllllllllllll  aaaaaaaaaaaaaaaaaaaa  aaaaaa'}/>
+                    <Post title={'Piada'} name={'2ºADM'} date={'3 horas atrás'} content={<img src={roubo} duration={1000} />}/>
+
                 </Box>
             </Box>
         </AppLayout>
