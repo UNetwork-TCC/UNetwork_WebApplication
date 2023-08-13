@@ -13,7 +13,7 @@ export default function Header({ minimize, maximize, close }) {
                     <FilterNone onClick={maximize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                     <Close onClick={close} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                 </Box>
-                <Box position='sticky' p='1.5rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
+                <Box position='sticky'  p='1.5rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
                     <Box sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
                         <img height={50} width={50} src={logo}></img>
                         <Typography ml>UNetwork</Typography>

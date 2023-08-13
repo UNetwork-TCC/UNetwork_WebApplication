@@ -11,6 +11,7 @@ import ThemeStore from './layout/ThemeStore'
 import Auth from './pages/Auth'
 import './utils/languages'
 import { Home } from './pages'
+import MaterialsPage from './pages/MaterialsPage'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
@@ -29,6 +30,7 @@ function App() {
                             <Route path="/error" element={<ErrorPage />} />
                             <Route path='/app' element={<Home />} />
                             <Route path='/app/favorites' element={<FavoritesPage />} />
+                            <Route path='/app/materials' element={<MaterialsPage />} />
                             <Route path='/app/*' element={<Navigate to='/error' />} />
                             
                         </Routes>

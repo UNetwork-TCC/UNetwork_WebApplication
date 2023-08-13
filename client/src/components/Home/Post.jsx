@@ -39,14 +39,14 @@ export default function Post({ title, date, name, content }) {
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <AccountBox sx={{ fontSize: '7em' }} />
                         <Box sx={{ ml: '0.5em' }}>
-                            <Typography sx={{ fontSize: '2em', fontWeight: 'bold' }}>{name}</Typography>
+                            <Typography sx={{ fontSize: '2em', fontWeight: 'bold', }}>{name}</Typography>
                             <Typography sx={{ color: 'gray', fontSize: '1.7em', fontWeight: 'bold' }}>{date}</Typography>
                         </Box>
                     </Box>
                 </Box>
                 <Box sx={{}}>
 
-                    <Typography sx={{ fontSize: '2em' }}>{content}</Typography>
+                    <Typography sx={{ fontSize: '2.5em' }}>{content}</Typography>
                     
                     
                     
@@ -58,7 +58,7 @@ export default function Post({ title, date, name, content }) {
                             <FavoriteBorder onClick={() => setFavoriteCLicket(true)} sx={buttons} />}
                     </IconButton>
                     <IconButton sx={areaIcons}><ChatBubbleRounded sx={buttons} /></IconButton>
-                    <IconButton sx={areaIcons}><Reply sx={{fontSize: '1.3em', transform: 'scaleX(-1)'}} /></IconButton>
+                    <IconButton sx={areaIcons}><Reply sx={{...buttons, transform: 'scaleX(-1)'}} /></IconButton>
                 </Box>
             </Container>
         </Card>

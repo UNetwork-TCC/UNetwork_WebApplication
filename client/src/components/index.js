@@ -12,6 +12,7 @@ import Folder from './FavoritePage/Folder'
 import Comment from './Timeline/Comment'
 import Login from './Auth/Login'
 import Register from './Auth/Register'
+import FolderMaterials from './Materials/FolderMaterials'
 
 export { 
     DiscoverSection,
@@ -28,4 +29,5 @@ export {
     Comment,
     Login,
     Register,
+    FolderMaterials
 }
