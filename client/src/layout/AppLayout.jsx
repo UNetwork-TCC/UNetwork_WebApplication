@@ -4,6 +4,7 @@ import { useStyles } from '../styles'
 import { Header, LoadingBackdrop } from '../layout'
 import { Bookmark, Home, Message } from '@mui/icons-material'
 import { useState } from 'react'
+import bg from '../assets/img/bg.jpg'
 
 export default function AppLayout({ children, sx, withSidebars }) {
     const classes = useStyles()
@@ -47,6 +48,15 @@ export default function AppLayout({ children, sx, withSidebars }) {
         <>
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
+                    <img src={bg} style={{
+                        zIndex: -2,
+                        opacity: 0.5,
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        width: '100%',
+                        height: 'auto'
+                    }} />
                     <Box sx={{ height: '95vh', width: '95vw', borderRadius: '1rem', ...boxStyles }} className={classes.wrapper}>
                         <Header 
                             minimize={minimize}
@@ -87,7 +97,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                                     </Stack>
                                 </Sidebar>
                             }
-                            <Box display='flex' justifyContent='center' width={withSidebars ? '80%' : '100%'}>
+                            <Box display='flex' justifyContent='center' overflow='auto' mb={15} width={withSidebars ? '80%' : '100%'}>
                                 {children}
                             </Box>
                             { withSidebars &&

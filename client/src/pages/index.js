@@ -6,4 +6,4 @@ import Home from './Home'
 import Suggestion from '../components/Timeline/Suggestion'
 import MaterialsPage from './MaterialsPage'
 
-export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home }
+export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage }

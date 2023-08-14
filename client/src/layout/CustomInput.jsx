@@ -2,7 +2,7 @@ import { Avatar, Box, TextField } from '@mui/material'
 
 export default function CustomInput({ inputWidth, width, icon, bgcolor, color, sx, value, defaultValue, placeholder, onChange, fullWidth, iconColor }) {
     return (
-        <Box width={ width ?`calc(${width} + 2.75rem)` : 'calc(100% + 2rem)'} display='flex' justifyContent='center'>
+        <Box width={ width ? `calc(${width} + 2.75rem)` : 'calc(100% + 2rem)'} display='flex' justifyContent='center'>
             <TextField
                 width={inputWidth}
                 placeholder={placeholder}

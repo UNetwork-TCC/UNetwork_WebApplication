@@ -1,4 +1,4 @@
-import { grey } from "@mui/material/colors"
+import { grey } from '@mui/material/colors'
 
 const defaultThemeProps = {
     typography: {
@@ -46,9 +46,9 @@ const defaultThemeProps = {
                         phone: '32px'
                     }
                 },
-                
+
                 // Custom Scrollbar
-                
+
                 body: {
                     backgroundColor: '#fafafa',
                 },

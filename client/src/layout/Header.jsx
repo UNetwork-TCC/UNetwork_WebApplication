@@ -3,18 +3,21 @@ import logo from '../assets/img/Logo.png'
 import { Email, Search, FilterNone, Close, Minimize } from '@mui/icons-material'
 import CustomLink from './CustomLink'
 import CustomInput from './CustomInput'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header({ minimize, maximize, close }) {
+    const navigate = useNavigate()
+
     return (
-        <Box position='sticky'>
+        <Box>
             <Box bgcolor='white' >
-                <Box width='100%' gap={2} p position='absolute' top={0} zIndex={1} display='flex' justifyContent='end' alignItems='center'>
+                <Box width='100%' gap={2} p position='relative' mb={-4} top={2} zIndex={1} display='flex' justifyContent='end' alignItems='center'>
                     <Minimize onClick={minimize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                     <FilterNone onClick={maximize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                     <Close onClick={close} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                 </Box>
-                <Box position='sticky'  p='1.5rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
-                    <Box sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
+                <Box  p='1.5rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
+                    <Box onClick={() => navigate('/app')} sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
                         <img height={50} width={50} src={logo}></img>
                         <Typography ml>UNetwork</Typography>
                     </Box>

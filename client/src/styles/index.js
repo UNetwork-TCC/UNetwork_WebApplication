@@ -2,7 +2,6 @@
 import { makeStyles } from '@mui/styles'
 import useMobileStyles from './useMobileStyles.js'
 import useChatPageStyles from './useChatPageStyles.js'
-import bg from '../assets/img/bg.jpg'
 
 const useStyles = makeStyles(theme => ({
     navLinks: {
@@ -46,14 +45,12 @@ const useStyles = makeStyles(theme => ({
     },
 
     body: {
+        overflow: 'hidden',
+        position: 'relative',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexGrow: 1,
-        background: `url(${bg})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        opacity: '0.5',
         minHeight: '100vh',
         width: '100vw',
         overflowX: 'hidden',
@@ -62,7 +59,7 @@ const useStyles = makeStyles(theme => ({
     wrapper: {
         display: 'flex',
         flexDirection: 'column',
-        overflowX: 'hidden',
+        overflow: 'hidden',
         background: 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3))',
         boxShadow: '5px 5px 10px',
         transition: '.3s ease-in-out'
