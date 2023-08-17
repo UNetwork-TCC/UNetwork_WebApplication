@@ -45,7 +45,6 @@ export default function Feed() {
                         user={{ name: '3°DS' }}
                         img={roubo}    
                     />
-
                 </Box>
             </Box>
         </AppLayout>

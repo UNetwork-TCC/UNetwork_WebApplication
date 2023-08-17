@@ -1,12 +1,39 @@
-import { Avatar, Box, Typography } from '@mui/material'
+import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Typography } from '@mui/material'
 import logo from '../assets/img/Logo.png'
-import { Email, Search, FilterNone, Close, Minimize } from '@mui/icons-material'
+import { Search, FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, ExitToApp } from '@mui/icons-material'
 import CustomLink from './CustomLink'
 import CustomInput from './CustomInput'
 import { useNavigate } from 'react-router-dom'
+import { CustomMenu } from '.'
+import { useState } from 'react'
 
 export default function Header({ minimize, maximize, close }) {
     const navigate = useNavigate()
+
+    const [ anchorEl, setAnchorEl ]  = useState(null)
+    const [ menuContent, setMenuContent ]  = useState(null)
+    const open = Boolean(anchorEl)
+    const handleClick = (e, elements, icons = null, userMenu = null, onClickEvents = elements.map(() => handleClose)) => {
+        const mapedElements = elements.map((e, i) =>
+            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{ icons && icons[i]}{e}</MenuItem>
+        )
+        
+        setAnchorEl(e.currentTarget)
+        
+        if (userMenu) setMenuContent([ 
+            <MenuItem disableRipple key={-2}>
+                <Avatar sx={{ background: 'transparent' }} /> Perfil
+            </MenuItem>,
+            <Divider key={-1} />,
+            ...mapedElements
+        ]) 
+        else setMenuContent(mapedElements)
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
+
+    const notification = true
 
     return (
         <Box>
@@ -16,7 +43,7 @@ export default function Header({ minimize, maximize, close }) {
                     <FilterNone onClick={maximize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                     <Close onClick={close} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                 </Box>
-                <Box  p='1.5rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
+                <Box p='1.5rem' bgcolor='white' display='flex' justifyContent='space-around' alignItems='center' >
                     <Box onClick={() => navigate('/app')} sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
                         <img height={50} width={50} src={logo}></img>
                         <Typography ml>UNetwork</Typography>
@@ -36,11 +63,40 @@ export default function Header({ minimize, maximize, close }) {
                         <CustomLink name='Materiais' />
                         <CustomLink name='Notícias' />
                     </Box>
-                    <Box gap={5} display='flex'>
-                        <Avatar>
-                            <Email />
-                        </Avatar>
-                        <Avatar sx={{ background: 'white', color: 'grey.400' }} />
+                    <Box gap={3} display='flex'>
+                        <Box> {
+                            notification ?
+                                <Badge badgeContent='+99' color='primary'>
+                                    <IconButton onClick={e => handleClick(e, [ 'Message1', 'Message2' ])}>
+                                        <Avatar>
+                                            <Notifications />
+                                        </Avatar>
+                                    </IconButton>
+                                </Badge>    
+                                :
+                                <IconButton onClick={e => handleClick(e, [ 'Message1', 'Message2' ])}>
+                                    <Avatar>
+                                        <Notifications />
+                                    </Avatar>
+                                </IconButton>
+                        }
+                            
+                        </Box>
+                        <IconButton onClick={e => handleClick(e, 
+                            [ 'Configurações', 'Ajuda e suporte', 'Dar feedback', 'Sair' ],
+                            [ <Settings key={0} />, <Help key={1} />, <Feedback key={2} />, <ExitToApp key={3} /> ],
+                            [ () => {}, () => {}, () => {}, () => { handleClose(); close() } ],
+                            true
+                        )}>
+                            <Avatar sx={{ background: 'white', color: 'grey.400' }} />
+                        </IconButton>
+                        <CustomMenu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            {menuContent}
+                        </CustomMenu>
                     </Box>
                 </Box>
             </Box>
