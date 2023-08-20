@@ -1,11 +1,14 @@
-import { Box, Button, Link, Typography } from '@mui/material'
+import { Box, Button, Link, Paper, Typography } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
 export default function FolderMaterials({ FolderName, id }) {
     return (
-        <Box sx={{ margin:'0 0 0 0px',display: 'flex', flexDirection: 'column', bgcolor: 'white', width: '18em', height: '15em', borderRadius: '.6vh',boxShadow:'5px 5px rgba(0,0,0,0.2)' }}>
+        <Paper elevation={12} sx={{ margin:'0 0 0 0px',display: 'flex', flexDirection: 'column', bgcolor: 'white', width: '18em', height: '15em', 
+        borderRadius: '.6vh',
+        // boxShadow:'5px 5px rgba(0,0,0,0.2)' /*Vitão, comenta esse boxShadow e vê se fica melhor na sua opiniao. Eu não consigo decidir a melhor, se é com bax-shadow, ou com elevation*/ 
+        }}>
             <Box sx={{ width: '95%', height:'20%' }}>
-                <MoreHorizIcon sx={{ cursor:'pointer', m:'0.5em 0', float:'right', fontSize:'1.8em', ':hover':{color:'text.secondary'} }} />
+                <MoreHorizIcon sx={{ cursor:'pointer', m:'0.5em 0', float:'right', fontSize:'1.8em', ':hover':{ color:'text.secondary' } }} />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', width:'100%', height:'30%', mb:'7%' }}>
                 <Box sx={{ bgcolor: 'gray', width: '25%', height: '100%' }} />
@@ -17,6 +20,6 @@ export default function FolderMaterials({ FolderName, id }) {
                 </Link>
 
             </Box>
-        </Box>
+        </Paper>
     )
 }

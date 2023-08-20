@@ -19,7 +19,7 @@ export default function Contact({ name, avatar }) {
                 variant='rounded'
                 sx={{ borderRadius: 3 }}
             >
-                { avatar ? 
+                {avatar ?
                     <img src={avatar} alt="Avatar" />
                     :
                     name.charAt(0).toUpperCase()

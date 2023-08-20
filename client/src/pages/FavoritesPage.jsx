@@ -67,20 +67,20 @@ export default function FavoritesPage() {
                 aria-describedby="modal-modal-description"
             >
                 <Box display='flex' justifyContent='center' alignItems='center' height={'100vh'}>
-                    <Box p sx={{ height: 300, width: 400, bgcolor:'background.paper'}} >
+                    <Box p sx={{ height: 300, width: 400, bgcolor:'background.paper' }} >
                         <Box sx={{ cursor:'pointer' }}  display='flex' justifyContent='end'>
-                            <DisabledByDefault onClick={handleClose} sx={{ width: '2rem', height: '1.5rem'}} />
+                            <DisabledByDefault onClick={handleClose} sx={{ width: '2rem', height: '1.5rem' }} />
                         </Box>
                        
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             Title
                         </Typography>
                         <Box display={'flex'}>
-                            <Button variant="outlined" sx={{ bgcolor: grey[200], width: '6rem', height: '1.5rem'}}>
+                            <Button variant="outlined" sx={{ bgcolor: grey[200], width: '6rem', height: '1.5rem' }}>
                                 Salvar
                                 
                             </Button>
-                        <Send sx={{ width: '1rem', height: '1rem' }}/>
+                            <Send sx={{ width: '1rem', height: '1rem' }}/>
                         </Box>
                     </Box>
                 </Box>
