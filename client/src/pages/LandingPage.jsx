@@ -6,17 +6,17 @@ import { Box, Button, Typography } from '@mui/material'
 import { Animation } from 'react-animate-style'
 import { ComunitySection, DiscoverSection, AboutSection } from '../components'
 import { useTheme } from '@emotion/react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Book, Token, WorkHistory } from '@mui/icons-material'
 import { AnimateOnScroll } from '../components/Misc'
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
 
 function LandingPage() {
     const theme = useTheme()
-    const { lang } = useParams()
 
     const { t } = useTranslation()
+
+    console.log(theme.breakpoints)
 
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
@@ -32,7 +32,7 @@ function LandingPage() {
             <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
                 <Box p='25px' m='25px' width='45%'>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true}>
-                        <Typography mb={4} variant='h1' fontWeight={900}>{t('header.title')}</Typography>
+                        <Typography mb={4} variant={'h1'} fontWeight={900}>{t('header.title')}</Typography>
                     </Animation>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true} animationInDelay={250}>
                         <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>

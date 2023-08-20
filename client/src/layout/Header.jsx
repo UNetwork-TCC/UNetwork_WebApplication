@@ -15,11 +15,9 @@ export default function Header({ minimize, maximize, close }) {
     const open = Boolean(anchorEl)
     const handleClick = (e, elements, icons = null, userMenu = null, onClickEvents = elements.map(() => handleClose)) => {
         const mapedElements = elements.map((e, i) =>
-            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{ icons && icons[i]}{e}</MenuItem>
+            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
         )
-        
-        setAnchorEl(e.currentTarget)
-        
+                
         if (userMenu) setMenuContent([ 
             <MenuItem disableRipple key={-2}>
                 <Avatar sx={{ background: 'transparent' }} /> Perfil
@@ -28,6 +26,9 @@ export default function Header({ minimize, maximize, close }) {
             ...mapedElements
         ]) 
         else setMenuContent(mapedElements)
+
+        setAnchorEl(e.currentTarget)
+
     }
     const handleClose = () => {
         setAnchorEl(null)
@@ -58,10 +59,10 @@ export default function Header({ minimize, maximize, close }) {
                         />
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
-                        <CustomLink name='Comunidade' />
-                        <CustomLink name='Classes' />
-                        <CustomLink name='Materiais' />
-                        <CustomLink name='Notícias' />
+                        <CustomLink to='/app/community' name='Comunidade' />
+                        <CustomLink to='/app/classes' name='Classes' />
+                        <CustomLink to='/app/materials' name='Materiais' />
+                        <CustomLink to='/app/news' name='Notícias' />
                     </Box>
                     <Box gap={3} display='flex'>
                         <Box> {

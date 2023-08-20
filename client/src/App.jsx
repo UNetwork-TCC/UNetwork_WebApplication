@@ -1,5 +1,4 @@
 import { CssBaseline } from '@mui/material'
-import GoogleAuth from './components/GoogleAuth'
 import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GOOGLE_CLIENT_ID } from './constants'

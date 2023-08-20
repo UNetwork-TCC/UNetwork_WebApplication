@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
 import { useStyles } from '../styles'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 export default function LandingPageHeader() {
     const { theme, setTheme } = useContext(themeContext)
     const classes = useStyles(theme)
+    const navigate = useNavigate()
 
     const { t } = useTranslation()
 
@@ -40,7 +41,7 @@ export default function LandingPageHeader() {
             position='sticky'
             p={2.5}
         >
-            <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 { theme?.palette.mode === 'light' ?
                     <img width={75} height={75} src={logo} alt="Logo" />
                     :                    

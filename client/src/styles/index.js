@@ -71,6 +71,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         flexDirection: 'column',
         height: '100%',
+        textDecoration: 'none',
         transition: '.3s ease-in-out',
         position: 'relative',
         border: 'none',
