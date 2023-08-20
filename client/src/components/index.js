@@ -13,6 +13,9 @@ import Comment from './Timeline/Comment'
 import Login from './Auth/Login'
 import Register from './Auth/Register'
 import FolderMaterials from './Materials/FolderMaterials'
+import ContactsArea from './Chat/ContactsArea'
+import ChatArea from './Chat/ChatArea'
+
 
 export { 
     DiscoverSection,
@@ -29,5 +32,7 @@ export {
     Comment,
     Login,
     Register,
-    FolderMaterials
+    FolderMaterials,
+    ContactsArea,
+    ChatArea,
 }
