@@ -8,4 +8,4 @@ import MaterialsPage from './MaterialsPage'
 import ChatPage from './ChatPage'
 
 
-export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage, ChatPage}
+export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage, ChatPage }

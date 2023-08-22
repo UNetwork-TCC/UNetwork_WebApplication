@@ -14,8 +14,9 @@ export default function Chat() {
     const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
 
-    const [text, setText] = useState('')
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [ text, setText ] = useState('')
+
+    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
@@ -32,9 +33,9 @@ export default function Chat() {
                     bgcolor:'white',
                     // order:'1px solid rgba(128,128,128, 0.5)'
                     // bgcolor:'rgba(128,128,128,0.1)', 
-                } 
-                    : 
-                    { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
+                    } 
+                        : 
+                        { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
                 >
                     <InputBase
 

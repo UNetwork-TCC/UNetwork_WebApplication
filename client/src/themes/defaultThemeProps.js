@@ -42,8 +42,8 @@ const defaultThemeProps = {
                 scrollBehavior: 'smooth',
 
                 html: {
-                    fontSize: {
-                        phone: '32px'
+                    '@media (max-width:1535.95px)': {
+                        fontSize: '12px'
                     }
                 },
 

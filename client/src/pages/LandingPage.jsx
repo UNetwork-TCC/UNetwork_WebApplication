@@ -6,15 +6,15 @@ import { Box, Button, Typography } from '@mui/material'
 import { Animation } from 'react-animate-style'
 import { ComunitySection, DiscoverSection, AboutSection } from '../components'
 import { useTheme } from '@emotion/react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Book, Token, WorkHistory } from '@mui/icons-material'
 import { AnimateOnScroll } from '../components/Misc'
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
 
 function LandingPage() {
     const theme = useTheme()
-    const { lang } = useParams()
+
+    console.log(theme.breakpoints.down('xl'))
 
     const { t } = useTranslation()
 
@@ -38,7 +38,7 @@ function LandingPage() {
                         <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
                         <Box mt={5} display='flex'>
                             <Button variant='contained'>
-                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('header.btn')}</Link>
+                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/app'>{t('header.btn')}</Link>
                             </Button>
                             <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
                         </Box>

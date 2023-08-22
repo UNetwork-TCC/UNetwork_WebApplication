@@ -4,7 +4,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 export default function FolderMaterials({ FolderName, id }) {
     return (
         <Paper elevation={6} sx={{ margin:'0 0 0 0px',display: 'flex', flexDirection: 'column', bgcolor: 'white', width: '18em', height: '15em', 
-        borderRadius: '.6vh',
+            borderRadius: '.6vh',
         // boxShadow:'5px 5px rgba(0,0,0,0.2)' /*Vitão, comenta esse boxShadow e vê se fica melhor na sua opiniao. Eu não consigo decidir a melhor, se é com bax-shadow, ou com elevation*/ 
         }}>
             <Box sx={{ width: '95%', height:'20%' }}>
