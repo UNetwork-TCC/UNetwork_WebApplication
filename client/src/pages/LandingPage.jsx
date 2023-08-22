@@ -14,9 +14,9 @@ import { useTranslation } from 'react-i18next'
 function LandingPage() {
     const theme = useTheme()
 
-    const { t } = useTranslation()
+    console.log(theme.breakpoints.down('xl'))
 
-    console.log(theme.breakpoints)
+    const { t } = useTranslation()
 
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
@@ -32,13 +32,13 @@ function LandingPage() {
             <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
                 <Box p='25px' m='25px' width='45%'>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true}>
-                        <Typography mb={4} variant={'h1'} fontWeight={900}>{t('header.title')}</Typography>
+                        <Typography mb={4} variant='h1' fontWeight={900}>{t('header.title')}</Typography>
                     </Animation>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true} animationInDelay={250}>
                         <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
                         <Box mt={5} display='flex'>
                             <Button variant='contained'>
-                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('header.btn')}</Link>
+                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/app'>{t('header.btn')}</Link>
                             </Button>
                             <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
                         </Box>

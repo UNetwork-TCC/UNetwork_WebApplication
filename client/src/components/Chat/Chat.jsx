@@ -7,10 +7,11 @@ import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
 import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
-
+import { useTheme } from '@emotion/react'
 
 export default function Chat() {
 
+    const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
 
     const [ text, setText ] = useState('')
@@ -19,8 +20,6 @@ export default function Chat() {
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
-
-
     }
 
     return (
@@ -28,9 +27,11 @@ export default function Chat() {
         <Box sx={{ height: '100%', width: '100%' }}>
             <Container sx={{ display: 'flex', height: '100%', }}>
                 <Box
-
+                    boxShadow={theme.shadows[3]}
                     component="form"
-                    sx={matches ? { p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '85%', borderRadius: '15px', border:'1px solid rgba(128,128,128, 0.5)'
+                    sx={matches ? { p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '100%', borderRadius: '15px', 
+                    bgcolor:'white',
+                    // order:'1px solid rgba(128,128,128, 0.5)'
                     // bgcolor:'rgba(128,128,128,0.1)', 
                     } 
                         : 

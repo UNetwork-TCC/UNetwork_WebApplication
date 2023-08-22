@@ -35,7 +35,7 @@ export default function Feed() {
                     <Post 
                         title={'Roubos gerais'}
                         date={'3 horas atrás'}
-                        content={'aaaaaaaaaaaaaaaaaa teste de tudoaaaaaaaaaaaa FLExivelllllllllllllllllllllllll  aaaaaaaaaaaaaaaaaaaa  aaaaaa'}
+                        content={'aaaaaaaaaaaaaaaaaa teste de tudoaaaaaaaaaaaa FLExivelllllllllllllllllllllllll  aaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
                         user={{ name: 'Filhos do Jhonatas' }}
                     />
                     <Post 

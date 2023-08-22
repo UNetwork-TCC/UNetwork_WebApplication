@@ -24,7 +24,7 @@ export default function Contact({ user, date, notification }) {
                     </Box>
                 </Box>
                 <Box display={'flex'} >
-                    <Box sx={{ width: '90%' }}>
+                    <Box sx={{ width: '90%', maxWidth: '90%' }}>
                         <Typography noWrap>last mensage</Typography>
                     </Box>
                     <Box sx={{ width: '10%', display: 'flex', justifyContent: 'center', }}>

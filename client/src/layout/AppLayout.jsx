@@ -1,5 +1,5 @@
 import Sidebar from './SideBar'
-import { Avatar, Box, IconButton, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useStyles } from '../styles'
 import { Header, LoadingBackdrop } from '../layout'
 import { Bookmark, ExpandLess, ExpandMore, Home, Message } from '@mui/icons-material'
@@ -9,8 +9,12 @@ import Shortcut from '../components/Home/Shortcut'
 import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import Contact from '../components/Home/Contact'
 
+import { useNavigate } from 'react-router-dom'
+
 export default function AppLayout({ children, sx, withSidebars }) {
     const classes = useStyles()
+
+    const navigate = useNavigate()
 
     const [ open, setOpen ] = useState(false)
     const [ shortcutsExpanded, setShortcutsExpanded ] = useState(true)
@@ -90,7 +94,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                             {withSidebars &&
                                 <Sidebar>
                                     <Stack width='100%' mb={5} gap={3}>
-                                        <Box className={classes.sideBarLinks}>
+                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app')}>
                                             <Avatar variant='iconWrapper'>
                                                 <Home />
                                             </Avatar>
@@ -98,7 +102,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                                                 Home
                                             </Typography>
                                         </Box>
-                                        <Box className={classes.sideBarLinks}>
+                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app/chat')}>
                                             <Avatar variant='iconWrapper'>
                                                 <Message />
                                             </Avatar>
@@ -106,7 +110,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                                                 Conversas
                                             </Typography>
                                         </Box>
-                                        <Box className={classes.sideBarLinks}>
+                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app/favorites')}>
                                             <Avatar variant='iconWrapper'>
                                                 <Bookmark />
                                             </Avatar>

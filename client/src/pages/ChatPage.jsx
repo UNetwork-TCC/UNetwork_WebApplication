@@ -55,8 +55,6 @@ export default function ChatPage() {
                             <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
                             <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-
-
                         </Stack>
                     </Stack>
                 </ContactsArea>
