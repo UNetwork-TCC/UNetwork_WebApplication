@@ -35,7 +35,7 @@ function App() {
                             <Route path='/app/*' element={<Navigate to='/error' />} />
                             
                         </Routes>
-                    </ThemeStore>
+                    </ThemeStore>       
                 </GoogleOAuthProvider>
             </themeContext.Provider>
         </Router>

@@ -48,12 +48,12 @@ export default function ChatPage() {
                             <Contact notification={'6'} date={'3 Dias'} username={'Leonardo Gargoriano'} />
                             <Contact notification={'3'} date={'1 Ano'} username={'Torugo'} />
                             <Contact notification={''} date={'3 Dias'} username={'Kauê'} />
-                            <Contact notification={'1'} date={'3 Dias'} username={'Elizabeth'} />
-                            <Contact notification={'14'} date={'3 Dias'} username={'Jhow'} />
-                            <Contact notification={'56'} date={'3 Dias'} username={'Luizinho'} />
-                            <Contact notification={'99'} date={'3 Dias'} username={'Paulo Rogério de Neves Oliveira'} /> {/* "+99" medo */}
-                            <Contact notification={'7'} date={'3 Dias'} username={'Rian'} />
-                            <Contact notification={'1'} date={'3 Dias'} username={'Vitor Hugo Rodrigues'} />
+                            <Contact notification={'1'} date={'1 dia'} username={'Elizabeth'} />
+                            <Contact notification={'14'} date={'Amanhã'} username={'Jhow'} />
+                            <Contact notification={'56'} date={'12:00'} username={'Luizinho'} />
+                            <Contact notification={'99'} date={'Ontem'} username={'Paulo Rogério de Neves Oliveira'} /> {/* "+99" medo */}
+                            <Contact notification={'7'} date={'7 Dias'} username={'Rian'} />
+                            <Contact notification={'1'} date={'2 Dias'} username={'Vitor Hugo Rodrigues'} />
                             <Contact notification={'3'} date={'3 Dias'} username={'Pacheco'} />
 
 
