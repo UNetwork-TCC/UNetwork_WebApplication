@@ -1,11 +1,10 @@
-import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button } from '@mui/material'
-import { Add, DisabledByDefault, Send } from '@mui/icons-material'
+import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button, TextField } from '@mui/material'
+import { Add, DisabledByDefault } from '@mui/icons-material'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
 import { useState } from 'react'
 import { Folder } from '../components'
 import AppLayout from '../layout/AppLayout'
-import { grey } from '@mui/material/colors'
 
 export default function FavoritesPage() {
     const [ folderArr, setFolderArr ] = useState([])
@@ -65,22 +64,27 @@ export default function FavoritesPage() {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+
             >
-                <Box display='flex' justifyContent='center' alignItems='center' height={'100vh'}>
-                    <Box p sx={{ height: 300, width: 400, bgcolor:'background.paper' }} >
+                <Box display='flex' justifyContent='center' alignItems='center' height={'100vh'} sx={{ borderRadius: 8 }}>
+                    <Box p sx={{ height: '65vh', width: '25vw', bgcolor:'background.paper' }} >
                         <Box sx={{ cursor:'pointer' }}  display='flex' justifyContent='end'>
                             <DisabledByDefault onClick={handleClose} sx={{ width: '2rem', height: '1.5rem' }} />
                         </Box>
-                       
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Title
-                        </Typography>
-                        <Box display={'flex'}>
-                            <Button variant="outlined" sx={{ bgcolor: grey[200], width: '6rem', height: '1.5rem' }}>
+                        <Box p={0}>
+                            <Divider sx={{ height: '.6vh', m: '.6vh 2% 0 2%', borderRadius:'3.1vh' }} variant="middle"/>
+                            <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'} textAlign={'center'}>
+                                Nova Pasta
+                            </Typography> 
+                        </Box>
+                        <Box display={'flex'} justifyContent={'center'} flexDirection={'column'} p={2} gap={2}> 
+                            <TextField id="outline-basic" label="Título" fullWidth />
+                            <TextField id="outline-basic" label="Subtitulo" fullWidth />
+                        </Box>
+                        <Box display={'flex'} height={'25%'} alignItems={'center'} justifyContent={'center'}>
+                            <Button variant='contained'>
                                 Salvar
-                                
                             </Button>
-                            <Send sx={{ width: '1rem', height: '1rem' }}/>
                         </Box>
                     </Box>
                 </Box>

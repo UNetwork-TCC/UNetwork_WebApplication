@@ -12,15 +12,13 @@ import ChatAreaOld from '../components/Chat/ChatAreaOld'
 export default function ChatPage() {
     const theme = useTheme()
 
-
-
     return (
         <AppLayout withSidebars>
             <Box sx={{ width: '100%', height: '100%', display: 'flex', }} >
                 <ContactsArea>
                     <Stack gap={4} sx={{}}>
                         <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                            <Box sx={{ width: "70%" }}>
+                            <Box sx={{ width: '70%' }}>
                                 <Typography variant='h4' sx={{}}>Conversas</Typography>
                             </Box>
                             <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
@@ -62,12 +60,12 @@ export default function ChatPage() {
                 </ContactsArea>
                 <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%', }} />
                 <ChatArea>
-                    <Box sx={{ width: '100%', height:'11%',display: 'flex', alignItems: 'center', p: '0 3%', pb:'4%',}}>
+                    <Box sx={{ width: '100%', height:'11%',display: 'flex', alignItems: 'center', p: '0 3%', pb:'4%', }}>
                         <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem', borderRadius: '50px' }}>
 
                         </Avatar>
                         <Box sx={{ width: '75%', maxWidth: '75%' }}>
-                            <Typography noWrap sx={{ fontSize: '1.5rem', ml: "2%" }} >Username</Typography>
+                            <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%' }} >Username</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', width: '25%', }} gap={3}>
                             <IconButton sx={{ }}>
@@ -82,11 +80,11 @@ export default function ChatPage() {
                         </Box>
                     </Box>
                     <Divider flexItem/>
-                    <Box sx={{width:'100%', height:'78%', display:'flex', alignItems:'center'}}>
+                    <Box sx={{ width:'100%', height:'78%', display:'flex', alignItems:'center' }}>
 
                     </Box> 
                     <Divider flexItem sx={{}}/>
-                    <Box sx={{width:'100%', height:'10%', display:'flex', pt:'2%' }}>
+                    <Box sx={{ width:'100%', height:'10%', display:'flex', pt:'2%' }}>
                         <Chat/>
                     </Box> 
                     
