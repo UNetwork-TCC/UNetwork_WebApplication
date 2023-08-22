@@ -20,7 +20,7 @@ export default function ChatPage() {
                 <ContactsArea>
                     <Stack gap={4} sx={{}}>
                         <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                            <Box sx={{ width: "70%" }}>
+                            <Box sx={{ width: '70%' }}>
                                 <Typography variant='h4' sx={{}}>Conversas</Typography>
                             </Box>
                             <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
@@ -44,17 +44,17 @@ export default function ChatPage() {
                             />
                         </Box>
                         <Stack gap={1}>
-                            <Contact notification={'8'} date={'19:45'} username={'Alfa'} />
-                            <Contact notification={'6'} date={'3 Dias'} username={'Leonardo Gargoriano'} />
-                            <Contact notification={'3'} date={'1 Ano'} username={'Torugo'} />
-                            <Contact notification={''} date={'3 Dias'} username={'Kauê'} />
-                            <Contact notification={'1'} date={'3 Dias'} username={'Elizabeth'} />
-                            <Contact notification={'14'} date={'3 Dias'} username={'Jhow'} />
-                            <Contact notification={'56'} date={'3 Dias'} username={'Luizinho'} />
-                            <Contact notification={'99'} date={'3 Dias'} username={'Paulo Rogério de Neves Oliveira'} /> {/* "+99" medo */}
-                            <Contact notification={'7'} date={'3 Dias'} username={'Rian'} />
-                            <Contact notification={'1'} date={'3 Dias'} username={'Vitor Hugo Rodrigues'} />
-                            <Contact notification={'3'} date={'3 Dias'} username={'Pacheco'} />
+                            <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
+                            <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
+                            <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
+                            <Contact notification={''} date={'3 Dias'} user={{ name: 'Kauê' }} />
+                            <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
+                            <Contact notification={'14'} date={'3 Dias'} user={{ name: 'Jhow' }} />
+                            <Contact notification={'56'} date={'3 Dias'} user={{ name: 'Luizinho' }} />
+                            <Contact notification={'99'} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
+                            <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
+                            <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
+                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
 
 
                         </Stack>
@@ -62,12 +62,12 @@ export default function ChatPage() {
                 </ContactsArea>
                 <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%', }} />
                 <ChatArea>
-                    <Box sx={{ width: '100%', height:'11%',display: 'flex', alignItems: 'center', p: '0 3%', pb:'4%',}}>
-                        <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem', borderRadius: '50px' }}>
+                    <Box sx={{ width: '100%', height:'11%',display: 'flex', alignItems: 'center', p: '0 3%', pb:'4%', }}>
+                        <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem' }}>
 
                         </Avatar>
                         <Box sx={{ width: '75%', maxWidth: '75%' }}>
-                            <Typography noWrap sx={{ fontSize: '1.5rem', ml: "2%" }} >Username</Typography>
+                            <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%' }} >Username</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', width: '25%', }} gap={3}>
                             <IconButton sx={{ }}>
@@ -82,11 +82,11 @@ export default function ChatPage() {
                         </Box>
                     </Box>
                     <Divider flexItem/>
-                    <Box sx={{width:'100%', height:'78%', display:'flex', alignItems:'center'}}>
+                    <Box sx={{ width:'100%', height:'78%', display:'flex', alignItems:'center' }}>
 
                     </Box> 
                     <Divider flexItem sx={{}}/>
-                    <Box sx={{width:'100%', height:'10%', display:'flex', pt:'2%' }}>
+                    <Box sx={{ width:'100%', height:'10%', display:'flex', pt:'2%' }}>
                         <Chat/>
                     </Box> 
                     

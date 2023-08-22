@@ -13,9 +13,9 @@ export default function Chat() {
 
     const matches = useMediaQuery('(min-width: 600px)')
 
-    const [text, setText] = useState('')
+    const [ text, setText ] = useState('')
 
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
@@ -32,9 +32,9 @@ export default function Chat() {
                     component="form"
                     sx={matches ? { p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '85%', borderRadius: '15px', border:'1px solid rgba(128,128,128, 0.5)'
                     // bgcolor:'rgba(128,128,128,0.1)', 
-                } 
-                    : 
-                    { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
+                    } 
+                        : 
+                        { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
                 >
                     <InputBase
 

@@ -12,10 +12,10 @@ import Contact from '../components/Home/Contact'
 export default function AppLayout({ children, sx, withSidebars }) {
     const classes = useStyles()
 
-    const [open, setOpen] = useState(false)
-    const [shortcutsExpanded, setShortcutsExpanded] = useState(true)
-    const [contactsExpanded, setContactsExpanded] = useState(true)
-    const [boxStyles, setBoxStyles] = useState({})
+    const [ open, setOpen ] = useState(false)
+    const [ shortcutsExpanded, setShortcutsExpanded ] = useState(true)
+    const [ contactsExpanded, setContactsExpanded ] = useState(true)
+    const [ boxStyles, setBoxStyles ] = useState({})
     const shortcuts = 5
     const contacts = 11
 
