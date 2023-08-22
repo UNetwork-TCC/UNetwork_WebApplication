@@ -102,7 +102,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                                                 Home
                                             </Typography>
                                         </Box>
-                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app/chatdc ')}>
+                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app/chat')}>
                                             <Avatar variant='iconWrapper'>
                                                 <Message />
                                             </Avatar>
