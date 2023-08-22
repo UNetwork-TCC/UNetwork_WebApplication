@@ -30,7 +30,7 @@ export default function Chat() {
                     boxShadow={theme.shadows[3]}
                     component="form"
                     sx={matches ? { p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '100%', borderRadius: '15px', 
-                    bgcolor:'white',
+                        bgcolor:'white',
                     // order:'1px solid rgba(128,128,128, 0.5)'
                     // bgcolor:'rgba(128,128,128,0.1)', 
                     } 
