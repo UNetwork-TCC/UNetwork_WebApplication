@@ -14,8 +14,6 @@ import { useTranslation } from 'react-i18next'
 function LandingPage() {
     const theme = useTheme()
 
-    console.log(theme.breakpoints.down('xl'))
-
     const { t } = useTranslation()
 
     return (

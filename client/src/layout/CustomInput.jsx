@@ -29,7 +29,6 @@ export default function CustomInput({ inputWidth, width, icon, bgcolor, color, s
                 position: 'relative',
                 right: '3.5rem',
                 top: '0.5rem',
-                fontSize: '0.75rem',
                 height: '2rem',
                 width: '2rem',
                 borderRadius: '15px',

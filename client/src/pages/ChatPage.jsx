@@ -10,10 +10,6 @@ import ChatAreaOld from '../components/Chat/ChatAreaOld'
 
 
 export default function ChatPage() {
-    const theme = useTheme()
-
-
-
     return (
         <AppLayout withSidebars>
             <Box sx={{ width: '100%', height: '100%', display: 'flex', }} >

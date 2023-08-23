@@ -14,7 +14,7 @@ import MaterialsPage from './pages/MaterialsPage'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
-    const lang = navigator.language.split('-')[1].toLowerCase()
+    const lang = navigator.language.split('-')[0].toLowerCase()
 
     return (
         <Router>
@@ -32,7 +32,6 @@ function App() {
                             <Route path='/app/materials' element={<MaterialsPage />} />
                             <Route path='/app/chat' element={<ChatPage />} />
                             <Route path='/app/*' element={<Navigate to='/error' />} />
-                            
                         </Routes>
                     </ThemeStore>       
                 </GoogleOAuthProvider>

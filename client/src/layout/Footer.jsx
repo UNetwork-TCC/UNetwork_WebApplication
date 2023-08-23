@@ -23,11 +23,11 @@ export default function Footer() {
     const { t } = useTranslation()
 
     useEffect(() => {
-        if (localStorage.getItem('lang') && language !== localStorage.getItem('lang')) {
+        if (language && language !== localStorage.getItem('lang')) {
 
             if (
-                language !== 'br'
-                && language !== 'us'
+                language !== 'pt'
+                && language !== 'en'
                 && language !== 'fr'
                 && language !== 'de'
                 && language !== 'es'
@@ -36,7 +36,7 @@ export default function Footer() {
                 && language !== 'zh'
                 && language !== 'jp'
                 && language !== 'ar'
-            ) localStorage.setItem('lang', 'br') 
+            ) localStorage.setItem('lang', 'pt') 
 
             localStorage.setItem('lang', language)
             window.location.reload()

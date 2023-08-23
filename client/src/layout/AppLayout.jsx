@@ -82,7 +82,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                         left: 0,
                         top: 0,
                         width: '100%',
-                        height: 'auto'
+                        height: '100%'
                     }} />
                     <Box sx={{ height: '95vh', width: '95vw', borderRadius: '1rem', ...boxStyles }} className={classes.wrapper}>
                         <Header
