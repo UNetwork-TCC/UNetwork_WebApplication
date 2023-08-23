@@ -1,21 +1,18 @@
-import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button, TextField } from '@mui/material'
-import { Add, DisabledByDefault } from '@mui/icons-material'
+import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button, TextField, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
+import { Add } from '@mui/icons-material'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
 import { useState } from 'react'
 import { Folder } from '../components'
 import AppLayout from '../layout/AppLayout'
+import { grey } from '@mui/material/colors'
+import CustomCheckBox from '../layout/CustomCheckBox'
 
 export default function FavoritesPage() {
-    const [ folderArr, setFolderArr ] = useState([])
     const [ open, setOpen ] = useState(false)
     
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-
-    function addFolder() { 
-        setFolderArr([ ...folderArr, <Folder key={folderArr.length} /> ])
-    }
 
     return (
         <AppLayout withSidebars>
@@ -64,29 +61,32 @@ export default function FavoritesPage() {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
 
             >
-                <Box display='flex' justifyContent='center' alignItems='center' height={'100vh'} sx={{ borderRadius: 8 }}>
-                    <Box p sx={{ height: '65vh', width: '25vw', bgcolor:'background.paper' }} >
-                        <Box sx={{ cursor:'pointer' }}  display='flex' justifyContent='end'>
-                            <DisabledByDefault onClick={handleClose} sx={{ width: '2rem', height: '1.5rem' }} />
-                        </Box>
-                        <Box p={0}>
-                            <Divider sx={{ height: '.6vh', m: '.6vh 2% 0 2%', borderRadius:'3.1vh' }} variant="middle"/>
-                            <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'} textAlign={'center'}>
-                                Nova Pasta
-                            </Typography> 
-                        </Box>
-                        <Box display={'flex'} justifyContent={'center'} flexDirection={'column'} p={2} gap={2}> 
-                            <TextField id="outline-basic" label="Título" fullWidth />
-                            <TextField id="outline-basic" label="Subtitulo" fullWidth />
-                        </Box>
-                        <Box display={'flex'} height={'25%'} alignItems={'center'} justifyContent={'center'}>
-                            <Button variant='contained'>
-                                Salvar
+                <Box p sx={{ height: '80vh', width: '35vw', bgcolor:'background.paper' }} borderRadius={2} >
+                    <Box p={0}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
+                            Nova Pasta
+                        </Typography> 
+                    </Box>
+                    <Box display={'flex'} justifyContent='start' flexDirection={'column'} p={2} gap={2}> 
+                        <TextField id="outline-basic" label="Título" fullWidth />
+                        <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
+                        <FormGroup>
+                            <CustomCheckBox caption='Isso deixará sua pasta pública' title='Público'/>
+                            <CustomCheckBox caption='Isso deixará sua pasta privada' title='Privado'/>   
+                        </FormGroup>
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3}>
+                            <Button variant='outlined'fullWidth>
+                                Cancelar
+                            </Button>
+                            <Button variant='outlined'fullWidth>
+                                Criar
                             </Button>
                         </Box>
                     </Box>
+                    
                 </Box>
             </Modal>
 
