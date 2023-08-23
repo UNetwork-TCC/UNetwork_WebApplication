@@ -1,13 +1,14 @@
- 
 import { createTheme, responsiveFontSizes } from '@mui/material'
 import defaultThemeProps from './defaultThemeProps'
+import { grey } from '@mui/material/colors'
 
 let lightTheme = createTheme({
     palette: {
         mode: 'light',
 
         background: {
-            paper: '#fafafa'
+            paper: '#fafafa',
+            card: grey[100]
         },
 
         primary: {
@@ -37,6 +38,15 @@ let lightTheme = createTheme({
 
     components: {
         ...defaultThemeProps.components,
+        MuiCssBaseline: {
+            styleOverrides: {
+                ...defaultThemeProps.components.MuiCssBaseline.styleOverrides,
+
+                '::-webkit-scrollbar-track:': {
+                    background: '#fafafa'
+                },
+            }
+        }
     }
 })
 

@@ -1,13 +1,14 @@
- 
 import { createTheme, responsiveFontSizes } from '@mui/material'
 import defaultThemeProps from './defaultThemeProps'
+import { grey } from '@mui/material/colors'
 
 let darkTheme = createTheme({
     palette: {
         mode: 'dark',
         
         background: {
-            paper: '#303030'
+            paper: '#303030',
+            card: grey[900],
         },
 
         primary: {
@@ -37,6 +38,20 @@ let darkTheme = createTheme({
 
     components: {
         ...defaultThemeProps.components,
+
+        MuiCssBaseline: {
+            styleOverrides: {
+                ...defaultThemeProps.components.MuiCssBaseline.styleOverrides,
+
+                '::-webkit-scrollbar-track:': {
+                    background: '#303030'
+                },
+
+                body: {
+                    backgroundColor: '#303030'
+                }
+            }
+        },
 
         MuiTextField: {
             styleOverrides: {

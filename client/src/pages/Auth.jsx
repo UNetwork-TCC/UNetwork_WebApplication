@@ -1,11 +1,13 @@
-import { Box, Button, Checkbox, Divider, FormControl, IconButton, Modal, TextField, Typography } from '@mui/material'
+import { Box, Button, Checkbox, FormControl, IconButton, Modal, TextField, Typography } from '@mui/material'
 import { Footer, LandingPageHeader } from '../layout'
 import { useTheme } from '@emotion/react'
-import { Facebook, Google } from '@mui/icons-material'
 import { useState } from 'react'
+import { grey } from '@mui/material/colors'
+import authDecoration from '../assets/svg/Auth/AuthDecoration.svg'
+import facebookLogo from '../assets/svg/Auth/FacebookLogo.svg'
+import googleLogo from '../assets/svg/Auth/GoogleLogo.svg'
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
-import { grey } from '@mui/material/colors'
 
 export default function Auth() {
     const theme = useTheme()
@@ -15,56 +17,63 @@ export default function Auth() {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
+    console.log(theme.palette.background.default);
+
     return (
         <>
             <Box bgcolor='background.paper'>
                 <LandingPageHeader />
-                <Box minHeight='65vh' width='100%' display='flex' justifyContent='space-around' alignItems='center' gap={20}>
-                    <Box display='flex' flexDirection='column' alignItems='center' justifyContent='start' height='55vh' width='35%' borderRadius={5} border={`1px solid ${theme.palette.primary.main}`}>
-                        <Typography m={3} variant='h5' color='primary.main' fontWeight={900} textAlign='center'>Crie sua conta</Typography>
-                        <Box display='flex' gap={5}>
-                            <IconButton>
-                                <Google sx={{ height: '3rem', width: '3rem' }} />
-                            </IconButton>
-                            <IconButton>
-                                <Facebook sx={{ height: '3rem', width: '3rem' }} />
-                            </IconButton>
-                        </Box>
-                        <Box display='flex' alignItems='center'>
-                            <Box sx={{ width: '8rem', height: '1px', bgcolor: 'rgba(0, 0, 0, 0.2)' }}/>
-                            <Typography m={2}>Ou cadastre seu email</Typography>
-                            <Box sx={{ width: '8rem', height: '1px', bgcolor: 'rgba(0, 0, 0, 0.2)' }}/>
-                        </Box>
-                        <Box p={2.5}>
-                            <FormControl sx={{ display: 'flex', gap: 2.5 }}>
-                                <TextField label='Nome' required fullWidth />
-                                <TextField label='Email' required  fullWidth/>
-                                <Box display='flex' gap={2.5}>
-                                    <TextField fullWidth label='Senha' required type='password' />
-                                    <TextField fullWidth label='Repetir senha' required type='password' />
-                                </Box>
-                                <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
-                                    <Box width='60%' display='flex' alignItems='center'>
-                                        <Checkbox required />
-                                        <Typography>Li e aceito os
-                                            <Typography onClick={handleOpen} ml={0.5} component='span' sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }} color='primary.main'>
-                                                Termos de Serviço e Política de Privacidade
-                                            </Typography>
-                                        </Typography>
+                <Box minHeight='65vh' width='100%' display='flex' justifyContent='center' alignItems='center' p={5}>
+                    <Box height='100%' width='100%' display='flex' justifyContent='center' alignItems='center'>
+                        <Box display='flex' flexDirection='column' alignItems='center' justifyContent='start' minHeight='60vh' width='80%' borderRadius={5} border={`1px solid ${theme.palette.primary.main}`}>
+                            <Typography m={3} variant='h5' color='primary.main' fontWeight={900} textAlign='center'>Crie sua conta</Typography>
+                            <Box display='flex' gap={5}>
+                                <IconButton>
+                                    <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
+                                </IconButton>
+                                <IconButton>
+                                    <img src={facebookLogo} style={{ height: '3rem', width: '3rem' }} />
+                                </IconButton>
+                            </Box>
+                            <Box display='flex' alignItems='center'>
+                                <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }} />
+                                <Typography m={2}>Ou cadastre seu email</Typography>
+                                <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }} />
+                            </Box>
+                            <Box p={2.5}>
+                                <FormControl sx={{ display: 'flex', gap: 2.5 }}>
+                                    <TextField label='Nome' required fullWidth />
+                                    <TextField label='Email' required  fullWidth/>
+                                    <Box display='flex' gap={2.5}>
+                                        <TextField fullWidth label='Senha' required type='password' />
+                                        <TextField fullWidth label='Repetir senha' required type='password' />
                                     </Box>
-                                    <Button variant='contained'>Cadastrar</Button>
-                                </Box>
-                            </FormControl>
+                                    <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
+                                        <Box width='60%' display='flex' alignItems='center'>
+                                            <Checkbox required />
+                                            <Typography>Li e aceito os
+                                                <Typography onClick={handleOpen} ml={0.5} component='span' sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }} color='primary.main'>
+                                                    Termos de Serviço e Política de Privacidade
+                                                </Typography>
+                                            </Typography>
+                                        </Box>
+                                        <Button variant='contained'>Cadastrar</Button>
+                                    </Box>
+                                </FormControl>
+                            </Box>
+                            <Box></Box>
                         </Box>
-                        <Box></Box>
                     </Box>
-                    <Box width='30%'>
-                        <Box>
-                            <Typography variant='h3' color='primary.main' fontWeight={900}>Pronto para se conectar?</Typography>
-                            <Typography>Faça seu cadastro e impulsione seu crescimento conosco!</Typography>
-                        </Box>
-                        <Box>
+                    <Box height='100%' width='100%' display='flex' justifyContent='center' alignItems='center'>
+                        <Box width='100%'>
+                            <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
+                                <Typography textAlign='center' variant='h3' color='primary.main' fontWeight={900}>Pronto para se conectar?</Typography>
+                                <Typography textAlign='center' variant='h6'>Faça seu cadastro e impulsione seu crescimento conosco!</Typography>
+                                <img src={authDecoration} />
+                            </Box>
+                            <Box>
 
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
@@ -74,6 +83,7 @@ export default function Auth() {
                 open={open}
                 onClose={handleClose}
                 sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                disableAutoFocus
             >
                 <Box height='80vh' width='30vw' borderRadius={3} bgcolor='background.paper'>
                     <Box m={3} display='flex' justifyContent='center' alignItems='center'>
@@ -84,11 +94,11 @@ export default function Auth() {
                         }
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
-                        <Box sx={{ width: '8rem', height: '1px', bgcolor: 'rgba(0, 0, 0, 0.2)' }}/>
+                        <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }}/>
                         <Typography variant='h6' m='0 20px' fontWeight={900}>Termos de Serviço</Typography>
-                        <Box sx={{ width: '8rem', height: '1px', bgcolor: 'rgba(0, 0, 0, 0.2)' }}/>    
+                        <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }}/>    
                     </Box>
-                    <Box m={2.5} p={2} sx={{ '::-webkit-scrollbar': { height: 5, width: 5 } }} overflow='scroll' borderRadius={2} height='78%' bgcolor={grey[100]}>
+                    <Box m={2.5} p={2} sx={{ '::-webkit-scrollbar': { height: 5, width: 5 } }} overflow='scroll' borderRadius={2} height='78%' bgcolor='background.card'>
                         <Box component='span'>Bem-vindo a UNetwork.</Box><br /><br /> Somos uma rede social que permite aos usuários se conectarem e compartilharem conteúdo. Ao usar nosso aplicativo, você concorda com estes termos de serviço. Por favor, leia-os atentamente:<br /><br />
                         <Box component='span' fontWeight={600}>Descrição do Serviço</Box><br /> A UNetwork é uma rede social que permite aos usuários criar perfis, compartilhar conteúdo e se conectar com outros usuários. Oferecemos diversas funcionalidades, como postagens de fotos e vídeos, mensagens privadas e grupos de discussão. Nosso objetivo é fornecer uma plataforma segura e amigável para que os usuários possam se conectar e compartilhar suas experiências.<br /><br />
                         <Box component='span' fontWeight={600}>Elegibilidade</Box><br />Para usar a UNetwork, você deve ter pelo menos 13 anos de idade. Ao criar uma conta, você declara que tem pelo menos 13 anos de idade e que todas as informações fornecidas são verdadeiras e precisas.<br /><br />

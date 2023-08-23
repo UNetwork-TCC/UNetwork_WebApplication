@@ -2,7 +2,7 @@ import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button, TextField,
 import { Add } from '@mui/icons-material'
 import Skeleton from '@mui/material/Skeleton'
 import Stack from '@mui/material/Stack'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Folder } from '../components'
 import AppLayout from '../layout/AppLayout'
 import { grey } from '@mui/material/colors'
@@ -10,9 +10,18 @@ import CustomCheckBox from '../layout/CustomCheckBox'
 
 export default function FavoritesPage() {
     const [ open, setOpen ] = useState(false)
+    const ref = useRef()
     
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
+
+    useEffect(() => {
+        document.addEventListener('keydown', e => {
+            if(e.which == 27) {
+                handleClose()  
+            }
+        })
+    }, [])
 
     return (
         <AppLayout withSidebars>
@@ -58,11 +67,12 @@ export default function FavoritesPage() {
             </Box>
             <Modal
                 open={open}
+                ref={ref}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-
+                disableAutoFocus
             >
                 <Box p sx={{ height: '80vh', width: '35vw', bgcolor:'background.paper' }} borderRadius={2} >
                     <Box p={0}>
@@ -70,7 +80,7 @@ export default function FavoritesPage() {
                             Nova Pasta
                         </Typography> 
                     </Box>
-                    <Box display={'flex'} justifyContent='start' flexDirection={'column'} p={2} gap={2}> 
+                    <Box display={'flex'} flexDirection={'column'} p={2} gap={2}> 
                         <TextField id="outline-basic" label="Título" fullWidth />
                         <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
                         <FormGroup>
