@@ -45,7 +45,6 @@ const defaultThemeProps = {
                     '@media (max-width:1535.95px)': {
                         fontSize: '12px'
                     },
-                    fontSize: '2590px'
                 },
 
                 // Custom Scrollbar
