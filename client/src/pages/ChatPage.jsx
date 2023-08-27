@@ -12,9 +12,9 @@ import ChatAreaOld from '../components/Chat/ChatAreaOld'
 export default function ChatPage() {
     return (
         <AppLayout withSidebars>
-            <Box sx={{ width: '100%', height: '100%', display: 'flex', }} >
+            <Box sx={{ width: '100%', height: '100%', display: 'flex',  }} >
                 <ContactsArea>
-                    <Stack gap={4} sx={{}}>
+                    <Stack gap={2} sx={{position:'sticky', top:'0', background:''}}>
                         <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
                             <Box sx={{ width: '70%' }}>
                                 <Typography variant='h4' sx={{}}>Conversas</Typography>
@@ -39,24 +39,29 @@ export default function ChatPage() {
                                 sx={{ ml: '5%' }}
                             />
                         </Box>
-                        <Stack gap={1}>
-                            <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
-                            <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
-                            <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
-                            <Contact notification={''} date={'3 Dias'} user={{ name: 'Kauê' }} />
-                            <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
-                            <Contact notification={'14'} date={'3 Dias'} user={{ name: 'Jhow' }} />
-                            <Contact notification={'56'} date={'3 Dias'} user={{ name: 'Luizinho' }} />
-                            <Contact notification={'99'} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
-                            <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
-                            <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
-                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                        </Stack>
                     </Stack>
+                    <Stack gap={1} sx={{mt:'2%'}}>
+                        <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
+                        <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
+                        <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
+                        <Contact notification={''} date={'3 Dias'} user={{ name: 'Kauê' }} />
+                        <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
+                        <Contact notification={'14'} date={'3 Dias'} user={{ name: 'Jhow' }} />
+                        <Contact notification={'56'} date={'3 Dias'} user={{ name: 'Luizinho' }} />
+                        <Contact notification={'99'} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
+                        <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
+                        <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
+                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                    </Stack>
+
                 </ContactsArea>
                 <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%', }} />
                 <ChatArea>
-                    <Box sx={{ width: '100%', height:'11%',display: 'flex', alignItems: 'center', p: '0 3%', pb:'4%', }}>
+                    <Box sx={{ width: '100%', height: '11%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%', }}>
                         <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem' }}>
 
                         </Avatar>
@@ -64,26 +69,26 @@ export default function ChatPage() {
                             <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%' }} >Username</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', width: '25%', }} gap={3}>
-                            <IconButton sx={{ }}>
+                            <IconButton sx={{}}>
                                 <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray' }} />
                             </IconButton>
-                            <IconButton sx={{ }}>
+                            <IconButton sx={{}}>
                                 <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray' }} />
                             </IconButton>
-                            <IconButton sx={{ }}>
+                            <IconButton sx={{}}>
                                 <Settings sx={{ fontSize: '2rem', color: 'gray' }} />
                             </IconButton>
                         </Box>
                     </Box>
-                    <Divider flexItem/>
-                    <Box sx={{ width:'100%', height:'78%', display:'flex', alignItems:'center' }}>
+                    <Divider flexItem />
+                    <Box sx={{ width: '100%', height: '78%', display: 'flex', alignItems: 'center' }}>
 
-                    </Box> 
-                    <Divider flexItem sx={{}}/>
-                    <Box sx={{ width:'100%', height:'10%', display:'flex', pt:'2%' }}>
-                        <Chat/>
-                    </Box> 
-                    
+                    </Box>
+                    <Divider flexItem sx={{}} />
+                    <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
+                        <Chat />
+                    </Box>
+
                 </ChatArea>
             </Box>
 

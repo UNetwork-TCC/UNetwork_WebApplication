@@ -14,13 +14,21 @@ export default function Chat() {
     const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
 
-    const [ text, setText ] = useState('')
 
-    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
+
+    const [text, setText] = useState('')
+
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
     }
+
+    const onEmojiCLickOut = () => {
+        alert('aa')
+    }
+
+
 
     return (
 
@@ -29,12 +37,13 @@ export default function Chat() {
                 <Box
                     boxShadow={theme.shadows[3]}
                     component="form"
-                    sx={matches ? { p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '100%', borderRadius: '15px', 
-                        bgcolor:'white',
-                    // order:'1px solid rgba(128,128,128, 0.5)'
-                    // bgcolor:'rgba(128,128,128,0.1)', 
-                    } 
-                        : 
+                    sx={matches ? {
+                        p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '100%', borderRadius: '15px',
+                        bgcolor: 'white',
+                        // order:'1px solid rgba(128,128,128, 0.5)'
+                        // bgcolor:'rgba(128,128,128,0.1)', 
+                    }
+                        :
                         { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}
                 >
                     <InputBase
@@ -57,12 +66,12 @@ export default function Chat() {
                         width: '1.5rem',
                         borderRadius: '15px',
                         color: 'white',
-                        bgcolor:'#673AB7',
+                        bgcolor: '#673AB7',
                         border: '1px solid rgba(0, 0, 0, 0.15)',
                         p: 2.5,
                         cursor: 'pointer',
                         transition: '.3s ease-in-out',
-                        ml:'1%'
+                        ml: '1%'
                     }}>
                         <SendIcon />
                     </Avatar>
@@ -72,9 +81,11 @@ export default function Chat() {
                 </Box>
 
             </Container>
-            <Box sx={{ position: 'absolute', bottom: '11%' }}>
-                {showEmojiPicker && <EmojiPicker id='emoji' defaultSkinTone='' emojiStyle='twitter' onEmojiClick={onEmojiClick} />}
+
+            <Box sx={{ position: 'absolute', bottom: '11%' }}  >
+                {showEmojiPicker && <EmojiPicker id='emoji' emojiStyle='twitter' onEmojiClick={onEmojiClick} autoFocusSearch={false} />}
             </Box>
+
         </Box>
 
     )

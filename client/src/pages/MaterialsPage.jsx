@@ -5,9 +5,6 @@ import { useTheme } from '@emotion/react'
 import { BuildOutlined, FilterList } from '@mui/icons-material'
 import { File, FolderMaterials } from '../components'
 
-
-
-
 export default function MaterialsPage() {
     const theme = useTheme()
 

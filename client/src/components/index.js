@@ -2,7 +2,7 @@ import DiscoverSection from './LandingPage/DiscoverSection'
 import AboutSection from './LandingPage/AboutSection'
 import ComunitySection from './LandingPage/ComunitySection'
 import Chat from './Chat/Chat'
-import Notice from './News/LittleNotice'
+import LittleNotice from './News/LittleNotice'
 import SideBar from './SideBar/SideBar'
 import File from './Materials/File'
 import Contact from './Chat/Contact'
@@ -15,6 +15,9 @@ import Register from './Auth/Register'
 import FolderMaterials from './Materials/FolderMaterials'
 import ContactsArea from './Chat/ContactsArea'
 import ChatArea from './Chat/ChatArea'
+import BigNotice from './News/BigNotice'
+import Notice from './News/Notice'
+
 
 
 export { 
@@ -22,7 +25,7 @@ export {
     AboutSection,
     ComunitySection,
     Chat,
-    Notice,
+    LittleNotice,
     Folder,
     SideBar,
     File,
@@ -35,4 +38,6 @@ export {
     FolderMaterials,
     ContactsArea,
     ChatArea,
+    BigNotice,
+    Notice,
 }
