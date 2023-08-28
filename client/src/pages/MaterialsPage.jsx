@@ -28,7 +28,7 @@ export default function MaterialsPage() {
                     <FolderMaterials FolderName={'teste'} />
                 </Box>
 
-                <Box flexDirection='column' m={5} >
+                <Box flexDirection='column' m={5} sx={{ml:'7.5%'}}>
                     <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
                     <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
                     <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />

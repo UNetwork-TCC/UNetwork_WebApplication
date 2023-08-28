@@ -5,6 +5,7 @@ import { Add, AttachFile } from '@mui/icons-material'
 import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
 import roubo from '../assets/img/paraPiada/roubo.jpg'
+import james from '../assets/img/paraPiada/james.jpg'
 
 
 export default function Feed() {
@@ -44,6 +45,14 @@ export default function Feed() {
                         content='Simplesmente roubado velho:'
                         user={{ name: '3°DS' }}
                         img={roubo}    
+                    />
+
+                    <Post 
+                        title={'Piada'} 
+                        date={'3 horas atrás'} 
+                        content='Ô JÂIMESS 🗣🗣, EU QUERO UMA SALADA DE FRUATA 🍌🍏🍇🍓🤤. OLHA QUE HABILIDADE 😏🤠🧐 OLHA QUE HABILIDADE 😏🤠🧐 EU QUERO UMA SALADA DE FRUTA, JAMES 😉🍏🍇. NO CAPRICHO 😋👌🏼. DE 5 🖐🏼, DE 7 🖐🏼✌🏼, DE 10 🖐🏼🤚🏼 ? ME DA UMA DE 5 🤚🏼. AQUI, TÁ NA MÃO 👨🏼‍🍳🤝🍹. TÁ AQUI 🍹. ISSO JAMES, MUITO OBRIGADO 😎🤝. BRIGADO 👌🏼👍🏼. DEUS ABENÇOE 🙏🏼🙏🏼. 👉🏼👉🏼👉🏼ESSE É O JÂIMESS👈🏼👈🏼👈🏼😎😎. HÃÃ ? 🤨🤨. DA SALADA DE FRUTA 🍇🍹👨🏼‍🍳 O ARTIXTA DE CIRCO 🎪 😃'
+                        user={{ name: '3°DS' }}
+                        img={james}    
                     />
                 </Box>
             </Box>

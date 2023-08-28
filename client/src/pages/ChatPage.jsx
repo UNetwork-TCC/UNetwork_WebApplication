@@ -12,52 +12,60 @@ import ChatAreaOld from '../components/Chat/ChatAreaOld'
 export default function ChatPage() {
     return (
         <AppLayout withSidebars>
-            <Box sx={{ width: '100%', height: '100%', display: 'flex',  }} >
+            <Box sx={{ width: '100%', height: '100%', display: 'flex', }} >
                 <ContactsArea>
-                    <Stack gap={2} sx={{position:'sticky', top:'0', background:''}}>
-                        <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                            <Box sx={{ width: '70%' }}>
-                                <Typography variant='h4' sx={{}}>Conversas</Typography>
+                    <Box sx={{ width: '100%', height: '17%' }}>
+                        <Stack gap={2} sx={{ position: 'sticky', top: '0', }}>
+                            <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
+                                <Box sx={{ width: '70%' }}>
+                                    <Typography variant='h4' sx={{}}>Conversas</Typography>
+                                </Box>
+                                <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
+                                    <IconButton>
+                                        <Add />
+                                    </IconButton>
+                                    <IconButton>
+                                        <ModeEditOutlineRounded />
+                                    </IconButton>
+                                </Box>
                             </Box>
-                            <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
-                                <IconButton>
-                                    <Add />
-                                </IconButton>
-                                <IconButton>
-                                    <ModeEditOutlineRounded />
-                                </IconButton>
+                            <Box sx={{}}>
+                                <CustomInput
+                                    width='95%'
+                                    bgcolor='white'
+                                    color='#673AB7'
+                                    iconColor={'white'}
+                                    placeholder='Procurar...'
+                                    icon={<Search />}
+                                    sx={{ ml: '5%' }}
+                                />
                             </Box>
-                        </Box>
-                        <Box sx={{}}>
-                            <CustomInput
-                                width='95%'
-                                bgcolor='white'
-                                color='#673AB7'
-                                iconColor={'white'}
-                                placeholder='Procurar...'
-                                icon={<Search />}
-                                sx={{ ml: '5%' }}
-                            />
-                        </Box>
-                    </Stack>
-                    <Stack gap={1} sx={{mt:'2%'}}>
-                        <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
-                        <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
-                        <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
-                        <Contact notification={''} date={'3 Dias'} user={{ name: 'Kauê' }} />
-                        <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
-                        <Contact notification={'14'} date={'3 Dias'} user={{ name: 'Jhow' }} />
-                        <Contact notification={'56'} date={'3 Dias'} user={{ name: 'Luizinho' }} />
-                        <Contact notification={'99'} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
-                        <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
-                        <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
-                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                        <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                    </Stack>
-
+                        </Stack>
+                    </Box>
+                    
+                    <Box sx={{
+                        width: '100%', height: '87%',
+                        overflow:'scroll',
+                        '::-webkit-scrollbar': { display: 'none' }
+                    }}>
+                        <Stack gap={1} sx={{mt:'2%',width:'100%', height:'100%'}}>
+                            <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
+                            <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
+                            <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
+                            <Contact notification={''} date={'3 Dias'} user={{ name: 'Kauê' }} />
+                            <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
+                            <Contact notification={'14'} date={'3 Dias'} user={{ name: 'Jhow' }} />
+                            <Contact notification={'56'} date={'3 Dias'} user={{ name: 'Luizinho' }} />
+                            <Contact notification={'99'} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
+                            <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
+                            <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
+                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                        </Stack>
+                    </Box>
                 </ContactsArea>
                 <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%', }} />
                 <ChatArea>
