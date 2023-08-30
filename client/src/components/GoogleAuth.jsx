@@ -2,6 +2,8 @@ import { GoogleLogin } from 'react-google-login'
 import { ActionTypes, GOOGLE_CLIENT_ID } from '../constants'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import googleLogo from '../assets/svg/Auth/GoogleLogo.svg'
+import { IconButton } from '@mui/material'
 
 export default function GoogleAuth() {
     const dispatch = useDispatch()
@@ -27,6 +29,13 @@ export default function GoogleAuth() {
 
     return (
         <GoogleLogin
+            render={
+                (renderProps) => (
+                    <IconButton onClick={renderProps.onClick}>
+                        <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
+                    </IconButton>
+                )
+            }
             clientId={GOOGLE_CLIENT_ID}
             redirectUri='/'
             onSuccess={googleSuccess}

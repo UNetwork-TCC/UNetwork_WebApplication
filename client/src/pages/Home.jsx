@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton } from '@mui/material'
+import { Avatar, Box } from '@mui/material'
 import CustomInput from '../layout/CustomInput'
 import { Post } from '../components'
 import { Add, AttachFile } from '@mui/icons-material'
@@ -6,10 +6,18 @@ import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
 import roubo from '../assets/img/paraPiada/roubo.jpg'
 import james from '../assets/img/paraPiada/james.jpg'
+// import { useEffect } from 'react'
+// import { useNavigate } from 'react-router-dom'
 
 
-export default function Feed() {
+export default function Home() {
     const theme = useTheme()
+    // const navigate = useNavigate()
+
+    // useEffect(() => {
+    //     if (!localStorage.getItem('user'))
+    //         navigate('/auth')
+    // })
 
     return (
         <AppLayout withSidebars>
