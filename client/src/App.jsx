@@ -7,10 +7,10 @@ import { lightTheme } from './themes'
 import { themeContext } from './contexts'
 import { LandingPage, ErrorPage, FavoritesPage, ChatPage, NewsPage, ClassesPage } from './pages'
 import ThemeStore from './layout/ThemeStore'
-import Auth from './pages/Auth'
-import './utils/languages'
 import { Home } from './pages'
 import MaterialsPage from './pages/MaterialsPage'
+import { Login, Register } from './pages'
+import './utils/languages'
 
 function App() {
     const [ theme, setTheme ] = useState(lightTheme)
@@ -25,7 +25,8 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Navigate to={'/' + lang} />} />
                             <Route path="/:lang" element={<LandingPage />} />
-                            <Route path="/auth" element={<Auth />} />
+                            <Route path="/auth/register" element={<Register />} />
+                            <Route path="/auth/login" element={<Login />} />
                             <Route path="/error" element={<ErrorPage />} />
                             <Route path='/app' element={<Home />} />
                             <Route path='/app/favorites' element={<FavoritesPage />} />

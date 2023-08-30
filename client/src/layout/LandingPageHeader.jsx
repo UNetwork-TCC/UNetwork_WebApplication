@@ -57,8 +57,8 @@ export default function LandingPageHeader() {
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
-                    <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth'>{t('nav.btn5')}</Link></Button>
-                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('nav.btn6')}</Link></Button>
+                    <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth/login'>{t('nav.btn5')}</Link></Button>
+                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth/register'>{t('nav.btn6')}</Link></Button>
                 </Box>
                 {/* <Box height={40} border='1px solid'></Box> */}
                 <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />

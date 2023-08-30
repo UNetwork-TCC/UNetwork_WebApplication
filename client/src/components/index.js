@@ -10,17 +10,14 @@ import Classes from './Classes/Classes'
 import Post from './Home/Post'
 import Folder from './FavoritePage/Folder'
 import Comment from './Timeline/Comment'
-import Login from './Auth/Login'
-import Register from './Auth/Register'
+import Auth from './Auth/Auth'
 import FolderMaterials from './Materials/FolderMaterials'
 import ContactsArea from './Chat/ContactsArea'
 import ChatArea from './Chat/ChatArea'
 import BigNotice from './News/BigNotice'
 import Notice from './News/Notice'
 
-
-
-export { 
+export {
     DiscoverSection,
     AboutSection,
     ComunitySection,
@@ -32,9 +29,8 @@ export {
     Contact,
     Classes,
     Post,
+    Auth,
     Comment,
-    Login,
-    Register,
     FolderMaterials,
     ContactsArea,
     ChatArea,
