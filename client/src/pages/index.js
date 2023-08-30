@@ -7,5 +7,6 @@ import Suggestion from '../components/Timeline/Suggestion'
 import MaterialsPage from './MaterialsPage'
 import ChatPage from './ChatPage'
 import NewsPage from './NewsPage'
+import ClassesPage from './ClassesPage'
 
-export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage, ChatPage, NewsPage}
+export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage, ChatPage, NewsPage, ClassesPage}

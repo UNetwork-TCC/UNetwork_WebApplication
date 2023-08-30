@@ -6,9 +6,6 @@ import CustomInput from '../layout/CustomInput'
 import { Add, Search, ModeEditOutlineRounded, VideocamOutlined, LocalPhone, Settings } from '@mui/icons-material'
 import ChatAreaOld from '../components/Chat/ChatAreaOld'
 
-
-
-
 export default function ChatPage() {
     return (
         <AppLayout withSidebars>
