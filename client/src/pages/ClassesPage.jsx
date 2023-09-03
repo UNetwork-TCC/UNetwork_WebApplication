@@ -20,12 +20,12 @@ export default function ClassesPage() {
                     </Box>
                 </Container>
                 <Box flexDirection='column' m={5} sx={{ display:'grid', gridTemplateColumns: 'auto auto auto', justifyItems:'center', rowGap:'2rem' }} >
-                    <Classes Folder={{name:'Os lambisgoia'}} />
-                    <Classes Folder={{name:'Lar Ternura'}} />
-                    <Classes Folder={{name:'Fofoqueiros'}} />
-                    <Classes Folder={{name:'Maconheiros da paz e da guerra'}} />
-                    <Classes Folder={{name:'Os programadores'}} />
-                    <Classes Folder={{name:'Os revoltados'}} />
+                    <Classes Class={{name:'Os lambisgoia'}} />
+                    <Classes Class={{name:'Lar Ternura'}} />
+                    <Classes Class={{name:'Fofoqueiros'}} />
+                    <Classes Class={{name:'Maconheiros da paz e da guerra'}} />
+                    <Classes Class={{name:'Os programadores'}} />
+                    <Classes Class={{name:'Os revoltados'}} />
                     
                 </Box>
                 

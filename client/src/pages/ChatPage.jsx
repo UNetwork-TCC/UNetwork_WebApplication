@@ -49,7 +49,7 @@ export default function ChatPage() {
                             <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
                             <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
                             <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
-                            <Contact notification={''} date={'3 Dias'} user={{ name: 'Kauê' }} />
+                            <Contact notification={''} date={'3 Dias'} user={{ name: 'Guilherme Lima' }} />
                             <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
                             <Contact notification={'14'} date={'3 Dias'} user={{ name: 'Jhow' }} />
                             <Contact notification={'56'} date={'3 Dias'} user={{ name: 'Luizinho' }} />
