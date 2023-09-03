@@ -16,9 +16,9 @@ export default function Chat() {
 
 
 
-    const [text, setText] = useState('')
+    const [ text, setText ] = useState('')
 
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)

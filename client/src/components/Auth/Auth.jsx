@@ -2,9 +2,8 @@ import { Box, IconButton, Typography } from '@mui/material'
 import { Footer, LandingPageHeader } from '../../layout'
 import { useTheme } from '@emotion/react'
 import facebookLogo from '../../assets/svg/Auth/FacebookLogo.svg'
-import googleLogo from '../../assets/svg/Auth/GoogleLogo.svg'
 import GoogleAuth from '../GoogleAuth'
-export default function Auth({ form, side }) {
+export default function Auth({ form, side, formTitle }) {
     const theme = useTheme()
 
     return (
@@ -14,7 +13,7 @@ export default function Auth({ form, side }) {
                 <Box minHeight='65vh' width='100%' display='flex' justifyContent='center' alignItems='center' p={5}>
                     <Box height='100%' width='100%' display='flex' justifyContent='center' alignItems='center'>
                         <Box display='flex' flexDirection='column' alignItems='center' justifyContent='start' minHeight='60vh' width='80%' borderRadius={5} border={`1px solid ${theme.palette.primary.main}`}>
-                            <Typography m={3} variant='h5' color='primary.main' fontWeight={900} textAlign='center'>Crie sua conta</Typography>
+                            <Typography m={3} variant='h5' color='primary.main' fontWeight={900} textAlign='center'>{formTitle}</Typography>
                             <Box display='flex' gap={5}>
                                 <GoogleAuth />
                                 <IconButton>

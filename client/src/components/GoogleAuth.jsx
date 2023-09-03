@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import googleLogo from '../assets/svg/Auth/GoogleLogo.svg'
 import { IconButton } from '@mui/material'
+import { useEffect } from 'react'
+import { gapi } from 'gapi-script'
 
 export default function GoogleAuth() {
     const dispatch = useDispatch()
@@ -16,7 +18,12 @@ export default function GoogleAuth() {
 
         try {
             dispatch({ type: AUTH, data: { result, token } })
-            navigate('/')
+            console.log({ result, token })
+            
+            setTimeout(() => {
+                navigate('/app')
+            }, 1000)
+
         } catch (error) {
             console.log(error)
         }
@@ -26,6 +33,12 @@ export default function GoogleAuth() {
         console.log(error)
         console.log('Não foi possível logar com a Google. Tente novamente mais tarde.')
     }
+
+    useEffect(() => {
+        gapi.load('client:auth2', () => {
+            gapi.auth2.init({ clientId: GOOGLE_CLIENT_ID })
+        })
+    }, [])
 
     return (
         <GoogleLogin

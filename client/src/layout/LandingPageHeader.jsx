@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
 import { useStyles } from '../styles'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
@@ -57,8 +57,8 @@ export default function LandingPageHeader() {
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
-                    <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth/login'>{t('nav.btn5')}</Link></Button>
-                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth/register'>{t('nav.btn6')}</Link></Button>
+                    <Button onClick={() => navigate('/auth/login')}>{t('nav.btn5')}</Button>
+                    <Button onClick={() => navigate('/auth/register')} sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'>{t('nav.btn6')}</Button>
                 </Box>
                 {/* <Box height={40} border='1px solid'></Box> */}
                 <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />

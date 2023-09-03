@@ -7,7 +7,16 @@ import { Auth } from '../components'
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
 import authDecoration from '../assets/svg/Auth/AuthDecoration.svg'
+import { Field, Form, Formik } from 'formik'
+import * as Yup from 'yup'
 function RegisterForm() {
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required('Este campo é obrigatório'),
+        email: Yup.string().email().required('Este campo é obrigatório'),
+        password: Yup.string().required('Este campo é obrigatório'),
+        confirmPassword: Yup.string().required('Este campo é obrigatório'),
+    })
 
     const theme = useTheme()
     const navigate = useNavigate()
@@ -33,14 +42,40 @@ function RegisterForm() {
     return (
         <>
             <Box p={2.5}>
-                <form onSubmit={handleSubmit}>
+                <form action='#' onSubmit={handleSubmit}>
                     <FormControl sx={{ display: 'flex', gap: 2.5 }}>
-                        <TextField label='Nome' required fullWidth />
-                        <TextField label='Email' required fullWidth />
-                        <Box display='flex' gap={2.5}>
-                            <TextField fullWidth label='Senha' required type='password' />
-                            <TextField fullWidth label='Repetir senha' required type='password' />
-                        </Box>
+                        <Formik
+                            initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
+                            validationSchema={validationSchema}
+                            style={{ width: '100%' }} 
+                            onSubmit={handleSubmit}
+                        >
+                            {({ errors, touched }) => (
+                                <Form>
+                                    <FormControl sx={{ display: 'flex', gap: 2.5 }}>
+                                        <Box>
+                                            <Field as={TextField} name='name' label='Nome' required fullWidth />
+                                            {errors.usernameOrEmail && touched.usernameOrEmail && (
+                                                <p style={{ color: 'red' }}>{errors.name}</p>
+                                            )}
+                                        </Box>
+                                        <Box gap={2.5}>
+                                            <Field as={TextField} name='email' fullWidth label='Email' required type='email' />
+                                            {errors.password && touched.password && (
+                                                <p style={{ color: 'red' }}>{errors.email}</p>
+                                            )}
+                                        </Box>
+                                        <Box display='flex' gap={2.5}>
+                                            <Field as={TextField} fullWidth name='password' label='Senha' required type='password' />
+                                            <Field as ={TextField} fullWidth name='confirmPassword' label='Repetir senha' required type='password' />
+                                        </Box>
+                                        <Box display='flex' justifyContent='space-between' mt={2} alignItems='center'>
+                                            <Button type='submit' variant='contained'>Entrar</Button>
+                                        </Box>
+                                    </FormControl>
+                                </Form>
+                            )}
+                        </Formik>
                         <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
                             <Box width='60%' display='flex' alignItems='center'>
                                 <Checkbox required />
@@ -110,6 +145,6 @@ function RegisterSide() {
 
 export default function Register() {
     return (
-        <Auth form={<RegisterForm />} side={<RegisterSide />} />
+        <Auth formTitle='Sign in' form={<RegisterForm />} side={<RegisterSide />} />
     )
 }
