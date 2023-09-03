@@ -142,7 +142,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                                 {children}
                             </Box>
                             {withSidebars &&
-                                <Sidebar sx={{ flexDirection: 'row-reverse' }}>
+                                <Sidebar sx={{ flexDirection: 'row-reverse', overflow:'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
                                     <Box color='text.secondary' display='flex' mb={3} gap={2}>
                                         <Typography sx={{ userSelect: 'none' }} onClick={contactsExpanded ? contactsCollapse : contactsExpand}>Contatos ({contacts})</Typography>
                                         {contactsExpanded ?
@@ -151,7 +151,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
                                             <ExpandMore sx={{ cursor: 'pointer' }} onClick={contactsExpand} />
                                         }
                                     </Box>
-                                    <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none' }}>
+                                    <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none', }}>
                                         <Contact name='Leonardo' />
                                         <Contact name='Torugo' />
                                         <Contact name='Alfa' />

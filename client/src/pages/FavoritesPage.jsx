@@ -12,7 +12,7 @@ export default function FavoritesPage() {
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
     const [ open, setOpen ] = useState(false)
-
+    
     const [ folderAttributes, setFolderAttributes ] = useState({
         title: '',
         visibility: ''
