@@ -4,9 +4,9 @@ import { CustomMenu } from '../../layout'
 
 export default function Classes({ Class }) {
 
-    const initials = Class.name.split(" ")
+    const initials = Class.name.split(' ')
 
-    if (initials.length > 1){
+    if (initials.length > 1) {
         var lettersInitial1 = initials[0].charAt(0).toUpperCase()
         var lettersInitial2 = initials[initials.length - 1].charAt(0).toUpperCase()
         var lettersInitials = lettersInitial1 + lettersInitial2
@@ -36,7 +36,7 @@ export default function Classes({ Class }) {
                     }
                 </Avatar>
             </Box>
-            <Box sx={{ height:'40%', display: 'flex', flexDirection: 'column', alignItems: 'center', width:'80%', textAlign:'center', justifyContent:'center'}}>
+            <Box sx={{ height:'40%', display: 'flex', flexDirection: 'column', alignItems: 'center', width:'80%', textAlign:'center', justifyContent:'center' }}>
                 <Typography sx={{ fontSize: '1.3em', textTransform: 'uppercase', fontWeight: 'bold', color: 'black' }} >{Class.name}</Typography>
             </Box>
         </Paper>

@@ -114,7 +114,7 @@ export default function FavoritesPage() {
                             label="Título"
                             value={folderAttributes.title}
                             fullWidth
-                         />
+                        />
                         <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
                         <FormControl>
                             <CustomCheckBox 

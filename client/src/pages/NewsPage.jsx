@@ -1,10 +1,9 @@
-import { Box, Button, Container, Divider, FormControl, Link, Modal, Paper, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Container, Divider, Link, Modal, Paper, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
 
 import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
 import { BuildOutlined, FilterList } from '@mui/icons-material'
-import { LittleNotice, BigNotice, Notice } from '../components'
-import CustomCheckBox from '../layout/CustomCheckBox'
+import { Notice } from '../components'
 import { useEffect, useState } from 'react'
 
 export default function NewsPage() {
@@ -12,17 +11,17 @@ export default function NewsPage() {
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
-    const [open, setOpen] = useState(false)
+    const [ open, setOpen ] = useState(false)
 
-    const [NewsAttributes, setNewsAttributes] = useState({
+    const [ NewsAttributes, setNewsAttributes ] = useState({
         title: '',
         description: ''
     })
 
-    const [checkedButtons, setCheckedButtons] = useState({
-        public: true,
-        private: false
-    })
+    // const [ checkedButtons, setCheckedButtons ] = useState({
+    //     public: true,
+    //     private: false
+    // })
 
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
@@ -59,13 +58,13 @@ export default function NewsPage() {
                 </Container>
                 <Box sx={{ display: 'flex' }}>
                     <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', }} >
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
-                        <Notice title={'ATCHINNN'} description={`Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                     </Container>
                     <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
                         <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem' }}>
@@ -131,7 +130,7 @@ export default function NewsPage() {
                             value={NewsAttributes.title}
                             fullWidth
                         />
-                        <Divider sx={{m:'1rem 0'}}/>
+                        <Divider sx={{ m: '1rem 0' }} />
                         <TextField
                             onChange={e => setNewsAttributes({ ...NewsAttributes, description: e.target.value })}
                             id="outline-basic"

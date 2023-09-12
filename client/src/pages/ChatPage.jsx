@@ -1,12 +1,12 @@
 import { Avatar, Box, Divider, IconButton, Stack, Typography } from '@mui/material'
 import AppLayout from '../layout/AppLayout'
-import { useTheme } from '@emotion/react'
 import { Chat, ChatArea, Contact, ContactsArea } from '../components'
 import CustomInput from '../layout/CustomInput'
 import { Add, Search, ModeEditOutlineRounded, VideocamOutlined, LocalPhone, Settings } from '@mui/icons-material'
-import ChatAreaOld from '../components/Chat/ChatAreaOld'
+
 
 export default function ChatPage() {
+
     return (
         <AppLayout withSidebars>
             <Box sx={{ width: '100%', height: '100%', display: 'flex', }} >
@@ -39,13 +39,13 @@ export default function ChatPage() {
                             </Box>
                         </Stack>
                     </Box>
-                    
+
                     <Box sx={{
                         width: '100%', height: '87%',
-                        overflow:'scroll',
+                        overflow: 'scroll',
                         '::-webkit-scrollbar': { display: 'none' }
                     }}>
-                        <Stack gap={1} sx={{mt:'2%',width:'100%', height:'100%'}}>
+                        <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%' }}>
                             <Contact notification={'8'} date={'19:45'} user={{ name: 'Alfa' }} />
                             <Contact notification={'6'} date={'3 Dias'} user={{ name: 'Leonardo' }} />
                             <Contact notification={'3'} date={'1 Ano'} user={{ name: 'Torugo' }} />
@@ -57,7 +57,7 @@ export default function ChatPage() {
                             <Contact notification={'7'} date={'3 Dias'} user={{ name: 'Rian' }} />
                             <Contact notification={'1'} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            <Contact notification={'2'} date={'2h'} user={{ name: 'Paulin' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />

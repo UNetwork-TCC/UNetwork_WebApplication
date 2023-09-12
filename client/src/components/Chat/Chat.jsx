@@ -14,8 +14,6 @@ export default function Chat() {
     const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
 
-
-
     const [ text, setText ] = useState('')
 
     const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
@@ -23,12 +21,6 @@ export default function Chat() {
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
     }
-
-    const onEmojiCLickOut = () => {
-        alert('aa')
-    }
-
-
 
     return (
 
@@ -53,10 +45,13 @@ export default function Chat() {
                         value={text}
                         onChange={e => setText(e.target.value)}
 
+
                     />
-                    <IconButton aria-label="File" size='large'>
+                    <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
+                    <IconButton component='label' htmlFor='file' sx={{ cursor: 'pointer', transition: '.3s', bgcolor: 'white', color:'gray', }}>
                         <ImageOutlinedIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
+                    
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='large'>
                         <EmojiEmotionsIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
@@ -83,7 +78,13 @@ export default function Chat() {
             </Container>
 
             <Box sx={{ position: 'absolute', bottom: '11%' }}  >
-                {showEmojiPicker && <EmojiPicker id='emoji' emojiStyle='twitter' onEmojiClick={onEmojiClick} autoFocusSearch={false} />}
+                {showEmojiPicker && (
+                    <Box >
+                        <Box sx={{ ml: '15.5%', width: '69%', mt: '7%', height: '75%', position: 'fixed', top: 0, right: 0, left: 0, bottom: 0, zIndex: 2, }} onClick={() => setShowEmojiPicker(false)}></Box>
+                        <Box sx={{ position: 'relative', zIndex: 3 }}>
+                            <EmojiPicker id='emoji' emojiStyle='twitter' onEmojiClick={onEmojiClick} autoFocusSearch={false} />
+                        </Box>
+                    </Box>)}
             </Box>
 
         </Box>

@@ -10,20 +10,20 @@ import CustomCheckBox from '../layout/CustomCheckBox'
 export default function ClassesPage() {
     const theme = useTheme()
 
-    const [typeForm, setTypeForm] = useState('Create')
+    const [ typeForm, setTypeForm ] = useState('Create')
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
-    const [open, setOpen] = useState(false)
+    const [ open, setOpen ] = useState(false)
 
-    const [ClassAttributes, setClassAttributes] = useState({
+    const [ ClassAttributes, setClassAttributes ] = useState({
         title: '',
         visibility: '',
         code: '',
         password: ''
     })
 
-    const [checkedButtons, setCheckedButtons] = useState({
+    const [ checkedButtons, setCheckedButtons ] = useState({
         public: true,
         private: false
     })
@@ -48,9 +48,9 @@ export default function ClassesPage() {
         })
     }, [])
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [ showPassword, setShowPassword ] = useState(false)
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowPassword = () => setShowPassword((show) => !show)
 
 
     return (
@@ -85,7 +85,7 @@ export default function ClassesPage() {
                 disableAutoFocus
             >
                 <Box p sx={{ height: matches ? '45vh' : '40vh', width: '35vw', bgcolor: 'background.paper', }} borderRadius={2} >
-                    <Box p={0} sx={{ display: "flex", width: '100%' }}>
+                    <Box p={0} sx={{ display: 'flex', width: '100%' }}>
                         <Button sx={{ width: '45%', ':hover': { cursor: 'pointer', bgcolor: 'whitesmoke' }, m: '0 5%', textAlign: 'center', borderRadius: '0.5rem', color: 'black', }} onClick={() => setTypeForm('Create')}>
                             <Typography id="modal-modal-title" sx={{ fontSize: '1.2rem' }} m={'1rem'}>
                                 Criar Classe

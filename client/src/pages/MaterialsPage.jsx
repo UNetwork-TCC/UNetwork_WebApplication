@@ -12,14 +12,14 @@ export default function MaterialsPage() {
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
-    const [open, setOpen] = useState(false)
+    const [ open, setOpen ] = useState(false)
 
-    const [folderAttributes, setFolderAttributes] = useState({
+    const [ folderAttributes, setFolderAttributes ] = useState({
         title: '',
         visibility: ''
     })
 
-    const [checkedButtons, setCheckedButtons] = useState({
+    const [ checkedButtons, setCheckedButtons ] = useState({
         public: true,
         private: false
     })
