@@ -1,7 +1,5 @@
-import { Avatar, Box, Divider, Typography, Card, Grid, Modal, Button, TextField, FormControl, useMediaQuery, useTheme } from '@mui/material'
+import { Avatar, Box, Typography, Card, Grid, Modal, Button, TextField, FormControl, useMediaQuery, useTheme } from '@mui/material'
 import { Add } from '@mui/icons-material'
-import Skeleton from '@mui/material/Skeleton'
-import Stack from '@mui/material/Stack'
 import { useEffect, useState } from 'react'
 import { Folder } from '../components'
 import AppLayout from '../layout/AppLayout'

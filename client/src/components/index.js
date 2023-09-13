@@ -16,6 +16,7 @@ import ContactsArea from './Chat/ContactsArea'
 import ChatArea from './Chat/ChatArea'
 import BigNotice from './News/BigNotice'
 import Notice from './News/Notice'
+import FilterAndConfig from './MoreThanOnePage/FilterAndConfig'
 
 export {
     DiscoverSection,
@@ -36,4 +37,5 @@ export {
     ChatArea,
     BigNotice,
     Notice,
+    FilterAndConfig,
 }

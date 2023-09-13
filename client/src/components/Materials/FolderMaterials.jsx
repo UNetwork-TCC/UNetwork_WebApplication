@@ -45,9 +45,9 @@ export default function FolderMaterials({ FolderName, id }) {
                 <Box 
                     onClick={
                         e => handleClick(e, 
-                            [ 'Item 1', 'Item 2' ],
+                            [ 'Baixar', 'Compartilhar', 'Favoritar', 'Renomear', 'Arquivar', 'Excluir' ],
                             [ onClickEvents.item1, onClickEvents.item2 ],
-                            [ <MoreHorizIcon key={0} />, <MoreHorizIcon key={1} /> ]
+                            
                         )
                     }
                     display='flex' 

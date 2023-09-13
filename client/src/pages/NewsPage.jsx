@@ -2,8 +2,7 @@ import { Box, Button, Container, Divider, Link, Modal, Paper, Stack, TextField, 
 
 import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
-import { BuildOutlined, FilterList } from '@mui/icons-material'
-import { Notice } from '../components'
+import { FilterAndConfig, Notice } from '../components'
 import { useEffect, useState } from 'react'
 
 export default function NewsPage() {
@@ -48,13 +47,7 @@ export default function NewsPage() {
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%', mb: '2%' }}>
                     <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                        <FilterList sx={{ cursor: 'pointer', fontSize: '2em', ':hover': { color: 'text.secondary' } }} />
-                        {/* Qualquer um pode filtrar */}
-                        <BuildOutlined sx={{ ml: '1.5em', fontSize: '2em', transform: 'scaleX(-1)', ':hover': { color: 'text.secondary', cursor: 'pointer' } }} />
-                        <Box sx={{ height: '75%', bgcolor: '#673AB7', fontSize: '1rem', borderRadius: '3.1vh', color: 'white', padding: '0.3em 1em', ml: '2em', ':hover': { cursor: 'pointer', bgcolor: '#673AB7', opacity: '0.85' } }} onClick={handleOpen}>CRIAR NOTÍCIAS</Box>
-                        {/* unico que vai poder criar noticias e modificalas, são as pessoas com certo nivel de acesso */}
-                    </Box>
+                    <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen}/>
                 </Container>
                 <Box sx={{ display: 'flex' }}>
                     <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', }} >

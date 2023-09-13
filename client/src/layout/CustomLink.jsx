@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { useStyles } from '../styles/'
 import { useContext } from 'react'
 import { themeContext } from '../contexts/themeContext'

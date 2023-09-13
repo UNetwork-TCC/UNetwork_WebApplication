@@ -1,4 +1,4 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, Report, Bookmark } from '@mui/icons-material'
+import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, } from '@mui/icons-material'
 import { Avatar, Box, Card, IconButton, MenuItem, Typography } from '@mui/material'
 import { useState } from 'react'
 import { CustomMenu } from '../../layout'
@@ -7,14 +7,38 @@ export default function Post({ date, content, degree, img, user }) {
 
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
 
-    const [ anchorEl, setAnchorEl ]  = useState(null)
-    const open = Boolean(anchorEl)
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget)
+    const onClickEvents = {
+        item1: () => {
+            console.log('oi')
+            handleClose()
+        },
+
+        item2: () => {
+            console.log('tcchau')
+            handleClose()
+        }
     }
+
+    const [ anchorEl, setAnchorEl ] = useState(null)
+    const [ menuContent, setMenuContent ] = useState(null)
+
+    const open = Boolean(anchorEl)
+
+    const handleClick = (e, elements, onClickEvents = elements.map(() => handleClose), icons = null) => {
+        const mapedElements = elements.map((e, i) =>
+            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
+        )
+
+        setMenuContent(mapedElements)
+
+        setAnchorEl(e.currentTarget)
+    }
+
     const handleClose = () => {
         setAnchorEl(null)
     }
+
+    
 
     return (
         <Card variant="elevation" elevation={2} sx={{
@@ -47,7 +71,14 @@ export default function Post({ date, content, degree, img, user }) {
                             <Typography sx={{ color: 'gray', fontSize: '1.7em' }}>{date}</Typography>
                         </Box>
                     </Box>
-                    <IconButton onClick={handleClick}>
+                    <IconButton onClick={
+                        e => handleClick(e, 
+                            [ 'Salvar', 'Favoritar', 'Seguir/Deseguir', 'Sobre esta conta', 'Ocultar', 'Denunciar', ],
+                            [ onClickEvents.item1, onClickEvents.item2 ],
+                            
+                    
+                        )
+                    }>
                         <MoreVert sx={{ fontSize: '1.2em' }} />
                     </IconButton>
                     <CustomMenu
@@ -55,14 +86,7 @@ export default function Post({ date, content, degree, img, user }) {
                         open={open}
                         onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Bookmark />
-                            Salvar
-                        </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
-                            <Report />
-                            Denunciar
-                        </MenuItem>
+                        {menuContent}
                     </CustomMenu>
                 </Box>
                 <Box display='flex' gap={2.5} flexDirection='column' mt={2.5} mb={5}>
@@ -74,10 +98,10 @@ export default function Post({ date, content, degree, img, user }) {
                 <Box display='flex' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
                     <Box display='flex' gap={2}>
                         <Avatar variant='iconWrapper'>
-                            <IconButton>
+                            <IconButton onClick={() => setFavoriteCLicked(val => !val)}>
                                 {favoriteClicked ?
-                                    <Favorite onClick={() => setFavoriteCLicked(false)} sx={{ color: 'red' }} /> :
-                                    <FavoriteBorder onClick={() => setFavoriteCLicked(true)} />
+                                    <Favorite sx={{ color: 'red', }} /> :
+                                    <FavoriteBorder/>
                                 }
                             </IconButton>
                         </Avatar>

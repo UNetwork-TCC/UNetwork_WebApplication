@@ -1,11 +1,44 @@
-import { Avatar, Box, Divider, IconButton, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
 import AppLayout from '../layout/AppLayout'
 import { Chat, ChatArea, Contact, ContactsArea } from '../components'
 import CustomInput from '../layout/CustomInput'
-import { Add, Search, ModeEditOutlineRounded, VideocamOutlined, LocalPhone, Settings } from '@mui/icons-material'
+import { Add, Search, VideocamOutlined, LocalPhone, Settings } from '@mui/icons-material'
+import { useState } from 'react'
+import { CustomMenu } from '../layout'
 
 
 export default function ChatPage() {
+
+    const onClickEvents = {
+        item1: () => {
+            console.log('oi')
+            handleClose()
+        },
+
+        item2: () => {
+            console.log('tcchau')
+            handleClose()
+        }
+    }
+
+    const [ anchorEl, setAnchorEl ] = useState(null)
+    const [ menuContent, setMenuContent ] = useState(null)
+
+    const open = Boolean(anchorEl)
+
+    const handleClick = (e, elements, onClickEvents = elements.map(() => handleClose), icons = null) => {
+        const mapedElements = elements.map((e, i) =>
+            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
+        )
+
+        setMenuContent(mapedElements)
+
+        setAnchorEl(e.currentTarget)
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
 
     return (
         <AppLayout withSidebars>
@@ -22,7 +55,7 @@ export default function ChatPage() {
                                         <Add />
                                     </IconButton>
                                     <IconButton>
-                                        <ModeEditOutlineRounded />
+                                        <Settings />
                                     </IconButton>
                                 </Box>
                             </Box>
@@ -80,7 +113,15 @@ export default function ChatPage() {
                             <IconButton sx={{}}>
                                 <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray' }} />
                             </IconButton>
-                            <IconButton sx={{}}>
+                            <IconButton sx={{}} 
+                                onClick={
+                                    e => handleClick(e, 
+                                        [ 'Ver Contato', 'Pesquisar', 'Fixar' ,'Silenciar', 'Limpar conversa', 'Denunciar', 'Bloquear', ],
+                                        [ onClickEvents.item1, onClickEvents.item2 ],
+                                                                    
+                                    )
+                                }
+                            >
                                 <Settings sx={{ fontSize: '2rem', color: 'gray' }} />
                             </IconButton>
                         </Box>
@@ -93,7 +134,13 @@ export default function ChatPage() {
                     <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
                         <Chat />
                     </Box>
-
+                    <CustomMenu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                    >
+                        {menuContent}
+                    </CustomMenu>
                 </ChatArea>
             </Box>
 
