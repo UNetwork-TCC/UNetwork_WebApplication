@@ -6,7 +6,7 @@ import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
 import roubo from '../assets/img/paraPiada/roubo.jpg'
 import james from '../assets/img/paraPiada/james.jpg'
-import ciclo from  '../assets/img/paraPiada/ciclo.jpg'
+import ClipsWrapper from '../components/Home/ClipsWrapper'
 
 // import { useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
@@ -34,6 +34,7 @@ export default function Home() {
         <AppLayout withSidebars>
             <Box display='flex' justifyContent='start' alignItems='center' flexDirection='column' p={3} mt={5} width='70%' height='100%' id="topo" sx={{ m:'0 12.5%' }}>
                 <Box width='100%' id="inicio">
+                    <ClipsWrapper />
                     <CustomInput
                         sx={{ boxShadow: theme.shadows[4] }}
                         fullWidth
@@ -52,13 +53,6 @@ export default function Home() {
                     </Box>
                 </Box>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
-                    <Post
-                        title={'O fim do Ciclo'}
-                        date={'12 horas atrás'}
-                        content={'Quebrando o CICLO'}
-                        user={{ name: 'DEATHLOOP' }}
-                        img={ciclo}
-                    />
                     <Post
                         title={'Roubos gerais'}
                         date={'3 horas atrás'}

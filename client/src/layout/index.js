@@ -8,6 +8,19 @@ import SideBar from './SideBar'
 import NavBar from './NavBar'
 import LoadingBackdrop from './LoadingBackdrop'
 import CustomMenu from './CustomMenu'
+import Clip from './Clip'
 
 
-export { LandingPageHeader, LoadingBackdrop, Layout, Footer, Header, CustomDivider, Topic, SideBar, NavBar, CustomMenu }
+export { 
+    LandingPageHeader, 
+    LoadingBackdrop, 
+    Layout, 
+    Footer, 
+    Header, 
+    CustomDivider, 
+    Topic, 
+    SideBar, 
+    NavBar, 
+    CustomMenu, 
+    Clip 
+}
