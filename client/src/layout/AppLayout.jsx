@@ -67,7 +67,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
         setOpen(true)
 
         setTimeout(() => {
-            window.location.href = '/auth'
+            window.location.href = '/auth/login'
         }, 2000)
     }
 

@@ -4,22 +4,25 @@ import { LoadingBackdrop } from '../layout'
 import { useTheme } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '../components'
+import { Field, Form, Formik } from 'formik'
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
 import authDecoration from '../assets/svg/Auth/AuthDecoration.svg'
-import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { login, signin } from '../features/auth/auth-slicer'
 function RegisterForm() {
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Este campo é obrigatório'),
         email: Yup.string().email().required('Este campo é obrigatório'),
-        password: Yup.string().required('Este campo é obrigatório'),
+        password: Yup.string().min(8, 'A senha precisa ter 8 digitos').required('Este campo é obrigatório'),
         confirmPassword: Yup.string().required('Este campo é obrigatório'),
     })
 
     const theme = useTheme()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [ open, setOpen ] = useState(false)
     const [ openLoading, setOpenLoading ] = useState(false)
@@ -29,66 +32,80 @@ function RegisterForm() {
     const handleOpenLoading = () => setOpenLoading(true)
     const handleCloseLoading = () => setOpenLoading(false)
 
-    const handleSubmit = () => {
-        handleOpenLoading()
+    const handleSubmit = user => {
+        // handleOpenLoading()
+
+        dispatch(signin({
+            name: user.name,
+            email: user.email,
+            passowrd: user.password
+        }))
 
         // localStorage.setItem('user', 1)
 
-        setTimeout(() => {
-            navigate('/app')
-        }, 2000)
+        // setTimeout(() => {
+        //     navigate('/app')
+        // }, 2000)
     }
 
     return (
         <>
             <Box p={2.5}>
-                <form action='#' onSubmit={handleSubmit}>
-                    <FormControl sx={{ display: 'flex', gap: 2.5 }}>
-                        <Formik
-                            initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
-                            validationSchema={validationSchema}
-                            style={{ width: '100%' }} 
-                            onSubmit={handleSubmit}
-                        >
-                            {({ errors, touched }) => (
-                                <Form>
-                                    <FormControl sx={{ display: 'flex', gap: 2.5 }}>
-                                        <Box>
-                                            <Field as={TextField} name='name' label='Nome' required fullWidth />
-                                            {errors.usernameOrEmail && touched.usernameOrEmail && (
-                                                <p style={{ color: 'red' }}>{errors.name}</p>
-                                            )}
-                                        </Box>
-                                        <Box gap={2.5}>
-                                            <Field as={TextField} name='email' fullWidth label='Email' required type='email' />
-                                            {errors.password && touched.password && (
-                                                <p style={{ color: 'red' }}>{errors.email}</p>
-                                            )}
-                                        </Box>
-                                        <Box display='flex' gap={2.5}>
+                <FormControl sx={{ display: 'flex', gap: 2.5 }}>
+                    <Formik
+                        initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
+                        validationSchema={validationSchema}
+                        style={{ width: '100%' }} 
+                        onSubmit={handleSubmit}
+                    >
+                        {({ errors, touched }) => (
+                            <Form action='/'>
+                                <FormControl sx={{ display: 'flex', gap: 2.5 }}>
+                                    <Box>
+                                        <Field as={TextField} name='name' label='Nome' required fullWidth />
+                                        {errors.name && touched.name && (
+                                            <p style={{ color: 'red' }}>{errors.name}</p>
+                                        )}
+                                    </Box>
+                                    <Box gap={2.5}>
+                                        <Field as={TextField} name='email' fullWidth label='Email' required type='email' />
+                                        {errors.email && touched.email && (
+                                            <p style={{ color: 'red' }}>{errors.email}</p>
+                                        )}
+                                    </Box>
+                                    <Box display='flex' gap={2.5}>
+                                        <Box width='100%'>
                                             <Field as={TextField} fullWidth name='password' label='Senha' required type='password' />
+                                            {errors.password && touched.password && (
+                                                <p style={{ color: 'red' }}>{errors.password}</p>
+                                            )}
+                                        </Box>
+                                        <Box width='100%'>
                                             <Field as ={TextField} fullWidth name='confirmPassword' label='Repetir senha' required type='password' />
+                                            {errors.confirmPassword && touched.confirmPassword && (
+                                                <p style={{ color: 'red' }}>{errors.confirmPassword}</p>
+                                            )}
                                         </Box>
-                                        <Box display='flex' justifyContent='space-between' mt={2} alignItems='center'>
-                                            <Button type='submit' variant='contained'>Entrar</Button>
-                                        </Box>
-                                    </FormControl>
-                                </Form>
-                            )}
-                        </Formik>
-                        <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
-                            <Box width='60%' display='flex' alignItems='center'>
-                                <Checkbox required />
-                                <Typography>Li e aceito os
-                                    <Typography onClick={handleOpen} ml={0.5} component='span' sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }} color='primary.main'>
-                                        Termos de Serviço e Política de Privacidade
-                                    </Typography>
+                                    </Box>
+                                    <Box display='flex' justifyContent='space-between' mt={2} alignItems='center'>
+                                        <Button type='submit' variant='contained'>Entrar</Button>
+                                    </Box>
+                                </FormControl>
+                            </Form>
+                        )}
+                    </Formik>
+                    <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
+                        <Box width='60%' display='flex' alignItems='center'>
+                            <Checkbox required />
+                            <Typography>Li e aceito os
+                                <Typography onClick={handleOpen} ml={0.5} component='span' sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }} color='primary.main'>
+                                    Termos de Serviço e Política de Privacidade
                                 </Typography>
-                            </Box>
-                            <Button type='submit' variant='contained'>Cadastrar</Button>
+                            </Typography>
                         </Box>
-                    </FormControl>
-                </form>
+                        <Button type='submit' variant='contained'>Cadastrar</Button>
+                    </Box>
+                </FormControl>
             </Box>
             <Modal
                 open={open}
