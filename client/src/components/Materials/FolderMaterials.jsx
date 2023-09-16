@@ -39,7 +39,7 @@ export default function FolderMaterials({ FolderName, id }) {
     return (
         <>
             <Paper elevation={6} sx={{
-                margin: '0 0 0 0px', display: 'flex', flexDirection: 'column', bgcolor: 'white', width: '18em', height: '15em',
+                margin: '0 0 0 0px', display: 'flex', flexDirection: 'column', bgcolor: 'white', width: '15rem', height: '12rem',
                 borderRadius: '.6vh',
             }}>
                 <Box 
@@ -63,9 +63,6 @@ export default function FolderMaterials({ FolderName, id }) {
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
                     <Typography sx={{ fontSize: '1.2em', textTransform: 'uppercase', fontWeight: 'bold', color: 'black' }}>{FolderName}</Typography>
-                    <Link href={`#${id}`} >
-                        <Button sx={{ color: 'black', textTransform: 'uppercase', fontSize: '1em', border: '1px solid #673AB7', borderRadius: '30px', padding: '0 7px', mt: '10%', ':hover': { color: 'white', bgcolor: '#673AB7' } }}>Ver Arquivos</Button>
-                    </Link>
 
                 </Box>
             </Paper>

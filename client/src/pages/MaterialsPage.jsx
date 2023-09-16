@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, Modal, TextField, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Container, FormControl, Grid, Modal, TextField, Typography, useMediaQuery } from '@mui/material'
 
 import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
@@ -46,29 +46,33 @@ export default function MaterialsPage() {
 
     return (
         <AppLayout withSidebars>
-            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
-                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
-                    <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Seus Materiais</Typography>
+            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} fontSize={'1rem'}>
+                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Seus Materiais</Typography>
                     <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
                 </Container>
-                <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '2rem' }} >
-                    <FolderMaterials FolderName={'teste'} />
-                    <FolderMaterials FolderName={'teste'} />
-                    <FolderMaterials FolderName={'teste'} />
-                    <FolderMaterials FolderName={'teste'} />
-                    <FolderMaterials FolderName={'teste'} />
-                    <FolderMaterials FolderName={'teste'} />
-                </Box>
+                
+                <Box display={'flex'} justifyContent={'start'} flexDirection={'column'}>
+                    <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '4rem', columnGap: '11rem' }} >
+                        <FolderMaterials FolderName={'teste'} />
+                        <FolderMaterials FolderName={'teste'} />
+                        <FolderMaterials FolderName={'teste'} />
+                        <FolderMaterials FolderName={'teste'} />
+                        <FolderMaterials FolderName={'teste'} />
+                        <FolderMaterials FolderName={'teste'} />
+                    </Box>
+                    <Box display={ 'grid' } gridTemplateColumns={ 'auto auto' } gridTemplateRows={ 'auto' } flexDirection={ 'column' } m={5} >
+                        <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
+                        <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
+                        <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
+                        <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
+                        <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
+                        <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
 
-                <Box flexDirection='column' m={5} sx={{ ml: '7.5%' }}>
-                    <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
-                    <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
-                    <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
-                    <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
-                    <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
-                    <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
+                    </Box>
 
                 </Box>
+                    
             </Box>
 
             <Modal
