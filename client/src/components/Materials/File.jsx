@@ -2,8 +2,8 @@ import { Box, Typography } from '@mui/material'
 
 export default function File({ fileName, description }) {
     return (
-        <Box sx={{ display:'flex', mb:'1em', cursor:'pointer', height:'4em', width:'40%', bgcolor:'white' }}>
-            <Box sx={{ bgcolor:'#D1C4E9', height:'100%', width:'13%' }}>
+        <Box sx={{ display:'flex', mb:'1em', cursor:'pointer', height:'4em', width:'30rem', bgcolor:'white' }}>
+            <Box sx={{ bgcolor:'#D1C4E9', height:'100%', width:'3.5rem' }}>
             
             </Box>
             <Box sx={{ ml:'1em', display:'flex', flexDirection:'column', justifyContent:'center', }}>

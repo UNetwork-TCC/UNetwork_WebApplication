@@ -6,6 +6,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Classes, FilterAndConfig } from '../components'
 import { useEffect, useState } from 'react'
 import CustomCheckBox from '../layout/CustomCheckBox'
+import CustomCarousel from '../layout/CustomCarousel'
 
 export default function ClassesPage() {
     const theme = useTheme()
@@ -59,7 +60,7 @@ export default function ClassesPage() {
         <AppLayout withSidebars>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
-                    <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Seus Classes</Typography>
+                    <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Suas Classes</Typography>
                     <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
                 </Container>
                 <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '2rem' }} >
@@ -71,7 +72,7 @@ export default function ClassesPage() {
                     <Classes Class={{ name: 'Os revoltados' }} />
 
                 </Box>
-
+            <CustomCarousel /> 
             </Box>
 
             <Modal

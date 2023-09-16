@@ -8,6 +8,10 @@ import SideBar from './SideBar'
 import NavBar from './NavBar'
 import LoadingBackdrop from './LoadingBackdrop'
 import CustomMenu from './CustomMenu'
+import CustomLink from './CustomLink'
+import CustomCheckBox from './CustomCheckBox'
+import CustomInput from './CustomInput'
+import CustomCarousel from './CustomCarousel'
 import Clip from './Clip'
 
 
@@ -22,5 +26,9 @@ export {
     SideBar, 
     NavBar, 
     CustomMenu, 
-    Clip 
+    Clip, 
+    CustomCheckBox,
+    CustomLink,
+    CustomInput,
+    CustomCarousel
 }
