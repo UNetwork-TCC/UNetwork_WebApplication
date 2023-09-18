@@ -21,7 +21,6 @@ function RegisterForm() {
     })
 
     const theme = useTheme()
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const [ open, setOpen ] = useState(false)

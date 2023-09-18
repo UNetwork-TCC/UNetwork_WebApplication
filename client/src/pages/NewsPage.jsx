@@ -4,9 +4,14 @@ import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
 import { FilterAndConfig, Notice } from '../components'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchNews } from '../features/news/news-slicer'
 
 export default function NewsPage() {
     const theme = useTheme()
+
+    const dispatch = useDispatch()
+    const news = useSelector(state => state.news)
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -35,6 +40,8 @@ export default function NewsPage() {
     }
 
     useEffect(() => {
+        dispatch(fetchNews())
+
         document.addEventListener('keydown', e => {
             if (e.code == 27) {
                 handleClose()

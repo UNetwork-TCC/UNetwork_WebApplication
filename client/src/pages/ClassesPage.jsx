@@ -72,7 +72,7 @@ export default function ClassesPage() {
                     <Classes Class={{ name: 'Os revoltados' }} />
 
                 </Box>
-            <CustomCarousel /> 
+                <CustomCarousel /> 
             </Box>
 
             <Modal
