@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { CustomDivider, Topic } from '../../layout'
 import { AnimateOnScroll } from '../Misc'
-import Image from 'mui-image'
 import { Diversity3, Forum, Newspaper } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
 
@@ -29,7 +28,7 @@ export default function AboutSection() {
             <Box width='100%' display='flex' height='100%' justifyContent='center' alignItems='center' p={5}>
                 <AnimateOnScroll animateOnce animation='fadeInLeft' duration={1500}>
                     <Box sx={{ width: '99%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
-                        <Diversity3 sx={{ width: 500, height: 500 }} />
+                        <Diversity3 sx={{ width: '31.25rem', height: '31.25rem' }} />
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
@@ -52,14 +51,14 @@ export default function AboutSection() {
                         />
                     </Box>
                     <Box mb={5} sx={{ width: '50%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
-                        <Forum sx={{ width: 500, height: 500 }} />
+                        <Forum sx={{ width: '31.25rem', height: '31.25rem' }} />
                     </Box>
                 </AnimateOnScroll>
             </Box>
             <Box width='100%' display='flex' height='100%' justifyContent='center' alignItems='center' p={5}>
                 <AnimateOnScroll animateOnce animation='fadeInLeft' duration={1500}>
                     <Box sx={{ width: '99%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
-                        <Newspaper sx={{ width: 500, height: 500 }} />
+                        <Newspaper sx={{ width: '31.25rem', height: '37.5rem' }} />
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic

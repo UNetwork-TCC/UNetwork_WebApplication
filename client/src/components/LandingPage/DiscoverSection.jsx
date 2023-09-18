@@ -30,7 +30,7 @@ export default function DiscoverSection() {
             <Box width='100%' display='flex' height='100%' justifyContent='center' alignItems='center' p={5}>
                 <AnimateOnScroll animateOnce animation='fadeInLeft' duration={1500}>
                     <Box sx={{ width: '99%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
-                        <Image style={{ userSelect: 'none' }} height={600} width={600} src={discoverFeature} />
+                        <Image style={{ userSelect: 'none' }} height='37.5rem' width='37.5rem' src={discoverFeature} />
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center'>
                         <Topic
@@ -53,7 +53,7 @@ export default function DiscoverSection() {
                         />
                     </Box>
                     <Box mb={5} sx={{ width: '50%', postion: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
-                        <Image style={{ userSelect: 'none' }} height={600} width={700} src={discoverFeature2} />
+                        <Image style={{ userSelect: 'none' }} height='37.5rem' width={700} src={discoverFeature2} />
                     </Box>
                 </AnimateOnScroll>
             </Box>
@@ -68,7 +68,7 @@ export default function DiscoverSection() {
                         />
                     </Box>
                     <Box sx={{ postion: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', left: '20px' }}>
-                        <Image style={{ userSelect: 'none', marginLeft: '100px', marginTop: '20px', zIndex: 2 }} height={700} width={1100} src={discoverFeature3} />
+                        <Image style={{ userSelect: 'none', marginLeft: '100px', marginTop: '20px', zIndex: 2 }} height='43.75rem' width='68.75rem' src={discoverFeature3} />
                         <Box position='relative' top={300} display='flex' justifyContent='center' alignItems='center'>
                             <Box>
                                 <Typography color='secondary.dark' variant='h3'>+5K</Typography>
@@ -89,7 +89,7 @@ export default function DiscoverSection() {
                     </Box>
                 </AnimateOnScroll>
                 <Box mb={5} sx={{ width: '100vw', postion: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Image style={{ userSelect: 'none', position: 'relative', bottom: 600, zIndex: 1 }} height={1600} width='100%' src={discoverFeature3Decoration} />
+                    <Image style={{ userSelect: 'none', position: 'relative', bottom: '37.5rem', zIndex: 1 }} height='100rem' width='100%' src={discoverFeature3Decoration} />
                 </Box>
             </Box>
         </Box>

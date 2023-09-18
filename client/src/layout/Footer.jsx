@@ -23,11 +23,11 @@ export default function Footer() {
     const { t } = useTranslation()
 
     useEffect(() => {
-        if (localStorage.getItem('lang') && language !== localStorage.getItem('lang')) {
+        if (language && language !== localStorage.getItem('lang')) {
 
             if (
-                language !== 'br'
-                && language !== 'us'
+                language !== 'pt'
+                && language !== 'en'
                 && language !== 'fr'
                 && language !== 'de'
                 && language !== 'es'
@@ -36,7 +36,7 @@ export default function Footer() {
                 && language !== 'zh'
                 && language !== 'jp'
                 && language !== 'ar'
-            ) localStorage.setItem('lang', 'br') 
+            ) localStorage.setItem('lang', 'pt') 
 
             localStorage.setItem('lang', language)
             window.location.reload()
@@ -83,8 +83,8 @@ export default function Footer() {
                             <Select onChange={e => {
                                 localStorage.setItem('lang', e.target.value)
                                 window.location.href = '/' + e.target.value
-                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue={'br'} value={localStorage.getItem('lang') || lang}>
-                                <MenuItem value='br' >
+                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue='pt' value={localStorage.getItem('lang') || lang}>
+                                <MenuItem value='pt'>
                                     <Box display='flex' position='relative' bottom={3}>
                                         <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagBR}/>
                                         <Typography position='relative' top={8}>
@@ -92,7 +92,7 @@ export default function Footer() {
                                         </Typography>
                                     </Box>
                                 </MenuItem>
-                                <MenuItem value='us' >
+                                <MenuItem value='en' >
                                     <Box display='flex' position='relative' bottom={3}>
                                         <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagUS}/>
                                         <Typography position='relative' top={8}>

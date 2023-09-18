@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { darkTheme, lightTheme } from '../themes'
 import { themeContext } from '../contexts'
 import { useStyles } from '../styles'
-import { Link, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import logo from '../assets/img/Logo.png'
 import lightLogo from '../assets/img/LightLogo.png'
@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 export default function LandingPageHeader() {
     const { theme, setTheme } = useContext(themeContext)
     const classes = useStyles(theme)
+    const navigate = useNavigate()
 
     const { t } = useTranslation()
 
@@ -40,7 +41,7 @@ export default function LandingPageHeader() {
             position='sticky'
             p={2.5}
         >
-            <Box onClick={<Navigate to='/' />} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 { theme?.palette.mode === 'light' ?
                     <img width={75} height={75} src={logo} alt="Logo" />
                     :                    
@@ -56,8 +57,8 @@ export default function LandingPageHeader() {
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
-                    <Button><Link style={{ textDecoration: 'none', color: theme.palette.primary.main }} to='/auth'>{t('nav.btn5')}</Link></Button>
-                    <Button sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'><Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth'>{t('nav.btn6')}</Link></Button>
+                    <Button onClick={() => navigate('/auth/login')}>{t('nav.btn5')}</Button>
+                    <Button onClick={() => navigate('/auth/register')} sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'>{t('nav.btn6')}</Button>
                 </Box>
                 {/* <Box height={40} border='1px solid'></Box> */}
                 <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />
