@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true, minlength: 8, maxlength: 99 },
     groupes: { type: Array, required: true },
     chats: { type: Array, required: true },
-    admin: { type: Boolean, required: true},
+    admin: { type: Boolean, required: false },
     posts: { type: Array, required: true },
     otherInfo: { type: Object, required: true, maxlength: 50, default: {
         avatar: '',
