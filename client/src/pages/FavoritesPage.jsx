@@ -10,10 +10,13 @@ export default function FavoritesPage() {
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
     const [ open, setOpen ] = useState(false)
+
+    const [ folders, setFolders ] = useState([])
     
     const [ folderAttributes, setFolderAttributes ] = useState({
         title: '',
-        visibility: ''
+        subtitle: '',
+        visibility: 'public'
     })
 
     const [ checkedButtons, setCheckedButtons ] = useState({
@@ -27,10 +30,14 @@ export default function FavoritesPage() {
     const createFolder = () => {
         // ...
 
-        console.log(folderAttributes)
-
-        if (folderAttributes.visibility && folderAttributes.title)
+        if (folderAttributes.visibility && folderAttributes.title) {
+            setFolders([
+                ...folders,
+                folderAttributes
+            ])
             handleClose()
+        }
+        else alert('preencha todos os campos!')
     }
 
     useEffect(() => {
@@ -65,26 +72,9 @@ export default function FavoritesPage() {
                                 </Box> 
                                 <Typography variant='h4' mb={2}>Pastas</Typography>
                                 <Grid container gap={3} columns={4} width={'auto'}>
-                                    <Folder title={'pintamanhangaba'} subtitle={'memes'}/>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
-                                    <Folder></Folder>
+                                    {folders.map(e => (
+                                        <Folder title={e.title} subtitle={!e.subtitle ? e.title : e.subtitle } key={e.title} />
+                                    ))}
                                 </Grid>
                             </Card>
                         </Box>
@@ -99,54 +89,63 @@ export default function FavoritesPage() {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p sx={{ height: matches ? '45  vh' : '40vh', width: '35vw', bgcolor:'background.paper' }} borderRadius={2} >
-                    <Box p={0}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
-                            Nova Pasta
-                        </Typography> 
-                    </Box>
-                    <Box display={'flex'} flexDirection={'column'} p={2} gap={2}> 
-                        <TextField 
-                            onChange={e => setFolderAttributes({ ...folderAttributes, title: e.target.value })} 
-                            id="outline-basic" 
-                            label="Título"
-                            value={folderAttributes.title}
-                            fullWidth
-                        />
-                        <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
-                        <FormControl>
-                            <CustomCheckBox 
-                                onClick={
-                                    () => {
-                                        setCheckedButtons({ public: !checkedButtons.public })
-                                        setFolderAttributes({ ...folderAttributes, visibility: 'public' })
-                                    }} 
-                                checked={checkedButtons.public} 
-                                caption='Isso deixará sua pasta pública' 
-                                title='Público'
-                            />
-                            <CustomCheckBox 
-                                onClick={
-                                    () => {
-                                        setCheckedButtons({ private: !checkedButtons.private })
-                                        setFolderAttributes({ ...folderAttributes, visibility: 'private' })
-                                    }}
-                                checked={checkedButtons.private}
-                                caption='Isso deixará sua pasta privada' 
-                                title='Privado'
-                            />   
-                        </FormControl>
-                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
-                            <Button onClick={handleClose} variant='outlined'fullWidth>
-                                Cancelar
-                            </Button>
-                            <Button onClick={createFolder} variant='outlined'fullWidth>
-                                Criar
-                            </Button>
+                <form onSubmit={createFolder}>
+                    <Box p sx={{ height: matches ? '45  vh' : '40vh', width: '35vw', bgcolor:'background.paper' }} borderRadius={2} >
+                        <Box p={0}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
+                                Nova Pasta
+                            </Typography> 
                         </Box>
+                        <Box display={'flex'} flexDirection={'column'} p={2} gap={2}> 
+                            <TextField 
+                                onChange={e => setFolderAttributes({ ...folderAttributes, title: e.target.value })} 
+                                id="outline-basic" 
+                                label="Título"
+                                value={folderAttributes.title}
+                                fullWidth
+                            />
+                            <TextField 
+                                onChange={e => setFolderAttributes({ ...folderAttributes, subtitle: e.target.value })} 
+                                id="outline-basic" 
+                                label="Tópico (opicional)"
+                                value={folderAttributes.subtitle}
+                                fullWidth
+                            />
+                            <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
+                            <FormControl>
+                                <CustomCheckBox 
+                                    onClick={
+                                        () => {
+                                            setCheckedButtons({ public: !checkedButtons.public })
+                                            setFolderAttributes({ ...folderAttributes, visibility: 'public' })
+                                        }} 
+                                    checked={checkedButtons.public} 
+                                    caption='Isso deixará sua pasta pública' 
+                                    title='Público'
+                                />
+                                <CustomCheckBox 
+                                    onClick={
+                                        () => {
+                                            setCheckedButtons({ private: !checkedButtons.private })
+                                            setFolderAttributes({ ...folderAttributes, visibility: 'private' })
+                                        }}
+                                    checked={checkedButtons.private}
+                                    caption='Isso deixará sua pasta privada' 
+                                    title='Privado'
+                                />   
+                            </FormControl>
+                            <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
+                                <Button onClick={handleClose} variant='outlined'fullWidth>
+                                    Cancelar
+                                </Button>
+                                <Button type='submit' onClick={createFolder} variant='outlined'fullWidth>
+                                    Criar
+                                </Button>
+                            </Box>
+                        </Box>
+                        
                     </Box>
-                    
-                </Box>
+                </form>
             </Modal>
 
         </AppLayout>

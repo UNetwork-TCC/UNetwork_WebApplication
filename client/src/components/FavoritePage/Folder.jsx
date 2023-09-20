@@ -4,7 +4,7 @@ import { grey } from '@mui/material/colors'
 
 function Folder({ title, subtitle }) {
     return(
-        <Box sx={{ bgcolor: grey[300] }} borderRadius={5} height={'4rem'} display={'flex'} alignItems={'center'}>
+        <Box maxWidth={200} sx={{ bgcolor: grey[300] }} borderRadius={5} height={'4rem'} display={'flex'} alignItems={'center'}>
             <List>
                 <ListItem>
                     <ListItemAvatar>
@@ -12,8 +12,9 @@ function Folder({ title, subtitle }) {
                             <FolderIcon/>
                         </Avatar>
                     </ListItemAvatar>
-                    <Typography />
                     <ListItemText
+                        primaryTypographyProps={{ noWrap: true }}
+                        secondaryTypographyProps={{ noWrap: true }}
                         primary={title}
                         secondary={subtitle}
                     />
