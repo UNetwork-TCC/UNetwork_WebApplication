@@ -2,7 +2,7 @@ import { Avatar, Box, Divider, IconButton, MenuItem, Stack, Typography } from '@
 import AppLayout from '../layout/AppLayout'
 import { Chat, ChatArea, Contact, ContactsArea } from '../components'
 import CustomInput from '../layout/CustomInput'
-import { Add, Search, VideocamOutlined, LocalPhone, Settings } from '@mui/icons-material'
+import { Add, Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Report } from '@mui/icons-material'
 import { useState } from 'react'
 import { CustomMenu } from '../layout'
 
@@ -116,8 +116,9 @@ export default function ChatPage() {
                             <IconButton sx={{}} 
                                 onClick={
                                     e => handleClick(e, 
-                                        [ 'Ver Contato', 'Pesquisar', 'Fixar' ,'Silenciar', 'Limpar conversa', 'Denunciar', 'Bloquear', ],
+                                        [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear', ],
                                         [ onClickEvents.item1, onClickEvents.item2 ],
+                                        [ <AccountBox key={null}/>,<Search key={null}/>, <FmdGood key={null}/>, null ,<Report key={null}/>, <Block key={null}/> ]
                                                                     
                                     )
                                 }

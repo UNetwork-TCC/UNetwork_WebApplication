@@ -1,7 +1,7 @@
-import { Box, Button, Container, Divider, FormControl, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, TextField, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Container, Divider, FormControl, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, TextField, Typography, } from '@mui/material'
 
 import AppLayout from '../layout/AppLayout'
-import { useTheme } from '@emotion/react'
+// import { useTheme } from '@emotion/react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Classes, FilterAndConfig } from '../components'
 import { useEffect, useState } from 'react'
@@ -9,11 +9,11 @@ import CustomCheckBox from '../layout/CustomCheckBox'
 import CustomCarousel from '../layout/CustomCarousel'
 
 export default function ClassesPage() {
-    const theme = useTheme()
+    // const theme = useTheme()
 
     const [ typeForm, setTypeForm ] = useState('Create')
 
-    const matches = useMediaQuery(theme.breakpoints.up('md'))
+    // const matches = useMediaQuery(theme.breakpoints.up('md'))
 
     const [ open, setOpen ] = useState(false)
 
@@ -21,7 +21,8 @@ export default function ClassesPage() {
         title: '',
         visibility: '',
         code: '',
-        password: ''
+        setPassword: '',
+        getPassword: ''
     })
 
     const [ checkedButtons, setCheckedButtons ] = useState({
@@ -70,7 +71,7 @@ export default function ClassesPage() {
                     <Classes Class={{ name: 'Maconheiros da paz e da guerra' }} />
                     <Classes Class={{ name: 'Os programadores' }} />
                     <Classes Class={{ name: 'Os revoltados' }} />
-
+                    
                 </Box>
                 <CustomCarousel /> 
             </Box>
@@ -83,7 +84,7 @@ export default function ClassesPage() {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p sx={{ height: matches ? '45vh' : '40vh', width: '35vw', bgcolor: 'background.paper', }} borderRadius={2} >
+                <Box p sx={{  width: '35vw', bgcolor: 'background.paper', }} borderRadius={2} >
                     <Box p={0} sx={{ display: 'flex', width: '100%' }}>
                         <Button sx={{ width: '45%', ':hover': { cursor: 'pointer', bgcolor: 'whitesmoke' }, m: '0 5%', textAlign: 'center', borderRadius: '0.5rem', color: 'black', }} onClick={() => setTypeForm('Create')}>
                             <Typography id="modal-modal-title" sx={{ fontSize: '1.2rem' }} m={'1rem'}>
@@ -128,6 +129,30 @@ export default function ClassesPage() {
                                     caption='Isso deixará sua pasta privada'
                                     title='Privado'
                                 />
+
+                                {checkedButtons.private === true && (
+                                    <FormControl fullWidth variant="outlined">
+                                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                        <OutlinedInput
+                                            onChange={e => setClassAttributes({ ...ClassAttributes, setPassword: e.target.value })}
+                                            value={ClassAttributes.setPassword}
+                                            id="outlined-adornment-password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            label="Password"
+                                        />
+                                    </FormControl>
+                                )}
                             </FormControl>
                             <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
                                 <Button onClick={handleClose} variant='outlined' fullWidth>
@@ -158,8 +183,8 @@ export default function ClassesPage() {
                                     <FormControl fullWidth variant="outlined">
                                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                         <OutlinedInput
-                                            onChange={e => setClassAttributes({ ...ClassAttributes, password: e.target.value })}
-                                            value={ClassAttributes.password}
+                                            onChange={e => setClassAttributes({ ...ClassAttributes, getPassword: e.target.value })}
+                                            value={ClassAttributes.getPassword}
                                             id="outlined-adornment-password"
                                             type={showPassword ? 'text' : 'password'}
                                             endAdornment={
