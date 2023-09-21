@@ -17,6 +17,8 @@ export default function ClassesPage() {
 
     const [ open, setOpen ] = useState(false)
 
+    const [ Class, setClass ] = useState([])
+
     const [ ClassAttributes, setClassAttributes ] = useState({
         title: '',
         visibility: '',
@@ -36,10 +38,14 @@ export default function ClassesPage() {
     const createClass = () => {
         // ...
 
-        console.log(ClassAttributes)
-
-        if (ClassAttributes.visibility && ClassAttributes.title)
+        if (ClassAttributes.visibility && ClassAttributes.title) {
+            setClass([
+                ...Class,
+                ClassAttributes
+            ])
             handleClose()
+        }
+        else alert('preencha todos os campos!')
     }
 
     useEffect(() => {
@@ -53,9 +59,6 @@ export default function ClassesPage() {
     const [ showPassword, setShowPassword ] = useState(false)
 
     const handleClickShowPassword = () => setShowPassword((show) => !show)
-
-    
-
 
     return (
         <AppLayout withSidebars>
@@ -71,6 +74,9 @@ export default function ClassesPage() {
                     <Classes Class={{ name: 'Maconheiros da paz e da guerra' }} />
                     <Classes Class={{ name: 'Os programadores' }} />
                     <Classes Class={{ name: 'Os revoltados' }} />
+                    {Class.map(e => (
+                        <Classes Class={{ name:e.title }}  key={e.title} />
+                    ))}
                     
                 </Box>
                 <CustomCarousel /> 
@@ -206,7 +212,7 @@ export default function ClassesPage() {
                                     <Button onClick={handleClose} variant='outlined' fullWidth>
                                         Cancelar
                                     </Button>
-                                    <Button onClick={createClass} variant='outlined' fullWidth>
+                                    <Button type='submit' onClick={createClass} variant='outlined' fullWidth>
                                         Criar
                                     </Button>
                                 </Box>

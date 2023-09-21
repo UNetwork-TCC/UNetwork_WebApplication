@@ -4,22 +4,27 @@ import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
 import { FilterAndConfig, Notice } from '../components'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, } from 'react-redux'
 import { fetchNews } from '../features/news/news-slicer'
 
 export default function NewsPage() {
     const theme = useTheme()
 
     const dispatch = useDispatch()
-    const news = useSelector(state => state.news)
+    // const news = useSelector(state => state.news)
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
     const [ open, setOpen ] = useState(false)
 
+    const [ News, setNews ] = useState([])
+
     const [ NewsAttributes, setNewsAttributes ] = useState({
         title: '',
-        description: ''
+        visibility: '',
+        code: '',
+        setPassword: '',
+        getPassword: ''
     })
 
     // const [ checkedButtons, setCheckedButtons ] = useState({
@@ -33,10 +38,14 @@ export default function NewsPage() {
     const createNews = () => {
         // ...
 
-        console.log(NewsAttributes)
-
-        if (NewsAttributes.description && NewsAttributes.title)
+        if (NewsAttributes.title) {
+            setNews([
+                ...News,
+                NewsAttributes
+            ])
             handleClose()
+        }
+        else alert('preencha todos os campos!')
     }
 
     useEffect(() => {
@@ -65,6 +74,9 @@ export default function NewsPage() {
                         <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                         <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                         <Notice title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        {News.map(e => (
+                            <Notice title={e.title} description={e.description} key={e.title} />
+                        ))}
                     </Container>
                     <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
                         <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem' }}>

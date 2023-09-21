@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, Grid, Modal, TextField, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Container, FormControl, Modal, TextField, Typography, useMediaQuery } from '@mui/material'
 
 import AppLayout from '../layout/AppLayout'
 import { useTheme } from '@emotion/react'
@@ -13,9 +13,14 @@ export default function MaterialsPage() {
 
     const [ open, setOpen ] = useState(false)
 
-    const [ folderAttributes, setFolderAttributes ] = useState({
+    const [ Materials, setMaterials ] = useState([])
+
+    const [ MaterialsAttributes, setMaterialsAttributes ] = useState({
         title: '',
-        visibility: ''
+        visibility: '',
+        code: '',
+        setPassword: '',
+        getPassword: ''
     })
 
     const [ checkedButtons, setCheckedButtons ] = useState({
@@ -26,13 +31,17 @@ export default function MaterialsPage() {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const createFolder = () => {
+    const createMaterials = () => {
         // ...
 
-        console.log(folderAttributes)
-
-        if (folderAttributes.visibility && folderAttributes.title)
+        if (MaterialsAttributes.visibility && MaterialsAttributes.title) {
+            setMaterials([
+                ...Materials,
+                MaterialsAttributes
+            ])
             handleClose()
+        }
+        else alert('preencha todos os campos!')
     }
 
     useEffect(() => {
@@ -60,6 +69,9 @@ export default function MaterialsPage() {
                         <FolderMaterials FolderName={'teste'} />
                         <FolderMaterials FolderName={'teste'} />
                         <FolderMaterials FolderName={'teste'} />
+                        {Materials.map(e => (
+                            <FolderMaterials FolderName={e.title} key={e.title} />
+                        ))}
                     </Box>
                     <Box display={ 'grid' } gridTemplateColumns={ 'auto auto' } gridTemplateRows={ 'auto' } flexDirection={ 'column' } m={5} >
                         <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
@@ -91,10 +103,10 @@ export default function MaterialsPage() {
                     </Box>
                     <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
                         <TextField
-                            onChange={e => setFolderAttributes({ ...folderAttributes, title: e.target.value })}
+                            onChange={e => setMaterialsAttributes({ ...MaterialsAttributes, title: e.target.value })}
                             id="outline-basic"
                             label="Título"
-                            value={folderAttributes.title}
+                            value={MaterialsAttributes.title}
                             fullWidth
                         />
                         <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
@@ -103,7 +115,7 @@ export default function MaterialsPage() {
                                 onClick={
                                     () => {
                                         setCheckedButtons({ public: !checkedButtons.public })
-                                        setFolderAttributes({ ...folderAttributes, visibility: 'public' })
+                                        setMaterialsAttributes({ ...MaterialsAttributes, visibility: 'public' })
                                     }}
                                 checked={checkedButtons.public}
                                 caption='Isso deixará sua pasta pública'
@@ -113,7 +125,7 @@ export default function MaterialsPage() {
                                 onClick={
                                     () => {
                                         setCheckedButtons({ private: !checkedButtons.private })
-                                        setFolderAttributes({ ...folderAttributes, visibility: 'private' })
+                                        setMaterialsAttributes({ ...MaterialsAttributes, visibility: 'private' })
                                     }}
                                 checked={checkedButtons.private}
                                 caption='Isso deixará sua pasta privada'
@@ -124,7 +136,7 @@ export default function MaterialsPage() {
                             <Button onClick={handleClose} variant='outlined' fullWidth>
                                 Cancelar
                             </Button>
-                            <Button onClick={createFolder} variant='outlined' fullWidth>
+                            <Button onClick={createMaterials} variant='outlined' fullWidth>
                                 Criar
                             </Button>
                         </Box>

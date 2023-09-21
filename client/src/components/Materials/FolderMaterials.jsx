@@ -1,9 +1,9 @@
-import { Box, Button, IconButton, Link, MenuItem, Paper, Typography } from '@mui/material'
+import { Box, IconButton, MenuItem, Paper, Typography } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { CustomMenu } from '../../layout'
 import { useState } from 'react'
 
-export default function FolderMaterials({ FolderName, id }) {
+export default function FolderMaterials({ FolderName, }) {
 
     const onClickEvents = {
         item1: () => {
@@ -61,9 +61,8 @@ export default function FolderMaterials({ FolderName, id }) {
                 <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', height: '30%', mb: '7%' }}>
                     <Box sx={{ bgcolor: 'gray', width: '25%', height: '100%' }} />
                 </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
-                    <Typography sx={{ fontSize: '1.2em', textTransform: 'uppercase', fontWeight: 'bold', color: 'black' }}>{FolderName}</Typography>
-
+                <Box sx={{ height:'40%', display: 'flex', flexDirection: 'column', alignItems: 'center', width:'80%', textAlign:'center', justifyContent:'center', ml:'10%' }}>
+                    <Typography sx={{ fontSize: '1.3em', textTransform: 'uppercase', fontWeight: 'bold', color: 'black' }} >{FolderName}</Typography>
                 </Box>
             </Paper>
             <CustomMenu
