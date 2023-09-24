@@ -1,9 +1,7 @@
-import { Avatar, Box, Typography, useMediaQuery } from '@mui/material'
+import { Avatar, Box, Typography, } from '@mui/material'
 
 export default function Contact({ user, date, notification }) {
-    const matches = useMediaQuery('(min-width: 600px)')
-
-
+    
     return (
         <Box sx={{ p: '3% 3%', mb: '1%', ml: '5%', display: 'flex', alignItems: 'center', width: '90%', transition: 'ease .3s', fontSize: '10px', ':hover': { bgcolor: 'lightgray', borderRadius: '15px', cursor: 'pointer' } }}>
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>

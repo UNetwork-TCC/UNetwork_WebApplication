@@ -1,13 +1,16 @@
-import { Avatar, Box, Divider, IconButton, MenuItem, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Button, Divider, IconButton, MenuItem, Modal, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
 import AppLayout from '../layout/AppLayout'
 import { Chat, ChatArea, Contact, ContactsArea } from '../components'
 import CustomInput from '../layout/CustomInput'
 import { Add, Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Report } from '@mui/icons-material'
 import { useState } from 'react'
 import { CustomMenu } from '../layout'
+import { useTheme } from '@emotion/react'
 
 
 export default function ChatPage() {
+
+    const theme = useTheme()
 
     const onClickEvents = {
         item1: () => {
@@ -21,10 +24,40 @@ export default function ChatPage() {
         }
     }
 
+    const [ open, setOpen ] = useState(false)
+
+    const matches = useMediaQuery(theme.breakpoints.up('md'))
+
+    const [ Contacts, setContacts ] = useState([])
+
+    const [ ContactsAttributes, setContactsAttributes ] = useState({
+        name: '',
+        code: '',
+        notification: '',
+        date: ''
+    })
+
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
+    const createContacts = () => {
+        // ...
+
+        if (ContactsAttributes.name) {
+            setContacts([
+                ...Contacts,
+                ContactsAttributes
+            ])
+            handleClose()
+        }
+        else alert('preencha todos os campos!')
+    }
+    
+
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ menuContent, setMenuContent ] = useState(null)
 
-    const open = Boolean(anchorEl)
+    const openCustonMenu = Boolean(anchorEl)
 
     const handleClick = (e, elements, onClickEvents = elements.map(() => handleClose), icons = null) => {
         const mapedElements = elements.map((e, i) =>
@@ -36,7 +69,7 @@ export default function ChatPage() {
         setAnchorEl(e.currentTarget)
     }
 
-    const handleClose = () => {
+    const handleCloseCustonMenu = () => {
         setAnchorEl(null)
     }
 
@@ -51,7 +84,7 @@ export default function ChatPage() {
                                     <Typography variant='h4' sx={{}}>Conversas</Typography>
                                 </Box>
                                 <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
-                                    <IconButton>
+                                    <IconButton onClick={handleOpen}>
                                         <Add />
                                     </IconButton>
                                     <IconButton>
@@ -94,6 +127,9 @@ export default function ChatPage() {
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
                             <Contact notification={'3'} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            {Contacts.map(e => (
+                                <Contact user={{ name: e.name }} key={e.name} />
+                            ))}
                         </Stack>
                     </Box>
                 </ContactsArea>
@@ -137,13 +173,48 @@ export default function ChatPage() {
                     </Box>
                     <CustomMenu
                         anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
+                        open={openCustonMenu}
+                        onClose={handleCloseCustonMenu}
                     >
                         {menuContent}
                     </CustomMenu>
                 </ChatArea>
             </Box>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                disableAutoFocus
+            >
+                <Box p sx={{ height: matches ? '45  vh' : '40vh', width: '35vw', bgcolor: 'background.paper' }} borderRadius={2} >
+                    <Box p={0}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
+                            Adicionar contato
+                        </Typography>
+                    </Box>
+                    <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
+                        <TextField
+                            onChange={e => setContactsAttributes({ ...ContactsAttributes, name: e.target.value })}
+                            id="outline-basic"
+                            label="Adicionar pelo nome"
+                            value={ContactsAttributes.name}
+                            fullWidth
+                        />
+                                               
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
+                            <Button onClick={handleClose} variant='outlined' fullWidth>
+                                Cancelar
+                            </Button>
+                            <Button onClick={createContacts} variant='outlined' fullWidth>
+                                Criar
+                            </Button>
+                        </Box>
+                    </Box>
+
+                </Box>
+            </Modal>
 
         </AppLayout>
     )
