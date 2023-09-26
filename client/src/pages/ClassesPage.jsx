@@ -213,14 +213,13 @@ export default function ClassesPage() {
                                         Cancelar
                                     </Button>
                                     <Button type='submit' onClick={createClass} variant='outlined' fullWidth>
-                                        Criar
+                                        Ingressar
                                     </Button>
                                 </Box>
                             </Box>
                         </Box>
                     )}
                 </Box>
-
             </Modal>
         </AppLayout>
     )
