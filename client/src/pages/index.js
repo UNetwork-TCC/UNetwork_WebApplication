@@ -10,5 +10,6 @@ import NewsPage from './NewsPage'
 import Register from './Register'
 import Login from './Login'
 import ClassesPage from './ClassesPage'
+import ForumPage from './ForumPage'
 
-export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage, ChatPage, NewsPage, Register, Login, ClassesPage }
+export { LandingPage, ErrorPage, FavoritesPage, Clips, Suggestion, Home, MaterialsPage, ChatPage, NewsPage, Register, Login, ClassesPage, ForumPage }

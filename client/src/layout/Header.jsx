@@ -18,7 +18,7 @@ export default function Header({ minimize, maximize, close }) {
             <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
         )
                 
-        if (userMenu) setMenuContent([ 
+        if (userMenu) setMenuContent([
             <MenuItem disableRipple key={-2}>
                 <Avatar sx={{ background: 'transparent' }} /> Perfil
             </MenuItem>,
@@ -59,7 +59,7 @@ export default function Header({ minimize, maximize, close }) {
                         />
                     </Box>
                     <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
-                        <CustomLink to='/app/community' name='Comunidade' />
+                        <CustomLink to='/app/forum' name='Foruns' />
                         <CustomLink to='/app/classes' name='Classes' />
                         <CustomLink to='/app/materials' name='Materiais' />
                         <CustomLink to='/app/news' name='Notícias' />

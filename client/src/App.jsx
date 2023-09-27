@@ -5,7 +5,7 @@ import { GOOGLE_CLIENT_ID } from './constants'
 import { useState } from 'react'
 import { lightTheme } from './themes'
 import { themeContext } from './contexts'
-import { LandingPage, ErrorPage, FavoritesPage, ChatPage, NewsPage, ClassesPage } from './pages'
+import { LandingPage, ErrorPage, FavoritesPage, ChatPage, NewsPage, ClassesPage, ForumPage } from './pages'
 import ThemeStore from './layout/ThemeStore'
 import { Home } from './pages'
 import MaterialsPage from './pages/MaterialsPage'
@@ -33,6 +33,7 @@ function App() {
                             <Route path='/app/materials' element={<MaterialsPage />} />
                             <Route path='/app/chat' element={<ChatPage />} />
                             <Route path='/app/news' element={<NewsPage />} />
+                            <Route path='/app/forum' element={<ForumPage />} />
                             <Route path='/app/classes' element={<ClassesPage />} />
                             <Route path='/app/*' element={<Navigate to='/error' />} />
                         </Routes>

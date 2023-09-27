@@ -12,6 +12,7 @@ import CustomLink from './CustomLink'
 import CustomCheckBox from './CustomCheckBox'
 import CustomInput from './CustomInput'
 import CustomCarousel from './CustomCarousel'
+import AppLayout from './AppLayout'
 import Clip from './Clip'
 
 
@@ -27,6 +28,7 @@ export {
     NavBar, 
     CustomMenu, 
     Clip, 
+    AppLayout,
     CustomCheckBox,
     CustomLink,
     CustomInput,

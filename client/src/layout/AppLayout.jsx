@@ -1,18 +1,21 @@
-import Sidebar from './SideBar'
 import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useStyles } from '../styles'
 import { Header, LoadingBackdrop } from '../layout'
 import { Bookmark, ExpandLess, ExpandMore, Home, Message } from '@mui/icons-material'
 import { useState } from 'react'
+import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import bg from '../assets/img/bg.jpg'
 import Shortcut from '../components/Home/Shortcut'
-import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import Contact from '../components/Home/Contact'
+import Sidebar from './SideBar'
 
 import { useNavigate } from 'react-router-dom'
+import { user, userContext } from '../contexts/userContext'
 
 export default function AppLayout({ children, sx, withSidebars }) {
     const classes = useStyles()
+
+    const [ userData, setUserData ] = useState(user)
 
     const navigate = useNavigate()
 
@@ -20,24 +23,15 @@ export default function AppLayout({ children, sx, withSidebars }) {
     const [ shortcutsExpanded, setShortcutsExpanded ] = useState(true)
     const [ contactsExpanded, setContactsExpanded ] = useState(true)
     const [ boxStyles, setBoxStyles ] = useState({})
+
     const shortcuts = 5
     const contacts = 11
 
-    const shortcutsExpand = () => {
-        setShortcutsExpanded(true)
-    }
+    const shortcutsExpand = () => setShortcutsExpanded(true)
+    const shortcutsCollapse = () => setShortcutsExpanded(false)
 
-    const shortcutsCollapse = () => {
-        setShortcutsExpanded(false)
-    }
-
-    const contactsExpand = () => {
-        setContactsExpanded(true)
-    }
-
-    const contactsCollapse = () => {
-        setContactsExpanded(false)
-    }
+    const contactsExpand = () => setContactsExpanded(true)
+    const contactsCollapse = () => setContactsExpanded(false)
 
     const maximize = () => {
         if (boxStyles.height === '100vh' || boxStyles.height === '200px') {
@@ -72,7 +66,7 @@ export default function AppLayout({ children, sx, withSidebars }) {
     }
 
     return (
-        <>
+        <userContext.Provider value={{ userData, setUserData }}>
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
                     <img src={bg} style={{
@@ -171,6 +165,6 @@ export default function AppLayout({ children, sx, withSidebars }) {
                 </Box>
             </Box>
             <LoadingBackdrop open={open} />
-        </>
+        </userContext.Provider>
     )
 }
