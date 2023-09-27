@@ -128,7 +128,7 @@ export const loginUser = async (req, res) => {
             { id: existingUser._id, email },
             process.env.SECRET,
             {
-                expiresIn: '20s',
+                expiresIn: '12h',
             }
         )
 
