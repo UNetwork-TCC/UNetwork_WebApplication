@@ -8,6 +8,7 @@ import { useState } from 'react'
 import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
 import { useTheme } from '@emotion/react'
+import { Manager } from 'socket.io-client'
 
 export default function Chat() {
 
@@ -20,6 +21,12 @@ export default function Chat() {
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
+    }
+    
+    const handleSubmit = () => {
+        const manager = new Manager('http://localhost:3000')
+        const socket = manager.socket('/')
+        console.log(text);
     }
 
     return (
@@ -55,7 +62,7 @@ export default function Chat() {
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='large'>
                         <EmojiEmotionsIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
-                    <Avatar variant="rounded" sx={{
+                    <Avatar onClick={() => handleSubmit()} variant="rounded" sx={{
                         fontSize: '0.5rem',
                         height: '1.5rem',
                         width: '1.5rem',
@@ -66,8 +73,9 @@ export default function Chat() {
                         p: 2.5,
                         cursor: 'pointer',
                         transition: '.3s ease-in-out',
-                        ml: '1%'
+                        ml: '1%',
                     }}>
+                        
                         <SendIcon />
                     </Avatar>
                     {/* <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '1.1vh', bgcolor: '#673AB7', borderRadius: '0 2.1vh 2.1vh 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" >
