@@ -24,7 +24,7 @@ export default function Chat() {
     }
     
     const handleSubmit = () => {
-        const manager = new Manager('http://localhost:3000')
+        const manager = new Manager('https://3001-unetworktcc-unetworkweb-m98w0koyiat.ws-us105.gitpod.io')
         const socket = manager.socket('/')
         console.log(text);
     }

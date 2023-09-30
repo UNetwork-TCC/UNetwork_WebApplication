@@ -22,8 +22,12 @@ import {
 dotenv.config()
 
 const app = express()
+
 const server = http.createServer(app)
-const io = new Server(server)
+const io = new Server(server, {cors: {
+  origin: '*', 
+  methods: ["GET", "POST"]
+}})
 
 io.on('connection', socket => {
     console.log('Usuário conectado!', socket.id);
@@ -49,7 +53,7 @@ io.on('connection', socket => {
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
-app.use(cors({origin: 'http://localhost:5173'}))
+app.use(cors({origin: 'https://5173-unetworktcc-unetworkweb-m98w0koyiat.ws-us105.gitpod.io'}))
 
 app.use('/pictures', pictureRouter)
 app.use('/user', userRouter)
@@ -61,22 +65,11 @@ app.use('/post', postRouter)
 app.use('/class', classRouter)
 app.use('/forum', forumRouter)
 
-const clients = []
-
-io.on('connection', (client) => {
-    clients.push(client)
-    console.log(`Cliente conectado com o id: ${client.id}`);
-
-    client.on('disconnect', () =>{
-        clients.splice(client.indexOf(client), 1)
-        console.log(`Cliente desconectado com o id: ${client.id}`);
-    })
-}
-)
-
-
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001
+
+const socketIoPort = 3001
+server.listen(socketIoPort, () => console.log(`Socket servidor na porta ${socketIoPort}`))
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
