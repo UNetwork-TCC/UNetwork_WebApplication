@@ -6,7 +6,13 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Classes, FilterAndConfig } from '../components'
 import { useEffect, useState } from 'react'
 import CustomCheckBox from '../layout/CustomCheckBox'
-import CustomCarousel from '../layout/CustomCarousel'
+import React, { Component } from 'react';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+
+import img1 from '../assets/img/paraPiada/ciclo.jpg'
+import img2 from '../assets/img/paraPiada/james.jpg'
+import img3 from '../assets/img/paraPiada/roubo.jpg'
 
 export default function ClassesPage() {
     // const theme = useTheme()
@@ -78,8 +84,21 @@ export default function ClassesPage() {
                         <Classes Class={{ name:e.title }}  key={e.title} />
                     ))}
                     
-                </Box>
-                <CustomCarousel /> 
+                </Box> 
+                <Box sx={{ width: '30rem', height:'30rem', display: 'flex', alignContent: 'center' }}>                
+                    <Carousel autoPlay infiniteLoop centerMode >
+                            <Box>
+                                <img src={img1} />
+                            </Box>
+                            <Box>
+                                <img src={img2} />
+                            </Box>
+                            <Box>
+                                <img src={img3} />
+                            </Box>
+                    </Carousel>
+                </Box>    
+
             </Box>
 
             <Modal
