@@ -4,29 +4,33 @@ import { Avatar, Container, useMediaQuery } from '@mui/material'
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
 import EmojiPicker from 'emoji-picker-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
 import { useTheme } from '@emotion/react'
-import { Manager } from 'socket.io-client'
+import io from 'socket.io-client'
 
 export default function Chat() {
 
     const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
 
-    const [ text, setText ] = useState('')
+    const [text, setText] = useState('')
 
-    const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
     const onEmojiClick = (emojiObject) => {
         setText(prevInput => prevInput + emojiObject.emoji)
     }
-    
-    const handleSubmit = () => {
-        const manager = new Manager('https://3001-unetworktcc-unetworkweb-m98w0koyiat.ws-us105.gitpod.io')
-        const socket = manager.socket('/')
-        console.log(text);
+
+    const [messageList, setMessageList] = useState([])
+
+    const handleSubmit = async () => {
+        const socket = await io.connect('https://3001-unetworktcc-unetworkweb-48q4wcnk4xb.ws-us105.gitpod.io')
+        
+        console.log(socket);
+        socket.emit('set_username', { name: 'Vitor', age: 24 })
+        socket.on('message', socket => alert('Seja bem-vindo!: ' + socket.name))
     }
 
     return (
@@ -55,10 +59,10 @@ export default function Chat() {
 
                     />
                     <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
-                    <IconButton component='label' htmlFor='file' sx={{ cursor: 'pointer', transition: '.3s', bgcolor: 'white', color:'gray', }}>
+                    <IconButton component='label' htmlFor='file' sx={{ cursor: 'pointer', transition: '.3s', bgcolor: 'white', color: 'gray', }}>
                         <ImageOutlinedIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
-                    
+
                     <IconButton type="button" aria-label="Emoji" onClick={() => setShowEmojiPicker(val => !val)} size='large'>
                         <EmojiEmotionsIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
@@ -75,7 +79,7 @@ export default function Chat() {
                         transition: '.3s ease-in-out',
                         ml: '1%',
                     }}>
-                        
+
                         <SendIcon />
                     </Avatar>
                     {/* <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '1.1vh', bgcolor: '#673AB7', borderRadius: '0 2.1vh 2.1vh 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" >
@@ -99,3 +103,6 @@ export default function Chat() {
 
     )
 }
+
+
+

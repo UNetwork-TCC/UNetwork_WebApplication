@@ -33,12 +33,16 @@ io.on('connection', socket => {
     console.log('Usuário conectado!', socket.id);
   
     socket.on('disconnect', reason => {
-      console.log(`Usuário desconectado! ${socket.id}`);
+      console.log(`
+        Usuário desconectado! ${socket.id}
+        Razão: ${reason}
+      `);
     })
   
     socket.on('set_username', username => {
       socket.data.username = username
       console.log(socket.data.username);
+      socket.emit('message', socket.data.username)
   
       socket.on('message', text => {
         io.emit('recieveMessage', {
@@ -53,7 +57,7 @@ io.on('connection', socket => {
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
-app.use(cors({origin: 'https://5173-unetworktcc-unetworkweb-m98w0koyiat.ws-us105.gitpod.io'}))
+app.use(cors({origin: 'https://5173-unetworktcc-unetworkweb-48q4wcnk4xb.ws-us105.gitpod.io'}))
 
 app.use('/pictures', pictureRouter)
 app.use('/user', userRouter)
