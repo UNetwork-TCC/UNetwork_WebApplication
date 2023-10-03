@@ -67,7 +67,7 @@ export default function Chat() {
                         cursor: 'pointer',
                         transition: '.3s ease-in-out',
                         ml: '1%'
-                    }}>
+                    }} >
                         <SendIcon />
                     </Avatar>
                     {/* <Box color="primary" sx={{ p: '1vh 1vh 0.3vh 1vh', ml: '1.1vh', bgcolor: '#673AB7', borderRadius: '0 2.1vh 2.1vh 0', color: 'white', ':hover': { bgcolor: '#A020F0' } }} aria-label="SendButton" >

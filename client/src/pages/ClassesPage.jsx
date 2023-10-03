@@ -21,7 +21,7 @@ export default function ClassesPage() {
 
     const [ ClassAttributes, setClassAttributes ] = useState({
         title: '',
-        visibility: '',
+        visibility: 'public',
         code: '',
         setPassword: '',
         getPassword: ''
@@ -65,7 +65,7 @@ export default function ClassesPage() {
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Suas Classes</Typography>
-                    <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
+                    <FilterAndConfig text={'CRIAR CLASSE'} handleOpen={handleOpen}/>
                 </Container>
                 <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '2rem' }} >
                     <Classes Class={{ name: 'Os lambisgoia' }} />
@@ -224,3 +224,4 @@ export default function ClassesPage() {
         </AppLayout>
     )
 }
+

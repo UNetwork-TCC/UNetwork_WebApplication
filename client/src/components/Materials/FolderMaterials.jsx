@@ -45,7 +45,7 @@ export default function FolderMaterials({ FolderName, }) {
                 <Box 
                     onClick={
                         e => handleClick(e, 
-                            [ 'Baixar', 'Compartilhar', 'Favoritar', 'Renomear', 'Arquivar', 'Excluir' ],
+                            [ 'Baixar', 'Compartilhar', 'Favoritar', 'Renomear', 'Excluir' ],
                             [ onClickEvents.item1, onClickEvents.item2 ],
                             
                         )

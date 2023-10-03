@@ -17,7 +17,7 @@ export default function MaterialsPage() {
 
     const [ MaterialsAttributes, setMaterialsAttributes ] = useState({
         title: '',
-        visibility: '',
+        visibility: 'public',
         code: '',
         setPassword: '',
         getPassword: ''
@@ -55,14 +55,14 @@ export default function MaterialsPage() {
 
     return (
         <AppLayout withSidebars>
-            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} fontSize={'1rem'}>
+            <Box display='flex' justifyContent='start' flexDirection='column' width='100%' height='100%' p={3} mt={5} fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Seus Materiais</Typography>
                     <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
                 </Container>
                 
                 <Box display={'flex'} justifyContent={'start'} flexDirection={'column'}>
-                    <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '4rem', columnGap: '11rem' }} >
+                    <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '4rem', columnGap: '2rem' }} >
                         <FolderMaterials FolderName={'teste'} />
                         <FolderMaterials FolderName={'teste'} />
                         <FolderMaterials FolderName={'teste'} />
