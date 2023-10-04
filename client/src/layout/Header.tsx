@@ -112,7 +112,7 @@ export default function Header({
                             
                         </Box>
                         <IconButton onClick={e => { handleClick(e, 
-                            [ 'Configurações', 'Ajuda e suporte', 'Dar feedback', 'Tema Escuro', 'Sair' ],
+                            [ 'Configurações', 'Ajuda e suporte', 'Dar feedback', theme.palette.mode === 'light' ? 'Tema Escuro' : 'Tema Claro', 'Sair' ],
                             [ 
                                 <Settings key={0} />,
                                 <Help key={1} />,
