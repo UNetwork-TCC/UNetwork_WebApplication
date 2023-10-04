@@ -1,5 +1,5 @@
-import { createContext } from "react";
-import { User } from "../types";
+import { type Dispatch, type SetStateAction, createContext } from 'react'
+import { type User } from '../types'
 
 export const user: User = {
     name: '',
@@ -24,4 +24,6 @@ export const user: User = {
         grade: 1
     }
 }
-export const userContext = createContext<User>(user)
+export const userContext = createContext<{
+    userData: User; setUserData: Dispatch<SetStateAction<User>> | Record<string, unknown>; 
+}>({ userData: user, setUserData: {} })

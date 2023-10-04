@@ -1,7 +1,8 @@
 import { Box } from '@mui/material'
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel'
+import { type ReactElement } from 'react'
 
-export default function CustomCarousel() {
+export default function CustomCarousel(): ReactElement {
     return (
         <CarouselProvider
             naturalSlideWidth={100  }

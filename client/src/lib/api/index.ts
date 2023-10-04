@@ -1,14 +1,27 @@
-import axios from 'axios'
+import { type News, type User } from '$types'
+import axios, { type AxiosResponse } from 'axios'
 
 const host = 'https://unetwork-api.onrender.com'
 
 const API = axios.create({ baseURL: host })
 
-export const fetchUsers = () => API.get('/user')
-export const createUser = (data: { name: string, email: string, password: string }) => API.post('/user/create', data)
-export const loginUser = (data: { email: string, password: string }) => API.post('/user/login', data)
-export const getUser = (id: string) => API.get('/user/' + id)
-export const deleteUser = (id: string) => API.delete('/user' + id)
-export const updateUser = (id: string, data: Object) => API.patch('/user' + id, data)
+// USERS REQUESTS
 
-export const fetchNews = () => API.get('/news')
+export const fetchUsers = async (): Promise<AxiosResponse<User[], any>> => await API.get<User[]>('/user')
+export const createUser = async (data: {
+  name: string
+  email: string
+  password: string
+}): Promise<AxiosResponse<typeof data, any>> => await API.post<typeof data>('/user/create', data)
+export const loginUser = async (data: { email: string; password: string }): Promise<AxiosResponse<typeof data, any>> =>
+    await API.post<typeof data>('/user/login', data)
+
+export const getUser = async (id: string): Promise<AxiosResponse<User, any>> => await API.get<User>('/user/' + id)
+export const deleteUser = async (id: string): Promise<AxiosResponse<User, any>> => await API.delete<User>('/user' + id)
+
+export const updateUser = async (id: string, data: Partial<User>): Promise<AxiosResponse<User, any>> =>
+    await API.patch<User>('/user' + id, data)
+
+// NEWS REQUESTS
+
+export const fetchNews = async (): Promise<AxiosResponse<News, any>> => await API.get<News>('/news')

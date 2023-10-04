@@ -1,11 +1,11 @@
 import { Avatar, Box, Typography, Card, Grid, Modal, Button, TextField, FormControl, useMediaQuery, useTheme } from '@mui/material'
 import { Add } from '@mui/icons-material'
-import { useEffect, useState } from 'react'
+import { type ReactElement, useEffect, useState } from 'react'
 import { AppLayout, CustomCheckBox } from '$layout'
 import { Folder } from '$components'
-import { folder } from '$types'
+import { type folder } from '$types'
 
-export default function FavoritesPage() {
+export default function FavoritesPage(): ReactElement {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -27,10 +27,10 @@ export default function FavoritesPage() {
         private: false
     })
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const createFolder = () => {
+    const createFolder = (): void => {
         // ...
 
         if (folderAttributes.visibility && folderAttributes.title) {
@@ -47,7 +47,7 @@ export default function FavoritesPage() {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
             const code: any = e.code
 
-            if(code == 27) {
+            if(Number(code) === 27) {
                 handleClose()  
             }
         })
@@ -103,14 +103,14 @@ export default function FavoritesPage() {
                         </Box>
                         <Box display={'flex'} flexDirection={'column'} p={2} gap={2}> 
                             <TextField 
-                                onChange={e => setFolderAttributes({ ...folderAttributes, title: e.target.value })} 
+                                onChange={e => { setFolderAttributes({ ...folderAttributes, title: e.target.value }) }} 
                                 id="outline-basic" 
                                 label="Título"
                                 value={folderAttributes.title}
                                 fullWidth
                             />
                             <TextField 
-                                onChange={e => setFolderAttributes({ ...folderAttributes, subtitle: e.target.value })} 
+                                onChange={e => { setFolderAttributes({ ...folderAttributes, subtitle: e.target.value }) }} 
                                 id="outline-basic" 
                                 label="Tópico (opicional)"
                                 value={folderAttributes.subtitle}

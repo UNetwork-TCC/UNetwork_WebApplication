@@ -9,11 +9,37 @@ import { Animation } from 'react-animate-style'
 import { Link } from 'react-router-dom'
 import { Book, Token, WorkHistory } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import { type ReactElement } from 'react'
 
-function LandingPage() {
+function LandingPage(): ReactElement {
     const theme = useTheme()
 
     const { t } = useTranslation()
+
+    function Heading({ title, content, icon } : { title: string, content: string, icon: ReactElement }): ReactElement {
+        return (
+            <>
+                <Typography 
+                    sx={{ fontSize: '1.7rem' }} 
+                    mb={2} variant='h5' 
+                    fontWeight={900} 
+                    color='secondary.main'
+                >
+                    <Box mb='-3px' mr='5px'>
+                        {icon}
+                    </Box>
+                    {t(title)}
+                </Typography>
+                <Typography 
+                    sx={{ fontSize: '1.3rem' }} 
+                    variant='h6' 
+                    color='secondary.main'
+                >
+                    {t(content)}
+                </Typography>
+            </>
+        )
+    }
 
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
@@ -49,24 +75,33 @@ function LandingPage() {
                     <Box width='50%' overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={350}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><WorkHistory sx={{ mb: '-3px', mr: '5px' }} />{t('header.feature1.title')}</Typography>
-                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature1.content')}</Typography>
+                                <Heading
+                                    title='header.feature1.title'
+                                    content='header.feature1.content'
+                                    icon={<WorkHistory />}
+                                />
                             </Box>
                         </AnimateOnScroll>
                     </Box>
                     <Box overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={450}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Book sx={{ mb: '-3px', mr: '5px' }} />{t('header.feature2.title')}</Typography>
-                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature2.content')}</Typography>
+                                <Heading
+                                    title='header.feature2.title'
+                                    content='header.feature2.content'
+                                    icon={<Book />}
+                                />
                             </Box>
                         </AnimateOnScroll>
                     </Box>
                     <Box overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={550}>
                             <Box>
-                                <Typography sx={{ fontSize: '1.7rem' }} mb={2} variant='h5' fontWeight={900} color='secondary.main'><Token sx={{ mb: '-3px', mr: '5px' }} />{t('header.feature3.title')}</Typography>
-                                <Typography sx={{ fontSize: '1.3rem' }} variant='h6' color='secondary.main'>{t('header.feature3.title')}</Typography>
+                                <Heading
+                                    title='header.feature3.title'
+                                    content='header.feature3.content'
+                                    icon={<Token />}
+                                />
                             </Box>
                         </AnimateOnScroll>
                     </Box>

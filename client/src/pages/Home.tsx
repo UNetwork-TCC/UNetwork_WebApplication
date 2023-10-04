@@ -4,12 +4,12 @@ import { Add, AttachFile, ArrowDropUp } from '@mui/icons-material'
 import { AppLayout, CustomInput } from '$layout'
 import roubo from '$assets/img/paraPiada/roubo.jpg'
 import james from '$assets/img/paraPiada/james.jpg'
+import { type ReactElement } from 'react'
 
 // import { useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
 
-
-export default function Home() {
+export default function Home(): ReactElement {
     const theme = useTheme()
 
     // useEffect(() => {
@@ -17,7 +17,7 @@ export default function Home() {
     //         navigate('/auth')
     // })
 
-    function StyledButton({ name, icon }: { name: string, icon: React.ReactNode }) {
+    function StyledButton({ name, icon }: { name: string, icon: React.ReactNode }): ReactElement {
         return (
             <MuiLink href={`#${name}`}>
                 <IconButton disableRipple sx={{ bgcolor: 'primary.main', color: 'white' }}>
@@ -36,15 +36,41 @@ export default function Home() {
                         sx={{ boxShadow: theme.shadows[4] }}
                         fullWidth
                         width='100%'
-                        bgcolor='white'
+                        bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                         placeholder='No que estou pensando...'
-                        color='primary.main'
+                        color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
                         iconColor='#dbdbdb'
                         icon={<Add />}
                     />
-                    <Box sx={{ position: 'relative', width: '50px', bottom: 47, right: '4rem', display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                    <Box 
+                        sx={{ 
+                            position: 'relative',
+                            width: '50px',
+                            bottom: { 
+                                lg: 45,
+                                xl: 47 
+                            },
+                            right: {
+                                lg: '5.25rem',
+                                xl: '4rem'
+                            },
+                            display: 'flex',
+                            justifyContent: 'end',
+                            alignItems: 'center' 
+                        }}>
                         <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
-                        <Avatar component='label' htmlFor='file' sx={{ cursor: 'pointer', transition: '.3s', bgcolor: 'primary.main', ':hover': { bgcolor: 'primary.light' } }}>
+                        <Avatar 
+                            component='label' 
+                            htmlFor='file' 
+                            sx={{
+                                cursor: 'pointer',
+                                transition: '.3s',
+                                bgcolor: 'primary.main',
+                                ':hover': {
+                                    bgcolor: 'primary.light' 
+                                } 
+                            }}
+                        >
                             <AttachFile />
                         </Avatar>
                     </Box>
@@ -56,6 +82,7 @@ export default function Home() {
                         content={'aaaaaaaaaaaaaaaaaa teste de tudoaaaaaaaaaaaa FLExivelllllllllllllllllllllllll  aaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
                         user={{ name: 'Filhos do Jhonatas' }}
                     />
+
                     <Post
                         title={'Piada'}
                         date={'3 horas atrás'}
@@ -73,7 +100,7 @@ export default function Home() {
                     />
                 </Box>
             </Box>
-            <Box sx={{ height: '100%', display: 'flex', position: 'sticky', top: 0, left: 200,flexDirection:'column-reverse', }}>
+            <Box sx={{ height: '100%', display: 'flex', position: 'sticky', top: 0, left: 200,flexDirection:'column-reverse' }}>
                 <Stack sx={{ position:'relative', bottom: 40 }} gap={6}>
                     <StyledButton
                         name='topo'

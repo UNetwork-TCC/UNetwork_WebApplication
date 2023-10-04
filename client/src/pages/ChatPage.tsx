@@ -2,11 +2,10 @@ import { Avatar, Box, Button, Divider, IconButton, MenuItem, Modal, Stack, TextF
 import { Chat, ChatArea, Contact, ContactsArea } from '$components'
 import { CustomInput, AppLayout, CustomMenu } from '$layout'
 import { Add, Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Report } from '@mui/icons-material'
-import { useState } from 'react'
-import { contact } from '$types'
+import { type ReactElement, useState } from 'react'
+import { type contact } from '$types'
 
-
-export default function ChatPage() {
+export default function ChatPage(): ReactElement {
 
     const theme = useTheme()
 
@@ -29,10 +28,10 @@ export default function ChatPage() {
     const [ Contacts, setContacts ] = useState<contact[]>([])
     const [ ContactsAttributes, setContactsAttributes ] = useState<contact>({ name: '', code: '', date: '', notification: '' })
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const createContacts = () => {
+    const createContacts = (): void => {
         // ...
 
         if (ContactsAttributes.name) {
@@ -44,16 +43,20 @@ export default function ChatPage() {
         }
         else alert('preencha todos os campos!')
     }
-    
 
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ menuContent, setMenuContent ] = useState<React.ReactNode>(null)
 
     const openCustonMenu = Boolean(anchorEl)
 
-    const handleClick = (e: any, elements: string[], onClickEvents = elements.map(() => handleClose), icons: React.ReactNode[] = []) => {
-        const mapedElements = elements.map((e, i) =>
-            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
+    const handleClick = (
+        e: any,
+        elements: string[],
+        onClickEventListeners = elements.map(() => handleClose),
+        icons: React.ReactNode[] = []
+    ): void => {
+        const mapedElements = elements.map((el, i) =>
+            <MenuItem onClick={onClickEventListeners[i]} key={i} disableRipple>{icons && icons[i]}{el}</MenuItem>
         )
 
         setMenuContent(mapedElements)
@@ -61,16 +64,16 @@ export default function ChatPage() {
         setAnchorEl(e.currentTarget)
     }
 
-    const handleCloseCustonMenu = () => {
+    const handleCloseCustonMenu = (): void => {
         setAnchorEl(null)
     }
 
     return (
         <AppLayout withSidebars>
-            <Box sx={{ width: '100%', height: '100%', display: 'flex', }} >
+            <Box sx={{ width: '100%', height: '100%', display: 'flex' }} >
                 <ContactsArea>
                     <Box sx={{ width: '100%', height: '17%' }}>
-                        <Stack gap={2} sx={{ position: 'sticky', top: '0', }}>
+                        <Stack gap={2} sx={{ position: 'sticky', top: '0' }}>
                             <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
                                 <Box sx={{ width: '70%' }}>
                                     <Typography variant='h4' sx={{}}>Conversas</Typography>
@@ -87,7 +90,7 @@ export default function ChatPage() {
                             <Box sx={{}}>
                                 <CustomInput
                                     width='95%'
-                                    bgcolor='white'
+                                    bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                                     color='#673AB7'
                                     iconColor={'white'}
                                     placeholder='Procurar...'
@@ -125,16 +128,16 @@ export default function ChatPage() {
                         </Stack>
                     </Box>
                 </ContactsArea>
-                <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%', }} />
+                <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%' }} />
                 <ChatArea>
-                    <Box sx={{ width: '100%', height: '11%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%', }}>
+                    <Box sx={{ width: '100%', height: '11%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
                         <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem' }}>
 
                         </Avatar>
                         <Box sx={{ width: '75%', maxWidth: '75%' }}>
                             <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%' }} >Username</Typography>
                         </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', width: '25%', }} gap={3}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', width: '25%' }} gap={3}>
                             <IconButton sx={{}}>
                                 <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray' }} />
                             </IconButton>
@@ -143,12 +146,12 @@ export default function ChatPage() {
                             </IconButton>
                             <IconButton sx={{}} 
                                 onClick={
-                                    e => handleClick(e, 
-                                        [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear', ],
+                                    e => { handleClick(e, 
+                                        [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear' ],
                                         [ onClickEvents.item1, onClickEvents.item2 ],
                                         [ <AccountBox key={null}/>,<Search key={null}/>, <FmdGood key={null}/>, null ,<Report key={null}/>, <Block key={null}/> ]
                                                                     
-                                    )
+                                    ) }
                                 }
                             >
                                 <Settings sx={{ fontSize: '2rem', color: 'gray' }} />
@@ -188,7 +191,7 @@ export default function ChatPage() {
                     </Box>
                     <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
                         <TextField
-                            onChange={e => setContactsAttributes({ ...ContactsAttributes, name: e.target.value })}
+                            onChange={e => { setContactsAttributes({ ...ContactsAttributes, name: e.target.value }) }}
                             id="outline-basic"
                             label="Adicionar pelo nome"
                             value={ContactsAttributes.name}

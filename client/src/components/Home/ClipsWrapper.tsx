@@ -1,7 +1,8 @@
 import { Box } from '@mui/material'
 import { Clip } from '$layout'
+import { type ReactElement } from 'react'
 
-export default function ClipsWrapper() {
+export default function ClipsWrapper(): ReactElement {
     const clipsData = {
         postedBy: {
             id: 'asd2312',

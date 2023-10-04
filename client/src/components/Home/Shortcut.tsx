@@ -1,5 +1,6 @@
 import { Circle } from '@mui/icons-material'
 import { Box, Tooltip, Typography, useTheme } from '@mui/material'
+import { type ReactElement } from 'react'
 
 export default function Shortcut({ 
     title,
@@ -9,7 +10,7 @@ export default function Shortcut({
     title: string,
     category: string,
     color: string
-}) {
+}) : ReactElement {
     const theme = useTheme()
 
     return (

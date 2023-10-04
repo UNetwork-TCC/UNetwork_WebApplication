@@ -1,5 +1,7 @@
-import { createContext } from 'react'
+import { createContext, type Dispatch, type SetStateAction } from 'react'
 import { lightTheme } from '../themes'
-import { CustomTheme } from '@mui/material'
+import { type CustomTheme } from '@mui/material'
 
-export const themeContext = createContext<CustomTheme | any>(lightTheme)
+export const themeContext = createContext<
+    { theme: CustomTheme, setTheme: Dispatch<SetStateAction<CustomTheme>> }
+>({ theme: lightTheme, setTheme: () => {} })

@@ -11,8 +11,9 @@ import { AnimateOnScroll } from '$components'
 import { CustomDivider, Topic } from '$layout'
 import { Person, Group } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import { type ReactElement } from 'react'
 
-export default function DiscoverSection() {
+export default function DiscoverSection(): ReactElement {
     const { t } = useTranslation()
 
     return (

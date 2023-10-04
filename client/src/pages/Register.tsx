@@ -1,24 +1,25 @@
+/* eslint-disable max-len */
+
 import { Box, Button, Checkbox, FormControl, Modal, TextField, Typography, useTheme } from '@mui/material'
-import { useState } from 'react'
+import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-// import { login, signin } from '$features/auth/auth-slicer'
-
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
 import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { useAppDispatch } from '$store'
 import { signup } from '$features/auth/auth-slicer'
-function RegisterForm() {
+
+function RegisterForm(): ReactElement {
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Este campo é obrigatório'),
         email: Yup.string().email().required('Este campo é obrigatório'),
         password: Yup.string().min(8, 'A senha precisa ter 8 digitos').required('Este campo é obrigatório'),
-        confirmPassword: Yup.string().required('Este campo é obrigatório'),
+        confirmPassword: Yup.string().required('Este campo é obrigatório')
     })
 
     const theme = useTheme()
@@ -28,13 +29,13 @@ function RegisterForm() {
     const [ open, setOpen ] = useState(false)
     const [ openLoading, setOpenLoading ] = useState(false)
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const handleOpenLoading = () => setOpenLoading(true)
-    const handleCloseLoading = () => setOpenLoading(false)
+    const handleOpenLoading = (): void => { setOpenLoading(true) }
+    const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    const handleSubmit = (user: { name: string, email: string, password: string }) => {
+    const handleSubmit = (user: { name: string, email: string, password: string }): void => {
         handleOpenLoading()
 
         try {
@@ -104,7 +105,17 @@ function RegisterForm() {
                         <Box width='60%' display='flex' alignItems='center'>
                             <Checkbox required />
                             <Typography>Li e aceito os
-                                <Typography onClick={handleOpen} ml={0.5} component='span' sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }} color='primary.main'>
+                                <Typography 
+                                    onClick={handleOpen} 
+                                    sx={{
+                                        cursor: 'pointer',
+                                        ':hover': {
+                                            textDecoration: 'underline'
+                                        } 
+                                    }} color='primary.main'
+                                    ml={0.5} 
+                                    component='span' 
+                                >
                                     Termos de Serviço e Política de Privacidade
                                 </Typography>
                             </Typography>
@@ -154,7 +165,7 @@ function RegisterForm() {
     )
 }
 
-function RegisterSide() {
+function RegisterSide(): ReactElement {
     return (
         <Box width='100%'>
             <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
@@ -166,7 +177,7 @@ function RegisterSide() {
     )
 }
 
-export default function Register() {
+export default function Register(): ReactElement {
     return (
         <Auth formTitle='Sign in' form={<RegisterForm />} side={<RegisterSide />} />
     )

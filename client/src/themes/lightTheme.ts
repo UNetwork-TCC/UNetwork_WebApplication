@@ -1,5 +1,9 @@
-import { CustomTheme, createTheme, responsiveFontSizes } from '@mui/material'
-import defaultThemeProps from './defaultThemeProps'
+import {
+    type CustomTheme,
+    createTheme,
+    responsiveFontSizes
+} from '@mui/material'
+import defaultThemeProperties from './defaultThemeProps'
 import { grey } from '@mui/material/colors'
 
 let lightTheme: CustomTheme = createTheme({
@@ -26,25 +30,25 @@ let lightTheme: CustomTheme = createTheme({
         contrast: {
             main: '#e91e63',
             light: '#f8bbd0',
-            dark: '#ad1467',
+            dark: '#ad1467'
         },
 
-        tinyElements: 'rgba(0, 0, 0, 0.38)',
+        tinyElements: 'rgba(0, 0, 0, 0.38)'
     },
 
     typography: {
-        ...defaultThemeProps.typography
+        ...defaultThemeProperties.typography
     },
 
     components: {
-        ...defaultThemeProps.components,
+        ...defaultThemeProperties.components,
         MuiCssBaseline: {
             styleOverrides: {
-                ...defaultThemeProps.components.MuiCssBaseline.styleOverrides,
+                ...defaultThemeProperties.components.MuiCssBaseline.styleOverrides,
 
                 '::-webkit-scrollbar-track:': {
                     background: '#fafafa'
-                },
+                }
             }
         }
     }

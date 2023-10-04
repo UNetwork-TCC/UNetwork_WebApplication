@@ -1,7 +1,7 @@
 import { Avatar, Box, MenuItem, Select, Typography } from '@mui/material'
 import FooterBackground from '../assets/svg/Home/FooterBackground.svg'
 import { FacebookRounded, Instagram, Language, LinkedIn, Twitter } from '@mui/icons-material'
-import { useEffect } from 'react'
+import { type ReactElement, useEffect } from 'react'
 
 import FlagBR from '../assets/svg/Flags/BR.svg'
 import FlagUS from '../assets/svg/Flags/US.svg'
@@ -17,7 +17,7 @@ import FlagIN from '../assets/svg/Flags/IN.svg'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
-export default function Footer() {
+export default function Footer(): ReactElement {
     const { lang: language } = useParams()
     const lang = navigator.language.split('-')[1].toLowerCase()
     const { t } = useTranslation()
@@ -43,9 +43,18 @@ export default function Footer() {
         }
     }, [ language ])
 
-
     return (
-        <Box sx={{ background: `url(${FooterBackground})`, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '180vh', height: '70vh', width: '100%' }}>
+        <Box 
+            sx={{ 
+                background: `url(${FooterBackground})`,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: '180vh',
+                height: '70vh',
+                width: '100%' 
+            }}>
             <Box display='flex' width='100%' height='100%' justifyContent='space-around' alignItems='center'>
                 <Box width='20%'>
                     <Typography mb={2.5}>{t('footer.copyright')}</Typography>
@@ -83,7 +92,7 @@ export default function Footer() {
                             <Select onChange={e => {
                                 localStorage.setItem('lang', e.target.value)
                                 window.location.href = '/' + e.target.value
-                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue='pt' value={localStorage.getItem('lang') || lang}>
+                            }} fullWidth sx={{ mt: 5, pl: 4, height: 50 }} defaultValue='pt' value={localStorage.getItem('lang') ?? lang}>
                                 <MenuItem value='pt'>
                                     <Box display='flex' position='relative' bottom={3}>
                                         <img width='30px' style={{ marginRight: 10, position: 'relative', top: 5 }} height='30px' src={FlagBR}/>

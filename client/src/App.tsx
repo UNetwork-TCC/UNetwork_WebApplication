@@ -1,16 +1,16 @@
-import { CssBaseline, CustomTheme } from '@mui/material'
+import { CssBaseline, type CustomTheme } from '@mui/material'
 import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GOOGLE_CLIENT_ID } from '$constants'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { type Dispatch, type SetStateAction, useState, type ReactElement } from 'react'
 import { lightTheme } from '$themes'
 import { themeContext } from '$contexts'
 import { Login, Register, Home, LandingPage, ErrorPage, FavoritesPage, ChatPage, NewsPage, ClassesPage, ForumPage, MaterialsPage } from '$pages'
 import { ThemeStore } from '$layout'
 import '$utils/languages'
-import { Theme } from '@mui/material'
+import { type Theme } from '@mui/material'
 
-function App() {
+function App(): ReactElement {
     const [ theme, setTheme ] = useState<Theme>(lightTheme)
     const lang = navigator.language.split('-')[0].toLowerCase()
 

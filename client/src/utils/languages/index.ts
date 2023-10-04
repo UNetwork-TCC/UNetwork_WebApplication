@@ -13,28 +13,26 @@ import { initReactI18next } from 'react-i18next'
 import i18next from 'i18next'
 
 const resources = {
-    'pt': BR,
-    'en': US,
-    'fr': FR,
-    'de': DE,
-    'es': ES,
-    'hi': HI,
-    'ru': RU,
-    'zh': ZH,
-    'jp': JP,
-    'ar': AR,
+    pt: BR,
+    en: US,
+    fr: FR,
+    de: DE,
+    es: ES,
+    hi: HI,
+    ru: RU,
+    zh: ZH,
+    jp: JP,
+    ar: AR
 }
 let lng = navigator.language
 lng = lng.split('-')[1].toLowerCase()
 
-i18next
-    .use(initReactI18next)
-    .init({
-        resources,
-        lng: localStorage.getItem('lang') || lng,
-        interpolation: {
-            escapeValue: false
-        }
-    })
+i18next.use(initReactI18next).init({
+    resources,
+    lng: localStorage.getItem('lang') ?? lng,
+    interpolation: {
+        escapeValue: false
+    }
+})
 
 export default i18next

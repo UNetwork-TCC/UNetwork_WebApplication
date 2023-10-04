@@ -2,15 +2,15 @@ import { Box, Button, Container, Divider, Link, Modal, Paper, Stack, TextField, 
 
 import { AppLayout } from '$layout'
 import { FilterAndConfig, News } from '$components'
-import { useEffect, useState } from 'react'
-import { useDispatch, } from 'react-redux'
+import { type ReactElement, useEffect, useState } from 'react'
 import { fetchNews } from '$features/news/news-slicer'
-import { news } from '$types'
+import { type news } from '$types'
+import { useAppDispatch } from '$store'
 
-export default function NewsPage() {
+export default function NewsPage(): ReactElement {
     const theme = useTheme()
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     // const news = useSelector(state => state.news)
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
@@ -33,10 +33,10 @@ export default function NewsPage() {
     //     private: false
     // })
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const createNews = () => {
+    const createNews = (): void => {
         // ...
 
         if (NewsAttributes.title) {
@@ -53,13 +53,13 @@ export default function NewsPage() {
         dispatch(fetchNews())
 
         document.addEventListener('keydown', (e: KeyboardEvent) => {
-            const code: any = e.code
+            const code: string = e.code
 
-            if (code == 27) {
+            if (Number(code) === 27) {
                 handleClose()
             }
         })
-    }, [])
+    }, [ dispatch ])
 
     return (
         <AppLayout withSidebars>
@@ -69,7 +69,7 @@ export default function NewsPage() {
                     <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen}/>
                 </Container>
                 <Box sx={{ display: 'flex' }}>
-                    <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', }} >
+                    <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
                         <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                         <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                         <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
@@ -139,7 +139,7 @@ export default function NewsPage() {
                     </Box>
                     <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
                         <TextField
-                            onChange={e => setNewsAttributes({ ...NewsAttributes, title: e.target.value })}
+                            onChange={e => { setNewsAttributes({ ...NewsAttributes, title: e.target.value }) }}
                             id="outline-basic"
                             label="Título"
                             value={NewsAttributes.title}
@@ -147,7 +147,7 @@ export default function NewsPage() {
                         />
                         <Divider sx={{ m: '1rem 0' }} />
                         <TextField
-                            onChange={e => setNewsAttributes({ ...NewsAttributes, description: e.target.value })}
+                            onChange={e => { setNewsAttributes({ ...NewsAttributes, description: e.target.value }) }}
                             id="outline-basic"
                             label="Descrição"
                             value={NewsAttributes.description}

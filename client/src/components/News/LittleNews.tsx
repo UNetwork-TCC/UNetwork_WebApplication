@@ -1,4 +1,5 @@
 import { Box, Link, Typography } from '@mui/material'
+import { type ReactElement } from 'react'
 
 export default function LittleNews({
     description,
@@ -8,7 +9,7 @@ export default function LittleNews({
     description: string,
     id: string,
     title: string
-}) {
+}) : ReactElement {
     return (
         <Box sx={{ display: 'flex', mb: '2%', fontSize: '10px' }}>
             <Box sx={{ width: '7%', bgcolor: 'red' }} />

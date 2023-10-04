@@ -1,9 +1,8 @@
- 
 import { ThemeProvider } from '@mui/material'
-import { useContext } from 'react'
+import { type ReactElement, useContext } from 'react'
 import { themeContext } from '$contexts'
 
-export default function ThemeStore({ children }: { children: React.ReactNode }) {
+export default function ThemeStore({ children }: { children: React.ReactNode }): ReactElement {
     const { theme } = useContext(themeContext)
 
     return (

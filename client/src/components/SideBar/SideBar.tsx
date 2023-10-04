@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { Box } from '@mui/material'
-import { SxProps } from '@mui/material'
+import { type SxProps } from '@mui/material'
 
 import {
     AccountCircle,
@@ -9,17 +9,18 @@ import {
     Bookmark,
     Groups,
     Newspaper,
-    Menu,
+    Menu
 } from '@mui/icons-material'
 
-export default function SideBar({ buttonStyle }: { buttonStyle: string }) {
+import { type ReactElement } from 'react'
 
+export default function SideBar({ buttonStyle }: { buttonStyle: string }): ReactElement {
 
     const notStylized: SxProps = {
         borderRadius: '2.1vh',
         mb: '6vh',
         ml: '2.5vh',
-        color:'gray',
+        color:'gray'
     }
 
     const Stylized: SxProps = {
@@ -32,7 +33,7 @@ export default function SideBar({ buttonStyle }: { buttonStyle: string }) {
         ml: '0.75vh',
         ':hover': {
             bgcolor: '#673AB7',
-            color: 'white',
+            color: 'white'
             
         }
     }
@@ -46,27 +47,27 @@ export default function SideBar({ buttonStyle }: { buttonStyle: string }) {
                     <AccountCircle sx={{ fontSize: '9.0vh' }} />
                 </Box>
                 <Box>
-                    <Box onClick={() => navigate('/materials')} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)}>
+                    <Box onClick={() => { navigate('/materials') }} sx={buttonStyle !== 'Materials' ? (notStylized) : (Stylized)}>
                         <MenuBook sx={{ fontSize: '5.5vh' }} />
                     </Box>
                 </Box>
                 <Box>
-                    <Box onClick={() => navigate('/Chat')} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
+                    <Box onClick={() => { navigate('/Chat') }} sx={buttonStyle !== 'Chat' ? (notStylized) : (Stylized)}>
                         <Chat sx={{ fontSize: '5.5vh' }} />
                     </Box>
                 </Box>
                 <Box>
-                    <Box onClick={() => navigate('/Classes')} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
+                    <Box onClick={() => { navigate('/Classes') }} className='Classes' sx={buttonStyle !== 'Classes' ? (notStylized) : (Stylized)}>
                         <Groups sx={{ fontSize: '5.5vh' }} />
                     </Box>
                 </Box>
                 <Box>
-                    <Box onClick={() => navigate('/Favorites')} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
+                    <Box onClick={() => { navigate('/Favorites') }} sx={buttonStyle !== 'Favorites' ? (notStylized) : (Stylized)}>
                         <Bookmark sx={{ fontSize: '5.5vh' }} />
                     </Box>
                 </Box>
                 <Box>
-                    <Box onClick={() => navigate('/News')} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
+                    <Box onClick={() => { navigate('/News') }} sx={buttonStyle !== 'News' ? (notStylized) : (Stylized)}>
                         <Newspaper sx={{ fontSize: '5.5vh' }} />
                     </Box>
                 </Box>
@@ -76,9 +77,7 @@ export default function SideBar({ buttonStyle }: { buttonStyle: string }) {
                     </Box>
                 </Box>
 
-
             </Box>
-
 
         </Box>
     )

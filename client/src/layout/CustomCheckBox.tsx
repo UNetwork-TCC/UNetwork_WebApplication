@@ -1,5 +1,6 @@
 import { Box, Checkbox, FormControl, FormHelperText, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
+import { type ReactElement } from 'react'
 
 // declare FormControl {
 //     new (props: any): FormControl
@@ -15,7 +16,7 @@ export default function CustomCheckBox({
     title: string,
     checked: boolean,
     onClick: () => void
-}) {
+}): ReactElement {
     const Form: any = FormControl
     const CheckBox: any = Checkbox
 

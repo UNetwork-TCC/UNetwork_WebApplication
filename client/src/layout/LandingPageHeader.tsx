@@ -1,7 +1,6 @@
- 
 import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material'
 import { DarkMode, LightMode } from '@mui/icons-material'
-import { useContext } from 'react'
+import { type ReactElement, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { darkTheme, lightTheme } from '$themes'
@@ -11,14 +10,14 @@ import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
 import { useTranslation } from 'react-i18next'
 
-export default function LandingPageHeader() {
+export default function LandingPageHeader(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
     const classes = useStyles(theme)
     const navigate = useNavigate()
 
     const { t } = useTranslation()
 
-    function StyledLink({ name } : { name: string }) {
+    function StyledLink({ name } : { name: string }): ReactElement {
         return (
             <MuiLink className={`${classes.navLinks}`} href={`#${name}`}>
                 <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>
@@ -26,7 +25,7 @@ export default function LandingPageHeader() {
         )
     }
 
-    const setAppTheme = () => {
+    const setAppTheme = (): void => {
         if (theme.palette.mode === 'light')
             setTheme(darkTheme)
         else
@@ -41,7 +40,7 @@ export default function LandingPageHeader() {
             position='sticky'
             p={2.5}
         >
-            <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Box onClick={() => { navigate('/') }} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 { theme?.palette.mode === 'light' ?
                     <img width={75} height={75} src={logo} alt="Logo" />
                     :                    
@@ -57,8 +56,8 @@ export default function LandingPageHeader() {
             </Box>
             <Box display='flex' height='100%'>
                 <Box mr='25px'>
-                    <Button onClick={() => navigate('/auth/login')}>{t('nav.btn5')}</Button>
-                    <Button onClick={() => navigate('/auth/register')} sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'>{t('nav.btn6')}</Button>
+                    <Button onClick={() => { navigate('/auth/login') }}>{t('nav.btn5')}</Button>
+                    <Button onClick={() => { navigate('/auth/register') }} sx={{ borderRadius: '20px', marginLeft: '25px' }} variant='contained'>{t('nav.btn6')}</Button>
                 </Box>
                 {/* <Box height={40} border='1px solid'></Box> */}
                 <Divider sx={{ borderColor: 'tinyElements' }} orientation='vertical' flexItem />

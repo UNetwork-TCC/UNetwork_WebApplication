@@ -1,9 +1,10 @@
-import { Search } from "@mui/icons-material";
-import { AppLayout, CustomInput } from "$layout";
-import { Avatar, Box, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material";
+import { Search } from '@mui/icons-material'
+import { AppLayout, CustomInput } from '$layout'
+import { Avatar, Box, Stack, Typography } from '@mui/material'
+import { useTheme } from '@mui/material'
+import { type ReactElement } from 'react'
 
-export default function ForumPage() {
+export default function ForumPage(): ReactElement {
     const theme = useTheme()
 
     return (

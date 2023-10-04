@@ -6,13 +6,15 @@ const useChatPageStyles = makeStyles({
         color: '#673AB7',
         fontWeight: 'bold',
         marginRight: '5px',
-        marginTop: '5px',
+        marginTop: '5px'
     },
 
     titleContacts: {
-        fontSize:'3rem', color: '#673AB7', fontWeight: 'bold', marginRight: '5px'
-    },
-
+        fontSize: '3rem',
+        color: '#673AB7',
+        fontWeight: 'bold',
+        marginRight: '5px'
+    }
 })
 
 export default useChatPageStyles

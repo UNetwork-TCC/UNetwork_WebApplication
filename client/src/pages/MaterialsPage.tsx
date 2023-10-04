@@ -1,12 +1,12 @@
 import { Box, Button, Container, FormControl, Modal, TextField, Typography, useMediaQuery } from '@mui/material'
 
 import { File, FilterAndConfig, FolderMaterials } from '$components'
-import { useEffect, useState } from 'react'
+import { type ReactElement, useEffect, useState } from 'react'
 import { AppLayout, CustomCheckBox } from '$layout'
-import { material } from 'types/dataTypes'
+import { type material } from 'types/dataTypes'
 import { useTheme } from '@mui/material'
 
-export default function MaterialsPage() {
+export default function MaterialsPage(): ReactElement {
     const theme = useTheme()
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
@@ -31,10 +31,10 @@ export default function MaterialsPage() {
         private: false
     })
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const createMaterials = () => {
+    const createMaterials = (): void => {
         // ...
 
         if (MaterialsAttributes.visibility && MaterialsAttributes.title) {
@@ -49,14 +49,13 @@ export default function MaterialsPage() {
 
     useEffect(() => {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
-            const code: any = e.code
+            const code: string = e.code
 
-            if (code == 27) {
+            if (Number(code) === 27) {
                 handleClose()
             }
         })
     }, [])
-
 
     return (
         <AppLayout withSidebars>
@@ -74,7 +73,7 @@ export default function MaterialsPage() {
                         <FolderMaterials folderName={'teste'} />
                         <FolderMaterials folderName={'teste'} />
                         <FolderMaterials folderName={'teste'} />
-                        {Materials.map((e)=> (
+                        {Materials.map((e) => (
                             <FolderMaterials folderName={e.title} key={e.title} />
                         ))}
                     </Box>
@@ -108,7 +107,7 @@ export default function MaterialsPage() {
                     </Box>
                     <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
                         <TextField
-                            onChange={e => setMaterialsAttributes({ ...MaterialsAttributes, title: e.target.value })}
+                            onChange={e => { setMaterialsAttributes({ ...MaterialsAttributes, title: e.target.value }) }}
                             id="outline-basic"
                             label="Título"
                             value={MaterialsAttributes.title}

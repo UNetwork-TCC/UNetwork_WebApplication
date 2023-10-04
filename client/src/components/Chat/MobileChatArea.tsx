@@ -4,17 +4,18 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { Chat } from '..'
 import { Box, Divider, IconButton, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { type ReactElement } from 'react'
 
-export default function MobileChatArea() {
+export default function MobileChatArea(): ReactElement {
     return (
         <Box sx={{ height: '85vh', width: '60vw', display: 'flex', flexDirection: 'column', m: '5px 0' }}>
             <Box sx={{ height: '15vh', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pr: '20px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', ml: '0px' }}>
                     <IconButton >
-                        <AccountCircleIcon sx={{ fontSize: '50px', }} />
+                        <AccountCircleIcon sx={{ fontSize: '50px' }} />
                     </IconButton>
-                    <Box sx={{ ml: '5px', display: 'flex', flexDirection: 'column', }}>
-                        <Typography sx={{ fontSize: '15px', fontWeight: 'bold', color: 'black', m: '0', }}>Usuario XXX</Typography>
+                    <Box sx={{ ml: '5px', display: 'flex', flexDirection: 'column' }}>
+                        <Typography sx={{ fontSize: '15px', fontWeight: 'bold', color: 'black', m: '0' }}>Usuario XXX</Typography>
                         <Typography sx={{ fontSize: '12px' }}>last mensage</Typography>
                     </Box>
                 </Box>
@@ -34,7 +35,7 @@ export default function MobileChatArea() {
             <Box sx={{ height: '63vh' }}>
 
             </Box>
-            <Box sx={{ height: '9vh', display: 'flex', justifyContent: 'center', }}>
+            <Box sx={{ height: '9vh', display: 'flex', justifyContent: 'center' }}>
                 <Chat chatClass={{ name: 'b' }} />
             </Box>
             

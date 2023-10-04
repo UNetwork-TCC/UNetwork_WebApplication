@@ -5,8 +5,9 @@ import ComunityFeature from '$assets/img/Home/ComunityFeature_Shadow.png'
 import Image from 'mui-image'
 import ComunityFeatureVideo from '$assets/video/ComunityFeatureVideo.mp4'
 import { useTranslation } from 'react-i18next'
+import { type ReactElement } from 'react'
 
-export default function ComunitySection() {
+export default function ComunitySection(): ReactElement {
     const theme = useTheme()
 
     const { t } = useTranslation()

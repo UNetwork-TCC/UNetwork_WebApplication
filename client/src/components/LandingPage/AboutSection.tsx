@@ -3,8 +3,9 @@ import { CustomDivider, Topic } from '$layout'
 import { AnimateOnScroll } from '$components'
 import { Diversity3, Forum, Newspaper } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
+import { type ReactElement } from 'react'
 
-export default function AboutSection() {
+export default function AboutSection(): ReactElement {
     
     const { t } = useTranslation()
 

@@ -1,9 +1,9 @@
 import { Box, IconButton, MenuItem, Paper, Typography } from '@mui/material'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { CustomMenu } from '$layout'
-import { useState } from 'react'
+import { type ReactElement, useState } from 'react'
 
-export default function FolderMaterials({ folderName } : { folderName: string }) {
+export default function FolderMaterials({ folderName } : { folderName: string }): ReactElement {
 
     const onClickEvents = {
         item1: () => {
@@ -22,9 +22,9 @@ export default function FolderMaterials({ folderName } : { folderName: string })
 
     const open = Boolean(anchorEl)
 
-    const handleClick = (e: any, elements: string[], onClickEvents = elements.map(() => handleClose), icons = null) => {
-        const mapedElements: Array<React.ReactNode> = elements.map((e, i) =>
-            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
+    const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
+        const mapedElements: React.ReactNode[] = elements.map((el, i) =>
+            <MenuItem onClick={onClickEventListeners[i]} key={i} disableRipple>{icons?.[i]}{el}</MenuItem>
         )
 
         setMenuContent(mapedElements)
@@ -32,23 +32,21 @@ export default function FolderMaterials({ folderName } : { folderName: string })
         setAnchorEl(e.currentTarget)
     }
 
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+    const handleClose = (): void => { setAnchorEl(null) }
 
     return (
         <>
             <Paper elevation={6} sx={{
                 margin: '0 0 0 0px', display: 'flex', flexDirection: 'column', bgcolor: 'white', width: '15rem', height: '12rem',
-                borderRadius: '.6vh',
+                borderRadius: '.6vh'
             }}>
                 <Box 
                     onClick={
-                        e => handleClick(e, 
+                        e => { handleClick(e, 
                             [ 'Baixar', 'Compartilhar', 'Favoritar', 'Renomear', 'Arquivar', 'Excluir' ],
-                            [ onClickEvents.item1, onClickEvents.item2 ],
+                            [ onClickEvents.item1, onClickEvents.item2 ]
                             
-                        )
+                        ) }
                     }
                     display='flex' 
                     height='3rem' 

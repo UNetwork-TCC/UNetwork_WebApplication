@@ -1,5 +1,6 @@
-import { Box, SxProps } from '@mui/material'
+import { Box, type SxProps } from '@mui/material'
 import { grey } from '@mui/material/colors'
+import { type ReactElement } from 'react'
 
 export default function SideBar({
     children,
@@ -9,9 +10,9 @@ export default function SideBar({
     children: React.ReactNode,
     sx?: SxProps,
     width?: string | number
-}) {
+}) : ReactElement {
     return (
-        <Box position='sticky' display='flex' alignItems='start' sx={sx} height='100%' width={width || '15%'}>
+        <Box position='sticky' display='flex' alignItems='start' sx={sx} height='100%' width={width ?? '15%'}>
             <Box p={5} width='100%'>
                 {children}
             </Box>

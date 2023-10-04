@@ -1,12 +1,11 @@
 import { Avatar, Box, Typography, useTheme } from '@mui/material'
-import { useState } from 'react'
-export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: string, avatar?: string, postedAt: Date, id: string | number }) {
+import { type ReactElement, useState } from 'react'
+export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: string, avatar?: string, postedAt: Date, id: string | number }): ReactElement {
     const theme: any = useTheme()
 
+    const [ , setOpen ] = useState<boolean>(false)
 
-    const [ _, setOpen ] = useState<boolean>(false)
-
-    const handleOpen = () => setOpen(true)
+    const handleOpen = (): void => { setOpen(true) }
     // const handleClose = () => setOpen(false)
 
     const border = '5px'
@@ -24,10 +23,14 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     position: 'relative',
                     padding: '2rem',
                     boxSizing: 'border-box',
-                    background: '#000',
                     backgroundClip: 'padding-box',
-                    border: `solid ${border} transparent`,
-                    borderRadius: '100%'
+                    borderRadius: '100%',
+                    cursor: 'pointer',
+                    transition: 'ease-in-out .3s'
+                },
+
+                '&:hover': {
+                    transform: 'scale(1.1)'
                 },
 
                 '&::before': {
@@ -43,7 +46,7 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     background: `linear-gradient(120deg, ${theme.palette.secondary.main}, ${theme.palette.contrast.main})`
                 }           
             }}>
-                <Avatar sx={{ height: '4.1rem', width: '4.1rem',  position: 'relative', bottom: 33, fontSize: '1.5rem' }}>
+                <Avatar sx={{ height: '4.2rem', width: '4.2rem',  position: 'relative', bottom: { lg: 25.5, xl: 33 }, fontSize: '1.5rem' }}>
                     { !avatar ?
                         String(postedBy).charAt(0).toUpperCase()
                         :

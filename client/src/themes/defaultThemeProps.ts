@@ -1,6 +1,6 @@
 import { grey } from '@mui/material/colors'
 
-const defaultThemeProps = {
+const defaultThemeProperties = {
     typography: {
         fontFamily: '\'Public Sans\', sans-serif'
     },
@@ -32,7 +32,7 @@ const defaultThemeProps = {
             styleOverrides: {
                 root: {
                     textDecoration: 'none',
-                    color: 'primary.main',
+                    color: 'primary.main'
                 }
             }
         },
@@ -44,13 +44,13 @@ const defaultThemeProps = {
                 html: {
                     '@media (max-width:1535.95px)': {
                         fontSize: '12px'
-                    },
+                    }
                 },
 
                 // Custom Scrollbar
 
                 body: {
-                    backgroundColor: '#fafafa',
+                    backgroundColor: '#fafafa'
                 },
 
                 '::-webkit-scrollbar': {
@@ -67,11 +67,11 @@ const defaultThemeProps = {
                 },
 
                 '::-webkit-scrollbar-thumb:hover': {
-                    background: '#555',
+                    background: '#555'
                 }
             }
         }
     }
 }
 
-export default defaultThemeProps
+export default defaultThemeProperties

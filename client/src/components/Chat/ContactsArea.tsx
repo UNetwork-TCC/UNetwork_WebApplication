@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
-import React from 'react'
+import React, { type ReactElement } from 'react'
 
-export default function ContactsArea({ children } : { children: React.ReactNode }) {
+export default function ContactsArea({ children } : { children: React.ReactNode }): ReactElement {
     return (
         <Box position='sticky' display='flex' alignItems='start' height='96%' maxHeight='99%' width='30%' sx={{ pt: '2%', 
         // overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' }, overflowX:'hidden', 

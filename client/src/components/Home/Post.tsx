@@ -1,6 +1,6 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, } from '@mui/icons-material'
+import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert } from '@mui/icons-material'
 import { Avatar, Box, Card, IconButton, MenuItem, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { type ReactElement, useState } from 'react'
 import { CustomMenu } from '$layout'
 
 export default function Post({ 
@@ -17,7 +17,7 @@ export default function Post({
     degree?: string,
     img?: string,
     user: { name: string, avatar?: string }
-}) {
+}) : ReactElement {
 
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
 
@@ -40,9 +40,9 @@ export default function Post({
 
     const open = Boolean(anchorEl)
 
-    const handleClick = (e: any, elements: string[], onClickEvents = elements.map(() => handleClose), icons = null) => {
-        const mapedElements: React.ReactNode[] = elements.map((e, i) =>
-            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
+    const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
+        const mapedElements: React.ReactNode[] = elements.map((el, i) =>
+            <MenuItem onClick={onClickEventListeners[i]} key={i} disableRipple>{icons?.[i]}{el}</MenuItem>
         )
 
         setMenuContent(mapedElements)
@@ -50,15 +50,12 @@ export default function Post({
         setAnchorEl(e.currentTarget)
     }
 
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+    const handleClose = (): void => { setAnchorEl(null) }
 
     return (
         <Card variant="elevation" elevation={2} sx={{
             minHeight: '15rem',
             width: '100%',
-            backgroundColor: '#fff',
             borderRadius: '20px',
             display: 'flex',
             alignItems: 'center',
@@ -66,7 +63,7 @@ export default function Post({
             mb: '3em'
         }}>
             <Box sx={{ width: '100%', height: '100%' }} pt={6} pb={6} pl={4} pr={4}>
-                <Box mb={2.5} sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
+                <Box mb={2.5} sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Box height='5.6em'>
                             <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
@@ -82,16 +79,15 @@ export default function Post({
                         </Box>
                         <Box sx={{ ml: '1rem' }}>
                             <Typography sx={{ fontSize: '2em' }}>{user?.name}</Typography>
-                            <Typography sx={{ color: 'gray', fontSize: '1.7em' }}>{date}</Typography>
+                            <Typography sx={{ color: 'gray', fontSize: '1.7em' }}>{date.toString()}</Typography>
                         </Box>
                     </Box>
                     <IconButton onClick={
-                        e => handleClick(e, 
-                            [ 'Salvar', 'Favoritar', 'Seguir/Deseguir', 'Sobre esta conta', 'Ocultar', 'Denunciar', ],
-                            [ onClickEvents.item1, onClickEvents.item2 ],
-                            
+                        e => { handleClick(e, 
+                            [ 'Salvar', 'Favoritar', 'Seguir/Deseguir', 'Sobre esta conta', 'Ocultar', 'Denunciar' ],
+                            [ onClickEvents.item1, onClickEvents.item2 ]
                     
-                        )
+                        ) }
                     }>
                         <MoreVert sx={{ fontSize: '1.2em' }} />
                     </IconButton>
@@ -111,21 +107,21 @@ export default function Post({
                 </Box>
                 <Box display='flex' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
                     <Box display='flex' gap={2}>
-                        <Avatar variant={variant}>
-                            <IconButton onClick={() => setFavoriteCLicked(val => !val)}>
+                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                            <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
                                 {favoriteClicked ?
-                                    <Favorite sx={{ color: 'red', }} /> :
+                                    <Favorite sx={{ color: 'red' }} /> :
                                     <FavoriteBorder/>
                                 }
                             </IconButton>
                         </Avatar>
-                        <Avatar variant={variant}>
+                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
                             <IconButton>
                                 <ChatBubbleRounded />
                             </IconButton>
                         </Avatar>
 
-                        <Avatar variant={variant}>
+                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
                             <IconButton>
                                 <Reply sx={{ transform: 'scaleX(-1)' }} />
                             </IconButton>
@@ -142,7 +138,7 @@ export default function Post({
                             <Avatar sx={{ borderRadius: 3.5, position: 'relative', right: '.75em', zIndex: 2 }} variant='rounded'>
 
                             </Avatar>
-                            <Avatar sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1 }} variant={variant}>
+                            <Avatar sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }} variant={variant}>
                                 +11
                             </Avatar>
                         </Box>

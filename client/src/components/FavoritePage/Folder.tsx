@@ -1,6 +1,7 @@
 import { Folder as FolderIcon } from '@mui/icons-material'
 import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material'
 import { grey } from '@mui/material/colors'
+import { type ReactElement } from 'react'
 
 function Folder({
     title,
@@ -8,7 +9,7 @@ function Folder({
 }: {
     title: string,
     subtitle: string
-}) {
+}) : ReactElement {
     if (title.length >= 9) {
         title = title.substring(13, 0) + '...'
     }

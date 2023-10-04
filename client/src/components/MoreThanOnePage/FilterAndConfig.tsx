@@ -2,8 +2,8 @@
 import { FilterList } from '@mui/icons-material'
 import { Box, IconButton, MenuItem, Stack } from '@mui/material'
 import { CustomMenu } from '$layout'
-import React, { useState } from 'react'
-export default function FilterAndConfig({ text, handleOpen }: { text: string, handleOpen: any }) {
+import { type ReactElement, useState } from 'react'
+export default function FilterAndConfig({ text, handleOpen }: { text: string, handleOpen: any }): ReactElement {
     
     const onClickEvents = {
         item1: () => {
@@ -17,14 +17,14 @@ export default function FilterAndConfig({ text, handleOpen }: { text: string, ha
         }
     }
 
-    const [ anchorEl, setAnchorEl ] = useState<React.ReactNode>(null)
-    const [ menuContent, setMenuContent ] = useState<Array<{}>>([])
+    const [ anchorEl, setAnchorEl ] = useState(null)
+    const [ menuContent, setMenuContent ] = useState<ReactElement[]>([])
 
     const open = Boolean(anchorEl)
 
-    const handleClick = (e: React.ReactNode | any, elements: Array<any>, onClickEvents = elements.map(() => handleClose), icons = null) => {
-        const mapedElements = elements.map((e: any, i: number) =>
-            <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
+    const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
+        const mapedElements = elements.map((el, i) =>
+            <MenuItem onClick={onClickEventListeners[i]} key={i} disableRipple>{icons?.[i]}{el}</MenuItem>
         )
 
         setMenuContent(mapedElements)
@@ -32,20 +32,18 @@ export default function FilterAndConfig({ text, handleOpen }: { text: string, ha
         setAnchorEl(e.currentTarget)
     }
 
-    const handleClose = () => {
-        setAnchorEl(null)
-    }
+    const handleClose = (): void => { setAnchorEl(null) }
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Stack sx={{ display:'flex', flexDirection:'row' }} gap={3}>
                 <IconButton
                     onClick={
-                        e => handleClick(e, 
+                        e => { handleClick(e, 
                             [ 'Ordem A-Z', 'Ordem Z-A', 'Recentes', 'Antigas' ],
-                            [ onClickEvents.item1, onClickEvents.item2 ],
+                            [ onClickEvents.item1, onClickEvents.item2 ]
                         
-                        )
+                        ) }
                     }
                 >
                     <FilterList sx={{ cursor: 'pointer', fontSize: '2rem' ,':hover': { color: 'text.secondary' } }} />
@@ -74,7 +72,6 @@ export default function FilterAndConfig({ text, handleOpen }: { text: string, ha
                 {menuContent}
             </CustomMenu>
         </Box>
-
 
     )
 }

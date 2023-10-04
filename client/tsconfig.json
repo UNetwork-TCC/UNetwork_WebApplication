@@ -44,6 +44,6 @@
       "$store": ["store.ts"],
     }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", ".eslintrc.json", "vite.config.ts"],
+  "references": [{ "path": "./tsconfig.json" }]
 }

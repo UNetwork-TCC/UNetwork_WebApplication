@@ -1,13 +1,13 @@
-import { Box, Button, Container, Divider, FormControl, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, TextField, Typography, } from '@mui/material'
+import { Box, Button, Container, Divider, FormControl, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, TextField, Typography } from '@mui/material'
 
 // import { useTheme } from '@emotion/react'
 import { AppLayout, CustomCheckBox, CustomCarousel } from '$layout'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Classes, FilterAndConfig } from '$components'
-import { useEffect, useState } from 'react'
-import { class_ } from '$types'
+import { type ReactElement, useEffect, useState } from 'react'
+import { type class_ } from '$types'
 
-export default function ClassesPage() {
+export default function ClassesPage(): ReactElement {
     // const theme = useTheme()
 
     const [ typeForm, setTypeForm ] = useState('Create')
@@ -34,10 +34,10 @@ export default function ClassesPage() {
         private: false
     })
 
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const createClass = () => {
+    const createClass = (): void => {
         // ...
 
         if (ClassAttributes.visibility && ClassAttributes.title) {
@@ -52,9 +52,9 @@ export default function ClassesPage() {
 
     useEffect(() => {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
-            const code: any = e.code
+            const code: string = e.code
 
-            if (code == 27) {
+            if (Number(code) === 27) {
                 handleClose()
             }
         })
@@ -62,7 +62,7 @@ export default function ClassesPage() {
 
     const [ showPassword, setShowPassword ] = useState(false)
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show)
+    const handleClickShowPassword = (): void => { setShowPassword((show) => !show) }
 
     return (
         <AppLayout withSidebars>
@@ -94,15 +94,40 @@ export default function ClassesPage() {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{  width: '35vw', bgcolor: 'background.paper', }} borderRadius={2} >
+                <Box p={1} sx={{  width: '35vw', bgcolor: 'background.paper' }} borderRadius={2} >
                     <Box p={0} sx={{ display: 'flex', width: '100%' }}>
-                        <Button sx={{ width: '45%', ':hover': { cursor: 'pointer', bgcolor: 'whitesmoke' }, m: '0 5%', textAlign: 'center', borderRadius: '0.5rem', color: 'black', }} onClick={() => setTypeForm('Create')}>
+                        <Button 
+                            onClick={() => { setTypeForm('Create') }}
+                            sx={{ width: '45%',
+                                ':hover': { 
+                                    cursor: 'pointer',
+                                    bgcolor: 'whitesmoke' 
+                                },
+                                m: '0 5%',
+                                textAlign: 'center',
+                                borderRadius: '0.5rem',
+                                color: 'black' 
+                            }} 
+                        >
                             <Typography id="modal-modal-title" sx={{ fontSize: '1.2rem' }} m={'1rem'}>
                                 Criar Classe
                             </Typography>
                         </Button>
                         <Divider orientation='vertical' flexItem sx={{}} />
-                        <Button sx={{ width: '45%', ':hover': { cursor: 'pointer', bgcolor: 'whitesmoke' }, m: '0 5%', textAlign: 'center', borderRadius: '0.5rem', color: 'black', }} onClick={() => setTypeForm('Join')}>
+                        <Button 
+                            onClick={() => { setTypeForm('Join') }}
+                            sx={{ 
+                                width: '45%',
+                                ':hover': { 
+                                    cursor: 'pointer',
+                                    bgcolor: 'whitesmoke' 
+                                },
+                                m: '0 5%',
+                                textAlign: 'center',
+                                borderRadius: '0.5rem',
+                                color: 'black' 
+                            }}
+                        > 
                             <Typography id="modal-modal-title" sx={{ fontSize: '1.2rem' }} m={'1rem'}>
                                 Ingressar
                             </Typography>
@@ -111,7 +136,7 @@ export default function ClassesPage() {
                     {typeForm === 'Create' ? (
                         <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
                             <TextField
-                                onChange={e => setClassAttributes({ ...ClassAttributes, title: e.target.value })}
+                                onChange={e => { setClassAttributes({ ...ClassAttributes, title: e.target.value }) }}
                                 id="outline-basic"
                                 label="Título"
                                 value={ClassAttributes.title}
@@ -140,11 +165,11 @@ export default function ClassesPage() {
                                     title='Privado'
                                 />
 
-                                {checkedButtons.private === true && (
+                                {checkedButtons.private && (
                                     <FormControl fullWidth variant="outlined">
                                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                         <OutlinedInput
-                                            onChange={e => setClassAttributes({ ...ClassAttributes, setPassword: e.target.value })}
+                                            onChange={e => { setClassAttributes({ ...ClassAttributes, setPassword: e.target.value }) }}
                                             value={ClassAttributes.setPassword}
                                             id="outlined-adornment-password"
                                             type={showPassword ? 'text' : 'password'}
@@ -180,7 +205,7 @@ export default function ClassesPage() {
                                 <Box display={'flex'} flexDirection={'column'} gap={2}>
                                     <Typography>Adicionar codigo da Classe</Typography>
                                     <TextField
-                                        onChange={e => setClassAttributes({ ...ClassAttributes, code: e.target.value })}
+                                        onChange={e => { setClassAttributes({ ...ClassAttributes, code: e.target.value }) }}
                                         id="outline-basic"
                                         label="Código"
                                         value={ClassAttributes.code}
@@ -193,7 +218,7 @@ export default function ClassesPage() {
                                     <FormControl fullWidth variant="outlined">
                                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                         <OutlinedInput
-                                            onChange={e => setClassAttributes({ ...ClassAttributes, getPassword: e.target.value })}
+                                            onChange={e => { setClassAttributes({ ...ClassAttributes, getPassword: e.target.value }) }}
                                             value={ClassAttributes.getPassword}
                                             id="outlined-adornment-password"
                                             type={showPassword ? 'text' : 'password'}

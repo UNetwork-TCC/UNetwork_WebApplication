@@ -47,5 +47,5 @@ export {
     Clips,
     BigNews,
     News,
-    FilterAndConfig,
+    FilterAndConfig
 }

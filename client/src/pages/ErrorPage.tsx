@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import topDecoration from '$assets/svg/Error/TopDecoration.svg'
 import bottomDecoration from '$assets/svg/Error/BottomDecoration.svg'
 import errorSvg from '$assets/svg/Error/ErrorSvg.svg'
+import { type ReactElement } from 'react'
 
-function ErrorPage() {
+function ErrorPage(): ReactElement {
     const navigate = useNavigate()
 
     return (
@@ -38,7 +39,12 @@ function ErrorPage() {
                             <Typography m={1} variant="h5">Você pode ficar e relaxar aqui ou voltar ao começo.</Typography>
                         </Box>
                         <Box>
-                            <Button onClick={() => navigate('/app')} sx={{ marginLeft: '8px', marginTop: '25px', borderRadius: '15px' }} variant="contained">Volte para o início</Button>
+                            <Button 
+                                onClick={() => { navigate('/app') }} sx={{ marginLeft: '8px', marginTop: '25px', borderRadius: '15px' }}
+                                variant="contained"
+                            >
+                                Volte para o início
+                            </Button>
                         </Box>
                     </Box>
                 </Box>

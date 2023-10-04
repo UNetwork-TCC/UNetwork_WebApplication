@@ -15,19 +15,18 @@ import AppLayout from './AppLayout'
 import Clip from './Clip'
 import ThemeStore from './ThemeStore'
 
-
-export { 
-    LandingPageHeader, 
-    LoadingBackdrop, 
-    Layout, 
-    Footer, 
-    Header, 
-    CustomDivider, 
-    Topic, 
+export {
+    LandingPageHeader,
+    LoadingBackdrop,
+    Layout,
+    Footer,
+    Header,
+    CustomDivider,
+    Topic,
     SideBar,
     ThemeStore,
-    CustomMenu, 
-    Clip, 
+    CustomMenu,
+    Clip,
     AppLayout,
     CustomCheckBox,
     CustomLink,

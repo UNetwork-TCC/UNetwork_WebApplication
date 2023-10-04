@@ -1,6 +1,6 @@
-import { createContext } from "react"
+import { createContext } from 'react'
 
-export const appLayout: { leftSideBar: boolean, rightSideBar: boolean } = {
+export const appLayout: { leftSideBar: boolean; rightSideBar: boolean } = {
     leftSideBar: true,
     rightSideBar: true
 }

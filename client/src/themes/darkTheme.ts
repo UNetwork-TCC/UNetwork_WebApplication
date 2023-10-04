@@ -1,47 +1,47 @@
 import { createTheme, responsiveFontSizes } from '@mui/material'
-import defaultThemeProps from './defaultThemeProps'
+import defaultThemeProperties from './defaultThemeProps'
 import { grey } from '@mui/material/colors'
 
 let darkTheme = createTheme({
     palette: {
         mode: 'dark',
-        
+
         background: {
             paper: '#303030',
-            card: grey[900],
+            card: grey[900]
         },
 
         primary: {
             main: '#d1c4e9',
             light: '#311b92',
-            dark: '#673ab7',
+            dark: '#673ab7'
         },
 
         secondary: {
             main: '#b2ebf2',
             light: '#006064',
-            dark: '#00bcd4',
+            dark: '#00bcd4'
         },
 
         contrast: {
             main: '#f8bbd0',
             light: '#ad1467',
-            dark: '#e91e63',
+            dark: '#e91e63'
         },
 
-        tinyElements: 'rgba(255, 255, 255, 0.38)',
+        tinyElements: 'rgba(255, 255, 255, 0.38)'
     },
 
     typography: {
-        ...defaultThemeProps.typography
+        ...defaultThemeProperties.typography
     },
 
     components: {
-        ...defaultThemeProps.components,
+        ...defaultThemeProperties.components,
 
         MuiCssBaseline: {
             styleOverrides: {
-                ...defaultThemeProps.components.MuiCssBaseline.styleOverrides,
+                ...defaultThemeProperties.components.MuiCssBaseline.styleOverrides,
 
                 '::-webkit-scrollbar-track:': {
                     background: '#303030'
@@ -65,7 +65,7 @@ let darkTheme = createTheme({
             styleOverrides: {
                 root: {
                     textDecoration: 'none',
-                    color: 'primary.main',
+                    color: 'primary.main'
                 }
             }
         }

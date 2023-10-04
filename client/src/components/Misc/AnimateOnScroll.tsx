@@ -1,6 +1,6 @@
- 
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box } from '@mui/material'
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
+import React, { type MutableRefObject, useEffect, useRef, useState, type ReactElement } from 'react'
 import { Animation } from 'react-animate-style'
 
 export default function AnimateOnScroll({
@@ -17,8 +17,8 @@ export default function AnimateOnScroll({
     duration?: number,
     style?: React.CSSProperties,
     animateOnce?: boolean
-}) {
-    const animationDelay = delay ? delay : 0
+}) : ReactElement {
+    const animationDelay = delay ?? 0
     const ref: MutableRefObject<React.ReactNode | any> = useRef()
     const [ isVisible, setIsVisible ] = useState(false)
 
@@ -44,11 +44,16 @@ export default function AnimateOnScroll({
 
     useEffect(() => {
         observer.observe(ref.current)
-    }, [])
+    }, [ observer ])
 
     return (
         <Box visibility='hidden' ref={ref}>
-            <Animation className={isVisible ? `animate__animated animate__${animation}` : ''} style={{ display: 'flex', ...style }} isVisible animationInDuration={duration} animationInDelay={animationDelay}>
+            <Animation 
+                className={isVisible ? `animate__animated animate__${animation}` : ''} style={{ display: 'flex', ...style }}
+                isVisible 
+                animationInDuration={duration} 
+                animationInDelay={animationDelay}
+            >
                 {children}
             </Animation>
         </Box>

@@ -1,5 +1,5 @@
 import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
-import { useState } from 'react'
+import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop } from '$layout'
 // import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
@@ -10,7 +10,7 @@ import * as Yup from 'yup'
 import { useAppDispatch } from '$store'
 import { useNavigate } from 'react-router-dom'
 
-function LoginForm() {
+function LoginForm(): ReactElement {
     const validationSchema = Yup.object().shape({
         email: Yup.string().required('Este campo é obrigatório'),
         password: Yup.string().required('Este campo é obrigatório')
@@ -21,10 +21,10 @@ function LoginForm() {
 
     const [ openLoading, setOpenLoading ] = useState(false)
 
-    const handleOpenLoading = () => setOpenLoading(true)
-    const handleCloseLoading = () => setOpenLoading(false)
+    const handleOpenLoading = (): void => { setOpenLoading(true) }
+    const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    const handleSubmit = async (user: { email: string, password: string }) => {
+    const handleSubmit = (user: { email: string, password: string }): void => {
         handleOpenLoading()
         // localStorage.setItem('user', 1)
 
@@ -84,7 +84,7 @@ function LoginForm() {
     )
 }
 
-function LoginSide() {
+function LoginSide(): ReactElement {
     return (
         <Box width='100%'>
             <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
@@ -96,7 +96,7 @@ function LoginSide() {
     )
 }
 
-export default function Login() {
+export default function Login(): ReactElement {
     return (
         <Auth formTitle='Log in' form={<LoginForm />} side={<LoginSide />} />
     )

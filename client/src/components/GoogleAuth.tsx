@@ -1,13 +1,13 @@
-import { GoogleLogin, GoogleLoginResponse } from 'react-google-login'
+import { GoogleLogin, type GoogleLoginResponse } from 'react-google-login'
 import { GOOGLE_CLIENT_ID } from '../constants'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import googleLogo from '../assets/svg/Auth/GoogleLogo.svg'
 import { IconButton } from '@mui/material'
-import { useEffect } from 'react'
+import { type ReactElement, useEffect } from 'react'
 import { gapi } from 'gapi-script'
 
-export default function GoogleAuth() {
+export default function GoogleAuth(): ReactElement {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const googleSuccess: any = (res: GoogleLoginResponse) => {
@@ -27,7 +27,7 @@ export default function GoogleAuth() {
         }
     }
 
-    const googleFailure = (error: any) => {
+    const googleFailure = (error: any): void => {
         console.log(error)
         console.log('Não foi possível logar com a Google. Tente novamente mais tarde.')
     }

@@ -1,11 +1,11 @@
-import { Box, SxProps } from '@mui/material'
+import { Box, type SxProps } from '@mui/material'
 import { themeContext } from '$contexts'
-import { useContext } from 'react'
+import { type ReactElement, useContext } from 'react'
 
-export default function CustomDivider({ sx } : { sx?: SxProps }) {
+export default function CustomDivider({ sx } : { sx?: SxProps }): ReactElement {
     const { theme } = useContext(themeContext)
 
-    const borderTheme = () => {
+    const borderTheme = (): string => {
         if (theme.palette.mode === 'light')
             return `${theme.palette.primary.main}99, ${theme.palette.secondary.main}99`
         else 

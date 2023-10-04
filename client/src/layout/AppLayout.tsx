@@ -1,8 +1,8 @@
-import { Avatar, Box, Stack, SxProps, Typography } from '@mui/material'
+import { Avatar, Box, Stack, type SxProps, Typography } from '@mui/material'
 import { useStyles } from '../styles'
 import { Header, LoadingBackdrop } from '.'
 import { Bookmark, ExpandLess, ExpandMore, Home, Message } from '@mui/icons-material'
-import { CSSProperties, useState } from 'react'
+import React, { type CSSProperties, useState, type ReactElement } from 'react'
 import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import bg from '../assets/img/bg.jpg'
 import Shortcut from '../components/Home/Shortcut'
@@ -12,21 +12,21 @@ import Sidebar from './SideBar'
 
 import { useNavigate } from 'react-router-dom'
 import { user, userContext } from '../contexts/userContext'
-import { User } from '$types'
+import { type User } from '$types'
 
 export default function AppLayout({
     children,
     sx,
-    withSidebars 
-} : {
-    children: React.ReactNode,
-    sx?: SxProps,
+    withSidebars
+}: {
+    children: React.ReactNode
+    sx?: SxProps
     withSidebars?: boolean
-}) {
+}): ReactElement {
     const classes = useStyles()
 
     const [ userData, setUserData ] = useState<User>(user)
-    const contextValue: any = { userData, setUserData }
+    const contextValue: { userData: User, setUserData: React.Dispatch<React.SetStateAction<User>> } = { userData, setUserData }
 
     const navigate = useNavigate()
 
@@ -39,13 +39,13 @@ export default function AppLayout({
     const contacts = 11
     const variant: any = 'iconWrapper'
 
-    const shortcutsExpand = () => setShortcutsExpanded(true)
-    const shortcutsCollapse = () => setShortcutsExpanded(false)
+    const shortcutsExpand = (): void => { setShortcutsExpanded(true) }
+    const shortcutsCollapse = (): void => { setShortcutsExpanded(false) }
 
-    const contactsExpand = () => setContactsExpanded(true)
-    const contactsCollapse = () => setContactsExpanded(false)
+    const contactsExpand = (): void => { setContactsExpanded(true) }
+    const contactsCollapse = (): void => { setContactsExpanded(false) }
 
-    const maximize = () => {
+    const maximize = (): void => {
         if (boxStyles.height === '100vh' || boxStyles.height === '200px') {
             setBoxStyles({
                 height: '95vh',
@@ -61,7 +61,7 @@ export default function AppLayout({
         }
     }
 
-    const minimize = () => {
+    const minimize = (): void => {
         setBoxStyles({
             height: '200px',
             width: '400px',
@@ -69,7 +69,7 @@ export default function AppLayout({
         })
     }
 
-    const close = () => {
+    const close = (): void => {
         setOpen(true)
 
         setTimeout(() => {
@@ -97,10 +97,10 @@ export default function AppLayout({
                             close={close}
                         />
                         <Box height='100%' display='flex' justifyContent='center' width='100%'>
-                            {withSidebars &&
+                            {(withSidebars ?? false) &&
                                 <Sidebar>
                                     <Stack width='100%' mb={5} gap={3}>
-                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app')}>
+                                        <Box className={classes.sideBarLinks} onClick={() => { navigate('/app') }}>
                                             <Avatar variant={variant}>
                                                 <Home />
                                             </Avatar>
@@ -108,7 +108,7 @@ export default function AppLayout({
                                                 Home
                                             </Typography>
                                         </Box>
-                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app/chat')}>
+                                        <Box className={classes.sideBarLinks} onClick={() => { navigate('/app/chat') }}>
                                             <Avatar variant={variant}>
                                                 <Message />
                                             </Avatar>
@@ -116,7 +116,7 @@ export default function AppLayout({
                                                 Conversas
                                             </Typography>
                                         </Box>
-                                        <Box className={classes.sideBarLinks} onClick={() => navigate('/app/favorites')}>
+                                        <Box className={classes.sideBarLinks} onClick={() => { navigate('/app/favorites') }}>
                                             <Avatar variant={variant}>
                                                 <Bookmark />
                                             </Avatar>
@@ -127,11 +127,12 @@ export default function AppLayout({
                                     </Stack>
                                     <Box>
                                         <Box color='text.secondary' display='flex' mb={3} gap={2}>
-                                            <Typography sx={{ userSelect: 'none' }} onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}>Seus atalhos ({shortcuts})</Typography>
-                                            {shortcutsExpanded ?
-                                                <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
-                                                :
-                                                <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
+                                            <Typography sx={{ userSelect: 'none' }} 
+                                                onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
+                                            >Seus atalhos ({shortcuts})</Typography>
+                                            {shortcutsExpanded
+                                                ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
+                                                : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
                                             }
                                         </Box>
                                         <Stack gap={3} sx={{ display: shortcutsExpanded ? 'flex' : 'none' }}>
@@ -144,20 +145,19 @@ export default function AppLayout({
                                     </Box>
                                 </Sidebar>
                             }
-                            <Box display='flex' justifyContent='center' overflow='auto' mb={13} width={withSidebars ? '80%' : '100%'}>
+                            <Box display='flex' justifyContent='center' overflow='auto' mb={13} width={(withSidebars ?? false) ? '80%' : '100%'}>
                                 {children}
                             </Box>
-                            {withSidebars &&
-                                <Sidebar sx={{ flexDirection: 'row-reverse', overflow:'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
+                            {(withSidebars ?? false) &&
+                                <Sidebar sx={{ flexDirection: 'row-reverse', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
                                     <Box color='text.secondary' display='flex' mb={3} gap={2}>
                                         <Typography sx={{ userSelect: 'none' }} onClick={contactsExpanded ? contactsCollapse : contactsExpand}>Contatos ({contacts})</Typography>
-                                        {contactsExpanded ?
-                                            <ExpandLess sx={{ cursor: 'pointer' }} onClick={contactsCollapse} />
-                                            :
-                                            <ExpandMore sx={{ cursor: 'pointer' }} onClick={contactsExpand} />
+                                        {contactsExpanded
+                                            ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={contactsCollapse} />
+                                            : <ExpandMore sx={{ cursor: 'pointer' }} onClick={contactsExpand} />
                                         }
                                     </Box>
-                                    <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none', }}>
+                                    <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none' }}>
                                         <Contact name='Leonardo' />
                                         <Contact name='Torugo' />
                                         <Contact name='Alfa' />
