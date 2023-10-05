@@ -1,16 +1,28 @@
 import { Box, Button, Container, Divider, FormControl, IconButton, InputAdornment, InputLabel, Modal, OutlinedInput, TextField, Typography } from '@mui/material'
 
 // import { useTheme } from '@emotion/react'
-import { AppLayout, CustomCheckBox, CustomCarousel } from '$layout'
+import { AppLayout, CustomCheckBox } from '$layout'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Classes, FilterAndConfig } from '$components'
-import { type ReactElement, useEffect, useState } from 'react'
+import { type ReactElement, useEffect, useState, ReactChild } from 'react'
+import img1 from '$assets/img/paraPiada/ciclo.jpg'
+import img2 from '$assets/img/paraPiada/james.jpg'
+import img3 from '$assets/img/paraPiada/roubo.jpg'
 import { type class_ } from '$types'
+import { Carousel } from 'react-responsive-carousel'
+import "react-responsive-carousel/lib/styles/carousel.min.css"
+
 
 export default function ClassesPage(): ReactElement {
     // const theme = useTheme()
 
     const [ typeForm, setTypeForm ] = useState('Create')
+
+    const arr: ReactChild[] = [
+        <img src={img1} />,
+        <img src={img2} />,
+        <img src={img3} />
+    ]
 
     // const matches = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -72,18 +84,29 @@ export default function ClassesPage(): ReactElement {
                     <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
                 </Container>
                 <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '2rem' }} >
-                    <Classes _class={{ name: 'Os lambisgoia' }} />
+                    {/* <Classes _class={{ name: 'Os lambisgoia' }} />
                     <Classes _class={{ name: 'Lar Ternura' }} />
                     <Classes _class={{ name: 'Fofoqueiros' }} />
                     <Classes _class={{ name: 'Maconheiros da paz e da guerra' }} />
                     <Classes _class={{ name: 'Os programadores' }} />
-                    <Classes _class={{ name: 'Os revoltados' }} />
-                    {_class.map(e => (
+                    <Classes _class={{ name: 'Os revoltados' }} /> */}
+                    {/* {_class.map(e => (
                         <Classes _class={{ name:e.title }}  key={e.title} />
-                    ))}
+                    ))} */}
+                    <Carousel  
+                        autoPlay
+                        centerMode
+                        infiniteLoop
+                        showIndicators={false}
+                        showStatus={false}
+                        showThumbs={false}
+                    >
+                        {arr}
+                    </Carousel> 
+                </Box>
+                <Box width='100%' height='30rem' display='flex' alignContent='center' alignItems='center'>
                     
                 </Box>
-                <CustomCarousel /> 
             </Box>
 
             <Modal

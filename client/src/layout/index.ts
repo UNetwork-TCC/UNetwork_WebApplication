@@ -10,7 +10,6 @@ import CustomMenu from './CustomMenu'
 import CustomLink from './CustomLink'
 import CustomCheckBox from './CustomCheckBox'
 import CustomInput from './CustomInput'
-import CustomCarousel from './CustomCarousel'
 import AppLayout from './AppLayout'
 import Clip from './Clip'
 import ThemeStore from './ThemeStore'
@@ -30,6 +29,5 @@ export {
     AppLayout,
     CustomCheckBox,
     CustomLink,
-    CustomInput,
-    CustomCarousel
+    CustomInput
 }
