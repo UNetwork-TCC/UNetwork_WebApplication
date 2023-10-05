@@ -26,7 +26,7 @@ export {
     SideBar,
     ThemeStore,
     CustomMenu,
-    Clip,
+    Clip as Clip,
     AppLayout,
     CustomCheckBox,
     CustomLink,

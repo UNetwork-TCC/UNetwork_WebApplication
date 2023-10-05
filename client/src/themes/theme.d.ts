@@ -3,13 +3,22 @@ import { type Theme, type ThemeOptions } from '@mui/material/styles'
 declare module '@mui/material' {
   interface CustomTheme extends Theme {
     background?: {
-      card?: any
+      card?: string
+    },
+
+    constrast?: {
+      main: string
     }
+
   }
 
   interface CustomThemeOptions extends ThemeOptions {
     background?: {
-      card?: any
+      card?: string
+    },
+
+    constrast?: {
+      main: string
     }
   }
 

@@ -44,19 +44,17 @@ export default function Home(): ReactElement {
                     />
                     <Box 
                         sx={{ 
-                            position: 'relative',
-                            width: '50px',
-                            bottom: { 
-                                lg: 45,
-                                xl: 47 
-                            },
-                            right: {
-                                lg: '5.25rem',
-                                xl: '4rem'
-                            },
                             display: 'flex',
                             justifyContent: 'end',
-                            alignItems: 'center' 
+                            alignItems: 'center', 
+                            position: 'relative',
+                            width: '50px',
+                            bottom: 47,
+                            right: '4rem',
+                            [theme.breakpoints.down('xl')]: {
+                                bottom: 44,
+                                right: '5.25rem'
+                            }
                         }}>
                         <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
                         <Avatar 

@@ -22,17 +22,25 @@ import BigNews from './News/BigNews'
 import News from './News/News'
 import FilterAndConfig from './MoreThanOnePage/FilterAndConfig'
 import AnimateOnScroll from './Misc/AnimateOnScroll'
+import ForumIcon from './Forum/ForumIcon' 
+import ForumWrapper from './Forum/ForumWrapper' 
+import Shortcut from './Home/Shortcut'
+import ClipComponent from './Home/ClipComponent';
 
 export {
     DiscoverSection,
     AboutSection,
+    ClipComponent,
     ComunitySection,
     ClipsWrapper,
+    ForumWrapper,
     Chat,
     LittleNews,
+    ForumIcon,
     Folder,
     SideBar,
     File,
+    Shortcut,
     Contact,
     Classes,
     Post,

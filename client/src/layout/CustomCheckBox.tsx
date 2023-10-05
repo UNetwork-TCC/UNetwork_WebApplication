@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControl, FormHelperText, Typography } from '@mui/material'
+import { Box, Checkbox, FormControl, FormHelperText, Typography, useTheme } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { type ReactElement } from 'react'
 
@@ -20,12 +20,14 @@ export default function CustomCheckBox({
     const Form: any = FormControl
     const CheckBox: any = Checkbox
 
+    const theme = useTheme()
+
     return (
         <Form
             component='label' 
             htmlFor={title} 
             label={title} 
-            sx={{ bgcolor: grey[100], m: 0, p: 1, mb: 1 }}
+            sx={{ bgcolor: theme.palette.mode === 'light' ? grey[100] : grey[800], m: 0, p: 1, mb: 1 }}
         >
             <Box display='flex' alignItems='center'> 
                 <CheckBox onClick={onClick} checked={checked} id={title}>{title}</CheckBox>
