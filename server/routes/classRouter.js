@@ -5,8 +5,8 @@ const router = Router()
 
 router.get('/', fetchClasses)
 router.get('/:id', getClassById)
-router.post('/create', createClass)
-router.patch('/:id/update', updateClass)
-router.delete('/:id/delete', deleteClass)
+router.post('/', createClass)
+router.patch('/:id', updateClass)
+router.delete('/:id', deleteClass)
 
 export default router 

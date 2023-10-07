@@ -7,9 +7,9 @@ const router = Router()
 router.get('/', checkToken, fetchUsers)
 router.get('/:id', checkToken, getUserById)
 router.get('/:id/followers', getFollowers)
-router.post('/create', createUser)
-router.delete('/:id/delete', checkToken, deleteUser)
-router.patch('/:id/update', checkToken, updateUser)
+router.post('/', createUser)
+router.delete('/:id/', checkToken, deleteUser)
+router.patch('/:id/', checkToken, updateUser)
 router.post('/login', loginUser)
 
 export default router

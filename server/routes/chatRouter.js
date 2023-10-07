@@ -4,9 +4,9 @@ import { createChat, deleteChat, fetchChats, getChatById, updateChat } from '../
 const router = Router()
 
 router.get('/', fetchChats)
+router.post('/', createChat)
 router.get('/:id', getChatById)
-router.delete('/:id/delete', deleteChat)
-router.patch('/:id/update', updateChat)
-router.post('/create', createChat)
+router.delete('/:id', deleteChat)
+router.patch('/:id', updateChat)
 
 export default router
