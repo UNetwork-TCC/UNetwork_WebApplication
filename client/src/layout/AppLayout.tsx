@@ -5,7 +5,7 @@ import { Bookmark, ExpandLess, ExpandMore, Home, KeyboardDoubleArrowLeft, Keyboa
 import React, { type CSSProperties, useState, type ReactElement } from 'react'
 import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import bg from '$assets/img/bg.jpg'
-import darkbg from '$assets/img/darkbg.png'
+import darkbg from '$assets/img/image.jpg'
 import { Shortcut, Contact } from '$components'
 import { SideBar } from '$layout'
 import { useNavigate } from 'react-router-dom'

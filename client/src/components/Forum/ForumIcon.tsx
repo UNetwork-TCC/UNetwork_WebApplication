@@ -1,6 +1,5 @@
 import { useState, type ReactElement } from 'react'
 import { Avatar, Box, FormHelperText, IconButton, Modal, Typography } from '@mui/material'
-import { Circle } from '@mui/icons-material'
 
 export default function ForumIcon({ name, topic, people, image: src } : { name: string, topic: string, people: number, image?: string }): ReactElement {
     const [ open, setOpen ] = useState(false)
@@ -27,9 +26,9 @@ export default function ForumIcon({ name, topic, people, image: src } : { name: 
                     </Avatar>
                 </IconButton>
                 <Box display='flex' justifyContent='center' flexDirection='column'>
-                    <Typography>{name}</Typography>
+                    <Typography>{name.charAt(0).toUpperCase() + name.slice(1)}</Typography>
                     <Box gap={1} display='flex'>
-                        <FormHelperText>{topic}</FormHelperText>
+                        <FormHelperText>{topic.charAt(0).toUpperCase() + topic.slice(1)}</FormHelperText>
                         <FormHelperText>•</FormHelperText>
                         <FormHelperText>{people + ' Pessoas estão nesta discussão'}</FormHelperText>
                     </Box>

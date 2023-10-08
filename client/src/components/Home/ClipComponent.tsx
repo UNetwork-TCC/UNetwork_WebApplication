@@ -12,7 +12,7 @@ export default function ClipComponent(): ReactElement {
             sx={{
                 height: '800px',
                 width: '400px',
-                bgcolor: 'background.paper',
+                bgcolor: 'background.paper'
             }}
         >
             

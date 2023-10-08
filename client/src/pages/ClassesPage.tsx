@@ -4,14 +4,13 @@ import { Box, Button, Container, Divider, FormControl, IconButton, InputAdornmen
 import { AppLayout, CustomCheckBox } from '$layout'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Classes, FilterAndConfig } from '$components'
-import { type ReactElement, useEffect, useState, ReactChild } from 'react'
+import { type ReactElement, useEffect, useState, type ReactChild } from 'react'
 import img1 from '$assets/img/paraPiada/ciclo.jpg'
 import img2 from '$assets/img/paraPiada/james.jpg'
 import img3 from '$assets/img/paraPiada/roubo.jpg'
 import { type class_ } from '$types'
 import { Carousel } from 'react-responsive-carousel'
-import "react-responsive-carousel/lib/styles/carousel.min.css"
-
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 export default function ClassesPage(): ReactElement {
     // const theme = useTheme()

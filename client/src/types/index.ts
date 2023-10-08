@@ -5,7 +5,9 @@ import {
     type Chat,
     type Post,
     type Forum,
-    type News
+    type News,
+    type Class,
+    type Picture
 } from './models'
 
 import { type contact, type class_, type news, type folder } from './dataTypes'
@@ -18,6 +20,8 @@ export type {
     Post,
     Forum,
     News,
+    Class,
+    Picture,
     contact,
     folder,
     news,
