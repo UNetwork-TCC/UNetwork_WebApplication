@@ -6,7 +6,7 @@ export const fetchPosts = async (req, res) => {
         if (!fetched) {
             return res.status(400).send({message: 'Os posts não foram encontrados!'})
         }
-        res.status(200).send({fetched, message: 'Post encontrado!'})
+        res.status(200).json(fetched)
     } catch (error) {
         res.status(404).send({message: error.message})
     }
