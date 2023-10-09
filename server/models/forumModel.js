@@ -5,11 +5,11 @@ const forumSchema = new mongoose.Schema({
     description: { type: String, required: true, maxlenght: 100 },
     topic: { type: String, required: true },
     createdAt: { type: String, required: true, default: new Date().getDate() },
+    createdBy: { type: Object, required: true, default: { user: {} } },
     comments: { type: Array, required: true, default: [''] },
     usersIn: { type: Array, required: true, default: [''] },
     likes: { type: Array, required: true, default: [''] },
     closedAt: { type: String, default: 'Em aberto' },
-    icon: { type: String, default: 'random_icon.png' }
 })
 
 const forumModel = mongoose.model('Forums', forumSchema, 'Forums')
