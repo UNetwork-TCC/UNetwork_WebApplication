@@ -15,15 +15,15 @@ export const fetchForums = async (req, res) => {
 
 export const createForums = async (req, res) => {
     try {
-        const { title, description, theme} = req.body
-        if (!title || !description || !theme) {
+        const { title, description, topic} = req.body
+        if (!title || !description || !topic) {
             return res.status(400).send({message: 'Preencha todos os campos!'})
         }
 
         const newForum = Forum({
             title, 
             description, 
-            theme,
+            topic,
             createdAt: formatDate(new Date())
         })
         
