@@ -1,4 +1,5 @@
 import { Forum } from '../models/index.js'
+import formatDate from '../functions/formatDate.js'
 
 export const fetchForums = async (req, res) => {
     try {
@@ -22,7 +23,8 @@ export const createForums = async (req, res) => {
         const newForum = Forum({
             title, 
             description, 
-            theme
+            theme,
+            createdAt: formatDate(new Date())
         })
         
         const updatedForum = await newForum.save()
