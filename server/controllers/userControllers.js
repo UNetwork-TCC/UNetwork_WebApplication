@@ -8,7 +8,7 @@ export const fetchUsers = async (_req, res) => {
         if (!fetched) {
             return res.status(400).send({message: 'Os usuários não foram encontrados!'})
         }
-        res.status(200).send({fetched, message: 'Os usuários foram encontrados!'})
+        res.status(200).json(fetched)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

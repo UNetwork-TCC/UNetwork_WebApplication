@@ -4,9 +4,9 @@ import { fetchPosts, createPost, getById, updatePost, deletePost } from '../cont
 const router = Router()
 
 router.get('/', fetchPosts)
-router.post('/create', createPost)
-router.get('/:id/getById', getById)
-router.patch('/:id/update', updatePost)
-router.delete('/:id/delete', deletePost)
+router.post('/', createPost)
+router.get('/:id', getById)
+router.patch('/:id/', updatePost)
+router.delete('/:id/', deletePost)
 
 export default router

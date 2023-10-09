@@ -5,8 +5,8 @@ const router = Router()
 
 router.get('/', fetchNews)
 router.get('/:id', getNewsById)
-router.post('/create', createNews)
-router.patch('/:id/update', updateNews)
-router.delete('/:id/delete', deleteNews)
+router.post('/', createNews)
+router.patch('/:id', updateNews)
+router.delete('/:id', deleteNews)
 
 export default router

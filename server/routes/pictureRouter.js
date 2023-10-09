@@ -6,7 +6,7 @@ const router = Router()
 
 router.post('/post', upload.single('file'), postPictures)
 router.get('/:id', getPicturesById)
-router.delete('/:id/delete', deletePictures)
-router.patch('/:id/update', upload.single('file'), updatePictures)
+router.delete('/:id/', deletePictures)
+router.patch('/:id/', upload.single('file'), updatePictures)
 
 export default router

@@ -6,7 +6,7 @@ export const fetchChats = async (req, res) => {
         if (!fetched) {
             return res.status(400).send({message: 'Os chats não foram encontrados!'})
         }
-        res.status(200).send({fetched, message: 'Chats encontrados com sucesso!'})
+        res.status(200).json(fetched)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

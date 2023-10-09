@@ -4,9 +4,9 @@ import { createForums, deleteForum, fetchForums, getForumById, updateForumsMessa
 const router = Router()
 
 router.get('/', fetchForums)
-router.post('/create', createForums)
-router.patch('/:id/update', updateForumsMessages)
-router.delete('/:id/delete', deleteForum)
+router.post('/', createForums)
+router.patch('/:id/', updateForumsMessages)
+router.delete('/:id/', deleteForum)
 router.get('/:id', getForumById)
 
 export default router
