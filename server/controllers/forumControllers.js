@@ -13,6 +13,19 @@ export const fetchForums = async (req, res) => {
     }
 }
 
+export const getForumById = async (req, res) => {
+    try {
+        const {id} = req.params
+        const existingForum = await Forum.findById(id)
+        if (!existingForum) {
+            return res.status(400).send({message: 'Os forums não foram encontrados!'})
+        }
+        res.status(200).json(existingForum)
+    } catch (error) {
+        res.status(404).send({message: error.message})
+    }
+}
+
 export const createForums = async (req, res) => {
     try {
         const { title, description, topic} = req.body
@@ -60,19 +73,6 @@ export const deleteForum = async (req, res) => {
         }
         const deletedForum = await Forum.findByIdAndDelete(id)
         res.status(200).send({deletedForum, message: 'O fórum foi deletado!'})
-    } catch (error) {
-        res.status(404).send({message: error.message})
-    }
-}
-
-export const getForumById = async (req, res) => {
-    try {
-        const {id} = req.params
-        const existingForum = await Forum.findById(id)
-        if (!existingForum) {
-            return res.status(400).send({message: 'Os forums não foram encontrados!'})
-        }
-        res.status(200).send({existingForum, message: 'O fórum foi encontrado!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }

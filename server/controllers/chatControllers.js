@@ -20,7 +20,7 @@ export const getChatById = async (req, res) => {
         if (!chat) {
             return res.status(404).send({message: 'Chat não econtrado!'})
         }
-        return res.status(200).send({ chat, message: 'Chat encontrado!'})
+        return res.status(200).json(chat)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

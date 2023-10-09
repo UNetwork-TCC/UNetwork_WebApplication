@@ -22,7 +22,7 @@ export const getUserById = async (req, res) => {
         if (!user) {
             res.status(404).send({message: 'Usuário não econtrado!'})
         }
-        return res.status(200).send({ user, message: 'Usuário encontrado!'})
+        return res.status(200).json(user)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

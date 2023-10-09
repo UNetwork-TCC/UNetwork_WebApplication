@@ -20,7 +20,7 @@ export const getNewsById = async (req, res) => {
         if (!news) {
             return res.status(400).send({message: 'Notícia não encontrada!'})
         }
-        res.status(200).send({news, message: 'A notícia foi encontrada!'})
+        res.status(200).json(news)
     } catch (error) {
         res.status(404).send({message: error.message})
     }
