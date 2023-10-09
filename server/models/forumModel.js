@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const forumSchema = new mongoose.Schema({
     title: { type: String, required: true, maxlenght: 50 },
     description: { type: String, required: true, maxlenght: 100 },
-    theme: { type: String, required: true },
+    topic: { type: String, required: true },
     createdAt: { type: String, required: true, default: new Date().getDate() },
     comments: { type: Array, required: true, default: [''] },
     usersIn: { type: Array, required: true, default: [''] },
