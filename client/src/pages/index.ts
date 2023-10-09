@@ -10,6 +10,7 @@ import NewsPage from './NewsPage'
 import Register from './Register'
 import Login from './Login'
 import ClassesPage from './ClassesPage'
+import ForumHome from './ForumHome'
 import ForumPage from './ForumPage'
 
 export {
@@ -25,5 +26,6 @@ export {
     Register,
     Login,
     ClassesPage,
+    ForumHome,
     ForumPage
 }

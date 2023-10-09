@@ -18,9 +18,9 @@ export default function ClassesPage(): ReactElement {
     const [ typeForm, setTypeForm ] = useState('Create')
 
     const arr: ReactChild[] = [
-        <img src={img1} />,
-        <img src={img2} />,
-        <img src={img3} />
+        <img src={img1} key={0} />,
+        <img src={img2} key={1} />,
+        <img src={img3} key={2} />
     ]
 
     // const matches = useMediaQuery(theme.breakpoints.up('md'))

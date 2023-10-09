@@ -1,6 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
+
 import { authReducer, authSlice } from '$features/auth/auth-slicer'
 import { newsReducer, newsSlice } from '$features/news/news-slicer'
+import { forumReducer, forumSlice } from '$features/forum/forum-slicer'
+
 import {
     type TypedUseSelectorHook,
     useDispatch,
@@ -10,7 +13,8 @@ import {
 const store = configureStore({
     reducer: {
         [authSlice.name]: authReducer,
-        [newsSlice.name]: newsReducer
+        [newsSlice.name]: newsReducer,
+        [forumSlice.name]: forumReducer
     }
 })
 
