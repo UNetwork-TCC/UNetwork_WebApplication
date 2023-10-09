@@ -1,17 +1,15 @@
-import { Avatar, Box, Stack, type SxProps, Typography } from '@mui/material'
-import { useStyles } from '../styles'
+import { Avatar, Box, Stack, type SxProps, Typography, useTheme } from '@mui/material'
+import { useStyles } from '$styles'
 import { Header, LoadingBackdrop } from '.'
-import { Bookmark, ExpandLess, ExpandMore, Home, Message } from '@mui/icons-material'
+import { Bookmark, ExpandLess, ExpandMore, Home, KeyboardDoubleArrowLeft, KeyboardDoubleArrowRight, Message } from '@mui/icons-material'
 import React, { type CSSProperties, useState, type ReactElement } from 'react'
 import { blue, green, purple, red, yellow } from '@mui/material/colors'
-import bg from '../assets/img/bg.jpg'
-import Shortcut from '../components/Home/Shortcut'
-import Contact from '../components/Home/Contact'
-
-import Sidebar from './SideBar'
-
+import bg from '$assets/img/bg.jpg'
+import darkbg from '$assets/img/image.jpg'
+import { Shortcut, Contact } from '$components'
+import { SideBar } from '$layout'
 import { useNavigate } from 'react-router-dom'
-import { user, userContext } from '../contexts/userContext'
+import { user, userContext } from '$contexts'
 import { type User } from '$types'
 
 export default function AppLayout({
@@ -24,9 +22,10 @@ export default function AppLayout({
     withSidebars?: boolean
 }): ReactElement {
     const classes = useStyles()
+    const theme = useTheme()
 
     const [ userData, setUserData ] = useState<User>(user)
-    const contextValue: { userData: User, setUserData: React.Dispatch<React.SetStateAction<User>> } = { userData, setUserData }
+    const userContextValue: { userData: User, setUserData: React.Dispatch<React.SetStateAction<User>> } = { userData, setUserData }
 
     const navigate = useNavigate()
 
@@ -44,6 +43,9 @@ export default function AppLayout({
 
     const contactsExpand = (): void => { setContactsExpanded(true) }
     const contactsCollapse = (): void => { setContactsExpanded(false) }
+
+    const [ leftSideBar, setLeftSideBar ] = useState(withSidebars)
+    const [ rightSideBar, setRightSideBar ] = useState(withSidebars)
 
     const maximize = (): void => {
         if (boxStyles.height === '100vh' || boxStyles.height === '200px') {
@@ -78,18 +80,21 @@ export default function AppLayout({
     }
 
     return (
-        <userContext.Provider value={contextValue}>
+        <userContext.Provider value={userContextValue}>
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
-                    <img src={bg} style={{
-                        zIndex: -2,
-                        opacity: 0.5,
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        width: '100%',
-                        height: '100%'
-                    }} />
+                    <img 
+                        src={theme.palette.mode === 'light' ? bg : darkbg} 
+                        style={{
+                            zIndex: -2,
+                            opacity: theme.palette.mode === 'light' ? 0.5 : 0.3,
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            width: '100%',
+                            height: '100%'
+                        }} 
+                    />
                     <Box sx={{ height: '95vh', width: '95vw', borderRadius: '1rem', ...boxStyles }} className={classes.wrapper}>
                         <Header
                             minimize={minimize}
@@ -97,8 +102,8 @@ export default function AppLayout({
                             close={close}
                         />
                         <Box height='100%' display='flex' justifyContent='center' width='100%'>
-                            {(withSidebars ?? false) &&
-                                <Sidebar>
+                            {(!withSidebars ?? false) || (leftSideBar ?? false) &&
+                                <SideBar>
                                     <Stack width='100%' mb={5} gap={3}>
                                         <Box className={classes.sideBarLinks} onClick={() => { navigate('/app') }}>
                                             <Avatar variant={variant}>
@@ -143,13 +148,35 @@ export default function AppLayout({
                                             <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
                                         </Stack>
                                     </Box>
-                                </Sidebar>
+                                </SideBar>
                             }
+
+                            {(withSidebars ?? false) &&
+                                <Box sx={{ cursor: 'pointer' }} component='span' position='relative' m={2.5}>
+                                    {(leftSideBar ?? false) ?
+                                        <KeyboardDoubleArrowLeft onClick={(): void => { setLeftSideBar(prev => !prev) }} />
+                                        :
+                                        <KeyboardDoubleArrowRight onClick={(): void => { setLeftSideBar(prev => !prev) }} />
+                                    }
+                                </Box>
+                            }
+
                             <Box display='flex' justifyContent='center' overflow='auto' mb={13} width={(withSidebars ?? false) ? '80%' : '100%'}>
                                 {children}
                             </Box>
+
                             {(withSidebars ?? false) &&
-                                <Sidebar sx={{ flexDirection: 'row-reverse', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
+                                <Box sx={{ cursor: 'pointer' }} component='span' position='relative' m={2.5}>
+                                    {(rightSideBar ?? false) ?
+                                        <KeyboardDoubleArrowRight onClick={(): void => { setRightSideBar(prev => !prev) }} />
+                                        :
+                                        <KeyboardDoubleArrowLeft onClick={(): void => { setRightSideBar(prev => !prev) }} />
+                                    }
+                                </Box>
+                            }
+
+                            {(!withSidebars ?? false) || (rightSideBar ?? false) &&
+                                <SideBar sx={{ flexDirection: 'row-reverse', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
                                     <Box color='text.secondary' display='flex' mb={3} gap={2}>
                                         <Typography sx={{ userSelect: 'none' }} onClick={contactsExpanded ? contactsCollapse : contactsExpand}>Contatos ({contacts})</Typography>
                                         {contactsExpanded
@@ -158,19 +185,19 @@ export default function AppLayout({
                                         }
                                     </Box>
                                     <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none' }}>
-                                        <Contact name='Leonardo' />
-                                        <Contact name='Torugo' />
-                                        <Contact name='Alfa' />
-                                        <Contact name='Jhow' />
-                                        <Contact name='Rian' />
-                                        <Contact name='Kauê' />
-                                        <Contact name='Elizabeth' />
-                                        <Contact name='Luizinho' />
-                                        <Contact name='Paulo Rogério de Neves Oliveira' />
-                                        <Contact name='Fabinho' />
-                                        <Contact name='Sueli Muniz' />
+                                        <Contact user={{ name: 'Leonardo' }} />
+                                        <Contact user={{ name: 'Torugo' }} />
+                                        <Contact user={{ name: 'Alfa' }} />
+                                        <Contact user={{ name: 'Jhow' }} />
+                                        <Contact user={{ name: 'Rian' }} />
+                                        <Contact user={{ name: 'Kauê' }} />
+                                        <Contact user={{ name: 'Elizabeth' }} />
+                                        <Contact user={{ name: 'Luizinho' }} />
+                                        <Contact user={{ name: 'Paulo Rogério de Neves Oliveira' }} />
+                                        <Contact user={{ name: 'Fabinho' }} />
+                                        <Contact user={{ name: 'Sueli Muniz' }} />
                                     </Stack>
-                                </Sidebar>
+                                </SideBar>
                             }
                         </Box>
                     </Box>

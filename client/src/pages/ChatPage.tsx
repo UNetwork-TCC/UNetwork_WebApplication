@@ -150,8 +150,7 @@ export default function ChatPage(): ReactElement {
                                         [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear' ],
                                         [ onClickEvents.item1, onClickEvents.item2 ],
                                         [ <AccountBox key={null}/>,<Search key={null}/>, <FmdGood key={null}/>, null ,<Report key={null}/>, <Block key={null}/> ]
-                                                                    
-                                    ) }
+                                    )}
                                 }
                             >
                                 <Settings sx={{ fontSize: '2rem', color: 'gray' }} />

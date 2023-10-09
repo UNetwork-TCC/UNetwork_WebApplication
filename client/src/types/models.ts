@@ -30,6 +30,20 @@ export interface Group {
   messages: any[]
 }
 
+export interface Class {
+  name: string
+  title: string
+  description: string
+  theme: string
+  usersOnClass: User[]
+  messages: Message[]
+  voiceChannels: any[]
+  chatChannels: any[]
+  createdAt: Date
+  createdBy: User
+  createdIn: Group
+}
+
 export interface Message {
   content: string
   sendedBy: User

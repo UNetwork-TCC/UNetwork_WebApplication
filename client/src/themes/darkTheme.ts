@@ -1,8 +1,8 @@
-import { createTheme, responsiveFontSizes } from '@mui/material'
+import { type CustomTheme, createTheme, responsiveFontSizes } from '@mui/material'
 import defaultThemeProperties from './defaultThemeProps'
 import { grey } from '@mui/material/colors'
 
-let darkTheme = createTheme({
+let darkTheme: CustomTheme = createTheme({
     palette: {
         mode: 'dark',
 

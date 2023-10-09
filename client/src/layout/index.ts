@@ -10,10 +10,11 @@ import CustomMenu from './CustomMenu'
 import CustomLink from './CustomLink'
 import CustomCheckBox from './CustomCheckBox'
 import CustomInput from './CustomInput'
-import CustomCarousel from './CustomCarousel'
 import AppLayout from './AppLayout'
 import Clip from './Clip'
 import ThemeStore from './ThemeStore'
+import Rate from './Rate'
+import UNetworkModal from './UNetworkModal'
 
 export {
     LandingPageHeader,
@@ -26,10 +27,11 @@ export {
     SideBar,
     ThemeStore,
     CustomMenu,
+    UNetworkModal,
     Clip,
+    Rate,
     AppLayout,
     CustomCheckBox,
     CustomLink,
-    CustomInput,
-    CustomCarousel
+    CustomInput
 }

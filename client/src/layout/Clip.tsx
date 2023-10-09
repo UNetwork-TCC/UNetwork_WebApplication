@@ -1,12 +1,13 @@
-import { Avatar, Box, Typography, useTheme } from '@mui/material'
+import { ClipComponent } from '$components'
+import { Avatar, Box, Modal, Typography, useTheme } from '@mui/material'
 import { type ReactElement, useState } from 'react'
 export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: string, avatar?: string, postedAt: Date, id: string | number }): ReactElement {
     const theme: any = useTheme()
 
-    const [ , setOpen ] = useState<boolean>(false)
+    const [ open, setOpen ] = useState<boolean>(false)
 
     const handleOpen = (): void => { setOpen(true) }
-    // const handleClose = () => setOpen(false)
+    const handleClose = (): void => { setOpen(false) }
 
     const border = '5px'
 
@@ -44,10 +45,19 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     margin: `-${border}`,
                     borderRadius: 'inherit',
                     background: `linear-gradient(120deg, ${theme.palette.secondary.main}, ${theme.palette.contrast.main})`
-                }           
+                }
             }}>
-                <Avatar sx={{ height: '4.2rem', width: '4.2rem',  position: 'relative', bottom: { lg: 25.5, xl: 33 }, fontSize: '1.5rem' }}>
-                    { !avatar ?
+                <Avatar sx={{
+                    fontSize: '1.5rem',
+                    height: '4.2rem',
+                    width: '4.2rem',
+                    position: 'relative',
+                    bottom: 33,
+                    [theme.breakpoints.down('xl')]: {
+                        bottom: 25.5
+                    }
+                }}>
+                    {!avatar ?
                         String(postedBy).charAt(0).toUpperCase()
                         :
                         <img src={avatar} alt={'Clip de ' + postedBy} />
@@ -57,7 +67,20 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     <Typography>{postedBy}</Typography>
                 </Box>
             </Box>
-        
+            <Modal
+                open={open}
+                onClose={handleClose}
+                disableAutoFocus
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100vh',
+                    width: '100vw'
+                }}
+            >               
+                <ClipComponent />
+            </Modal>
         </>
     )
 }

@@ -53,7 +53,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexGrow: 1,
         minHeight: '100vh',
         width: '100vw',
-        overflowX: 'hidden'
+        overflowX: 'hidden',
+        background: theme.palette.mode === 'dark' ?
+            ' #343342' 
+            : 'none'
     },
 
     wrapper: {

@@ -9,6 +9,7 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
+    "composite": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -45,5 +46,5 @@
     }
   },
   "include": ["src", ".eslintrc.json", "vite.config.ts"],
-  "references": [{ "path": "./tsconfig.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
