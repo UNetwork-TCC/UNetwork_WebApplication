@@ -21,7 +21,7 @@ export const getById = async (req, res) => {
             return res.status(400).send({message: 'Mensagem não encontrada!'})
         }
 
-        res.status(200).send(messages)
+        res.status(200).json(messages)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

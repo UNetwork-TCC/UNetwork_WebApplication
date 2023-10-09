@@ -49,7 +49,7 @@ export const getById = async (req, res) => {
             return res.status(400).send({message: 'Post não encontrado!'})
         }
 
-        res.status(200).send({existingPost, message: 'Post encontrado!'})
+        res.status(200).json(existingPost)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

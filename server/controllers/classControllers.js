@@ -20,7 +20,7 @@ export const getClassById = async (req, res) => {
         if (!existingClass) {
             return res.status(400).send({message: 'Classe não encontrada!'})
         }
-        res.status(200).send({existingClass, message: 'A classe foi encontrada!'})
+        res.status(200).json(existingClass)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

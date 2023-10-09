@@ -20,7 +20,7 @@ export const getById = async (req, res) => {
         if (!group) {
             res.status(404).send({message: 'Grupo não econtrado!'})
         }
-        return res.status(200).send({ group, message: 'Grupo encontrado!'})
+        return res.status(200).json(group)
     } catch (error) {
         res.status(404).send({message: error.message})
     }

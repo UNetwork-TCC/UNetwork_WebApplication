@@ -34,7 +34,7 @@ export const getPicturesById = async (req, res) => {
         const {id} = req.params
         const gotten = await Picture.findById(id)
         if (!gotten) return res.status(400).send({message: 'Imagem não encontrada!'})
-        res.status(200).send({ gotten, message: 'Imagem pega com sucesso!'}) 
+        res.status(200).json(gotten)
     } catch (error) {
         res.status(404).send({message: error.message})
     }
