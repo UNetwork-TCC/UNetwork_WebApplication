@@ -86,7 +86,8 @@ export const getForum = async (id: string): ApiRequest<Forum> => await API.get<F
 export const createForum = async (data: {
   title: string,
   description: string,
-  theme: string,
+  topic: string,
+  createdBy: User | string
 }): ApiRequest<Forum> => await API.post<Forum>('/forum', data)
 
 export const deleteForum = async (id: string): ApiRequest<Forum> => await API.delete<Forum>('/forum/' + id)
@@ -99,7 +100,7 @@ export const getGroup = async (id: string): ApiRequest<Group> => await API.get<G
 export const createGroup = async (data: {
   name: string,
   description: string,
-  theme: string,
+  topic: string,
 }): ApiRequest<Group> => await API.post<Group>('/group', data)
 
 export const deleteGroup = async (id: string): ApiRequest<Group> => await API.delete<Group>('/group/' + id)

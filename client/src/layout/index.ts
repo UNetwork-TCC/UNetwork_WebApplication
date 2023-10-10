@@ -15,6 +15,7 @@ import Clip from './Clip'
 import ThemeStore from './ThemeStore'
 import Rate from './Rate'
 import UNetworkModal from './UNetworkModal'
+import FormModal from './FormModal'
 
 export {
     LandingPageHeader,
@@ -27,6 +28,7 @@ export {
     SideBar,
     ThemeStore,
     CustomMenu,
+    FormModal,
     UNetworkModal,
     Clip,
     Rate,
