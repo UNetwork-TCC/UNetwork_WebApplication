@@ -163,17 +163,16 @@ export default function AppLayout({
 
                             <Box display='flex' justifyContent='center' overflow='auto' mb={13} width={(withSidebars ?? false) ? '80%' : '100%'}>
                                 {children}
+                                {(withSidebars ?? false) &&
+                                    <Box sx={{ cursor: 'pointer' }} component='span' position='relative' m={2.5}>
+                                        {(rightSideBar ?? false) ?
+                                            <KeyboardDoubleArrowRight onClick={(): void => { setRightSideBar(prev => !prev) }} />
+                                            :
+                                            <KeyboardDoubleArrowLeft onClick={(): void => { setRightSideBar(prev => !prev) }} />
+                                        }
+                                    </Box>
+                                }
                             </Box>
-
-                            {(withSidebars ?? false) &&
-                                <Box sx={{ cursor: 'pointer' }} component='span' position='relative' m={2.5}>
-                                    {(rightSideBar ?? false) ?
-                                        <KeyboardDoubleArrowRight onClick={(): void => { setRightSideBar(prev => !prev) }} />
-                                        :
-                                        <KeyboardDoubleArrowLeft onClick={(): void => { setRightSideBar(prev => !prev) }} />
-                                    }
-                                </Box>
-                            }
 
                             {(!withSidebars ?? false) || (rightSideBar ?? false) &&
                                 <SideBar sx={{ flexDirection: 'row-reverse', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
