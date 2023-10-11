@@ -1,4 +1,5 @@
 export interface User {
+  _id?: string
   name: string
   email: string
   followers: User[]
@@ -23,6 +24,7 @@ export interface User {
 }
 
 export interface Group {
+  _id?: string
   title: string
   description: string
   usersOnGroup: User[]
@@ -31,6 +33,7 @@ export interface Group {
 }
 
 export interface Class {
+  _id?: string
   name: string
   title: string
   description: string
@@ -45,6 +48,7 @@ export interface Class {
 }
 
 export interface Message {
+  _id?: string
   content: string
   sendedBy: User
   sendedAt: Date
@@ -53,11 +57,13 @@ export interface Message {
 }
 
 export interface Chat {
+  _id?: string
   users: User[]
   messages: Message[]
 }
 
 export interface Post {
+  _id?: string
   name: string
   description: string
   content: {
@@ -73,19 +79,21 @@ export interface Post {
 }
 
 export interface Forum {
+  _id?: string
   title: string
   description: string
-  theme: string
+  topic: string
   createdAt: Date
   createdBy: User
   createdIn: Group | Chat | Forum
   closedAt?: Date
   comments: Message[]
   likes: User[]
-  views: User[]
+  usersIn: User[]
 }
 
 export interface News {
+  _id?: string
   name: string
   description: string
   content: string
@@ -96,6 +104,7 @@ export interface News {
 }
 
 export interface Picture {
+  _id?: string
   name: string
   src: string
 }

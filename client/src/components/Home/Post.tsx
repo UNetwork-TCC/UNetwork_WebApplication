@@ -79,7 +79,7 @@ export default function Post({
                         </Box>
                         <Box sx={{ ml: '1rem' }}>
                             <Typography sx={{ fontSize: '2em' }}>{user?.name}</Typography>
-                            <Typography sx={{ color: 'gray', fontSize: '1.7em' }}>{date.toString()}</Typography>
+                            <Typography sx={{ color: 'gray', fontSize: '1.7em' }}>{date?.toString()}</Typography>
                         </Box>
                     </Box>
                     <IconButton onClick={

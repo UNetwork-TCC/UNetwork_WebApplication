@@ -1,7 +1,7 @@
-import { Avatar, Box, Typography, Card, Grid, Modal, Button, TextField, FormControl, useMediaQuery, useTheme } from '@mui/material'
+import { Avatar, Box, Typography, Card, Grid, Button, TextField, FormControl, useMediaQuery, useTheme } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { type ReactElement, useEffect, useState } from 'react'
-import { AppLayout, CustomCheckBox } from '$layout'
+import { AppLayout, CustomCheckBox, FormModal } from '$layout'
 import { Folder } from '$components'
 import { type folder } from '$types'
 
@@ -86,72 +86,57 @@ export default function FavoritesPage(): ReactElement {
                     </Box>
                 </Box>
             </Box>
-            <Modal
+            <FormModal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                disableAutoFocus
+                title='Nova Pasta'
             >
-                <form onSubmit={createFolder}>
-                    <Box p={1} sx={{ height: matches ? '45  vh' : '40vh', width: '35vw', bgcolor:'background.paper' }} borderRadius={2} >
-                        <Box p={0}>
-                            <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
-                                Nova Pasta
-                            </Typography> 
-                        </Box>
-                        <Box display={'flex'} flexDirection={'column'} p={2} gap={2}> 
-                            <TextField 
-                                onChange={e => { setFolderAttributes({ ...folderAttributes, title: e.target.value }) }} 
-                                id="outline-basic" 
-                                label="Título"
-                                value={folderAttributes.title}
-                                fullWidth
-                            />
-                            <TextField 
-                                onChange={e => { setFolderAttributes({ ...folderAttributes, subtitle: e.target.value }) }} 
-                                id="outline-basic" 
-                                label="Tópico (opicional)"
-                                value={folderAttributes.subtitle}
-                                fullWidth
-                            />
-                            <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
-                            <FormControl>
-                                <CustomCheckBox 
-                                    onClick={
-                                        () => {
-                                            setCheckedButtons(state => ({ ...state, public: !state.public }))
-                                            setFolderAttributes({ ...folderAttributes, visibility: 'public' })
-                                        }} 
-                                    checked={checkedButtons.public} 
-                                    caption='Isso deixará sua pasta pública' 
-                                    title='Público'
-                                />
-                                <CustomCheckBox 
-                                    onClick={
-                                        () => {
-                                            setCheckedButtons(state => ({ ...state, private: !state.private }))
-                                            setFolderAttributes({ ...folderAttributes, visibility: 'private' })
-                                        }}
-                                    checked={checkedButtons.private}
-                                    caption='Isso deixará sua pasta privada' 
-                                    title='Privado'
-                                />   
-                            </FormControl>
-                            <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
-                                <Button onClick={handleClose} variant='outlined'fullWidth>
-                                    Cancelar
-                                </Button>
-                                <Button type='submit' onClick={createFolder} variant='outlined'fullWidth>
-                                    Criar
-                                </Button>
-                            </Box>
-                        </Box>
-                        
+                <>
+                    <TextField 
+                        onChange={e => { setFolderAttributes({ ...folderAttributes, title: e.target.value }) }} 
+                        label="Título"
+                        value={folderAttributes.title}
+                        fullWidth
+                    />
+                    <TextField 
+                        onChange={e => { setFolderAttributes({ ...folderAttributes, subtitle: e.target.value }) }} 
+                        label="Tópico (opicional)"
+                        value={folderAttributes.subtitle}
+                        fullWidth
+                    />
+                    <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
+                    <FormControl>
+                        <CustomCheckBox 
+                            onClick={
+                                () => {
+                                    setCheckedButtons(state => ({ ...state, public: !state.public }))
+                                    setFolderAttributes({ ...folderAttributes, visibility: 'public' })
+                                }} 
+                            checked={checkedButtons.public} 
+                            caption='Isso deixará sua pasta pública' 
+                            title='Público'
+                        />
+                        <CustomCheckBox 
+                            onClick={
+                                () => {
+                                    setCheckedButtons(state => ({ ...state, private: !state.private }))
+                                    setFolderAttributes({ ...folderAttributes, visibility: 'private' })
+                                }}
+                            checked={checkedButtons.private}
+                            caption='Isso deixará sua pasta privada' 
+                            title='Privado'
+                        />   
+                    </FormControl>
+                    <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
+                        <Button onClick={handleClose} variant='outlined'fullWidth>
+                            Cancelar
+                        </Button>
+                        <Button type='submit' onClick={createFolder} variant='outlined'fullWidth>
+                            Criar
+                        </Button>
                     </Box>
-                </form>
-            </Modal>
+                </>
+            </FormModal>
 
         </AppLayout>
 
