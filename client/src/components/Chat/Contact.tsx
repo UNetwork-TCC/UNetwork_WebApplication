@@ -28,11 +28,6 @@ export default function Contact({
                 fontSize: '10px'
             }}>
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>
-                {user.avatar ?
-                    <img src={user.avatar} alt="Avatar" />
-                    :
-                    user.name.charAt(0).toUpperCase()
-                }
             </Avatar>
             <Box sx={{ display: 'flex', flexDirection: 'column', ml: '1.2em', width: '100%', maxWidth: '90%' }}>
                 <Box display={'flex'}>

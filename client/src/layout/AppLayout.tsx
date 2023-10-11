@@ -35,7 +35,7 @@ export default function AppLayout({
     const [ boxStyles, setBoxStyles ] = useState<CSSProperties>({})
 
     const shortcuts = 5
-    const contacts = 11
+    const contacts = 7
     const variant: any = 'iconWrapper'
 
     const shortcutsExpand = (): void => { setShortcutsExpanded(true) }
@@ -141,11 +141,11 @@ export default function AppLayout({
                                             }
                                         </Box>
                                         <Stack gap={3} sx={{ display: shortcutsExpanded ? 'flex' : 'none' }}>
-                                            <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
-                                            <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
-                                            <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />
-                                            <Shortcut title='Matemática' category='Materiais' color={yellow[600]} />
-                                            <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                            <Shortcut title='Atalho' category='Conversas' color={red[600]} />
+                                            <Shortcut title='Atalho' category='Conversas' color={blue[600]} />
+                                            <Shortcut title='Atalho' category='Classes' color={green[600]} />
+                                            <Shortcut title='Atalho' category='Materiais' color={yellow[600]} />
+                                            <Shortcut title='Atalho' category='Grupo' color={purple[600]} />
                                         </Stack>
                                     </Box>
                                 </SideBar>
@@ -163,8 +163,6 @@ export default function AppLayout({
 
                             <Box display='flex' justifyContent='center' overflow='auto' mb={13} width={(withSidebars ?? false) ? '80%' : '100%'}>
                                 {children}
-                            </Box>
-
                             {(withSidebars ?? false) &&
                                 <Box sx={{ cursor: 'pointer' }} component='span' position='relative' m={2.5}>
                                     {(rightSideBar ?? false) ?
@@ -174,6 +172,8 @@ export default function AppLayout({
                                     }
                                 </Box>
                             }
+                            </Box>
+
 
                             {(!withSidebars ?? false) || (rightSideBar ?? false) &&
                                 <SideBar sx={{ flexDirection: 'row-reverse', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
@@ -185,17 +185,13 @@ export default function AppLayout({
                                         }
                                     </Box>
                                     <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none' }}>
-                                        <Contact user={{ name: 'Leonardo' }} />
-                                        <Contact user={{ name: 'Torugo' }} />
-                                        <Contact user={{ name: 'Alfa' }} />
-                                        <Contact user={{ name: 'Jhow' }} />
-                                        <Contact user={{ name: 'Rian' }} />
-                                        <Contact user={{ name: 'Kauê' }} />
-                                        <Contact user={{ name: 'Elizabeth' }} />
-                                        <Contact user={{ name: 'Luizinho' }} />
-                                        <Contact user={{ name: 'Paulo Rogério de Neves Oliveira' }} />
-                                        <Contact user={{ name: 'Fabinho' }} />
-                                        <Contact user={{ name: 'Sueli Muniz' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
+                                        <Contact user={{ name: 'Usuário' }} />
                                     </Stack>
                                 </SideBar>
                             }

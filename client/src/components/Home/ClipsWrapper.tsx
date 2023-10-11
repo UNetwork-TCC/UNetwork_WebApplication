@@ -6,7 +6,7 @@ export default function ClipsWrapper(): ReactElement {
     const clipsData = {
         postedBy: {
             id: 'asd2312',
-            name: 'Vitor',
+            name: 'Usuário',
             avatar: '$assets/img/bg.jpg'
         },
 

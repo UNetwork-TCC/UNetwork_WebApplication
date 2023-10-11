@@ -12,7 +12,7 @@ export default function ForumIcon({
 } : {
     title: string,
     topic: string,
-    usersIn: User[],
+    usersIn: User[] | string,
     id: string | undefined,
     image?: string 
 }): ReactElement {

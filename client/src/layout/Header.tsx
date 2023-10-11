@@ -106,7 +106,7 @@ export default function Header({
         <>
             <Box>
                 <Box bgcolor={theme.palette.mode === 'light' ? 'white' : 'background.paper'} >
-                    <Box 
+                    {/* <Box 
                         width='100%'
                         gap={2}
                         p={1}
@@ -121,7 +121,7 @@ export default function Header({
                         <Minimize onClick={minimize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                         <FilterNone onClick={maximize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                         <Close onClick={close} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
-                    </Box>
+                    </Box> */}
                     <Box p='1.5rem' display='flex' justifyContent='space-around' alignItems='center' >
                         <Box onClick={() => { navigate('/app') }} sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
                             <img height={50} width={50} src={ theme.palette.mode === 'light' ? logo : lightLogo}></img>
@@ -135,7 +135,7 @@ export default function Header({
                             />
                         </Box>
                         <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
-                            <CustomLink to='/app/forum' name='Foruns' />
+                            <CustomLink to='/app/forum' name='Fóruns' />
                             <CustomLink to='/app/classes' name='Classes' />
                             <CustomLink to='/app/materials' name='Materiais' />
                             <CustomLink to='/app/news' name='Notícias' />

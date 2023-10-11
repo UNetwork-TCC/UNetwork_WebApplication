@@ -57,11 +57,6 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                         bottom: 25.5
                     }
                 }}>
-                    {!avatar ?
-                        String(postedBy).charAt(0).toUpperCase()
-                        :
-                        <img src={avatar} alt={'Clip de ' + postedBy} />
-                    }
                 </Avatar>
                 <Box mt={-3}>
                     <Typography>{postedBy}</Typography>

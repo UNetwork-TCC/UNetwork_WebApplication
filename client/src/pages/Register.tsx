@@ -117,7 +117,6 @@ function RegisterForm(): ReactElement {
                                 </Typography>
                             </Typography>
                         </Box>
-                        <Button type='submit' variant='contained'>Cadastrar</Button>
                     </Box>
                 </FormControl>
             </Box>

@@ -63,15 +63,24 @@ export default function ForumHome(): ReactElement {
                     </Box>
                 </Box>
                 <ForumWrapper>
-                    {forumsArr.map((forum: Forum) => (
-                        <ForumIcon
-                            key={forum._id}
-                            id={forum._id}
-                            title={forum.title}
-                            topic={forum.topic}
-                            usersIn={forum.usersIn}
-                        />
-                    ))}
+                    <ForumIcon
+                        id='1'
+                        title='Fórum'
+                        topic='Escola'
+                        usersIn='00'
+                    />
+                    <ForumIcon
+                        id='1'
+                        title='Fórum'
+                        topic='Escola'
+                        usersIn='00000000'
+                    />
+                    <ForumIcon
+                        id='1'
+                        title='Fórum'
+                        topic='Escola'
+                        usersIn='000000000000000000000'
+                    />
                 </ForumWrapper>
             </Box>
             <FormModal

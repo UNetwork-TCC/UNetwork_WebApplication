@@ -107,21 +107,21 @@ export default function ChatPage(): ReactElement {
                         '::-webkit-scrollbar': { display: 'none' }
                     }}>
                         <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%' }}>
-                            <Contact notification={8} date={'19:45'} user={{ name: 'Alfa' }} />
-                            <Contact notification={6} date={'3 Dias'} user={{ name: 'Leonardo' }} />
-                            <Contact notification={3} date={'1 Ano'} user={{ name: 'Torugo' }} />
-                            <Contact date={'3 Dias'} user={{ name: 'Guilherme Lima' }} />
-                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
-                            <Contact notification={14} date={'3 Dias'} user={{ name: 'Jhow' }} />
-                            <Contact notification={56} date={'3 Dias'} user={{ name: 'Luizinho' }} />
-                            <Contact notification={99} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
-                            <Contact notification={7} date={'3 Dias'} user={{ name: 'Rian' }} />
-                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={2} date={'2h'} user={{ name: 'Paulin' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
+                            <Contact notification={8} date={'19:45'} user={{ name: 'Usuário' }} />
+                            <Contact notification={6} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={3} date={'1 Ano'} user={{ name: 'Usuário' }} />
+                            <Contact date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={14} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={56} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={99} date={'3 Dias'} user={{ name: 'Usuário' }} /> {/* "+99" medo */}
+                            <Contact notification={7} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={2} date={'2h'} user={{ name: 'Usuário' }} />
+                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Usuário' }} />
+                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Usuário' }} />
                             {Contacts.map(e => (
                                 <Contact user={{ name: e.name }} key={e.name} />
                             ))}
@@ -163,7 +163,6 @@ export default function ChatPage(): ReactElement {
                     </Box>
                     <Divider flexItem sx={{}} />
                     <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
-                        <Chat chatClass={{ name: 'A' }} />
                     </Box>
                     <CustomMenu
                         anchorEl={anchorEl}

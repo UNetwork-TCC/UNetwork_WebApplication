@@ -73,28 +73,19 @@ export default function Home(): ReactElement {
                         </Avatar>
                     </Box>
                 </Box>
-                <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
+                <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>                    
                     <Post
-                        title={'Roubos gerais'}
-                        date={'3 horas atrás'}
-                        content={'aaaaaaaaaaaaaaaaaa teste de tudoaaaaaaaaaaaa FLExivelllllllllllllllllllllllll  aaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
-                        user={{ name: 'Filhos do Jhonatas' }}
+                        title={'Post'}
+                        date={'Agora há pouco'}
+                        content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum aspernatur illo possimus dolorum dolore molestiae dignissimos cupiditate quas laudantium quis excepturi, praesentium culpa tenetur magnam inventore. Pariatur magni nobis voluptatibus.'
+                        user={{ name: 'Usuário' }}
                     />
 
                     <Post
-                        title={'Piada'}
+                        title={'Post'}
                         date={'3 horas atrás'}
-                        content='Simplesmente roubado velho:'
-                        user={{ name: '3°DS' }}
-                        img={roubo}
-                    />
-
-                    <Post
-                        title={'Piada'}
-                        date={'3 horas atrás'}
-                        content='Ô JÂIMESS 🗣🗣, EU QUERO UMA SALADA DE FRUATA 🍌🍏🍇🍓🤤. OLHA QUE HABILIDADE 😏🤠🧐 OLHA QUE HABILIDADE 😏🤠🧐 EU QUERO UMA SALADA DE FRUTA, JAMES 😉🍏🍇. NO CAPRICHO 😋👌🏼. DE 5 🖐🏼, DE 7 🖐🏼✌🏼, DE 10 🖐🏼🤚🏼 ? ME DA UMA DE 5 🤚🏼. AQUI, TÁ NA MÃO 👨🏼‍🍳🤝🍹. TÁ AQUI 🍹. ISSO JAMES, MUITO OBRIGADO 😎🤝. BRIGADO 👌🏼👍🏼. DEUS ABENÇOE 🙏🏼🙏🏼. 👉🏼👉🏼👉🏼ESSE É O JÂIMESS👈🏼👈🏼👈🏼😎😎. HÃÃ ? 🤨🤨. DA SALADA DE FRUTA 🍇🍹👨🏼‍🍳 O ARTIXTA DE CIRCO 🎪 😃'
-                        user={{ name: '3°DS' }}
-                        img={james}
+                        content='Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum aspernatur illo possimus dolorum dolore molestiae dignissimos cupiditate quas laudantium quis excepturi, praesentium culpa tenetur magnam inventore. Pariatur magni nobis voluptatibus.'
+                        user={{ name: 'Usuário' }}
                     />
                 </Box>
             </Box>

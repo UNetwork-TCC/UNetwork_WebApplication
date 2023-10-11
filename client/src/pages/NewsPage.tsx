@@ -70,13 +70,13 @@ export default function NewsPage(): ReactElement {
                 </Container>
                 <Box sx={{ display: 'flex' }}>
                     <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
+                        <News title={'Notícia'} description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae, aperiam culpa unde odit quisquam quasi atque quae illo magnam laudantium.'} topic={'Saude'} data={'1 Dia'} />
                         {news.map((e: news) => (
                             <News title={e.title} description={e.description} key={e.title} />
                         ))}
