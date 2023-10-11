@@ -21,7 +21,7 @@ export default function ForumPage(): ReactElement {
             <Post
                 title={forum.title}
                 date={forum.createdAt}
-                user={{ name: 'Vitor' }}
+                user={{ name: forum.createdBy }}
                 content={forum.description}
             />
         </AppLayout>
