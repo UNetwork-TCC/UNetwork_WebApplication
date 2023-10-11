@@ -92,7 +92,7 @@ function RegisterForm(): ReactElement {
                                         </Box>
                                     </Box>
                                     <Box display='flex' justifyContent='space-between' mt={2} alignItems='center'>
-                                        <Button type='submit' variant='contained'>Entrar</Button>
+                                        <Button type='submit' variant='contained'>Cadastrar</Button>
                                     </Box>
                                 </FormControl>
                             </Form>
@@ -117,7 +117,6 @@ function RegisterForm(): ReactElement {
                                 </Typography>
                             </Typography>
                         </Box>
-                        <Button type='submit' variant='contained'>Cadastrar</Button>
                     </Box>
                 </FormControl>
             </Box>

@@ -83,15 +83,15 @@ export default function ClassesPage(): ReactElement {
                     <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
                 </Container>
                 <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '2rem' }} >
-                    {/* <Classes _class={{ name: 'Os lambisgoia' }} />
+                    <Classes _class={{ name: 'Os lambisgoia' }} />
                     <Classes _class={{ name: 'Lar Ternura' }} />
                     <Classes _class={{ name: 'Fofoqueiros' }} />
                     <Classes _class={{ name: 'Maconheiros da paz e da guerra' }} />
                     <Classes _class={{ name: 'Os programadores' }} />
-                    <Classes _class={{ name: 'Os revoltados' }} /> */}
-                    {/* {_class.map(e => (
+                    <Classes _class={{ name: 'Os revoltados' }} />
+                    {_class.map(e => (
                         <Classes _class={{ name:e.title }}  key={e.title} />
-                    ))} */}
+                    ))}
                     <Carousel  
                         autoPlay
                         centerMode
@@ -101,7 +101,7 @@ export default function ClassesPage(): ReactElement {
                         showThumbs={false}
                     >
                         {arr}
-                    </Carousel> 
+                    </Carousel>
                 </Box>
                 <Box width='100%' height='30rem' display='flex' alignContent='center' alignItems='center'>
                     
