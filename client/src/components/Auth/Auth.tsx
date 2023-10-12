@@ -1,18 +1,19 @@
 import { Box, IconButton, Typography } from '@mui/material'
 import { Footer, LandingPageHeader } from '$layout'
 import facebookLogo from '$assets/svg/Auth/FacebookLogo.svg'
-import GoogleAuth from '../GoogleAuth'
 import React, { type ReactElement } from 'react'
 import { useTheme } from '@mui/material'
+import { GoogleAuth } from '$components'
+
 export default function Auth({
     form,
     side,
     formTitle
-} : {
+}: {
     form: React.ReactNode,
     side: React.ReactNode,
     formTitle: string
-}) : ReactElement {
+}): ReactElement {
     const theme = useTheme()
 
     return (
@@ -21,14 +22,14 @@ export default function Auth({
                 <LandingPageHeader />
                 <Box minHeight='65vh' width='100%' display='flex' justifyContent='center' alignItems='center' p={5}>
                     <Box height='100%' width='100%' display='flex' justifyContent='center' alignItems='center'>
-                        <Box 
-                            display='flex' 
-                            flexDirection='column' 
-                            alignItems='center' 
-                            justifyContent='start' 
-                            minHeight='60vh' 
-                            width='80%' 
-                            borderRadius={5} 
+                        <Box
+                            display='flex'
+                            flexDirection='column'
+                            alignItems='center'
+                            justifyContent='start'
+                            minHeight='60vh'
+                            width='80%'
+                            borderRadius={5}
                             border={`1px solid ${theme.palette.primary.main}`}
                         >
                             <Typography m={3} variant='h5' color='primary.main' fontWeight={900} textAlign='center'>{formTitle}</Typography>

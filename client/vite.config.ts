@@ -15,6 +15,7 @@ export default defineConfig({
             '$features': path.resolve(__dirname, './src/features'),
             '$hooks': path.resolve(__dirname, './src/hooks'),
             '$layout': path.resolve(__dirname, './src/layout'),
+            '$skeletons': path.resolve(__dirname, './src/layout/skeletons'),
             '$lib': path.resolve(__dirname, './src/lib'),
             '$api': path.resolve(__dirname, './src/lib/api'),
             '$pages': path.resolve(__dirname, './src/pages'),

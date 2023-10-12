@@ -27,11 +27,13 @@ import ForumWrapper from './Forum/ForumWrapper'
 import Shortcut from './Home/Shortcut'
 import ClipComponent from './Home/ClipComponent'
 import FeedbackForm from './Home/FeedbackForm'
+import GoogleAuth from './Auth/GoogleAuth'
 
 export {
     DiscoverSection,
     AboutSection,
     ClipComponent,
+    GoogleAuth,
     ComunitySection,
     ClipsWrapper,
     ForumWrapper,

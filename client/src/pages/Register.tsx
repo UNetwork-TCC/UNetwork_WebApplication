@@ -73,7 +73,7 @@ function RegisterForm(): ReactElement {
 
     return (
         <>
-            <Box p={2.5}>
+            <Box width='85.3%' p={2.5}>
                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
                     <Formik
                         initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}

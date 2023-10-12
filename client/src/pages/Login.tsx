@@ -30,7 +30,7 @@ function LoginForm(): ReactElement {
 
     const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
         handleOpenLoading()
-
+        
         try {
             const status = await dispatch(login(user)).then(res => GET_TYPE(res.type))
             
@@ -49,7 +49,6 @@ function LoginForm(): ReactElement {
         }
 
         console.log(user)
-
     }
 
     return (
