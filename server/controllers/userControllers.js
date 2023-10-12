@@ -31,7 +31,7 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
     try {
         const { name, email, password } = req.body
-        const existingUser = User.findOne({ email })
+        const existingUser = await User.findOne({ email })
         const hashedPassword = bcrypt.hashSync(password, 10)
 
         if (password.length < 8) {
