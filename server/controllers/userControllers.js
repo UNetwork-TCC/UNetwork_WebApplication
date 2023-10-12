@@ -31,11 +31,16 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
     try {
         const { name, email, password } = req.body
+        const existingUser = User.findOne({ email })
         const hashedPassword = bcrypt.hashSync(password, 10)
 
         if (password.length < 8) {
             return res.status(400).send({message: 'A senha precisa de ao menos 8 caractéres!'})
-        } 
+        }
+
+        if (existingUser) {
+            return res.status(400).send({message: 'Usuário já cadastrado!'})
+        }
         
         const newUser = User({
             name,
