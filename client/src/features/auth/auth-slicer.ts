@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import * as api from '$api'
 import { type User } from '$types'
 
-const initialState: { user: User | Record<string, unknown> } = {
-    user: {}
+const initialState: { 
+    user: User | Record<string, unknown>,
+    token: string | undefined
+} = {
+    user: {},
+    token: undefined
 }
 
 export const login = createAsyncThunk(
@@ -29,13 +33,19 @@ export const signup = createAsyncThunk(
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        logOut: (state) => {
+            state.user = {}
+            state.token = ''
+        }
+    },
     extraReducers: builder => {
 
         // Login Reducer
 
         builder.addCase(login.fulfilled, (state, action) => {
             state.user = action.payload
+            state.token = action.payload.token
 
             console.log('Usuário logado com sucesso!')
             console.log(state.user)
@@ -57,3 +67,4 @@ export const authSlice = createSlice({
 })
 
 export const authReducer = authSlice.reducer
+export const { logOut } = authSlice.actions

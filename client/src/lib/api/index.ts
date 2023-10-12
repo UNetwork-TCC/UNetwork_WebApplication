@@ -24,7 +24,7 @@ export const createUser = async (data: Partial<User> | {
   email: string
   password: string
 }): ApiRequest<typeof data> => await API.post<typeof data>('/user', data)
-export const loginUser = async (data: { email: string; password: string }): ApiRequest<typeof data> => await API.post<typeof data>('/user/login', data)
+export const loginUser = async (data: { email: string; password: string }): ApiRequest<typeof data & { token?: string }> => await API.post<typeof data>('/user/login', data)
 export const getUser = async (id: string): ApiRequest<User> => await API.get<User>('/user/' + id)
 export const deleteUser = async (id: string): ApiRequest<User> => await API.delete<User>('/user' + id)
 export const updateUser = async (id: string, data: Partial<User>): ApiRequest<User> => await API.patch<User>('/user' + id, data)
