@@ -165,8 +165,8 @@ export default function Header({
                                     <Settings key={0} />,
                                     <Help key={1} />,
                                     <Feedback key={2} />,
-                                    theme.palette.mode === 'light' ? <DarkMode key={3} /> : <LightMode key={3} />,
-                                    <ExitToApp key={4} /> 
+                                    theme.palette.mode === 'light' ? <DarkMode key={3} /> : <LightMode key={4} />,
+                                    <ExitToApp key={5} /> 
                                 ],
                                 [   () => {},
                                     handleHelp,

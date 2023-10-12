@@ -61,7 +61,7 @@ function LandingPage(): ReactElement {
                         <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
                         <Box mt={5} display='flex'>
                             <Button variant='contained'>
-                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/app'>{t('header.btn')}</Link>
+                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth/register'>{t('header.btn')}</Link>
                             </Button>
                             <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
                         </Box>

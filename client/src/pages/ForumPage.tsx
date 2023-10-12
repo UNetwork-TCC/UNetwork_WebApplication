@@ -3,7 +3,7 @@ import { getForum } from '$features/forum/forum-slicer'
 import { AppLayout } from '$layout'
 import { useAppDispatch, useAppSelector } from '$store'
 import { type Forum } from '$types'
-import { useEffect, type ReactElement } from 'react'
+import { useEffect, type ReactElement, EffectCallback } from 'react'
 import { useParams } from 'react-router-dom'
 
 export default function ForumPage(): ReactElement {
@@ -13,7 +13,9 @@ export default function ForumPage(): ReactElement {
     const forum: Forum | Record<string, any> = useAppSelector(state => state.forum.forum)
 
     useEffect(() => {
-        dispatch(getForum(id ?? ''))
+        (async () => {
+            await dispatch(getForum(id ?? ''))
+        })()
     }, [ dispatch, id ])
 
     return (

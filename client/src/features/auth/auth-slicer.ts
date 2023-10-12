@@ -20,6 +20,8 @@ export const signup = createAsyncThunk(
     async (user: { name: string; email: string; password: string }) => {
         const { data } = await api.createUser(user)
 
+        console.log(data)
+
         return data
     }
 )
@@ -29,12 +31,21 @@ export const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
+
+        // Login Reducer
+
         builder.addCase(login.fulfilled, (state, action) => {
             state.user = action.payload
 
             console.log('Usuário logado com sucesso!')
             console.log(state.user)
         })
+
+        builder.addCase(login.rejected, (_, action) => {
+            console.log(action.error)
+        })
+
+        // Signup Reducer
 
         builder.addCase(signup.fulfilled, (state, action) => {
             state.user = action.payload

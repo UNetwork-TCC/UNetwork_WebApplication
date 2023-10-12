@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { Box, Button, Checkbox, FormControl, TextField, Typography } from '@mui/material'
+import { Box, Button, Checkbox, FormControl, Snackbar, TextField, Typography } from '@mui/material'
 import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +9,9 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { useAppDispatch } from '$store'
-import { signup } from '$features/auth/auth-slicer'
+import { login, signup } from '$features/auth/auth-slicer'
+import { GET_TYPE, HTTP_STATUS } from '$constants'
+import { Alert } from '@mui/material'
 
 function RegisterForm(): ReactElement {
 
@@ -25,6 +27,10 @@ function RegisterForm(): ReactElement {
 
     const [ open, setOpen ] = useState(false)
     const [ openLoading, setOpenLoading ] = useState(false)
+    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
+
+    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
+    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
     const handleOpen = (): void => { setOpen(true) }
     const handleClose = (): void => { setOpen(false) }
@@ -32,24 +38,37 @@ function RegisterForm(): ReactElement {
     const handleOpenLoading = (): void => { setOpenLoading(true) }
     const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    const handleSubmit = (user: { name: string, email: string, password: string }): void => {
+    const handleSubmit = async (user: { name: string, email: string, password: string }): Promise<void> => {
         handleOpenLoading()
 
         try {
-            dispatch(signup({
+            const status = await dispatch(signup({
                 name: user.name,
                 email: user.email,
                 password: user.password
-            }))
+            })).then(res => GET_TYPE(res.type))
 
-            console.log('oi')
+            if (status === HTTP_STATUS.FULFILLED) {
+                const loginStatus = await dispatch(login({
+                    email: user.email,
+                    password: user.password 
+                })).then(res => GET_TYPE(res.type))
+
+                if (loginStatus === HTTP_STATUS.FULFILLED) {
+                    navigate('/app')
+                } else {
+                    handleCloseLoading()
+                    handleSnackbarOpen()
+                }
+            } else if (status === HTTP_STATUS.REJECTED) {
+                handleCloseLoading()
+                handleSnackbarOpen()
+            }
+
         } catch (error) {
+            handleCloseLoading()
             console.log(error)            
         }
-
-        setTimeout(() => {
-            navigate('/app')
-        }, 2000)
     }
 
     return (
@@ -95,29 +114,29 @@ function RegisterForm(): ReactElement {
                                         <Button type='submit' variant='contained'>Cadastrar</Button>
                                     </Box>
                                 </FormControl>
+                                <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
+                                    <Box width='60%' display='flex' alignItems='center'>
+                                        <Checkbox required />
+                                        <Typography>Li e aceito os
+                                            <Typography 
+                                                onClick={handleOpen} 
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    ':hover': {
+                                                        textDecoration: 'underline'
+                                                    } 
+                                                }} color='primary.main'
+                                                ml={0.5} 
+                                                component='span' 
+                                            >
+                                                Termos de Serviço e Política de Privacidade
+                                            </Typography>
+                                        </Typography>
+                                    </Box>
+                                </Box>
                             </Form>
                         )}
                     </Formik>
-                    <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
-                        <Box width='60%' display='flex' alignItems='center'>
-                            <Checkbox required />
-                            <Typography>Li e aceito os
-                                <Typography 
-                                    onClick={handleOpen} 
-                                    sx={{
-                                        cursor: 'pointer',
-                                        ':hover': {
-                                            textDecoration: 'underline'
-                                        } 
-                                    }} color='primary.main'
-                                    ml={0.5} 
-                                    component='span' 
-                                >
-                                    Termos de Serviço e Política de Privacidade
-                                </Typography>
-                            </Typography>
-                        </Box>
-                    </Box>
                 </FormControl>
             </Box>
             <UNetworkModal
@@ -140,6 +159,16 @@ function RegisterForm(): ReactElement {
                 handleClose={handleCloseLoading}
                 open={openLoading}
             />
+            <Snackbar
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                autoHideDuration={5000}
+            >
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                    Usuário já cadastrado!
+                </Alert>
+            </Snackbar>
         </>
     )
 }

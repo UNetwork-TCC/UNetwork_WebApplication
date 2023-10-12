@@ -1,7 +1,6 @@
-import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography } from '@mui/material'
 import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop } from '$layout'
-// import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
 import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
 import { login } from '$features/auth/auth-slicer'
@@ -9,6 +8,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { useAppDispatch } from '$store'
 import { useNavigate } from 'react-router-dom'
+import { GET_TYPE, HTTP_STATUS } from '$constants'
 
 function LoginForm(): ReactElement {
     const validationSchema = Yup.object().shape({
@@ -20,23 +20,31 @@ function LoginForm(): ReactElement {
     const navigate = useNavigate()
 
     const [ openLoading, setOpenLoading ] = useState(false)
+    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
 
     const handleOpenLoading = (): void => { setOpenLoading(true) }
     const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    const handleSubmit = (user: { email: string, password: string }): void => {
+    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
+    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+
+    const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
         handleOpenLoading()
-        // localStorage.setItem('user', 1)
 
         try {
-            dispatch(login(user))
+            const status = await dispatch(login(user)).then(res => GET_TYPE(res.type))
             
-            setTimeout(() => {
+            if (status === HTTP_STATUS.FULFILLED) {
                 navigate('/app')
-            }, 2000)
+            } else if (status === HTTP_STATUS.REJECTED) {
+                handleCloseLoading()
+                handleSnackbarOpen()
+            }
+            
         } catch (error) {
-            setTimeout(() => {
-                handleCloseLoading()    
+            setTimeout((err: any) => {
+                handleCloseLoading()
+                console.log(err)    
             }, 2000)
         }
 
@@ -80,6 +88,16 @@ function LoginForm(): ReactElement {
                 handleClose={handleCloseLoading}
                 open={openLoading}
             />
+            <Snackbar 
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                autoHideDuration={5000}
+            >
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                    Usuário e/ou senha incorreta(os)!
+                </Alert>
+            </Snackbar>
         </>
     )
 }
