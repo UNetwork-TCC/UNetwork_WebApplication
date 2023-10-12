@@ -1,27 +1,38 @@
 import { GoogleLogin, type GoogleLoginResponse } from 'react-google-login'
-import { GOOGLE_CLIENT_ID } from '../../constants'
-import { useDispatch } from 'react-redux'
+import { GET_TYPE, GOOGLE_CLIENT_ID, HTTP_STATUS } from '../../constants'
 import { useNavigate } from 'react-router-dom'
-import googleLogo from '../assets/svg/Auth/GoogleLogo.svg'
+import googleLogo from '$assets/svg/Auth/GoogleLogo.svg'
 import { IconButton } from '@mui/material'
-import { type ReactElement, useEffect } from 'react'
+import { type ReactElement, useEffect, useState } from 'react'
 import { gapi } from 'gapi-script'
+import { LoadingBackdrop } from '$layout'
+import { useAppDispatch } from '$store'
+import { login, signup } from '$features/auth/auth-slicer'
 
 export default function GoogleAuth(): ReactElement {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const googleSuccess: any = (res: GoogleLoginResponse) => {
-        const result = res?.profileObj
-        const token = res?.tokenId
+
+    const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
+
+    const googleSuccess: any = async (response: GoogleLoginResponse): Promise<void> => {
+        const result = response?.profileObj
+        // const token = response?.tokenId
 
         try {
-            dispatch({ type: 'AUTH', data: { result, token } })
-            console.log({ result, token })
+            await dispatch(signup({ 
+                name: result.name,
+                email: result.email.toLowerCase(),
+                password: result.googleId
+            }))
 
-            setTimeout(() => {
+            const status = await dispatch(login({ 
+                email: result.email.toLowerCase(),
+                password: result.googleId 
+            })).then(res => GET_TYPE(res.type))
+
+            if (status === HTTP_STATUS.FULFILLED)
                 navigate('/app')
-            }, 1000)
-
         } catch (error) {
             console.log(error)
         }
@@ -42,9 +53,18 @@ export default function GoogleAuth(): ReactElement {
         <GoogleLogin
             render={
                 (renderProps) => (
-                    <IconButton onClick={renderProps.onClick}>
-                        <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
-                    </IconButton>
+                    <>
+                        <IconButton onClick={() => {
+                            setLoadingOpen(true)
+                            renderProps.onClick()
+                        }}>
+                            <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
+                        </IconButton>
+                        <LoadingBackdrop
+                            open={loadingOpen}
+                            handleClose={(): void => { setLoadingOpen(false) }}
+                        />
+                    </>
                 )
             }
             clientId={GOOGLE_CLIENT_ID}

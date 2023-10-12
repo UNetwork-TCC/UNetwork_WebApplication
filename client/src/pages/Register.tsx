@@ -44,13 +44,13 @@ function RegisterForm(): ReactElement {
         try {
             const status = await dispatch(signup({
                 name: user.name,
-                email: user.email,
+                email: user.email.toLowerCase(),
                 password: user.password
             })).then(res => GET_TYPE(res.type))
 
             if (status === HTTP_STATUS.FULFILLED) {
                 const loginStatus = await dispatch(login({
-                    email: user.email,
+                    email: user.email.toLowerCase(),
                     password: user.password 
                 })).then(res => GET_TYPE(res.type))
 

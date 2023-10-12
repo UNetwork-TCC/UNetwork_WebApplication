@@ -17,7 +17,7 @@ export const login = createAsyncThunk(
 
 export const signup = createAsyncThunk(
     'auth/signup',
-    async (user: { name: string; email: string; password: string }) => {
+    async (user: Partial<User> | { name: string; email: string; password: string }) => {
         const { data } = await api.createUser(user)
 
         console.log(data)

@@ -41,7 +41,7 @@ export default function Auth({
                             </Box>
                             <Box display='flex' alignItems='center'>
                                 <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }} />
-                                <Typography m={2}>Ou cadastre seu email</Typography>
+                                <Typography m={2}>Ou...</Typography>
                                 <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }} />
                             </Box>
                             {form}

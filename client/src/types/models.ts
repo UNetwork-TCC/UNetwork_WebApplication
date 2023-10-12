@@ -13,13 +13,13 @@ export interface User {
   admin: boolean
   posts: Post[]
   otherInfo: {
-    avatar: string
-    bio: string
-    phone: string
-    city: string
-    state: string
-    country: string
-    grade: number
+    avatar?: string
+    bio?: string
+    phone?: string
+    city?: string
+    state?: string
+    country?: string
+    grade?: number
   }
 }
 

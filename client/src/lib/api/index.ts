@@ -19,7 +19,7 @@ type ApiRequest<T> = Promise<AxiosResponse<T, any>>
 // USERS REQUESTS
 
 export const fetchUsers = async (): ApiRequest<User[]> => await API.get<User[]>('/user')
-export const createUser = async (data: {
+export const createUser = async (data: Partial<User> | {
   name: string
   email: string
   password: string

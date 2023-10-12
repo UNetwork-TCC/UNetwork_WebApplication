@@ -9,12 +9,14 @@ import {
     useDispatch,
     useSelector
 } from 'react-redux'
+import { userReducer, userSlice } from '$features/user/user-slicer'
 
 const store = configureStore({
     reducer: {
         [authSlice.name]: authReducer,
         [newsSlice.name]: newsReducer,
-        [forumSlice.name]: forumReducer
+        [forumSlice.name]: forumReducer,
+        [userSlice.name]: userReducer
     }
 })
 

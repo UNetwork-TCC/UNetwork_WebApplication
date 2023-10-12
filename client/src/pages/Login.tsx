@@ -32,7 +32,10 @@ function LoginForm(): ReactElement {
         handleOpenLoading()
         
         try {
-            const status = await dispatch(login(user)).then(res => GET_TYPE(res.type))
+            const status = await dispatch(login({
+                email: user.email.toLowerCase(),
+                password: user.password 
+            })).then(res => GET_TYPE(res.type))
             
             if (status === HTTP_STATUS.FULFILLED) {
                 navigate('/app')
