@@ -28,6 +28,7 @@ import Shortcut from './Home/Shortcut'
 import ClipComponent from './Home/ClipComponent'
 import FeedbackForm from './Home/FeedbackForm'
 import GoogleAuth from './Auth/GoogleAuth'
+import ContactAppLayout from './Home/Contact'
 
 export {
     DiscoverSection,
@@ -59,5 +60,6 @@ export {
     BigNews,
     News,
     FilterAndConfig,
-    FeedbackForm
+    FeedbackForm,
+    ContactAppLayout
 }
