@@ -84,7 +84,7 @@ export default function AppLayout({
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
                     <img 
-                        src={theme.palette.mode === 'light' ? bg : darkbg} 
+                        src={theme.palette.mode === 'light' && bg} 
                         style={{
                             zIndex: -2,
                             opacity: theme.palette.mode === 'light' ? 0.5 : 0.3,

@@ -57,7 +57,7 @@ export default function Footer(): ReactElement {
                 height: '70vh',
                 width: '100%',
                 [theme.breakpoints.only('xl')]: {
-                    backgroundSize: '200vh'
+                    backgroundSize: '205vh'
                 },
                 [theme.breakpoints.down('sm')]: {
                     backgroundSize: '160vh',
