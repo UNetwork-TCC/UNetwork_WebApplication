@@ -45,10 +45,28 @@ function LandingPage(): ReactElement {
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <LandingPageHeader />
             <Box>
-                <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='63%' bottom={90} position='absolute'>
+                <Box 
+                    sx={{ 
+                        pointerEvents: 'none',
+                        width: '100%',
+                        height: '100%',
+                        left: '63%',
+                        bottom: 90,
+                        position: 'absolute' 
+                    }} 
+                >
                     <Image src={liquidBg} duration={1000} />
                 </Box>
-                <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='56%' bottom={5} position='absolute'>
+                <Box 
+                    sx={{ 
+                        pointerEvents: 'none',
+                        width: '100%',
+                        height: '100%',
+                        left: '56%',
+                        bottom: 5,
+                        position: 'absolute'
+                    }} 
+                >
                     <Image src={peopleVector} duration={1000} />
                 </Box>
             </Box>

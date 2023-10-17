@@ -5,13 +5,13 @@ import { FilterAndConfig, News } from '$components'
 import { type ReactElement, useEffect, useState } from 'react'
 import { fetchNews } from '$features/news'
 import { type news } from '$types'
-import { useAppDispatch } from '$store'
+import { useFetchDispatch } from '$hooks'
+import { HTTP_STATUS } from '$constants'
 
 export default function NewsPage(): ReactElement {
     const theme = useTheme()
 
-    const dispatch = useAppDispatch()
-    // const news = useSelector(state => state.news)
+    const status = useFetchDispatch(fetchNews())
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -50,7 +50,11 @@ export default function NewsPage(): ReactElement {
     }
 
     useEffect(() => {
-        dispatch(fetchNews())
+        (async () => {
+            if (await status === HTTP_STATUS.FULFILLED) {
+
+            }
+        })()
 
         document.addEventListener('keydown', (e: KeyboardEvent) => {
             const code: string = e.code
@@ -59,7 +63,7 @@ export default function NewsPage(): ReactElement {
                 handleClose()
             }
         })
-    }, [dispatch])
+    }, [ status ])
 
     return (
         <AppLayout withSidebars>
@@ -77,10 +81,7 @@ export default function NewsPage(): ReactElement {
                         <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                         <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
                         <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        {news.map((e: news) => (
-                            <News title={e.title} description={e.description} key={e.title} />
-                        ))}
-                    </Container>
+                     </Container>
                     <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
                         <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem' }}>
                             <Typography sx={{ m: '5% 0 5% 5%', fontWeight: 'bold' }}>Mais Lidas</Typography>

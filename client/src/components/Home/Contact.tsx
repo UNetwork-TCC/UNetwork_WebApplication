@@ -2,7 +2,7 @@ import { useTheme } from '@mui/material'
 import { Avatar, Box, Tooltip, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
 
-export default function Contact({ name, avatar } : { name: string, avatar?: string }): ReactElement {
+export default function ContactAppLayout({ name, avatar } : { name: string, avatar?: string }): ReactElement {
     const theme = useTheme()
 
     return (

@@ -150,7 +150,7 @@ export default function ChatPage(): ReactElement {
                                         [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear' ],
                                         [ onClickEvents.item1, onClickEvents.item2 ],
                                         [ <AccountBox key={null}/>,<Search key={null}/>, <FmdGood key={null}/>, null ,<Report key={null}/>, <Block key={null}/> ]
-                                    )}
+                                    ) }
                                 }
                             >
                                 <Settings sx={{ fontSize: '2rem', color: 'gray' }} />
@@ -160,10 +160,10 @@ export default function ChatPage(): ReactElement {
                     <Divider flexItem />
                     <Box sx={{ width: '100%', height: '78%', display: 'flex', alignItems: 'center' }}>
 
-                    </Box>
+                    </Box>  
                     <Divider flexItem sx={{}} />
                     <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
-                        <Chat chatClass={{ name: 'A' }} />
+                        <Chat />
                     </Box>
                     <CustomMenu
                         anchorEl={anchorEl}

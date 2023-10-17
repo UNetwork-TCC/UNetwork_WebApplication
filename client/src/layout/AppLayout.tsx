@@ -6,7 +6,7 @@ import React, { type CSSProperties, useState, type ReactElement } from 'react'
 import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import bg from '$assets/img/bg.jpg'
 import darkbg from '$assets/img/image.jpg'
-import { Shortcut, Contact } from '$components'
+import { Shortcut, ContactAppLayout } from '$components'
 import { SideBar } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { user, userContext } from '$contexts'
@@ -84,7 +84,7 @@ export default function AppLayout({
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
                     <img 
-                        src={theme.palette.mode === 'light' ? bg : darkbg} 
+                        src={theme.palette.mode === 'light' && bg} 
                         style={{
                             zIndex: -2,
                             opacity: theme.palette.mode === 'light' ? 0.5 : 0.3,
@@ -176,25 +176,26 @@ export default function AppLayout({
 
                             {(!withSidebars ?? false) || (rightSideBar ?? false) &&
                                 <SideBar sx={{ flexDirection: 'row-reverse', overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' } }}>
-                                    <Box color='text.secondary' display='flex' mb={3} gap={2}>
-                                        <Typography sx={{ userSelect: 'none' }} onClick={contactsExpanded ? contactsCollapse : contactsExpand}>Contatos ({contacts})</Typography>
+                                    <Box color='text.secondary' display='flex' mb={3} gap={2} 
+                                        onClick={contactsExpanded ? contactsCollapse : contactsExpand} sx={{ cursor:'pointer' }}>
+                                        <Typography sx={{ userSelect: 'none' }} >Contatos ({contacts})</Typography>
                                         {contactsExpanded
                                             ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={contactsCollapse} />
                                             : <ExpandMore sx={{ cursor: 'pointer' }} onClick={contactsExpand} />
                                         }
                                     </Box>
                                     <Stack gap={3} sx={{ display: contactsExpanded ? 'flex' : 'none' }}>
-                                        <Contact user={{ name: 'Leonardo' }} />
-                                        <Contact user={{ name: 'Torugo' }} />
-                                        <Contact user={{ name: 'Alfa' }} />
-                                        <Contact user={{ name: 'Jhow' }} />
-                                        <Contact user={{ name: 'Rian' }} />
-                                        <Contact user={{ name: 'Kauê' }} />
-                                        <Contact user={{ name: 'Elizabeth' }} />
-                                        <Contact user={{ name: 'Luizinho' }} />
-                                        <Contact user={{ name: 'Paulo Rogério de Neves Oliveira' }} />
-                                        <Contact user={{ name: 'Fabinho' }} />
-                                        <Contact user={{ name: 'Sueli Muniz' }} />
+                                        <ContactAppLayout name={'Leonardo'} />
+                                        <ContactAppLayout name={'Torugo'} />
+                                        <ContactAppLayout name={'Alfa'} />
+                                        <ContactAppLayout name={'Jhow'} />
+                                        <ContactAppLayout name={'Rian'} />
+                                        <ContactAppLayout name={'Kauê'} />
+                                        <ContactAppLayout name={'Elizabeth'} />
+                                        <ContactAppLayout name={'Luizinho'} />
+                                        <ContactAppLayout name={'Paulo Rogério de Neves Oliveira'} />
+                                        <ContactAppLayout name={'Fabinho'} />
+                                        <ContactAppLayout name={'Sueli Muniz'} />
                                     </Stack>
                                 </SideBar>
                             }
