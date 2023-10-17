@@ -7,19 +7,18 @@ import { fetchNews } from '$features/news'
 import { type news } from '$types'
 import { useFetchDispatch } from '$hooks'
 import { HTTP_STATUS } from '$constants'
+import { useAppSelector } from '$store'
 
 export default function NewsPage(): ReactElement {
     const theme = useTheme()
-
     const status = useFetchDispatch(fetchNews())
-
     const matches = useMediaQuery(theme.breakpoints.up('md'))
+    const newsArr = useAppSelector(state => state.news.news)
 
-    const [open, setOpen] = useState(false)
-
-    const [news, setNews] = useState<news[]>([])
-
-    const [NewsAttributes, setNewsAttributes] = useState<news>({
+    const [ isLoading, setIsLoading ] = useState<boolean>(true)
+    const [ open, setOpen ] = useState(false)
+    const [ news, setNews ] = useState<news[]>([])
+    const [ NewsAttributes, setNewsAttributes ] = useState<news>({
         title: '',
         description: '',
         visibility: 'public',
@@ -52,7 +51,7 @@ export default function NewsPage(): ReactElement {
     useEffect(() => {
         (async () => {
             if (await status === HTTP_STATUS.FULFILLED) {
-
+                setIsLoading(false)
             }
         })()
 
@@ -72,22 +71,25 @@ export default function NewsPage(): ReactElement {
                     <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
                     <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                 </Container>
-                <Box sx={{ display: 'flex' }}>
-                    <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                        <News title={'ATCHINNN'} description={'Saudeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'} topic={'Saude'} data={'1 Dia'} />
-                     </Container>
+                <Box sx={{ display: 'flex', width: '100%' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
+                        {isLoading ? (
+                            <Typography sx={{ width: '100%', height: '15%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Carregando...</Typography>
+                        ) : newsArr.map(item => (
+                            <News 
+                                key={item._id}
+                                title={item.name}
+                                description={item.description}
+                                date={item.postedAt}
+                                topic='Saúde'
+                            />
+                        ))}
+                    </Box>
                     <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
                         <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem' }}>
                             <Typography sx={{ m: '5% 0 5% 5%', fontWeight: 'bold' }}>Mais Lidas</Typography>
                             <Divider />
                             <Stack sx={{ width: '100%', height: '90%', pt: '1rem' }} gap={2}>
-
                                 <Link sx={{ color: 'black', display: 'flex', width: '100%', height: '15%', alignItems: 'center', cursor: 'pointer' }}>
                                     <Typography variant='h5' sx={{ mr: '5%', color: 'gray' }}>1</Typography>
                                     <Typography variant='h6'>Titulo da noticia mais curtida</Typography>
@@ -164,7 +166,6 @@ export default function NewsPage(): ReactElement {
                             </Button>
                         </Box>
                     </Box>
-
                 </Box>
             </Modal>
         </AppLayout>

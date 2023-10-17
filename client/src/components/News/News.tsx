@@ -5,13 +5,16 @@ export default function News({
     title,
     description,
     topic,
-    data 
+    date 
 } : {
     title: string,
     description: string,
     topic?: string,
-    data?: string
+    date?: Date | string
 }) : ReactElement {
+
+    console.log(title)
+
     return (
         <Link sx={{ color: 'black', ':hover': { cursor: 'pointer' } }} >
             <Paper elevation={8} sx={{ width:'72em', height:'22em', m: '0 0 2% 0', p:'1em 0 0 1em', borderRadius:'20px' }}>
@@ -22,7 +25,7 @@ export default function News({
                         <Typography sx={{ color: 'gray', mb: '2%' }}>{topic}</Typography>
                         <Typography sx={{ mb: '3%' }} variant="h6">{title}</Typography>
                         <Typography sx={{ wordWrap: 'break-word' }}>{description}</Typography>
-                        <Typography sx={{ color: 'gray', position: 'absolute', bottom: '0' }}>{data}</Typography>
+                        <Typography sx={{ color: 'gray', position: 'absolute', bottom: '0' }}>{date?.toString()}</Typography>
                     </Box>
                 </Box>
             </Paper>
