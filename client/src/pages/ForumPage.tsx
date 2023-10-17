@@ -1,5 +1,5 @@
 import { Post } from '$components'
-import { getForum } from '$features/forum/forum-slicer'
+import { getForum } from '$features/forum'
 import { AppLayout } from '$layout'
 import { useAppDispatch, useAppSelector } from '$store'
 import { type Forum } from '$types'
@@ -16,7 +16,7 @@ export default function ForumPage(): ReactElement {
         (async () => {
             await dispatch(getForum(id ?? ''))
         })()
-    }, [ dispatch, id ])
+    }, [dispatch, id])
 
     return (
         <AppLayout withSidebars>

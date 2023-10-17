@@ -3,7 +3,7 @@ import { Box, Button, Container, Divider, Link, Modal, Paper, Stack, TextField, 
 import { AppLayout } from '$layout'
 import { FilterAndConfig, News } from '$components'
 import { type ReactElement, useEffect, useState } from 'react'
-import { fetchNews } from '$features/news/news-slicer'
+import { fetchNews } from '$features/news'
 import { type news } from '$types'
 import { useAppDispatch } from '$store'
 
@@ -15,11 +15,11 @@ export default function NewsPage(): ReactElement {
 
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
-    const [ open, setOpen ] = useState(false)
+    const [open, setOpen] = useState(false)
 
-    const [ news, setNews ] = useState<news[]>([])
+    const [news, setNews] = useState<news[]>([])
 
-    const [ NewsAttributes, setNewsAttributes ] = useState<news>({
+    const [NewsAttributes, setNewsAttributes] = useState<news>({
         title: '',
         description: '',
         visibility: 'public',
@@ -59,14 +59,14 @@ export default function NewsPage(): ReactElement {
                 handleClose()
             }
         })
-    }, [ dispatch ])
+    }, [dispatch])
 
     return (
         <AppLayout withSidebars>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%', mb: '2%' }}>
                     <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
-                    <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen}/>
+                    <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                 </Container>
                 <Box sx={{ display: 'flex' }}>
                     <Container sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >

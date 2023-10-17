@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material'
 import { useEffect, type ReactElement, useState } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
 import { useAppDispatch, useAppSelector } from '$store'
-import { createForum, fetchForum } from '$features/forum/forum-slicer'
+import { createForum, fetchForum } from '$features/forum'
 import { type User, type Forum } from '$types'
 import { useFetchDispatch } from '$hooks'
 import { HTTP_STATUS } from '$constants'
@@ -14,9 +14,9 @@ import { ForumIconSkeleton } from '$skeletons'
 export default function ForumHome(): ReactElement {
     const theme = useTheme()
 
-    const [ open, setOpen ] = useState<boolean>(false)
-    const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
-    const [ isLoading, setIsLoading ] = useState<boolean>(true)
+    const [open, setOpen] = useState<boolean>(false)
+    const [loadingOpen, setLoadingOpen] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const handleOpen = (): void => { setOpen(true) }
     const handleClose = (): void => { setOpen(false) }
@@ -30,7 +30,7 @@ export default function ForumHome(): ReactElement {
     const forumState = useAppSelector(state => state.forum)
     const forumsArr: Forum[] = forumState.forums
 
-    const [ forumForm, setForumForm ] = useState<{ title: string, description: string, topic: string, createdBy: User | string }>({
+    const [forumForm, setForumForm] = useState<{ title: string, description: string, topic: string, createdBy: User | string }>({
         title: '',
         description: '',
         topic: '',
@@ -55,7 +55,7 @@ export default function ForumHome(): ReactElement {
             if (await status === HTTP_STATUS.REJECTED)
                 alert('Ops! Algo deu errado!')
         })()
-    }, [ status ])
+    }, [status])
 
     console.log(forumsArr)
 
@@ -81,11 +81,11 @@ export default function ForumHome(): ReactElement {
                 <ForumWrapper>
                     {isLoading ? (
                         <Stack width='100rem' gap={2}>
-                            {[ 0, 1, 2 ,3 ,4 , 5, 6, 7, 8 ].map(item => (
+                            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(item => (
                                 <ForumIconSkeleton key={item} />
                             ))}
                         </Stack>
-                    ) : 
+                    ) :
                         forumsArr.map((forum: Forum) => (
                             <ForumIcon
                                 key={forum._id}
@@ -130,7 +130,7 @@ export default function ForumHome(): ReactElement {
                     </Box>
                 </>
             </FormModal>
-            <LoadingBackdrop 
+            <LoadingBackdrop
                 open={loadingOpen}
                 handleClose={handleLoadingClose}
             />

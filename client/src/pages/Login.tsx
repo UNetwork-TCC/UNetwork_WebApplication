@@ -2,13 +2,13 @@ import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography } from
 import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop } from '$layout'
 import { Auth } from '$components'
-import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
-import { login } from '$features/auth/auth-slicer'
+import { login } from '$features/auth'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
 import { useAppDispatch } from '$store'
 import { useNavigate } from 'react-router-dom'
 import { GET_TYPE, HTTP_STATUS } from '$constants'
+import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
+import * as Yup from 'yup'
 
 function LoginForm(): ReactElement {
     const validationSchema = Yup.object().shape({
@@ -30,24 +30,24 @@ function LoginForm(): ReactElement {
 
     const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
         handleOpenLoading()
-        
+
         try {
             const status = await dispatch(login({
                 email: user.email.toLowerCase(),
-                password: user.password 
+                password: user.password
             })).then(res => GET_TYPE(res.type))
-            
+
             if (status === HTTP_STATUS.FULFILLED) {
                 navigate('/app')
             } else if (status === HTTP_STATUS.REJECTED) {
                 handleCloseLoading()
                 handleSnackbarOpen()
             }
-            
+
         } catch (error) {
             setTimeout((err: any) => {
                 handleCloseLoading()
-                console.log(err)    
+                console.log(err)
             }, 2000)
         }
 
@@ -57,10 +57,10 @@ function LoginForm(): ReactElement {
     return (
         <>
             <Box width='85.3%' p={2.5}>
-                <Formik 
+                <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={validationSchema}
-                    style={{ width: '100%' }} 
+                    style={{ width: '100%' }}
                     onSubmit={handleSubmit}
                 >
                     {({ errors, touched }) => (
@@ -90,7 +90,7 @@ function LoginForm(): ReactElement {
                 handleClose={handleCloseLoading}
                 open={openLoading}
             />
-            <Snackbar 
+            <Snackbar
                 open={snackbarOpen}
                 onClose={handleSnackbarClose}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

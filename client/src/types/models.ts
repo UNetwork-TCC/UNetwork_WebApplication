@@ -72,7 +72,7 @@ export interface Post {
   }
   postedBy: User
   postedAt: Date
-  postedIn: Group | Chat | Forum
+  postedIn: Group | Chat | Forum | string
   comments: Message[]
   likes: User[]
   views: User[]

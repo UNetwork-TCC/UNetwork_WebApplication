@@ -7,28 +7,28 @@ import { type ReactElement, useEffect, useState } from 'react'
 import { gapi } from 'gapi-script'
 import { LoadingBackdrop } from '$layout'
 import { useAppDispatch } from '$store'
-import { login, signup } from '$features/auth/auth-slicer'
+import { login, signup } from '$features/auth'
 
 export default function GoogleAuth(): ReactElement {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
+    const [loadingOpen, setLoadingOpen] = useState<boolean>(false)
 
     const googleSuccess: any = async (response: GoogleLoginResponse): Promise<void> => {
         const result = response?.profileObj
         // const token = response?.tokenId
 
         try {
-            await dispatch(signup({ 
+            await dispatch(signup({
                 name: result.name,
                 email: result.email.toLowerCase(),
                 password: result.googleId
             }))
 
-            const status = await dispatch(login({ 
+            const status = await dispatch(login({
                 email: result.email.toLowerCase(),
-                password: result.googleId 
+                password: result.googleId
             })).then(res => GET_TYPE(res.type))
 
             if (status === HTTP_STATUS.FULFILLED)

@@ -9,7 +9,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { useAppDispatch } from '$store'
-import { login, signup } from '$features/auth/auth-slicer'
+import { login, signup } from '$features/auth'
 import { GET_TYPE, HTTP_STATUS } from '$constants'
 import { Alert } from '@mui/material'
 
@@ -25,9 +25,9 @@ function RegisterForm(): ReactElement {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const [ open, setOpen ] = useState(false)
-    const [ openLoading, setOpenLoading ] = useState(false)
-    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [openLoading, setOpenLoading] = useState(false)
+    const [snackbarOpen, setSnackbarOpen] = useState(false)
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
@@ -51,7 +51,7 @@ function RegisterForm(): ReactElement {
             if (status === HTTP_STATUS.FULFILLED) {
                 const loginStatus = await dispatch(login({
                     email: user.email.toLowerCase(),
-                    password: user.password 
+                    password: user.password
                 })).then(res => GET_TYPE(res.type))
 
                 if (loginStatus === HTTP_STATUS.FULFILLED) {
@@ -67,7 +67,7 @@ function RegisterForm(): ReactElement {
 
         } catch (error) {
             handleCloseLoading()
-            console.log(error)            
+            console.log(error)
         }
     }
 
@@ -78,7 +78,7 @@ function RegisterForm(): ReactElement {
                     <Formik
                         initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
                         validationSchema={validationSchema}
-                        style={{ width: '100%' }} 
+                        style={{ width: '100%' }}
                         onSubmit={handleSubmit}
                     >
                         {({ errors, touched }) => (
@@ -104,7 +104,7 @@ function RegisterForm(): ReactElement {
                                             )}
                                         </Box>
                                         <Box width='100%'>
-                                            <Field as ={TextField} fullWidth name='confirmPassword' label='Repetir senha' required type='password' />
+                                            <Field as={TextField} fullWidth name='confirmPassword' label='Repetir senha' required type='password' />
                                             {errors.confirmPassword && touched.confirmPassword && (
                                                 <p style={{ color: 'red' }}>{errors.confirmPassword}</p>
                                             )}
@@ -118,16 +118,16 @@ function RegisterForm(): ReactElement {
                                     <Box width='60%' display='flex' alignItems='center'>
                                         <Checkbox required />
                                         <Typography>Li e aceito os
-                                            <Typography 
-                                                onClick={handleOpen} 
+                                            <Typography
+                                                onClick={handleOpen}
                                                 sx={{
                                                     cursor: 'pointer',
                                                     ':hover': {
                                                         textDecoration: 'underline'
-                                                    } 
+                                                    }
                                                 }} color='primary.main'
-                                                ml={0.5} 
-                                                component='span' 
+                                                ml={0.5}
+                                                component='span'
                                             >
                                                 Termos de Serviço e Política de Privacidade
                                             </Typography>

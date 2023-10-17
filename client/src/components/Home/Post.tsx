@@ -2,6 +2,7 @@ import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert } from '@m
 import { Avatar, Box, Card, IconButton, MenuItem, Typography } from '@mui/material'
 import React, { type ReactElement, useState } from 'react'
 import { CustomMenu } from '$layout'
+import { type Picture } from '$types'
 
 export default function Post({ 
     title,
@@ -13,7 +14,10 @@ export default function Post({
 } : {
     title: string,
     date: Date | string,
-    content: string,
+    content: {
+        text?: string,
+        picture?: Picture
+    },
     degree?: string,
     img?: string,
     user: { name: string, avatar?: string }
@@ -100,7 +104,7 @@ export default function Post({
                     </CustomMenu>
                 </Box>
                 <Box display='flex' gap={2.5} flexDirection='column' mt={2.5} mb={5}>
-                    <Typography variant='body1' fontSize='1.2rem'>{content}</Typography>
+                    <Typography variant='body1' fontSize='1.2rem'>{content?.text}</Typography>
                     {img &&
                         <img src={img} alt={'imagem de ' + user.name} />
                     }

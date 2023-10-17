@@ -2,20 +2,21 @@ import { Avatar, Box, IconButton, Link as MuiLink, Stack, useTheme } from '@mui/
 import { ClipsWrapper, Post } from '$components'
 import { Add, AttachFile, ArrowDropUp } from '@mui/icons-material'
 import { AppLayout, CustomInput } from '$layout'
+import { useEffect, type ReactElement, useState } from 'react'
+import { PostSkeleton } from '$skeletons'
+import { useFetchDispatch } from '$hooks'
+import { fetchPosts } from '$features/post'
+import { HTTP_STATUS } from '$constants'
+import { useAppSelector } from '$store'
 import roubo from '$assets/img/paraPiada/roubo.jpg'
 import james from '$assets/img/paraPiada/james.jpg'
-import { type ReactElement } from 'react'
-
-// import { useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom'
-
 export default function Home(): ReactElement {
     const theme = useTheme()
+    const status = useFetchDispatch(fetchPosts())
 
-    // useEffect(() => {
-    //     if (!localStorage.getItem('user'))
-    //         navigate('/auth')
-    // })
+    const posts = useAppSelector(state => state.post.posts)
+
+    const [ isLoading, setIsLoading ] = useState<boolean>(true)
 
     function StyledButton({ name, icon }: { name: string, icon: React.ReactNode }): ReactElement {
         return (
@@ -27,9 +28,17 @@ export default function Home(): ReactElement {
         )
     }
 
+    useEffect(() => {
+        (async () => {
+            if (await status === HTTP_STATUS.FULFILLED)
+                setIsLoading(false)
+
+        })()
+    }, [ status ])
+
     return (
         <AppLayout withSidebars>
-            <Box display='flex' justifyContent='start' alignItems='center' flexDirection='column' p={3} mt={5} width='70%' height='100%' id="topo" sx={{ m:'0 12.5%' }}>
+            <Box display='flex' justifyContent='start' alignItems='center' flexDirection='column' p={3} mt={5} width='70%' height='100%' id="topo" sx={{ m: '0 12.5%' }}>
                 <Box width='100%' id="inicio">
                     <ClipsWrapper />
                     <CustomInput
@@ -42,11 +51,11 @@ export default function Home(): ReactElement {
                         iconColor='#dbdbdb'
                         icon={<Add />}
                     />
-                    <Box 
-                        sx={{ 
+                    <Box
+                        sx={{
                             display: 'flex',
                             justifyContent: 'end',
-                            alignItems: 'center', 
+                            alignItems: 'center',
                             position: 'relative',
                             width: '50px',
                             bottom: 47,
@@ -57,16 +66,16 @@ export default function Home(): ReactElement {
                             }
                         }}>
                         <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
-                        <Avatar 
-                            component='label' 
-                            htmlFor='file' 
+                        <Avatar
+                            component='label'
+                            htmlFor='file'
                             sx={{
                                 cursor: 'pointer',
                                 transition: '.3s',
                                 bgcolor: 'primary.main',
                                 ':hover': {
-                                    bgcolor: 'primary.light' 
-                                } 
+                                    bgcolor: 'primary.light'
+                                }
                             }}
                         >
                             <AttachFile />
@@ -74,32 +83,28 @@ export default function Home(): ReactElement {
                     </Box>
                 </Box>
                 <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
-                    <Post
-                        title={'Roubos gerais'}
-                        date={'3 horas atrás'}
-                        content={'aaaaaaaaaaaaaaaaaa teste de tudoaaaaaaaaaaaa FLExivelllllllllllllllllllllllll  aaaaaaaaaaaaaaaaaaaa  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
-                        user={{ name: 'Filhos do Jhonatas' }}
-                    />
-
-                    <Post
-                        title={'Piada'}
-                        date={'3 horas atrás'}
-                        content='Simplesmente roubado velho:'
-                        user={{ name: '3°DS' }}
-                        img={roubo}
-                    />
-
-                    <Post
-                        title={'Piada'}
-                        date={'3 horas atrás'}
-                        content='Ô JÂIMESS 🗣🗣, EU QUERO UMA SALADA DE FRUATA 🍌🍏🍇🍓🤤. OLHA QUE HABILIDADE 😏🤠🧐 OLHA QUE HABILIDADE 😏🤠🧐 EU QUERO UMA SALADA DE FRUTA, JAMES 😉🍏🍇. NO CAPRICHO 😋👌🏼. DE 5 🖐🏼, DE 7 🖐🏼✌🏼, DE 10 🖐🏼🤚🏼 ? ME DA UMA DE 5 🤚🏼. AQUI, TÁ NA MÃO 👨🏼‍🍳🤝🍹. TÁ AQUI 🍹. ISSO JAMES, MUITO OBRIGADO 😎🤝. BRIGADO 👌🏼👍🏼. DEUS ABENÇOE 🙏🏼🙏🏼. 👉🏼👉🏼👉🏼ESSE É O JÂIMESS👈🏼👈🏼👈🏼😎😎. HÃÃ ? 🤨🤨. DA SALADA DE FRUTA 🍇🍹👨🏼‍🍳 O ARTIXTA DE CIRCO 🎪 😃'
-                        user={{ name: '3°DS' }}
-                        img={james}
-                    />
+                    { isLoading
+                        ? (
+                            <>
+                                <PostSkeleton />
+                                <PostSkeleton />
+                                <PostSkeleton />
+                            </>   
+                        )
+                        : posts.map(post => (
+                            <Post
+                                key={post._id}
+                                title={post.name}
+                                content={post.content}
+                                date={post.postedAt}
+                                user={{ name: post.postedBy?.name }}
+                            />
+                        ))
+                    }
                 </Box>
             </Box>
-            <Box sx={{ height: '100%', display: 'flex', position: 'sticky', top: 0, left: 200,flexDirection:'column-reverse' }}>
-                <Stack sx={{ position:'relative', bottom: 40 }} gap={6}>
+            <Box sx={{ height: '100%', display: 'flex', position: 'sticky', top: 0, left: 200, flexDirection: 'column-reverse' }}>
+                <Stack sx={{ position: 'relative', bottom: 40 }} gap={6}>
                     <StyledButton
                         name='topo'
                         icon={<ArrowDropUp />}
@@ -111,7 +116,7 @@ export default function Home(): ReactElement {
                     />
                 </Stack>
             </Box>
-                
+
         </AppLayout>
     )
 }
