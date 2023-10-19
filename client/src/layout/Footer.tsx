@@ -48,7 +48,6 @@ export default function Footer(): ReactElement {
     return (
         <Box 
             sx={{ 
-                background: `url(${FooterBackground})`,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -66,6 +65,15 @@ export default function Footer(): ReactElement {
                 }
             }}
         >
+            <img 
+                src={FooterBackground} 
+                style={{
+                    position: 'absolute',
+                    height: '90%',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover'
+                }} 
+            />
             <Box 
                 sx={{
                     [theme.breakpoints.down('sm')]: {

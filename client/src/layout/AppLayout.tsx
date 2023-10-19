@@ -83,18 +83,20 @@ export default function AppLayout({
         <userContext.Provider value={userContextValue}>
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
-                    <img 
-                        src={theme.palette.mode === 'light' && bg} 
-                        style={{
-                            zIndex: -2,
-                            opacity: theme.palette.mode === 'light' ? 0.5 : 0.3,
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            width: '100%',
-                            height: '100%'
-                        }} 
-                    />
+                    {theme.palette.mode === 'light' &&
+                        <img 
+                            src={bg} 
+                            style={{
+                                zIndex: -2,
+                                opacity: 'light',
+                                position: 'absolute',
+                                left: 0,
+                                top: 0,
+                                width: '100%',
+                                height: '100%'
+                            }} 
+                        />
+                    }
                     <Box sx={{ height: '95vh', width: '95vw', borderRadius: '1rem', ...boxStyles }} className={classes.wrapper}>
                         <Header
                             minimize={minimize}

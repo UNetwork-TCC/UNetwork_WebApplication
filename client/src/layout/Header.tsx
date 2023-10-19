@@ -104,8 +104,9 @@ export default function Header({
 
     return (
         <>
+            {/* #2b2430 <--- Opção de cor */}
             <Box>
-                <Box bgcolor={theme.palette.mode === 'light' ? 'white' : 'background.paper'} >
+                <Box bgcolor={theme.palette.mode === 'light' ? 'white' : '#333'} >
                     <Box 
                         width='100%'
                         gap={2}
