@@ -31,7 +31,7 @@ function App() {
                             <Route path='/app' element={<Home />} />
                             <Route path='/app/favorites' element={<FavoritesPage />} />
                             <Route path='/app/materials' element={<MaterialsPage />} />
-                            <Route path='/app/chat' element={<ChatPage />} />
+                            <Route path='/app/chat/:username' element={<ChatPage />} /> 
                             <Route path='/app/news' element={<NewsPage />} />
                             <Route path='/app/classes' element={<ClassesPage />} />
                             <Route path='/app/*' element={<Navigate to='/error' />} />

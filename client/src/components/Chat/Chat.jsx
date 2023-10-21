@@ -9,8 +9,9 @@ import InputBase from '@mui/material/InputBase'
 import Box from '@mui/material/Box'
 import { useTheme } from '@emotion/react'
 import io from 'socket.io-client'
+import { useParams } from 'react-router-dom'
 
-export default function Chat() {
+export default function Chat({handleSubmit}) {
 
     const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
@@ -25,13 +26,8 @@ export default function Chat() {
 
     const [messageList, setMessageList] = useState([])
 
-    const handleSubmit = async () => {
-        const socket = await io.connect('https://3001-unetworktcc-unetworkweb-48q4wcnk4xb.ws-us105.gitpod.io')
-        
-        console.log(socket);
-        socket.emit('set_username', { name: 'Vitor', age: 24 })
-        socket.on('message', socket => alert('Seja bem-vindo!: ' + socket.name))
-    }
+
+    
 
     return (
 
@@ -44,7 +40,7 @@ export default function Chat() {
                         p: '0 2% 0 0.7vh', display: 'flex', alignItems: 'center', width: '100%', height: '100%', borderRadius: '15px',
                         bgcolor: 'white',
                         // order:'1px solid rgba(128,128,128, 0.5)'
-                        // bgcolor:'rgba(128,128,128,0.1)', 
+                        // bgcolor:'rgba(128,128,128,0.1)',
                     }
                         :
                         { p: '0 0 0 6px', display: 'flex', alignItems: 'center', width: 400, border: '1px gray solid', borderRadius: '20px' }}

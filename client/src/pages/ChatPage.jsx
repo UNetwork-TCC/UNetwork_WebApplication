@@ -5,6 +5,8 @@ import CustomInput from '../layout/CustomInput'
 import { Add, Search, VideocamOutlined, LocalPhone, Settings } from '@mui/icons-material'
 import { useState } from 'react'
 import { CustomMenu } from '../layout'
+import { useParams } from 'react-router-dom'
+import { io } from 'socket.io-client'
 
 
 export default function ChatPage() {
@@ -20,12 +22,13 @@ export default function ChatPage() {
             handleClose()
         }
     }
-
+    
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ menuContent, setMenuContent ] = useState(null)
-
+    
     const open = Boolean(anchorEl)
-
+    const [chatArr, setChatArr] = useState([])
+    
     const handleClick = (e, elements, onClickEvents = elements.map(() => handleClose), icons = null) => {
         const mapedElements = elements.map((e, i) =>
             <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{e}</MenuItem>
@@ -39,6 +42,21 @@ export default function ChatPage() {
     const handleClose = () => {
         setAnchorEl(null)
     }
+
+    const {username} = useParams()
+    const room = 'leon'
+    console.log(username);
+    const handleSubmit = async () => {
+        const socket = await io.connect('https://3001-unetworktcc-unetworkweb-0cx5kotb7wu.ws-us105.gitpod.io')
+        
+        const message = prompt('digita a mensagem truta:')
+
+        console.log(socket);
+        socket.emit('select_room', {room, username})
+        socket.emit('message', message)
+        socket.on('message', data => setChatArr([...chatArr, data]))
+    }
+
 
     return (
         <AppLayout withSidebars>
@@ -128,11 +146,11 @@ export default function ChatPage() {
                     </Box>
                     <Divider flexItem />
                     <Box sx={{ width: '100%', height: '78%', display: 'flex', alignItems: 'center' }}>
-
+                        {chatArr}
                     </Box>
                     <Divider flexItem sx={{}} />
                     <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
-                        <Chat />
+                        <Chat handleSubmit={handleSubmit} />
                     </Box>
                     <CustomMenu
                         anchorEl={anchorEl}
