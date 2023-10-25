@@ -56,7 +56,7 @@ export default function Chat(): ReactElement {
                         color: 'white',
                         bgcolor: '#673AB7',
                         border: '1px solid rgba(0, 0, 0, 0.15)',
-                        p: 2.5,
+                        p: 2,
                         cursor: 'pointer',
                         transition: '.3s ease-in-out',
                         ml: '1%'

@@ -29,6 +29,7 @@ import ClipComponent from './Home/ClipComponent'
 import FeedbackForm from './Home/FeedbackForm'
 import GoogleAuth from './Auth/GoogleAuth'
 import ContactAppLayout from './Home/Contact'
+import Message from './Chat/Message'
 
 export {
     DiscoverSection,
@@ -38,6 +39,7 @@ export {
     ComunitySection,
     ClipsWrapper,
     ForumWrapper,
+    Message,
     Chat,
     LittleNews,
     ForumIcon,

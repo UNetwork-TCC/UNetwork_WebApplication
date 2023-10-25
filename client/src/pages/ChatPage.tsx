@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Divider, IconButton, MenuItem, Modal, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { Chat, ChatArea, Contact, ContactsArea } from '$components'
+import { Chat, ChatArea, Contact, ContactsArea, Message } from '$components'
 import { CustomInput, AppLayout, CustomMenu } from '$layout'
 import { Add, Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Report } from '@mui/icons-material'
 import { type ReactElement, useState } from 'react'
@@ -131,9 +131,7 @@ export default function ChatPage(): ReactElement {
                 <Divider orientation='vertical' role="presentation" flexItem sx={{ height: '100%' }} />
                 <ChatArea>
                     <Box sx={{ width: '100%', height: '11%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
-                        <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem' }}>
-
-                        </Avatar>
+                        <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem' }} />
                         <Box sx={{ width: '75%', maxWidth: '75%' }}>
                             <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%' }} >Username</Typography>
                         </Box>
@@ -158,9 +156,39 @@ export default function ChatPage(): ReactElement {
                         </Box>
                     </Box>
                     <Divider flexItem />
-                    <Box sx={{ width: '100%', height: '78%', display: 'flex', alignItems: 'center' }}>
-
+                    {/* MessageWrapper */}
+                    <Box 
+                        sx={{
+                            p: 2.5,
+                            width: '100%',
+                            height: '78%',
+                            display: 'flex',
+                            alignItems: 'start',
+                            flexDirection: 'column' 
+                        }}
+                    >
+                        <Message 
+                            text='Eae mano, tranquilo?' 
+                            messageFrom='him'
+                        />
+                        <Message 
+                            text='To suave man, e vc?'
+                            messageFrom='me'
+                        />
+                        <Message 
+                            text='tranquilo?'
+                            messageFrom='me'
+                        />
+                        <Message 
+                            text='tranquilo'
+                            messageFrom='him'
+                        />
+                        <Message 
+                            text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
+                            messageFrom='him'
+                        />
                     </Box>  
+                    {/* end */}
                     <Divider flexItem sx={{}} />
                     <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
                         <Chat />

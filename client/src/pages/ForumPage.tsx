@@ -16,7 +16,7 @@ export default function ForumPage(): ReactElement {
         (async () => {
             await dispatch(getForum(id ?? ''))
         })()
-    }, [dispatch, id])
+    }, [ dispatch, id ])
 
     return (
         <AppLayout withSidebars>

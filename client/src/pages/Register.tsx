@@ -25,9 +25,9 @@ function RegisterForm(): ReactElement {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const [open, setOpen] = useState(false)
-    const [openLoading, setOpenLoading] = useState(false)
-    const [snackbarOpen, setSnackbarOpen] = useState(false)
+    const [ open, setOpen ] = useState(false)
+    const [ openLoading, setOpenLoading ] = useState(false)
+    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }

@@ -13,7 +13,7 @@ export default function GoogleAuth(): ReactElement {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const [loadingOpen, setLoadingOpen] = useState<boolean>(false)
+    const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
 
     const googleSuccess: any = async (response: GoogleLoginResponse): Promise<void> => {
         const result = response?.profileObj

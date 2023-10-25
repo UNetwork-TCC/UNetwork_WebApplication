@@ -1,7 +1,7 @@
-import { type SxProps, useMediaQuery, useTheme } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Box, Modal } from "@mui/material";
-import { useEffect, type FormEventHandler, type ReactElement } from "react";
+import { type SxProps, useMediaQuery, useTheme } from '@mui/material'
+import { Typography } from '@mui/material'
+import { Box, Modal } from '@mui/material'
+import { useEffect, type FormEventHandler, type ReactElement } from 'react'
 
 export default function FormModal({
     open,
