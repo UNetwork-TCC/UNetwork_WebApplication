@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Divider, IconButton, MenuItem, Modal, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { Chat, ChatArea, Contact, ContactsArea, Message } from '$components'
+import { Chat, ChatArea, Contact, ContactsArea, MessageWrapper } from '$components'
 import { CustomInput, AppLayout, CustomMenu } from '$layout'
-import { Add, Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Report } from '@mui/icons-material'
+import { Add, Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Delete, Report } from '@mui/icons-material'
 import { type ReactElement, useState } from 'react'
 import { type contact } from '$types'
 
@@ -17,6 +17,10 @@ export default function ChatPage(): ReactElement {
 
         item2: () => {
             console.log('tcchau')
+            handleClose()
+        },
+
+        item4: () => {
             handleClose()
         }
     }
@@ -146,8 +150,8 @@ export default function ChatPage(): ReactElement {
                                 onClick={
                                     e => { handleClick(e, 
                                         [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear' ],
-                                        [ onClickEvents.item1, onClickEvents.item2 ],
-                                        [ <AccountBox key={null}/>,<Search key={null}/>, <FmdGood key={null}/>, null ,<Report key={null}/>, <Block key={null}/> ]
+                                        [ onClickEvents.item1, onClickEvents.item2, () => {}, onClickEvents.item4 ],
+                                        [ <AccountBox key={null}/>,<Search key={null}/>, <FmdGood key={null}/>, <Delete key={null} />,<Report key={null}/>, <Block key={null}/> ]
                                     ) }
                                 }
                             >
@@ -157,37 +161,7 @@ export default function ChatPage(): ReactElement {
                     </Box>
                     <Divider flexItem />
                     {/* MessageWrapper */}
-                    <Box 
-                        sx={{
-                            p: 2.5,
-                            width: '100%',
-                            height: '78%',
-                            display: 'flex',
-                            alignItems: 'start',
-                            flexDirection: 'column' 
-                        }}
-                    >
-                        <Message 
-                            text='Eae mano, tranquilo?' 
-                            messageFrom='him'
-                        />
-                        <Message 
-                            text='To suave man, e vc?'
-                            messageFrom='me'
-                        />
-                        <Message 
-                            text='tranquilo?'
-                            messageFrom='me'
-                        />
-                        <Message 
-                            text='tranquilo'
-                            messageFrom='him'
-                        />
-                        <Message 
-                            text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
-                            messageFrom='him'
-                        />
-                    </Box>  
+                    <MessageWrapper />
                     {/* end */}
                     <Divider flexItem sx={{}} />
                     <Box sx={{ width: '100%', height: '10%', display: 'flex', pt: '2%' }}>
