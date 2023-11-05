@@ -63,6 +63,7 @@ export default function Post({
             display: 'flex',
             alignItems: 'center',
             fontSize: '10px',
+            bgcolor: theme.palette.mode === 'dark' && '#28242b',
             mb: '3em'
         }}>
             <Box sx={{ width: '100%', height: '100%' }} pt={6} pb={6} pl={4} pr={4}>
@@ -71,7 +72,7 @@ export default function Post({
                         <Box height='5.6em'>
                             <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
                                 {user?.avatar ?
-                                    <img src={user?.avatar} alt="avatar" />
+                                    <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.avatar} alt="avatar" />
                                     :
                                     <Avatar />
                                 }
@@ -175,7 +176,10 @@ export default function Post({
                                         <Avatar sx={{ borderRadius: 3.5, position: 'relative', right: '.75em', zIndex: 2 }} variant='rounded'>
 
                                         </Avatar>
-                                        <Avatar sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }} variant={variant}>
+                                        <Avatar 
+                                            sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }} 
+                                            variant={variant}
+                                        >
                                             +11
                                         </Avatar>
                                     </Box>

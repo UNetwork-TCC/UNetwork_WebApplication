@@ -30,7 +30,7 @@ export default function Message({
         messageStyle = {
             ...messageStyle,
             bgcolor: theme.palette.mode === 'dark' ?
-                grey[800] 
+                '#444047' 
                 :
                 theme.palette.background.paper
         }
