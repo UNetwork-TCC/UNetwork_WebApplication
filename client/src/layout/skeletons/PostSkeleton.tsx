@@ -15,7 +15,7 @@ export default function PostSkeleton(): ReactElement {
                     md: '25rem',
                     xl: '20rem'
                 },
-                width: '100%',
+                width: '75%',
                 borderRadius: '20px',
                 fontSize: '10px',
                 mb: '3em',

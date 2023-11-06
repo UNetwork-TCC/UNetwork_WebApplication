@@ -30,10 +30,12 @@ import FeedbackForm from './Home/FeedbackForm'
 import GoogleAuth from './Auth/GoogleAuth'
 import ContactAppLayout from './Home/Contact'
 import Message from './Chat/Message'
+import MessageWrapper from './Chat/MessageWrapper'
 
 export {
     DiscoverSection,
     AboutSection,
+    MessageWrapper,
     ClipComponent,
     GoogleAuth,
     ComunitySection,

@@ -1,18 +1,16 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert } from '@mui/icons-material'
-import { Avatar, Box, Card, IconButton, MenuItem, Typography } from '@mui/material'
+import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown } from '@mui/icons-material'
+import { Avatar, Box, Card, IconButton, MenuItem, Typography, useTheme } from '@mui/material'
 import React, { type ReactElement, useState } from 'react'
 import { CustomMenu } from '$layout'
 import { type Picture } from '$types'
 
 export default function Post({ 
-    title,
     date,
     content,
     degree,
     img,
     user
 } : {
-    title: string,
     date: Date | string,
     content: {
         text?: string,
@@ -22,8 +20,9 @@ export default function Post({
     img?: string,
     user: { name: string, avatar?: string }
 }) : ReactElement {
-
+    const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
+    const [ contentTextLength, setContentTextLength ] = useState(content?.text?.length)
 
     const variant: any = 'iconWrapper'
 
@@ -58,21 +57,22 @@ export default function Post({
 
     return (
         <Card variant="elevation" elevation={2} sx={{
-            minHeight: '15rem',
-            width: '100%',
-            borderRadius: '20px',
+            minHeight: '40rem',
+            width: '75%',
+            borderRadius: '15px',
             display: 'flex',
             alignItems: 'center',
             fontSize: '10px',
+            bgcolor: theme.palette.mode === 'dark' && '#28242b',
             mb: '3em'
         }}>
             <Box sx={{ width: '100%', height: '100%' }} pt={6} pb={6} pl={4} pr={4}>
-                <Box mb={2.5} sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box mb='1rem' sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Box height='5.6em'>
                             <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
                                 {user?.avatar ?
-                                    <img src={user?.avatar} alt="avatar" />
+                                    <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.avatar} alt="avatar" />
                                     :
                                     <Avatar />
                                 }
@@ -103,48 +103,88 @@ export default function Post({
                         {menuContent}
                     </CustomMenu>
                 </Box>
-                <Box display='flex' gap={2.5} flexDirection='column' mt={2.5} mb={5}>
-                    <Typography variant='body1' fontSize='1.2rem'>{content?.text}</Typography>
-                    {img &&
-                        <img src={img} alt={'imagem de ' + user.name} />
-                    }
-                </Box>
-                <Box display='flex' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
-                    <Box display='flex' gap={2}>
-                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
-                            <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
-                                {favoriteClicked ?
-                                    <Favorite sx={{ color: 'red' }} /> :
-                                    <FavoriteBorder/>
-                                }
-                            </IconButton>
-                        </Avatar>
-                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
-                            <IconButton>
-                                <ChatBubbleRounded />
-                            </IconButton>
-                        </Avatar>
-
-                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
-                            <IconButton>
-                                <Reply sx={{ transform: 'scaleX(-1)' }} />
-                            </IconButton>
-                        </Avatar>
+                <Box width='100%' height='100%'>
+                    <Box
+                        sx={{
+                            minHeight: '70%',
+                            [theme.breakpoints.down('xl')]: {
+                                minHeight: '60%'
+                            }
+                        }}
+                        minHeight='70%' 
+                        display='flex' 
+                        gap='1rem' 
+                        flexDirection='column' 
+                        mt='1rem' 
+                        mb='2rem'
+                    >
+                        <Typography variant='body1' fontSize='1rem'>
+                            {contentTextLength !== undefined && contentTextLength >= 999 ? (
+                                <>
+                                    {content?.text?.substring(0, 999) + '...'}
+                                    <ArrowDropDown sx={{ cursor: 'pointer' }} onClick={() => { setContentTextLength(undefined) }} />
+                                </>
+                            ) : content?.text
+                            }
+                        </Typography>
+                        {img &&
+                            <img src={img} alt={'imagem de ' + user.name} />
+                        }
                     </Box>
                     <Box>
-                        <Box display='flex'>
-                            <Avatar sx={{ borderRadius: 3.5, position: 'relative', left: '.75em', zIndex: 1 }} variant='rounded'>
+                        <Box
+                            display='flex'
+                            alignItems='end'
+                            width='100%'
+                            sx={{
+                                height: '10%',
+                                [theme.breakpoints.down('xl')]: {
+                                    height: '5%'
+                                }
+                            }}
+                        >
+                            <Box display='flex' width='100%' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
+                                <Box display='flex' gap={2}>
+                                    <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                        <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
+                                            {favoriteClicked ?
+                                                <Favorite sx={{ color: 'red' }} /> :
+                                                <FavoriteBorder/>
+                                            }
+                                        </IconButton>
+                                    </Avatar>
+                                    <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                        <IconButton>
+                                            <ChatBubbleRounded />
+                                        </IconButton>
+                                    </Avatar>
 
-                            </Avatar>
-                            <Avatar sx={{ borderRadius: 3.5, position: 'relative', top: '.5em', zIndex: 1 }} variant='rounded'>
+                                    <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                        <IconButton>
+                                            <Reply sx={{ transform: 'scaleX(-1)' }} />
+                                        </IconButton>
+                                    </Avatar>
+                                </Box>
+                                <Box>
+                                    <Box display='flex'>
+                                        <Avatar sx={{ borderRadius: 3.5, position: 'relative', left: '.75em', zIndex: 1 }} variant='rounded'>
 
-                            </Avatar>
-                            <Avatar sx={{ borderRadius: 3.5, position: 'relative', right: '.75em', zIndex: 2 }} variant='rounded'>
+                                        </Avatar>
+                                        <Avatar sx={{ borderRadius: 3.5, position: 'relative', top: '.5em', zIndex: 1 }} variant='rounded'>
 
-                            </Avatar>
-                            <Avatar sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }} variant={variant}>
-                                +11
-                            </Avatar>
+                                        </Avatar>
+                                        <Avatar sx={{ borderRadius: 3.5, position: 'relative', right: '.75em', zIndex: 2 }} variant='rounded'>
+
+                                        </Avatar>
+                                        <Avatar 
+                                            sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }} 
+                                            variant={variant}
+                                        >
+                                            +11
+                                        </Avatar>
+                                    </Box>
+                                </Box>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
