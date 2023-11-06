@@ -1,5 +1,5 @@
 import { Avatar, useTheme } from '@mui/material'
-import { Box, SxProps, Typography } from '@mui/material'
+import { Box, type SxProps, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
 import { type ReactElement } from 'react'
 
