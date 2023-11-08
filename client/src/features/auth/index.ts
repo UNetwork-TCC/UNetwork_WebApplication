@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import * as api from '$api'
 import { type User } from '$types'
+import { authApiSlice } from './authApiSlice'
+import { useLoginMutation } from '$features/auth/authApiSlice'
+import store from '$store'
 
 const initialState: { 
     user: User | Record<string, unknown>,
@@ -34,7 +37,13 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logOut: (state) => {
+        setCredentials: (state, action) => {
+            const { user, accessToken } = action.payload
+            state.user = user
+            state.token = accessToken
+        },
+
+        logOut: state => {
             state.user = {}
             state.token = ''
         }
@@ -68,4 +77,5 @@ export const authSlice = createSlice({
 })
 
 export const authReducer = authSlice.reducer
-export const { logOut } = authSlice.actions
+export const { logOut, setCredentials } = authSlice.actions
+export { authApiSlice, useLoginMutation }

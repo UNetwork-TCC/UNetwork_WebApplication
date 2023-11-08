@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton, Link as MuiLink, Stack, useTheme } from '@mui/material'
+import { Avatar, Box, IconButton, Link as MuiLink, Stack, Typography, useTheme } from '@mui/material'
 import { ClipsWrapper, Post } from '$components'
 import { Add, AttachFile, ArrowDropUp } from '@mui/icons-material'
 import { AppLayout, CustomInput } from '$layout'
@@ -8,11 +8,15 @@ import { useFetchDispatch } from '$hooks'
 import { fetchPosts } from '$features/post'
 import { HTTP_STATUS } from '$constants'
 import { useAppSelector } from '$store'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
 export default function Home(): ReactElement {
     const theme = useTheme()
     const status = useFetchDispatch(fetchPosts())
+
+    const navigate = useNavigate()
 
     const posts = useAppSelector(state => state.post.posts)
 
@@ -26,7 +30,7 @@ export default function Home(): ReactElement {
     }, [ status ])
 
     return (
-        <AppLayout withSidebars>
+        <AppLayout>
             <Box
                 display='flex'
                 justifyContent='center'
@@ -118,18 +122,34 @@ export default function Home(): ReactElement {
                     display='flex'
                     justifyContent='center'
                     height='100%' 
-                    width='25%'
+                    width='20%'
                     p={3} 
                     m={5} 
                 >
                     <Box 
                         bgcolor='background.paper'
                         borderRadius={5}
-                        height='20rem'
-                        width='20rem'
+                        height='15rem'
+                        width='100%'
                         boxShadow={theme.shadows[15]}
+                        p={3}
                     >
-                        
+                        <Box height='100%' display='flex' flexDirection='column' gap={2}>
+                            <Box display='flex' gap={2}>
+                                <Avatar></Avatar>
+                                <Box display='flex' flexDirection='column'>
+                                    <Typography variant='body1'>@vitronks</Typography>
+                                    <Typography variant='caption'>Vitor Hugo Rodrigues dos Santos</Typography>
+                                </Box>
+                            </Box>
+                            <Box display='flex' flexDirection='column'>
+                                <Typography>Brasil, São Paulo</Typography>
+                                <Typography>+11 992253966</Typography>
+                            </Box>
+                            <Box height='100%' display='flex' justifyContent='end' flexDirection='column'>
+                                <Button onClick={() => { navigate('/app/profile') }} variant='contained'>Ver perfil</Button>
+                            </Box>
+                        </Box>
                     </Box>
                 </Box>
             </Box>

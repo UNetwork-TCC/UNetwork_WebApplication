@@ -7,10 +7,13 @@ import { Field, Form, Formik } from 'formik'
 import { useAppDispatch } from '$store'
 import { useNavigate } from 'react-router-dom'
 import { GET_TYPE, HTTP_STATUS } from '$constants'
+import { setCredentials, useLoginMutation } from '$features/auth'
 import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
 import * as Yup from 'yup'
 
 function LoginForm(): ReactElement {
+    // const [ login, { isLoading } ] = useLoginMutation()
+
     const validationSchema = Yup.object().shape({
         email: Yup.string().required('Este campo é obrigatório'),
         password: Yup.string().required('Este campo é obrigatório')
@@ -30,6 +33,22 @@ function LoginForm(): ReactElement {
 
     const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
         handleOpenLoading()
+
+        // try {
+        //     const userData = await login({
+        //         email: user.email.toLowerCase(),
+        //         password: user.password 
+        //     })
+    
+        //     dispatch(setCredentials({ ...userData, user }))
+
+        //     console.log('Deu certo!', userData)
+            
+        // } catch (error: any) {
+        //     console.log(error?.response)
+        //     handleCloseLoading()
+        //     handleSnackbarOpen()
+        // }
 
         try {
             const status = await dispatch(login({

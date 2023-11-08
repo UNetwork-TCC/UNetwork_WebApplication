@@ -9,6 +9,7 @@ import {
     type Post
 } from '$types'
 import axios, { type AxiosResponse } from 'axios'
+import { apiSlice } from './apiSlice'
 
 const host = 'https://unetwork-api.onrender.com'
 
@@ -118,3 +119,5 @@ export const createPost = async (data: {
 
 export const deletePost = async (id: string): ApiRequest<Post> => await API.delete<Post>('/post/' + id)
 export const updatePost = async (id: string, data: Partial<Post>): ApiRequest<Post> => await API.patch<Post>('/post/' + id, data)
+
+export { apiSlice }

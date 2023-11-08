@@ -13,8 +13,7 @@ import { type User } from '$types'
 
 export default function AppLayout({
     children,
-    sx,
-    withSidebars
+    sx
 }: {
     children: React.ReactNode
     sx?: SxProps
@@ -37,8 +36,6 @@ export default function AppLayout({
 
     const shortcutsExpand = (): void => { setShortcutsExpanded(true) }
     const shortcutsCollapse = (): void => { setShortcutsExpanded(false) }
-
-    
     const maximize = (): void => {
         if (boxStyles.height === '100vh' || boxStyles.height === '200px') {
             setBoxStyles({

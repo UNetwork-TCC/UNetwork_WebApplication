@@ -20,7 +20,8 @@ import {
     ClassesPage,
     ForumPage,
     MaterialsPage,
-    ForumHome 
+    ForumHome, 
+    Profile
 } from '$pages'
 
 function App(): ReactElement {
@@ -42,6 +43,7 @@ function App(): ReactElement {
                             <Route path="/auth/login" element={<Login />} />
                             <Route path="/error" element={<ErrorPage />} />
                             <Route path='/app' element={<Home />} />
+                            <Route path='/app/profile' element={<Profile />} />
                             <Route path='/app/favorites' element={<FavoritesPage />} />
                             <Route path='/app/materials' element={<MaterialsPage />} />
                             <Route path='/app/chat' element={<ChatPage />} />

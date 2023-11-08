@@ -65,7 +65,7 @@ export default function Header({
         )
                 
         if (userMenu) setMenuContent([
-            <MenuItem disableRipple key={-2}>
+            <MenuItem onClick={() => { navigate('/app/profile') }} disableRipple key={-2}>
                 <Avatar sx={{ background: 'transparent' }} /> Perfil
             </MenuItem>,
             <Divider key={-1} />,
@@ -104,7 +104,6 @@ export default function Header({
 
     return (
         <>
-            {/* #2b2430 <--- Opção de cor */}
             <Box>
                 <Box bgcolor={theme.palette.mode === 'light' ? 'white' : '#221f24'} >
                     <Box 

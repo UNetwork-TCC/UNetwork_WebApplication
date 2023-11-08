@@ -11,6 +11,7 @@ import {
     useDispatch,
     useSelector
 } from 'react-redux'
+import { apiSlice } from '$lib/api/apiSlice'
 
 const store = configureStore({
     reducer: {
@@ -18,8 +19,12 @@ const store = configureStore({
         [newsSlice.name]: newsReducer,
         [forumSlice.name]: forumReducer,
         [userSlice.name]: userReducer,
-        [postSlice.name]: postReducer
-    }
+        [postSlice.name]: postReducer,
+        [apiSlice.reducerPath]: apiSlice.reducer
+    },
+    
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiSlice.middleware),
+    devTools: true
 })
 
 export const useAppDispatch: () => typeof store.dispatch = useDispatch

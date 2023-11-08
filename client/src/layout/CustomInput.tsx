@@ -41,7 +41,7 @@ export default function CustomInput({
                 defaultValue={defaultValue}
                 onChange={onChange}
                 sx={{ 
-                    backgroundColor: bgcolor ?? (theme.palette.mode === 'light' ? 'grey.100' : 'grey.800'), 
+                    bgcolor: bgcolor ?? (theme.palette.mode === 'light' ? 'grey.100' : 'background.paper'), 
                     width: inputWidth ?? '100%',
                     height: '3.5rem',
                     [theme.breakpoints.down('xl')]: {

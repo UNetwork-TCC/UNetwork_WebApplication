@@ -63,7 +63,7 @@ export default function Post({
             display: 'flex',
             alignItems: 'center',
             fontSize: '10px',
-            bgcolor: theme.palette.mode === 'dark' && '#28242b',
+            bgcolor: 'background.secondary',
             mb: '3em'
         }}>
             <Box sx={{ width: '100%', height: '100%' }} pt={6} pb={6} pl={4} pr={4}>
@@ -77,7 +77,7 @@ export default function Post({
                                     <Avatar />
                                 }
                             </Avatar>
-                            <Avatar sx={{ position: 'relative', height: '1.75rem', width: '1.75rem', bottom: '1em', right: '0.5em', bgcolor: 'primary.dark' }}>
+                            <Avatar sx={{ position: 'relative', height: '1.75rem', width: '1.75rem', bottom: '1em', right: '0.5em', bgcolor: 'primary.dark', color: '' }}>
                                 {degree}
                             </Avatar>
                         </Box>
