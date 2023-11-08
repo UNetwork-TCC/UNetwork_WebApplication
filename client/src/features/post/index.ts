@@ -23,7 +23,7 @@ export const postSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchPosts.fulfilled, (state, action: any) => {
-            state.posts.push(action.payload)
+            state.posts = action.payload
         })
 
         builder.addCase(fetchPosts.rejected, (_, action) => {

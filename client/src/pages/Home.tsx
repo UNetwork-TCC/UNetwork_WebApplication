@@ -119,10 +119,15 @@ export default function Home(): ReactElement {
                     </Box>
                 </Box>
                 <Box
+                    sx={{
+                        width: '20%',
+                        [theme.breakpoints.down('xl')]: {
+                            width: '25%'
+                        }
+                    }}
                     display='flex'
                     justifyContent='center'
                     height='100%' 
-                    width='20%'
                     p={3} 
                     m={5} 
                 >

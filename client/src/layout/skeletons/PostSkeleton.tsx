@@ -1,9 +1,10 @@
 import { ChatBubbleRounded, FavoriteBorder, MoreVert, Reply } from '@mui/icons-material'
-import { Avatar, Box, Card, IconButton, Skeleton } from '@mui/material'
+import { Avatar, Box, Card, IconButton, Skeleton, useTheme } from '@mui/material'
 import { type ReactElement } from 'react'
 
 export default function PostSkeleton(): ReactElement {
     const variant: any = 'iconWrapper'
+    const theme = useTheme()
 
     return (
         <Card
@@ -11,11 +12,14 @@ export default function PostSkeleton(): ReactElement {
             elevation={2}
             sx={{
                 display: 'flex',
+                width: '75%',
                 minHeight: {
                     md: '25rem',
                     xl: '20rem'
                 },
-                width: '75%',
+                [theme.breakpoints.down('xl')]: {
+                    width: '85%'
+                },
                 borderRadius: '20px',
                 fontSize: '10px',
                 mb: '3em',

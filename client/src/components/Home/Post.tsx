@@ -59,6 +59,9 @@ export default function Post({
         <Card variant="elevation" elevation={2} sx={{
             minHeight: '40rem',
             width: '75%',
+            [theme.breakpoints.down('xl')]: {
+                width: '85%'
+            },
             borderRadius: '15px',
             display: 'flex',
             alignItems: 'center',
@@ -66,10 +69,28 @@ export default function Post({
             bgcolor: 'background.secondary',
             mb: '3em'
         }}>
-            <Box sx={{ width: '100%', height: '100%' }} pt={6} pb={6} pl={4} pr={4}>
+            <Box 
+                sx={{
+                    width: '100%',
+                    height: '100%',
+                    [theme.breakpoints.down('xl')]: {
+                        pt: 3,
+                        pb: 3
+                    } 
+                }} 
+                pl={4} 
+                pr={4}
+            >
                 <Box mb='1rem' sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box height='5.6em'>
+                        <Box
+                            sx={{
+                                height: '5.6em',
+                                [theme.breakpoints.down('xl')]: {
+                                    height: '4em'
+                                }
+                            }}
+                        >
                             <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
                                 {user?.avatar ?
                                     <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.avatar} alt="avatar" />
@@ -82,16 +103,17 @@ export default function Post({
                             </Avatar>
                         </Box>
                         <Box sx={{ ml: '1rem' }}>
-                            <Typography sx={{ fontSize: '2em' }}>{user?.name}</Typography>
-                            <Typography sx={{ color: 'gray', fontSize: '1.7em' }}>{date?.toString()}</Typography>
+                            <Typography sx={{ fontSize: '1.25rem' }}>{user?.name}</Typography>
+                            <Typography sx={{ color: 'gray', fontSize: '1em' }}>{date?.toString()}</Typography>
                         </Box>
                     </Box>
                     <IconButton onClick={
-                        e => { handleClick(e, 
-                            [ 'Salvar', 'Favoritar', 'Seguir/Deseguir', 'Sobre esta conta', 'Ocultar', 'Denunciar' ],
-                            [ onClickEvents.item1, onClickEvents.item2 ]
-                    
-                        ) }
+                        e => {
+                            handleClick(e, 
+                                [ 'Salvar', 'Favoritar', 'Seguir/Deseguir', 'Sobre esta conta', 'Ocultar', 'Denunciar' ],
+                                [ onClickEvents.item1, onClickEvents.item2 ]
+                            ) 
+                        }
                     }>
                         <MoreVert sx={{ fontSize: '1.2em' }} />
                     </IconButton>

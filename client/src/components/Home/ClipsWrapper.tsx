@@ -56,7 +56,7 @@ export default function ClipsWrapper(): ReactElement {
     }
 
     return (
-        <Box display='flex' m={2} mb={7.5}>
+        <Box display='flex' gap={2} m={2} mb={7.5}>
             {clipsData.clips.map(clip => (
                 <Clip
                     key={clip.id}
