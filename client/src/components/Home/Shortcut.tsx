@@ -5,11 +5,13 @@ import { type ReactElement } from 'react'
 export default function Shortcut({ 
     title,
     category,
-    color 
+    color,
+    menuClicked
 } : {
     title: string,
     category: string,
-    color: string
+    color: string,
+    menuClicked: boolean
 }) : ReactElement {
     const theme = useTheme()
 
@@ -35,18 +37,20 @@ export default function Shortcut({
             >
                 <Circle sx={{ height: 12.5, color }} />
             </Box>
-            <Box ml={2} >
-                {
-                    title.length > 10 ?
-                        <Tooltip title={title}>
-                            <Typography variant='body1'>{title.substring(10, 0) + '...'}
-                            </Typography>
-                        </Tooltip>
-                        :
-                        <Typography variant='body1'>{title}</Typography>
-                }
-                <Typography color='text.secondary' variant='subtitle2'>{category}</Typography>
-            </Box>
+            { !menuClicked &&
+                <Box ml={2}>
+                    {
+                        title.length > 10 ?
+                            <Tooltip title={title}>
+                                <Typography variant='body1'>{title.substring(10, 0) + '...'}
+                                </Typography>
+                            </Tooltip>
+                            :
+                            <Typography variant='body1'>{title}</Typography>
+                    }
+                    <Typography color='text.secondary' variant='subtitle2'>{category}</Typography>
+                </Box>
+            }
         </Box>
     )
 }

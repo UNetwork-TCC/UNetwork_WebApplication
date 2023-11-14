@@ -74,12 +74,10 @@ export default function Post({
                     width: '100%',
                     height: '100%',
                     [theme.breakpoints.down('xl')]: {
-                        pt: 3,
-                        pb: 3
+                        p: 3
                     } 
                 }} 
-                pl={4} 
-                pr={4}
+                p={4}
             >
                 <Box mb='1rem' sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>

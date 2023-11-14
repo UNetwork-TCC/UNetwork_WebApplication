@@ -30,6 +30,7 @@ export default function AppLayout({
     const [ open, setOpen ] = useState(false)
     const [ shortcutsExpanded, setShortcutsExpanded ] = useState(true)
     const [ boxStyles, setBoxStyles ] = useState<CSSProperties>({})
+    const [ menuClicked, setMenuClicked ] = useState<boolan>(false)
 
     const shortcuts = 5
     const variant: any = 'iconWrapper'
@@ -68,6 +69,8 @@ export default function AppLayout({
         }, 2000)
     }
 
+    const menuClick = (): void => { setMenuClicked((state: boolean) => !state) }
+
     return (
         <userContext.Provider value={userContextValue}>
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
@@ -93,49 +96,65 @@ export default function AppLayout({
                             close={close}
                         />
                         <Box height='100%' display='flex' justifyContent='center' width='100%'>
-                            <SideBar>
+                            <SideBar sx={{ width: menuClicked === true ? '6%' : '15%' }} menuClick={menuClick}>
                                 <Stack width='100%' mb={5} gap={3}>
                                     <Box className={classes.sideBarLinks} onClick={() => { navigate('/app') }}>
                                         <Avatar variant={variant}>
                                             <Home />
                                         </Avatar>
-                                        <Typography display='flex' justifyContent='center' alignItems='center' ml={2.5}>
-                                            Home
-                                        </Typography>
+                                        { !menuClicked &&
+                                            <Typography display='flex' justifyContent='center' alignItems='center' ml={2.5}>
+                                                Home
+                                            </Typography>
+                                        }
                                     </Box>
                                     <Box className={classes.sideBarLinks} onClick={() => { navigate('/app/chat') }}>
                                         <Avatar variant={variant}>
                                             <Message />
                                         </Avatar>
-                                        <Typography display='flex' justifyContent='center' alignItems='center' ml={2.5}>
-                                            Conversas
-                                        </Typography>
+                                        { !menuClicked &&
+                                            <Typography display='flex' justifyContent='center' alignItems='center' ml={2.5}>
+                                                Conversas
+                                            </Typography>
+                                        }
                                     </Box>
                                     <Box className={classes.sideBarLinks} onClick={() => { navigate('/app/favorites') }}>
                                         <Avatar variant={variant}>
                                             <Bookmark />
                                         </Avatar>
-                                        <Typography display='flex' justifyContent='center' alignItems='center' ml={2.5}>
-                                            Favoritos
-                                        </Typography>
+                                        { !menuClicked && 
+                                            <Typography display='flex' justifyContent='center' alignItems='center' ml={2.5}>
+                                                Favoritos
+                                            </Typography>
+                                        }
                                     </Box>
                                 </Stack>
                                 <Box>
                                     <Box color='text.secondary' display='flex' mb={3} gap={2}>
-                                        <Typography sx={{ userSelect: 'none' }} 
-                                            onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
-                                        >Seus atalhos ({shortcuts})</Typography>
+                                        { !menuClicked &&
+                                            <Typography sx={{ userSelect: 'none' }} 
+                                                onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
+                                            >Seus atalhos ({shortcuts})</Typography>
+                                        }
                                         {shortcutsExpanded
                                             ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
                                             : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
                                         }
                                     </Box>
-                                    <Stack gap={3} sx={{ display: shortcutsExpanded ? 'flex' : 'none' }}>
-                                        <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
-                                        <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
-                                        <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />
-                                        <Shortcut title='Matemática' category='Materiais' color={yellow[600]} />
-                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Stack 
+                                        gap={3} 
+                                        sx={{
+                                            display: shortcutsExpanded ? 'flex' : 'none',
+                                            overflow: 'scroll',
+                                            overflowX: 'hidden',
+                                            '::-webkit-slider-thumb': { display: 'none' } 
+                                        }}
+                                    >
+                                        <Shortcut menuClicked={menuClicked} title='Leonardo' category='Conversas' color={red[600]} />
+                                        <Shortcut menuClicked={menuClicked} title='Alfa' category='Conversas' color={blue[600]} />
+                                        <Shortcut menuClicked={menuClicked} title='Filhos do Jhonatas' category='Classes' color={green[600]} />
+                                        <Shortcut menuClicked={menuClicked} title='Matemática' category='Materiais' color={yellow[600]} />
+                                        <Shortcut menuClicked={menuClicked} title='Estudos' category='Grupo' color={purple[600]} />
                                     </Stack>
                                 </Box>
                             </SideBar>

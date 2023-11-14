@@ -72,7 +72,7 @@ export default function NewsPage(): ReactElement {
                     <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                 </Container>
                 <Box sx={{ display: 'flex', width: '100%' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
+                    <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
                         {isLoading ? (
                             <Typography sx={{ width: '100%', height: '15%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Carregando...</Typography>
                         ) : newsArr.map(item => (
