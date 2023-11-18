@@ -1,12 +1,11 @@
 import {
-    type CustomTheme,
     createTheme,
     responsiveFontSizes
 } from '@mui/material'
 import defaultThemeProperties from './defaultThemeProps'
 import { grey } from '@mui/material/colors'
 
-let lightTheme: CustomTheme = createTheme({
+let lightTheme = createTheme({
     palette: {
         mode: 'light',
 

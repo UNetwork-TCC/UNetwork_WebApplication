@@ -1,15 +1,35 @@
-import { createContext } from 'react'
+import { type Dispatch, type SetStateAction, createContext, type CSSProperties } from 'react'
 
 interface AppLayout {
-    leftSideBar: boolean | undefined
-    rightSideBar: boolean | undefined
-    maximizedWindow: boolean | undefined
+    sideBar: {
+        dropdownButtonClicked: boolean
+        setDropdownButtonClicked: Dispatch<SetStateAction<boolean>>
+        shortcutsExpanded: boolean
+        setShortcutsExpanded: Dispatch<SetStateAction<boolean>>
+    }
+
+    window: {
+        size: CSSProperties,
+        setSize: Dispatch<SetStateAction<CSSProperties>>
+    }
 }
 
 export const appLayout: AppLayout = {
-    leftSideBar: true,
-    rightSideBar: true,
-    maximizedWindow: false
+    sideBar: {
+        dropdownButtonClicked: false,
+        setDropdownButtonClicked: () => {},
+        shortcutsExpanded: true,
+        setShortcutsExpanded: () => {}
+    },
+
+    window: {
+        size: {
+            height: '95vh',
+            width: '95vw',
+            borderRadius: '1rem'
+        },
+        setSize: () => {}
+    }
 }
 
-export const appLayoutContext = createContext(appLayout)
+export const appLayoutContext = createContext<AppLayout>(appLayout)

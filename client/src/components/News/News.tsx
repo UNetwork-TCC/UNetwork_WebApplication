@@ -12,19 +12,21 @@ export default function News({
     description: string,
     topic?: string,
     date?: Date | string,
-    img: string
+    img?: string
 }) : ReactElement {
     return (
         <Link sx={{ color: 'black', ':hover': { cursor: 'pointer' } }} >
-            <Paper elevation={8} sx={{ width:'50rem', borderRadius:'20px' }}>
-                <Box sx={{  width: '70em', fontSize: '10px', p: 2, borderRadius: 20, display: 'flex', position: 'relative' }}>
-                    <img style={{ background: 'gray', width: '60rem', height: '20em', borderRadius: 10 }} src={img} /> 
-                    <Box sx={{ ml: '1em', mt: '.5em', display: 'flex', flexDirection: 'column' }}>
-                        <Typography sx={{ color: 'gray', mb: '2%' }}>{topic}</Typography>
-                        <Typography sx={{ mb: '3%' }} variant="h6">{title}</Typography>
-                        <Typography sx={{ wordWrap: 'break-word' }}>{description}</Typography>
-                        <Box mt={2}>
-                            <Typography sx={{ color: 'gray', position: 'absolute', bottom: '0' }}>{date?.toString()}</Typography>
+            <Paper elevation={8} sx={{ width: '50rem', borderRadius: 4 }}>
+                <Box sx={{ display: 'flex', gap: 2, width: '100%', fontSize: '10px', p: 2, borderRadius: 20 }}>
+                    <img style={{ background: 'gray', width: '45rem', height: '15rem', borderRadius: 4 }} src={img} /> 
+                    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
+                        <Box>
+                            <Typography sx={{ color: 'gray', mb: '.25rem' }}>{topic}</Typography>
+                            <Typography variant="h6" sx={{ mb: '.5rem' }}>{title}</Typography>
+                            <Typography variant='caption' sx={{ wordWrap: 'break-word' }}>{description}</Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant='caption'>{date?.toString()}</Typography>
                         </Box>
                     </Box>
                 </Box>

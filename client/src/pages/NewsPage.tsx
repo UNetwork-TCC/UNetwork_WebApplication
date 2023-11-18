@@ -8,6 +8,7 @@ import { type news } from '$types'
 import { useFetchDispatch } from '$hooks'
 import { HTTP_STATUS } from '$constants'
 import { useAppSelector } from '$store'
+import { NewsSkeleton } from '$skeletons'
 
 export default function NewsPage(): ReactElement {
     const theme = useTheme()
@@ -74,7 +75,11 @@ export default function NewsPage(): ReactElement {
                 <Box sx={{ display: 'flex', width: '100%' }}>
                     <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
                         {isLoading ? (
-                            <Typography sx={{ width: '100%', height: '15%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Carregando...</Typography>
+                            <>
+                                <NewsSkeleton />
+                                <NewsSkeleton />
+                                <NewsSkeleton />
+                            </>
                         ) : newsArr.map(item => (
                             <News 
                                 key={item._id}

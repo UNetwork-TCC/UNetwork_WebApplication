@@ -160,19 +160,15 @@ export default function Header({
                                 
                             </Box>
                             <IconButton onClick={e => { handleClick(e, 
-                                [ 'Configurações', 'Ajuda e suporte', 'Dar feedback', theme.palette.mode === 'light' ? 'Tema Escuro' : 'Tema Claro', 'Sair' ],
+                                [ 'Configurações', 'Ajuda e suporte', 'Dar feedback' ],
                                 [ 
                                     <Settings key={0} />,
                                     <Help key={1} />,
-                                    <Feedback key={2} />,
-                                    theme.palette.mode === 'light' ? <DarkMode key={3} /> : <LightMode key={4} />,
-                                    <ExitToApp key={5} /> 
+                                    <Feedback key={2} />
                                 ],
                                 [   () => {},
                                     handleHelp,
-                                    handleFeedback,
-                                    changeTheme,
-                                    () => { handleMenuClose(); close() } 
+                                    handleFeedback
                                 ],
                                 true
                             ) }}>
