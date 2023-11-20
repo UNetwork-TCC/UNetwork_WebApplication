@@ -1,13 +1,14 @@
 import { type BaseQueryApi, type FetchArgs, type FetchBaseQueryError, type FetchBaseQueryMeta, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from '$features/auth'
 import { type QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes'
-import store from '$store'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'https://unetwork-api.onrender.com',
     credentials: 'include',
     prepareHeaders: (headers, { getState }: { getState: any }) => {
         const token = getState().auth.token
+
+        console.log(getState())
 
         if (token) {
             headers.set('authorization', `Bearer ${token}`)
@@ -30,10 +31,12 @@ const baseQueryWithReauth = async (
 > => {
     let result = await baseQuery(args, api, extraOptions)
 
+    console.log(result)
+    
     if (result?.error?.status === 'FETCH_ERROR') {
         console.log('sending refresh token')
 
-        const refreshResult = await baseQuery('/refresh', api, extraOptions)
+        const refreshResult = await baseQuery('/user/login', api, extraOptions)
         console.log(refreshResult)
         
         if (refreshResult?.data) {
@@ -51,7 +54,7 @@ const baseQueryWithReauth = async (
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
-    endpoints: buillder => ({
+    endpoints: (_builder) => ({
 
     })
 })

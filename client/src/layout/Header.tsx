@@ -4,12 +4,11 @@
 import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography } from '@mui/material'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
-import { Search, FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, ExitToApp, DarkMode, LightMode, CloseSharp } from '@mui/icons-material'
+import { Search, FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp } from '@mui/icons-material'
 import { CustomLink, CustomInput, CustomMenu, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { type ReactElement, useState, useContext, type FormEvent } from 'react'
 import { themeContext } from '$contexts'
-import { darkTheme, lightTheme } from '$themes'
 import { FeedbackForm } from '$components'
 
 export default function Header({ 
@@ -22,7 +21,7 @@ export default function Header({
     close: () => void,
 }) : ReactElement {
     const navigate = useNavigate()
-    const { theme, setTheme } = useContext(themeContext)
+    const { theme } = useContext(themeContext)
 
     const [ anchorEl, setAnchorEl ]  = useState(null)
     const [ menuContent, setMenuContent ]  = useState<React.ReactNode[]>([])
@@ -40,13 +39,6 @@ export default function Header({
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
-
-    const changeTheme = (): void => {
-        if (theme.palette.mode === 'light') setTheme(darkTheme)
-        else setTheme(lightTheme)
-
-        handleMenuClose()
-    }
 
     const handleFeedback = (): void => {
         handleModalOpen()
@@ -207,7 +199,12 @@ export default function Header({
                 <Box component='span'>Perguntas Feitas Frequentemente (FAQ)</Box><br /><br />
                 <Box component='span' fontWeight={600}>O que é a UNetwork?</Box><br />R: A UNetwork é uma rede social que permite aos usuários criar perfis, compartilhar conteúdo e se conectar com outros usuários. Oferecemos diversas funcionalidades, como postagens de fotos e vídeos, mensagens privadas e grupos de discussão. Nosso objetivo é fornecer uma plataforma segura e amigável para que os usuários possam se conectar e compartilhar suas experiências.<br /><br />
                 <Box component='span' fontWeight={600}>Como faço para denunciar um conteúdo ou usário abusivo?</Box><br />R: Basta clicar nos três pontinhos do determinado usuário ou post e então clicar em "Denunciar".<br /><br />
-                <Box component='span' fontWeight={600}>Como faço para enviar uma sugestão ou feedback?</Box><br />R: Abra o menu do usuário clicando na sua foto de perfil no canto superior direito e depois clique na opção "Dar feedback".<br /><br />
+                <Box component='span' fontWeight={600}>Como faço para enviar uma sugestão ou feedback ou reportar algum bug?</Box><br />R: Abra o menu do usuário clicando na sua foto de perfil no canto superior direito e depois clique na opção "Dar feedback".<br /><br />
+                <Box component='span' fontWeight={600}>Caso eu esqueça minha senha, como posso redefini-la?</Box><br />R: Vá até a página de "Login" e clique na opção "Esqueceu sua senha?", presente no canto inferior direito do formulário. Um email será enviado para o endereço de e-mail informado. Siga as instruções para redefinir sua senha.<br /><br />
+                <Box component='span' fontWeight={600}>Como posso confiugrar minhas preferências de privacidade?</Box><br />R: Clique na sua foto de perfil no canto superior direito do cabçalho da aplicação e vá em "Configurações". Depois ative a configuração "Conta privada."<br /><br />
+                <Box component='span' fontWeight={600}>Como posso deletar minha conta?</Box><br />R: Clique na sua foto de perfil no canto superior direito do cabçalho da aplicação e vá em "Configurações". A última opção "Delete minha conta", em vermelho, irá deletar sua conta.<br /><br />
+                <Box component='span' fontWeight={600}>Como posso obter notificaçãoes sobre novos posts ou atualizações?</Box><br />R: Basta seguir o usuário ou a classe que compartilha aquele tipo de conteúdo e então novas notificações chegarão para você toda vez que algo de novo for postado.<br /><br />
+                <Box component='span' fontWeight={600}>Como posso bloquear ou desbloquear outros usuários?</Box><br />R: Vá na página "Chat". Clique na foto de perfil do usuário no qual você queira bloquear/desbloquear e clique na opção "Bloquear" ou "Desbloquear".<br /><br />
             </UNetworkModal>
             <Snackbar 
                 open={snackbarOpen}

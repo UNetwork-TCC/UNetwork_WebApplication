@@ -10,7 +10,7 @@ let darkTheme: CustomTheme = createTheme({
             paper: '#322e36',
             secondary: '#28242b',
             terciary: '#303030',
-            card: grey[900]
+            card: '#262329'
         },
 
         primary: {

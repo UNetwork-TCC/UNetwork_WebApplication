@@ -1,11 +1,13 @@
 import { type ReactElement, useState, type CSSProperties } from 'react'
-import { appLayoutContext, themeContext } from '$contexts'
+import { appLayoutContext, userContext, themeContext, user as userDefaultValue } from '$contexts'
 import { ThemeStore } from '$layout'
 import { CssBaseline, type Theme } from '@mui/material'
 import { lightTheme } from '$themes'
 
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { GOOGLE_CLIENT_ID } from '$constants'
+
+import { type User } from '$types'
 
 export default function ContextProvider({ children } : { children: ReactElement }): ReactElement {
     //  Theme Context
@@ -34,14 +36,21 @@ export default function ContextProvider({ children } : { children: ReactElement 
         }
     }
 
+    // User Context
+
+    const [ user, setUser ] = useState<User>(userDefaultValue)
+    const userContextValue = { user, setUser }
+
     return (
         <themeContext.Provider value={themeContextValue}>
             <ThemeStore>
                 <appLayoutContext.Provider value={appLayoutContextValue}>
-                    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID} >
-                        <CssBaseline />
-                        {children}
-                    </GoogleOAuthProvider>
+                    <userContext.Provider value={userContextValue}>
+                        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+                            <CssBaseline />
+                            {children}
+                        </GoogleOAuthProvider>
+                    </userContext.Provider>
                 </appLayoutContext.Provider>
             </ThemeStore>
         </themeContext.Provider>

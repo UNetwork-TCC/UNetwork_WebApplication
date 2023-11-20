@@ -38,8 +38,8 @@ export default function ClassesPage(): ReactElement {
     })
 
     const [ checkedButtons, setCheckedButtons ] = useState<{
-        public: boolean, 
-        private: boolean 
+        public: boolean,
+        private: boolean
     }>({
         public: true,
         private: false
@@ -76,11 +76,11 @@ export default function ClassesPage(): ReactElement {
     const handleClickShowPassword = (): void => { setShowPassword((show) => !show) }
 
     return (
-        <AppLayout withSidebars>
+        <AppLayout>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Suas Classes</Typography>
-                    <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
+                    <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen} />
                 </Container>
                 <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '2rem' }} >
                     <Classes _class={{ name: 'Os lambisgoia' }} />
@@ -90,9 +90,9 @@ export default function ClassesPage(): ReactElement {
                     <Classes _class={{ name: 'Os programadores' }} />
                     <Classes _class={{ name: 'Os revoltados' }} />
                     {_class.map(e => (
-                        <Classes _class={{ name:e.title }}  key={e.title} />
+                        <Classes _class={{ name: e.title }} key={e.title} />
                     ))}
-                    <Carousel  
+                    <Carousel
                         autoPlay
                         centerMode
                         infiniteLoop
@@ -104,7 +104,7 @@ export default function ClassesPage(): ReactElement {
                     </Carousel>
                 </Box>
                 <Box width='100%' height='30rem' display='flex' alignContent='center' alignItems='center'>
-                    
+
                 </Box>
             </Box>
 
@@ -116,40 +116,41 @@ export default function ClassesPage(): ReactElement {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{  width: '35vw', bgcolor: 'background.paper' }} borderRadius={2} >
+                <Box p={1} sx={{ width: '35vw', bgcolor: 'background.paper' }} borderRadius={2} >
                     <Box p={0} sx={{ display: 'flex', width: '100%' }}>
-                        <Button 
+                        <Button
                             onClick={() => { setTypeForm('Create') }}
-                            sx={{ width: '45%',
-                                ':hover': { 
+                            sx={{
+                                width: '45%',
+                                ':hover': {
                                     cursor: 'pointer',
-                                    bgcolor: 'whitesmoke' 
+                                    bgcolor: 'whitesmoke'
                                 },
                                 m: '0 5%',
                                 textAlign: 'center',
                                 borderRadius: '0.5rem',
-                                color: 'black' 
-                            }} 
+                                color: 'black'
+                            }}
                         >
                             <Typography id="modal-modal-title" sx={{ fontSize: '1.2rem' }} m={'1rem'}>
                                 Criar Classe
                             </Typography>
                         </Button>
                         <Divider orientation='vertical' flexItem sx={{}} />
-                        <Button 
+                        <Button
                             onClick={() => { setTypeForm('Join') }}
-                            sx={{ 
+                            sx={{
                                 width: '45%',
-                                ':hover': { 
+                                ':hover': {
                                     cursor: 'pointer',
-                                    bgcolor: 'whitesmoke' 
+                                    bgcolor: 'whitesmoke'
                                 },
                                 m: '0 5%',
                                 textAlign: 'center',
                                 borderRadius: '0.5rem',
-                                color: 'black' 
+                                color: 'black'
                             }}
-                        > 
+                        >
                             <Typography id="modal-modal-title" sx={{ fontSize: '1.2rem' }} m={'1rem'}>
                                 Ingressar
                             </Typography>

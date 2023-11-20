@@ -3,7 +3,6 @@ import * as api from '$api'
 import { type User } from '$types'
 import { authApiSlice } from './authApiSlice'
 import { useLoginMutation } from '$features/auth/authApiSlice'
-import store from '$store'
 
 const initialState: { 
     user: User | Record<string, unknown>,
@@ -41,6 +40,12 @@ export const authSlice = createSlice({
             const { user, accessToken } = action.payload
             state.user = user
             state.token = accessToken
+
+            console.log('veio do setCredentials: ', {
+                user,
+                accessToken,
+                state
+            })
         },
 
         logOut: state => {

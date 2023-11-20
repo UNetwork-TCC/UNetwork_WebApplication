@@ -27,7 +27,7 @@ export default function CustomCheckBox({
             component='label' 
             htmlFor={title} 
             label={title} 
-            sx={{ bgcolor: theme.palette.mode === 'light' ? grey[100] : grey[800], m: 0, p: 1, mb: 1 }}
+            sx={{ bgcolor: theme.palette.mode === 'light' ? grey[100] : 'background.card', m: 0, p: 1, mb: 1 }}
         >
             <Box display='flex' alignItems='center'> 
                 <CheckBox onClick={onClick} checked={checked} id={title}>{title}</CheckBox>

@@ -121,7 +121,7 @@ export default function MaterialsPage(): ReactElement {
     const handleCloseOptions = (): void => { setAnchorEl(null) }
 
     return (
-        <AppLayout withSidebars>
+        <AppLayout>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Seus Materiais</Typography>

@@ -66,7 +66,7 @@ export default function NewsPage(): ReactElement {
     }, [ status ])
 
     return (
-        <AppLayout withSidebars>
+        <AppLayout>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%', mb: '2%' }}>
                     <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
@@ -81,7 +81,7 @@ export default function NewsPage(): ReactElement {
                                 <NewsSkeleton />
                             </>
                         ) : newsArr.map(item => (
-                            <News 
+                            <News
                                 key={item._id}
                                 title={item.name}
                                 description={item.description}

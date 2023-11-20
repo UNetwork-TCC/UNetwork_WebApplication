@@ -13,7 +13,6 @@ import CustomInput from './CustomInput'
 import AppLayout from './AppLayout'
 import Clip from './Clip'
 import ThemeStore from './ThemeStore'
-import Rate from './Rate'
 import UNetworkModal from './UNetworkModal'
 import FormModal from './FormModal'
 
@@ -31,7 +30,6 @@ export {
     FormModal,
     UNetworkModal,
     Clip,
-    Rate,
     AppLayout,
     CustomCheckBox,
     CustomLink,

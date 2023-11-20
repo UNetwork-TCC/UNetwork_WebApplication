@@ -60,7 +60,7 @@ export default function ForumHome(): ReactElement {
     console.log(forumsArr)
 
     return (
-        <AppLayout withSidebars>
+        <AppLayout>
             <Box sx={{ overflowX: 'hidden' }} overflow='auto' display='flex' width='100%' flexDirection='column' p={2.5}>
                 <Box mb={3} display='flex' flexDirection='column' gap={3}>
                     <Box>

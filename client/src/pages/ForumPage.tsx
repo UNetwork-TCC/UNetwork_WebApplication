@@ -21,7 +21,7 @@ export default function ForumPage(): ReactElement {
     useEffect(() => {
         (async () => {
             const response = await dispatch(getForum(id ?? ''))
-            
+
             const status = GET_TYPE(response.type)
             if (status === HTTP_STATUS.FULFILLED) {
                 setIsLoading(false)
@@ -30,8 +30,8 @@ export default function ForumPage(): ReactElement {
     }, [ dispatch, id ])
 
     return (
-        <AppLayout withSidebars>
-            { isLoading ? (
+        <AppLayout>
+            {isLoading ? (
                 <Typography>Carregando...</Typography>
             ) : (
                 <Post

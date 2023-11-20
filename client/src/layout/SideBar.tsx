@@ -1,5 +1,5 @@
 import { ArrowBackIos, ArrowForwardIos, Bookmark, DarkMode, ExpandLess, ExpandMore, Home, LightMode, Logout, LogoutOutlined, Message } from '@mui/icons-material'
-import { Box, Stack, type SxProps, Typography, Popover } from '@mui/material'
+import { Box, Stack, type SxProps, Typography, Popover, Divider } from '@mui/material'
 import { type ReactElement, useState, useContext } from 'react'
 import { blue, green, purple, red, yellow } from '@mui/material/colors'
 import { Shortcut } from '$components'
@@ -115,162 +115,165 @@ export default function SideBar(): ReactElement {
     }
 
     return (
-        <Box
-            sx={{
-                height: '100%',
-                position: 'relative',
-                top: 0,
-                left: 0,
-                p: 3,
-                width: !dropdownButtonClicked ? '20rem' : '7rem',
-                borderRight: `1px solid ${theme.palette.divider}`,
-                bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
-                transition: '.3s ease-in-out'
-            }}
-        >
-            <Box position='relative'>
-                {
-                    dropdownButtonClicked ?
-                        <ArrowForwardIos
-                            sx={arrowStyle}
-                            onClick={toogleDropdown}
-                        />
-                        :
-                        <ArrowBackIos
-                            sx={arrowStyle}
-                            onClick={toogleDropdown}
-                        />
-                }
-            </Box>
+        <>
             <Box
-                display='flex'
-                flexDirection='column'
-                height='100%'
+                sx={{
+                    height: '100%',
+                    position: 'relative',
+                    top: 0,
+                    left: 0,
+                    p: 3,
+                    width: !dropdownButtonClicked ? '20rem' : '7rem',
+                    // borderRight: `1px solid ${theme.palette.divider}`,
+                    bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
+                    transition: '.3s ease-in-out'
+                }}
             >
-                <Box display='flex' gap={2} flexDirection='column'>
-                    <Stack>
-                        <Box>
-                            <NavLink
-                                icon={<Home />}
-                                text='Home'
-                                link='/app'
+                <Box position='relative'>
+                    {
+                        dropdownButtonClicked ?
+                            <ArrowForwardIos
+                                sx={arrowStyle}
+                                onClick={toogleDropdown}
                             />
-                            <NavLink
-                                icon={<Message />}
-                                text='Conversas'
-                                link='/app/chat'
+                            :
+                            <ArrowBackIos
+                                sx={arrowStyle}
+                                onClick={toogleDropdown}
                             />
-                            <NavLink
-                                icon={<Bookmark />}
-                                text='Favoritos'
-                                link='/app/favorites'
-                            />
-                        </Box>
-                    </Stack>
-                    <Box 
-                        sx={{
-                            [theme.breakpoints.down('xl')]: {
-                                ml: 1
-                            }
-                        }} 
-                        height='500px' 
-                        ml={!dropdownButtonClicked ? 3 : 2.4}
-                    >
-                        <Box
-                            onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
-                            color='text.secondary'
-                            display='flex'
-                            mb={3}
-                            gap={2}
+                    }
+                </Box>
+                <Box
+                    display='flex'
+                    flexDirection='column'
+                    height='100%'
+                >
+                    <Box display='flex' gap={2} flexDirection='column'>
+                        <Stack>
+                            <Box>
+                                <NavLink
+                                    icon={<Home />}
+                                    text='Home'
+                                    link='/app'
+                                />
+                                <NavLink
+                                    icon={<Message />}
+                                    text='Conversas'
+                                    link='/app/chat'
+                                />
+                                <NavLink
+                                    icon={<Bookmark />}
+                                    text='Favoritos'
+                                    link='/app/favorites'
+                                />
+                            </Box>
+                        </Stack>
+                        <Box 
+                            sx={{
+                                [theme.breakpoints.down('xl')]: {
+                                    ml: 1
+                                }
+                            }} 
+                            height='500px' 
+                            ml={!dropdownButtonClicked ? 3 : 2.4}
                         >
-                            {!dropdownButtonClicked ?
-                                <>
-                                    <Typography sx={{ userSelect: 'none' }}>Seus atalhos ({shortcuts})</Typography>
-                                    {shortcutsExpanded
-                                        ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
-                                        : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
-                                    }
-                                </>
-                                :
-                                <Box onClick={e => { handleOpenPopover(e) }}>
-                                    { !open ?
-                                        <ExpandMore sx={{ cursor: 'pointer' }} />
-                                        :
-                                        <ExpandLess sx={{ cursor: 'pointer' }} />
-                                    }
-                                </Box>
+                            <Box
+                                onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
+                                color='text.secondary'
+                                display='flex'
+                                mb={3}
+                                gap={2}
+                            >
+                                {!dropdownButtonClicked ?
+                                    <>
+                                        <Typography sx={{ userSelect: 'none' }}>Seus atalhos ({shortcuts})</Typography>
+                                        {shortcutsExpanded
+                                            ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
+                                            : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
+                                        }
+                                    </>
+                                    :
+                                    <Box onClick={e => { handleOpenPopover(e) }}>
+                                        { !open ?
+                                            <ExpandMore sx={{ cursor: 'pointer' }} />
+                                            :
+                                            <ExpandLess sx={{ cursor: 'pointer' }} />
+                                        }
+                                    </Box>
+                                }
+                            </Box>
+                            {!dropdownButtonClicked &&
+                                <Stack
+                                    gap={3}
+                                    sx={{
+                                        maxHeight: '450px',
+                                        display: shortcutsExpanded ? 'flex' : 'none',
+                                        overflow: 'scroll',
+                                        overflowX: 'hidden',
+                                        '::-webkit-slider-thumb': { display: 'none' }
+                                    }}
+                                >
+                                    <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
+                                    <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
+                                    <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />
+                                    <Shortcut title='Matemática' category='Materiais' color={yellow[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                </Stack>
                             }
-                        </Box>
-                        {!dropdownButtonClicked &&
-                            <Stack
-                                gap={3}
-                                sx={{
-                                    maxHeight: '450px',
-                                    display: shortcutsExpanded ? 'flex' : 'none',
-                                    overflow: 'scroll',
-                                    overflowX: 'hidden',
-                                    '::-webkit-slider-thumb': { display: 'none' }
+                            <Popover
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClosePopover}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'right'
                                 }}
                             >
-                                <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
-                                <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
-                                <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />
-                                <Shortcut title='Matemática' category='Materiais' color={yellow[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                            </Stack>
-                        }
-                        <Popover
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClosePopover}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'right'
-                            }}
-                        >
-                            <Stack maxHeight={450} width={200} p={2.5}>
-                                <Typography mb={2.5} textAlign='center'>Seus atalhos ({shortcuts})</Typography>
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                <Shortcut title='Estudos' category='Grupo' color={purple[600]} />   
-                            </Stack>
-                        </Popover>
+                                <Stack maxHeight={450} width={200} p={2.5}>
+                                    <Typography mb={2.5} textAlign='center'>Seus atalhos ({shortcuts})</Typography>
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />   
+                                </Stack>
+                            </Popover>
+                        </Box>
+                        <Stack>
+                            <NavLink 
+                                icon={<LogoutOutlined />}
+                                text='Sair'
+                                link={logout}
+                            />
+                            <NavLink 
+                                icon={theme.palette.mode === 'dark' ? <LightMode /> : <DarkMode />}
+                                text={theme.palette.mode === 'dark' ? 'Tema claro' : 'Tema escuro'}
+                                link={(): void => { setTheme(theme.palette.mode === 'dark' ? lightTheme : darkTheme) }}
+                            />
+                        </Stack>
                     </Box>
-                    <Stack>
-                        <NavLink 
-                            icon={<LogoutOutlined />}
-                            text='Sair'
-                            link={logout}
-                        />
-                        <NavLink 
-                            icon={theme.palette.mode === 'dark' ? <LightMode /> : <DarkMode />}
-                            text={theme.palette.mode === 'dark' ? 'Tema claro' : 'Tema escuro'}
-                            link={(): void => { setTheme(theme.palette.mode === 'dark' ? lightTheme : darkTheme) }}
-                        />
-                    </Stack>
                 </Box>
             </Box>
-        </Box>
+            <Divider orientation='vertical' role='presentation' flexItem sx={{ height: '100%' }} />
+        </>
     )
 }

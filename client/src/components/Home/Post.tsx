@@ -61,7 +61,6 @@ export default function Post({
 
     const handleClose = (): void => { setAnchorEl(null) }
 
-
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 

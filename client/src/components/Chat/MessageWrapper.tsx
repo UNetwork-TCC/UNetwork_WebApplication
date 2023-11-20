@@ -8,7 +8,7 @@ export default function MessageWrapper(): ReactElement {
             sx={{
                 p: 2.5,
                 width: '100%',
-                height: '78%',
+                height: '80%',
                 display: 'flex',
                 overflow: 'scroll',
                 overflowX: 'hidden',

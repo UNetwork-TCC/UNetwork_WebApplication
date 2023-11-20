@@ -27,7 +27,7 @@ export default function Profile(): ReactElement {
                             <Avatar
                                 sx={{
                                     height: '10rem',
-                                    width: '10rem',
+                                    width: '10rem'
                                 }}
                             ></Avatar>
                             <Box width='100%' display='flex' flexDirection='column' gap={2.5}>
@@ -45,7 +45,7 @@ export default function Profile(): ReactElement {
                                 <Box width='50%'>
                                     <Typography>@vitronks</Typography>
                                     <Typography>Vitor Hugo Rodrigues dos Santos</Typography>
-                                    <Typography>{`Olá! Esta é a bio de um maluco aí.`}</Typography>
+                                    <Typography>{'Olá! Esta é a bio de um maluco aí.'}</Typography>
                                 </Box>
                             </Box>
                         </Box>

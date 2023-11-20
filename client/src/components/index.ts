@@ -1,7 +1,6 @@
 import DiscoverSection from './LandingPage/DiscoverSection'
 import AboutSection from './LandingPage/AboutSection'
 import ComunitySection from './LandingPage/ComunitySection'
-import Chat from './Chat/Chat'
 import LittleNews from './News/LittleNews'
 import SideBar from './SideBar/SideBar'
 import File from './Materials/File'
@@ -31,6 +30,7 @@ import GoogleAuth from './Auth/GoogleAuth'
 import ContactAppLayout from './Home/Contact'
 import Message from './Chat/Message'
 import MessageWrapper from './Chat/MessageWrapper'
+import ChatBar from './Chat/ChatBar'
 
 export {
     DiscoverSection,
@@ -42,7 +42,7 @@ export {
     ClipsWrapper,
     ForumWrapper,
     Message,
-    Chat,
+    ChatBar,
     LittleNews,
     ForumIcon,
     Folder,
