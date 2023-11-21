@@ -1,22 +1,17 @@
 import { Box, Button, Container, Divider, Link, Modal, Paper, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
-
 import { AppLayout } from '$layout'
 import { FilterAndConfig, News } from '$components'
 import { type ReactElement, useEffect, useState } from 'react'
-import { fetchNews } from '$features/news'
 import { type news } from '$types'
-import { useFetchDispatch } from '$hooks'
-import { HTTP_STATUS } from '$constants'
-import { useAppSelector } from '$store'
 import { NewsSkeleton } from '$skeletons'
+import { useFetchNewsMutation } from '$features/news'
 
 export default function NewsPage(): ReactElement {
     const theme = useTheme()
-    const status = useFetchDispatch(fetchNews())
     const matches = useMediaQuery(theme.breakpoints.up('md'))
-    const newsArr = useAppSelector(state => state.news.news)
 
-    const [ isLoading, setIsLoading ] = useState<boolean>(true)
+    const [ fetchNews, { data: newsData, isLoading } ] = useFetchNewsMutation()
+
     const [ open, setOpen ] = useState(false)
     const [ news, setNews ] = useState<news[]>([])
     const [ NewsAttributes, setNewsAttributes ] = useState<news>({
@@ -27,11 +22,6 @@ export default function NewsPage(): ReactElement {
         setPassword: '',
         getPassword: ''
     })
-
-    // const [ checkedButtons, setCheckedButtons ] = useState({
-    //     public: true,
-    //     private: false
-    // })
 
     const handleOpen = (): void => { setOpen(true) }
     const handleClose = (): void => { setOpen(false) }
@@ -51,9 +41,7 @@ export default function NewsPage(): ReactElement {
 
     useEffect(() => {
         (async () => {
-            if (await status === HTTP_STATUS.FULFILLED) {
-                setIsLoading(false)
-            }
+            await fetchNews(null)
         })()
 
         document.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -63,7 +51,7 @@ export default function NewsPage(): ReactElement {
                 handleClose()
             }
         })
-    }, [ status ])
+    }, [ fetchNews ])
 
     return (
         <AppLayout>
@@ -80,7 +68,7 @@ export default function NewsPage(): ReactElement {
                                 <NewsSkeleton />
                                 <NewsSkeleton />
                             </>
-                        ) : newsArr.map(item => (
+                        ) : newsData?.map(item => (
                             <News
                                 key={item._id}
                                 title={item.name}

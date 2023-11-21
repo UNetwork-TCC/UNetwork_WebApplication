@@ -25,8 +25,8 @@ const userApiSlice = apiSlice.injectEndpoints({
         }),
 
         updateUser: builder.mutation<User, Partial<User>>({
-            query: data => ({
-                url: '/user',
+            query: ({ _id, ...data }) => ({
+                url: `/user/${_id}`,
                 method: 'PATCH',
                 body: data
             })
