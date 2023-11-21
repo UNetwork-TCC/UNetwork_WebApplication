@@ -14,7 +14,8 @@ export default function CustomInput({
     placeholder,
     onChange,
     fullWidth,
-    iconColor 
+    iconColor,
+    ...props
 } : {
     inputWidth?: string | number,
     width?: string,
@@ -40,6 +41,7 @@ export default function CustomInput({
                 value={value}
                 defaultValue={defaultValue}
                 onChange={onChange}
+                {...props}
                 sx={{ 
                     bgcolor: bgcolor ?? (theme.palette.mode === 'light' ? 'grey.100' : 'background.paper'), 
                     width: inputWidth ?? '100%',

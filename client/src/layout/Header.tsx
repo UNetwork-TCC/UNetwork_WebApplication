@@ -4,8 +4,8 @@
 import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography } from '@mui/material'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
-import { Search, FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp } from '@mui/icons-material'
-import { CustomLink, CustomInput, CustomMenu, UNetworkModal } from '$layout'
+import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp } from '@mui/icons-material'
+import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { type ReactElement, useState, useContext, type FormEvent } from 'react'
 import { themeContext } from '$contexts'
@@ -120,11 +120,7 @@ export default function Header({
                             <Typography ml={1}>UNetwork</Typography>
                         </Box>
                         <Box display='flex' width='33%'>
-                            <CustomInput
-                                width='100%'
-                                placeholder='Pesquise...'
-                                icon={<Search />}
-                            />
+                            <SearchBar />
                         </Box>
                         <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
                             <CustomLink to='/app/forum' name='Fóruns' />

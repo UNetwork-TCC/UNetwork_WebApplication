@@ -16,7 +16,7 @@ export const userSlice = createSlice({
 
 const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        fetchUsers: builder.mutation<User, unknown>({
+        fetchUsers: builder.mutation<User[], unknown>({
             query: () => '/user'
         }),
 
