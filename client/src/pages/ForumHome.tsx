@@ -2,21 +2,17 @@ import { Search } from '@mui/icons-material'
 import { AppLayout, CustomInput, FormModal, LoadingBackdrop } from '$layout'
 import { Box, Button, Stack, TextField } from '@mui/material'
 import { useTheme } from '@mui/material'
-import { useEffect, type ReactElement, useState } from 'react'
+import { useEffect, type ReactElement, useState, type FormEvent } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
-import { useAppDispatch, useAppSelector } from '$store'
-import { createForum, fetchForum } from '$features/forum'
 import { type User, type Forum } from '$types'
-import { useFetchDispatch } from '$hooks'
-import { HTTP_STATUS } from '$constants'
 import { ForumIconSkeleton } from '$skeletons'
+import { useFetchForumsMutation } from '$features/forum'
 
 export default function ForumHome(): ReactElement {
     const theme = useTheme()
 
     const [ open, setOpen ] = useState<boolean>(false)
     const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
-    const [ isLoading, setIsLoading ] = useState<boolean>(true)
 
     const handleOpen = (): void => { setOpen(true) }
     const handleClose = (): void => { setOpen(false) }
@@ -24,11 +20,7 @@ export default function ForumHome(): ReactElement {
     // const handleLoadingOpen = (): void => { setLoadingOpen(true) }
     const handleLoadingClose = (): void => { setLoadingOpen(false) }
 
-    const status = useFetchDispatch(fetchForum())
-
-    const dispatch = useAppDispatch()
-    const forumState = useAppSelector(state => state.forum)
-    const forumsArr: Forum[] = forumState.forums
+    const [ fetchForums, { isLoading, data: forums } ] = useFetchForumsMutation()
 
     const [ forumForm, setForumForm ] = useState<{ title: string, description: string, topic: string, createdBy: User | string }>({
         title: '',
@@ -37,27 +29,17 @@ export default function ForumHome(): ReactElement {
         createdBy: 'Vitronks'
     })
 
-    const handleSubmit = (e: Event): void => {
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault()
-
-        dispatch(createForum(forumForm))
 
         location.reload()
     }
 
     useEffect(() => {
         (async () => {
-            if (await status === HTTP_STATUS.FULFILLED) {
-                handleLoadingClose()
-                setIsLoading(false)
-            }
-
-            if (await status === HTTP_STATUS.REJECTED)
-                alert('Ops! Algo deu errado!')
+            await fetchForums(null)
         })()
-    }, [ status ])
-
-    console.log(forumsArr)
+    }, [ fetchForums ])
 
     return (
         <AppLayout>
@@ -86,7 +68,7 @@ export default function ForumHome(): ReactElement {
                             ))}
                         </Stack>
                     ) :
-                        forumsArr.map((forum: Forum) => (
+                        forums?.map((forum: Forum) => (
                             <ForumIcon
                                 key={forum._id}
                                 id={forum._id}

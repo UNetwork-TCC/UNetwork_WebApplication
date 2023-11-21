@@ -11,14 +11,14 @@ export default function Post({
     img,
     user
 } : {
-    date: Date | string,
+    date: Date | string | undefined,
     content: {
         text?: string,
         picture?: Picture
-    },
+    } | undefined | string,
     degree?: string,
     img?: string,
-    user: { name: string, avatar?: string }
+    user: { name: string | undefined, avatar?: string }
 }) : ReactElement {
     const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)

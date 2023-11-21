@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from '$api'
 import { type Post } from '$types'
 
-const initialState: { posts: Post[] } = {
-    posts: []
+const initialState: { post: Partial<Post> } = {
+    post: {}
 }
 
 export const postSlice = createSlice({
@@ -16,7 +16,7 @@ export const postSlice = createSlice({
 
 const postApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        fetchPosts: builder.mutation<Post[], unknown>({
+        fetchPosts: builder.mutation<Post[], any>({
             query: () => '/post'
         }),
 
@@ -32,7 +32,7 @@ const postApiSlice = apiSlice.injectEndpoints({
             })
         }),
 
-        updatePost: builder.mutation<Post, Partial<Post> & Pick<Post, '_id'>>({
+        updatePost: builder.mutation<Post, Partial<Post>>({
             query: ({ _id, ...data }) => ({
                 url: `/post/${_id}`,
                 method: 'PATCH',

@@ -83,7 +83,7 @@ export interface Forum {
   title: string
   description: string
   topic: string
-  createdAt: Date
+  createdAt: Date | string
   createdBy: User
   createdIn: Group | Chat | Forum
   closedAt?: Date
