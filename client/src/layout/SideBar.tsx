@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import { type MouseEvent } from 'react'
 import { appLayoutContext, themeContext } from '$contexts'
 import { darkTheme, lightTheme } from '$themes'
+import { useAppDispatch } from '$store'
+import { logOut } from '$features/auth'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
@@ -23,6 +25,8 @@ export default function SideBar(): ReactElement {
     const [ anchorEl, setAnchorEl ] = useState<HTMLDivElement | null>(null)
     const toogleDropdown = (): void => { setDropdownButtonClicked(prevState => !prevState) }
     
+    const dispatch = useAppDispatch()
+
     const shortcutsExpand = (): void => { setShortcutsExpanded(true) }
     const shortcutsCollapse = (): void => { setShortcutsExpanded(false) }
 
@@ -57,10 +61,12 @@ export default function SideBar(): ReactElement {
         }
     }
 
-    const logout = (): void => {
+    const logout = async (): Promise<void> => {
+        dispatch(logOut())
+
         setTimeout(() => {
             navigate('/auth/login')
-        }, 1000)
+        }, 1500)
     }
 
     function NavLink({
