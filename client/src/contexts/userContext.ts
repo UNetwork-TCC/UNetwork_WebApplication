@@ -25,5 +25,5 @@ export const user: User = {
     }
 }
 export const userContext = createContext<{
-    user: User; setUser: Dispatch<SetStateAction<User>> | Record<string, unknown>; 
-}>({ user, setUser: {} })
+    user: User; setUser: Dispatch<SetStateAction<User>> | (() => void) 
+        }>({ user, setUser: () => {} })

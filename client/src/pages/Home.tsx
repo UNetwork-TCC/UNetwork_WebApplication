@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
 import { useFetchPostsMutation } from '$features/post'
+import { useAppSelector } from '$store'
 export default function Home(): ReactElement {
     const theme = useTheme()
 
@@ -16,8 +17,10 @@ export default function Home(): ReactElement {
 
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
 
-    // const posts = useAppSelector(state => state.post.posts)
+    const user = useAppSelector(state => state.auth)
 
+    console.log(user)
+    
     useEffect(() => {
         (async () => {
             await fetchPosts(null)

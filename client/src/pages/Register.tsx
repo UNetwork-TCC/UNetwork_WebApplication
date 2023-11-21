@@ -11,6 +11,7 @@ import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { Alert } from '@mui/material'
 import { setCredentials, useLoginMutation, useSignupMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
+import { useGetUserMutation } from '$features/user'
 
 function RegisterForm(): ReactElement {
 
@@ -30,6 +31,7 @@ function RegisterForm(): ReactElement {
 
     const [ login, { data, isSuccess: isLoginSuccess } ] = useLoginMutation()
     const [ signup, { isSuccess: isSignupSuccess } ] = useSignupMutation()
+    const [ getUser, { data: userData } ] = useGetUserMutation()
 
     const [ isLoginSuccessState, setIsLoginSuccessState ] = useState(isLoginSuccess)
     const [ isSignupSuccessState, setIsSignupSuccessState ] = useState(isSignupSuccess)
@@ -65,8 +67,8 @@ function RegisterForm(): ReactElement {
                 })
                 
                 if (isLoginSuccessState) {
-                    dispatch(setCredentials({ user: data?.id, accessToken: data?.token }))
-
+                    await getUser(data?.id ?? '')
+                    dispatch(setCredentials({ user: userData, accessToken: data?.token }))
                     navigate('/app')
                 } else if (!isLoginSuccessState) {
                     handleCloseLoading()

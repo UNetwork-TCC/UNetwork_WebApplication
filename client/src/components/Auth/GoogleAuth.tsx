@@ -9,6 +9,7 @@ import { LoadingBackdrop } from '$layout'
 import { useSignupMutation, useLoginMutation } from '$features/auth/authApiSlice'
 import { useAppDispatch } from '$store'
 import { setCredentials } from '$features/auth'
+import { useGetUserMutation } from '$features/user'
 
 export default function GoogleAuth(): ReactElement {
     const navigate = useNavigate()
@@ -17,6 +18,7 @@ export default function GoogleAuth(): ReactElement {
 
     const [ login, { data } ] = useLoginMutation()
     const [ signup ] = useSignupMutation()
+    const [ getUser, { data: userData } ] = useGetUserMutation()
 
     const dispatch = useAppDispatch()
 
@@ -35,7 +37,9 @@ export default function GoogleAuth(): ReactElement {
                 password: result.googleId
             })
 
-            dispatch(setCredentials({ user: result.googleId, accessToken: data?.token }))
+            await getUser(data?.id ?? '')
+
+            dispatch(setCredentials({ user: userData, accessToken: data?.token }))
 
             navigate('/app')
         } catch (error) {
