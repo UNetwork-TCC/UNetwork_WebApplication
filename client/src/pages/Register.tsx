@@ -1,17 +1,16 @@
 /* eslint-disable max-len */
 
 import { Box, Button, Checkbox, FormControl, Snackbar, TextField, Typography } from '@mui/material'
-import { type ReactElement, useState } from 'react'
+import { type ReactElement, useState, useEffect } from 'react'
 import { LoadingBackdrop, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
-import { useAppDispatch } from '$store'
-import { login, signup } from '$features/auth'
-import { GET_TYPE, HTTP_STATUS } from '$constants'
 import { Alert } from '@mui/material'
+import { setCredentials, useLoginMutation, useSignupMutation } from '$features/auth'
+import { useAppDispatch } from '$store'
 
 function RegisterForm(): ReactElement {
 
@@ -22,12 +21,18 @@ function RegisterForm(): ReactElement {
         confirmPassword: Yup.string().required('Este campo é obrigatório')
     })
 
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const [ open, setOpen ] = useState(false)
     const [ openLoading, setOpenLoading ] = useState(false)
     const [ snackbarOpen, setSnackbarOpen ] = useState(false)
+
+    const [ login, { data, isSuccess: isLoginSuccess } ] = useLoginMutation()
+    const [ signup, { isSuccess: isSignupSuccess } ] = useSignupMutation()
+
+    const [ isLoginSuccessState, setIsLoginSuccessState ] = useState(isLoginSuccess)
+    const [ isSignupSuccessState, setIsSignupSuccessState ] = useState(isSignupSuccess)
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
@@ -38,36 +43,42 @@ function RegisterForm(): ReactElement {
     const handleOpenLoading = (): void => { setOpenLoading(true) }
     const handleCloseLoading = (): void => { setOpenLoading(false) }
 
+    useEffect(() => {
+        setIsLoginSuccessState(isLoginSuccess)
+        setIsSignupSuccessState(isSignupSuccess)
+    }, [ isLoginSuccess, isSignupSuccess ])
+
     const handleSubmit = async (user: { name: string, email: string, password: string }): Promise<void> => {
         handleOpenLoading()
 
         try {
-            const status = await dispatch(signup({
+            await signup({
                 name: user.name,
                 email: user.email.toLowerCase(),
                 password: user.password
-            })).then(res => GET_TYPE(res.type))
+            })
 
-            if (status === HTTP_STATUS.FULFILLED) {
-                const loginStatus = await dispatch(login({
+            if (isSignupSuccessState) {
+                await login({
                     email: user.email.toLowerCase(),
                     password: user.password
-                })).then(res => GET_TYPE(res.type))
+                })
+                
+                if (isLoginSuccessState) {
+                    dispatch(setCredentials({ user: data?.id, accessToken: data?.token }))
 
-                if (loginStatus === HTTP_STATUS.FULFILLED) {
                     navigate('/app')
-                } else {
+                } else if (!isLoginSuccessState) {
                     handleCloseLoading()
                     handleSnackbarOpen()
                 }
-            } else if (status === HTTP_STATUS.REJECTED) {
+            } else if (!isSignupSuccessState) {
                 handleCloseLoading()
                 handleSnackbarOpen()
             }
-
         } catch (error) {
-            handleCloseLoading()
             console.log(error)
+            navigate('/app/error')
         }
     }
 

@@ -1,12 +1,10 @@
 import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography } from '@mui/material'
-import { type ReactElement, useState } from 'react'
+import { type ReactElement, useState, useEffect } from 'react'
 import { LoadingBackdrop } from '$layout'
 import { Auth } from '$components'
-// import { login } from '$features/auth'
 import { Field, Form, Formik } from 'formik'
-import { useAppDispatch, useAppSelector } from '$store'
+import { useAppDispatch } from '$store'
 import { useNavigate } from 'react-router-dom'
-import { GET_TYPE, HTTP_STATUS } from '$constants'
 import { setCredentials, useLoginMutation } from '$features/auth'
 import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
 import * as Yup from 'yup'
@@ -17,7 +15,7 @@ function LoginForm(): ReactElement {
         password: Yup.string().required('Este campo é obrigatório')
     })
 
-    const [ login ] = useLoginMutation()
+    const [ login, { data, isSuccess: isLoginSuccess, isError: isLoginError } ] = useLoginMutation()
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -31,47 +29,29 @@ function LoginForm(): ReactElement {
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
+    useEffect(() => {
+        if(isLoginSuccess) {
+            dispatch(setCredentials({ user: data?.id, accessToken: data?.token }))
+            navigate('/app')
+        } else if (isLoginError) { 
+            handleCloseLoading()
+            handleSnackbarOpen()    
+        }
+    }, [ isLoginSuccess, isLoginError,  data, dispatch, navigate ])
+
     const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
         handleOpenLoading()
 
         try {
-            const userData = await login({
+            await login({
                 email: user.email.toLowerCase(),
                 password: user.password
             })
-        
-            dispatch(setCredentials({ ...userData, user }))
 
-            console.log('Deu certo!', userData)
-            handleCloseLoading()
-            
         } catch (error: any) {
-            console.log(error?.response)
-            handleCloseLoading()
-            handleSnackbarOpen()
+            console.log(error)
+            navigate('/app/error')
         }
-
-        // try {
-        //     const status = await dispatch(login({
-        //         email: user.email.toLowerCase(),
-        //         password: user.password
-        //     })).then(res => GET_TYPE(res.type))
-
-        //     if (status === HTTP_STATUS.FULFILLED) {
-        //         navigate('/app')
-        //     } else if (status === HTTP_STATUS.REJECTED) {
-        //         handleCloseLoading()
-        //         handleSnackbarOpen()
-        //     }
-
-        // } catch (error) {
-        //     setTimeout((err: any) => {
-        //         handleCloseLoading()
-        //         console.log(err)
-        //     }, 2000)
-        // }
-
-        console.log(user)
     }
 
     return (

@@ -1,40 +1,46 @@
 import { GoogleLogin, type GoogleLoginResponse } from 'react-google-login'
-import { GET_TYPE, GOOGLE_CLIENT_ID, HTTP_STATUS } from '../../constants'
+import { GOOGLE_CLIENT_ID } from '../../constants'
 import { useNavigate } from 'react-router-dom'
 import googleLogo from '$assets/svg/Auth/GoogleLogo.svg'
 import { IconButton } from '@mui/material'
 import { type ReactElement, useEffect, useState } from 'react'
 import { gapi } from 'gapi-script'
 import { LoadingBackdrop } from '$layout'
+import { useSignupMutation, useLoginMutation } from '$features/auth/authApiSlice'
 import { useAppDispatch } from '$store'
-import { login, signup } from '$features/auth'
+import { setCredentials } from '$features/auth'
 
 export default function GoogleAuth(): ReactElement {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
 
+    const [ login, { data } ] = useLoginMutation()
+    const [ signup ] = useSignupMutation()
+
+    const dispatch = useAppDispatch()
+
     const googleSuccess: any = async (response: GoogleLoginResponse): Promise<void> => {
         const result = response?.profileObj
-        // const token = response?.tokenId
 
         try {
-            await dispatch(signup({
+            await signup({
                 name: result.name,
                 email: result.email.toLowerCase(),
                 password: result.googleId
-            }))
+            })
 
-            const status = await dispatch(login({
+            await login({
                 email: result.email.toLowerCase(),
                 password: result.googleId
-            })).then(res => GET_TYPE(res.type))
+            })
 
-            if (status === HTTP_STATUS.FULFILLED)
-                navigate('/app')
+            dispatch(setCredentials({ user: result.googleId, accessToken: data?.token }))
+
+            navigate('/app')
         } catch (error) {
             console.log(error)
+            navigate('/app/error')
         }
     }
 

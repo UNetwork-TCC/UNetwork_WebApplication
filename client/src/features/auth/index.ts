@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import * as api from '$api'
+import { createSlice } from '@reduxjs/toolkit'
 import { type User } from '$types'
 import { authApiSlice } from './authApiSlice'
-import { useLoginMutation } from '$features/auth/authApiSlice'
+import { useLoginMutation, useSignupMutation } from '$features/auth/authApiSlice'
 
 const initialState: { 
     user: User | Record<string, unknown>,
@@ -12,75 +11,24 @@ const initialState: {
     token: undefined
 }
 
-export const login = createAsyncThunk(
-    'auth/login',
-    async (user: { email: string; password: string }) => {
-        const { data } = await api.loginUser(user)
-
-        return data
-    }
-)
-
-export const signup = createAsyncThunk(
-    'auth/signup',
-    async (user: Partial<User> | { name: string; email: string; password: string }) => {
-        const { data } = await api.createUser(user)
-
-        console.log(data)
-
-        return data
-    }
-)
-
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
         setCredentials: (state, action) => {
             const { user, accessToken } = action.payload
+
             state.user = user
             state.token = accessToken
-
-            console.log('veio do setCredentials: ', {
-                user,
-                accessToken,
-                state
-            })
         },
 
         logOut: state => {
             state.user = {}
             state.token = ''
         }
-    },
-    extraReducers: builder => {
-
-        // Login Reducer
-
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.user = action.payload
-            state.token = action.payload.token
-
-            console.log('Usuário logado com sucesso!')
-            console.log(state.user)
-            console.log(state.token)
-        })
-
-        builder.addCase(login.rejected, (_, action) => {
-            console.log(action.error)
-        })
-
-        // Signup Reducer
-
-        builder.addCase(signup.fulfilled, (state, action) => {
-            state.user = action.payload
-
-            console.log('Usuário cadastrado com sucesso!')
-            console.log(state.user)
-        })
     }
 })
 
 export const authReducer = authSlice.reducer
 export const { logOut, setCredentials } = authSlice.actions
-export { authApiSlice, useLoginMutation }
+export { authApiSlice, useLoginMutation, useSignupMutation }
