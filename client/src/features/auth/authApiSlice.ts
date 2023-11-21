@@ -1,4 +1,4 @@
-import { apiSlice } from '$lib/api/apiSlice'
+import { apiSlice } from '$api'
 import { type User } from '$types'
 
 export const authApiSlice = apiSlice.injectEndpoints({

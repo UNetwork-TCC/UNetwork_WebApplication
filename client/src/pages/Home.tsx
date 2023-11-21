@@ -1,33 +1,28 @@
-import { Avatar, Box, IconButton, Link as MuiLink, Stack, Typography, useTheme } from '@mui/material'
+import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { ClipsWrapper, Post } from '$components'
-import { Add, AttachFile, ArrowDropUp } from '@mui/icons-material'
+import { Add, AttachFile } from '@mui/icons-material'
 import { AppLayout, CustomInput } from '$layout'
-import { useEffect, type ReactElement, useState } from 'react'
+import { useEffect, type ReactElement } from 'react'
 import { PostSkeleton } from '$skeletons'
-import { useFetchDispatch } from '$hooks'
-import { fetchPosts } from '$features/post'
-import { HTTP_STATUS } from '$constants'
-import { useAppSelector } from '$store'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
+import { useFetchPostsMutation } from '$features/post'
 export default function Home(): ReactElement {
     const theme = useTheme()
-    const status = useFetchDispatch(fetchPosts())
 
     const navigate = useNavigate()
 
-    const posts = useAppSelector(state => state.post.posts)
+    const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
 
-    const [ isLoading, setIsLoading ] = useState<boolean>(true)
+    // const posts = useAppSelector(state => state.post.posts)
 
     useEffect(() => {
         (async () => {
-            if (await status === HTTP_STATUS.FULFILLED)
-                setIsLoading(false)
+            await fetchPosts(null)
         })()
-    }, [ status ])
+    }, [ fetchPosts ])
 
     return (
         <AppLayout>
@@ -100,7 +95,7 @@ export default function Home(): ReactElement {
                                     <PostSkeleton />
                                 </>   
                             )
-                            : posts.map(post => (
+                            : posts?.map(post => (
                                 <Post
                                     key={post._id}
                                     content={post.content}
