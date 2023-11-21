@@ -12,7 +12,7 @@ export default function FavoritesPage(): ReactElement {
     const [ open, setOpen ] = useState(false)
 
     const [ folders, setFolders ] = useState<folder[]>([])
-    
+
     const [ folderAttributes, setFolderAttributes ] = useState<folder>({
         title: '',
         subtitle: '',
@@ -47,16 +47,16 @@ export default function FavoritesPage(): ReactElement {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
             const code: any = e.code
 
-            if(Number(code) === 27) {
-                handleClose()  
+            if (Number(code) === 27) {
+                handleClose()
             }
         })
     }, [])
 
     return (
-        <AppLayout withSidebars>
-            <Box> 
-                <Box sx={{ display: 'flex', height:'88vh' }}>
+        <AppLayout>
+            <Box>
+                <Box sx={{ display: 'flex', height: '88vh' }}>
                     <Box p={1}>
                         <Box>
                             <Card sx={{
@@ -71,14 +71,14 @@ export default function FavoritesPage(): ReactElement {
                             }}>
                                 <Box display='flex' mb={2} sx={{ cursor: 'pointer' }} onClick={handleOpen}>
                                     <Avatar sx={{ padding: '10px', margin: '10px', width: 20, height: 20, bgcolor: 'primary.main' }}>
-                                        <Add sx={{ fontSize: '1em' }}/> 
+                                        <Add sx={{ fontSize: '1em' }} />
                                     </Avatar>
                                     <Typography position={'relative'} top={8}>Adicionar Pasta</Typography>
-                                </Box> 
+                                </Box>
                                 <Typography variant='h4' mb={2}>Pastas</Typography>
                                 <Grid container gap={3} columns={4} width={'auto'}>
                                     {folders.map(e => (
-                                        <Folder title={e.title} subtitle={!e.subtitle ? e.title : e.subtitle } key={e.title} />
+                                        <Folder title={e.title} subtitle={!e.subtitle ? e.title : e.subtitle} key={e.title} />
                                     ))}
                                 </Grid>
                             </Card>
@@ -92,46 +92,46 @@ export default function FavoritesPage(): ReactElement {
                 title='Nova Pasta'
             >
                 <>
-                    <TextField 
-                        onChange={e => { setFolderAttributes({ ...folderAttributes, title: e.target.value }) }} 
+                    <TextField
+                        onChange={e => { setFolderAttributes({ ...folderAttributes, title: e.target.value }) }}
                         label="Título"
                         value={folderAttributes.title}
                         fullWidth
                     />
-                    <TextField 
-                        onChange={e => { setFolderAttributes({ ...folderAttributes, subtitle: e.target.value }) }} 
+                    <TextField
+                        onChange={e => { setFolderAttributes({ ...folderAttributes, subtitle: e.target.value }) }}
                         label="Tópico (opicional)"
                         value={folderAttributes.subtitle}
                         fullWidth
                     />
                     <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
                     <FormControl>
-                        <CustomCheckBox 
+                        <CustomCheckBox
                             onClick={
                                 () => {
                                     setCheckedButtons(state => ({ ...state, public: !state.public }))
                                     setFolderAttributes({ ...folderAttributes, visibility: 'public' })
-                                }} 
-                            checked={checkedButtons.public} 
-                            caption='Isso deixará sua pasta pública' 
+                                }}
+                            checked={checkedButtons.public}
+                            caption='Isso deixará sua pasta pública'
                             title='Público'
                         />
-                        <CustomCheckBox 
+                        <CustomCheckBox
                             onClick={
                                 () => {
                                     setCheckedButtons(state => ({ ...state, private: !state.private }))
                                     setFolderAttributes({ ...folderAttributes, visibility: 'private' })
                                 }}
                             checked={checkedButtons.private}
-                            caption='Isso deixará sua pasta privada' 
+                            caption='Isso deixará sua pasta privada'
                             title='Privado'
-                        />   
+                        />
                     </FormControl>
                     <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
-                        <Button onClick={handleClose} variant='outlined'fullWidth>
+                        <Button onClick={handleClose} variant='outlined' fullWidth>
                             Cancelar
                         </Button>
-                        <Button type='submit' onClick={createFolder} variant='outlined'fullWidth>
+                        <Button type='submit' onClick={createFolder} variant='outlined' fullWidth>
                             Criar
                         </Button>
                     </Box>

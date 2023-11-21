@@ -1,7 +1,6 @@
 import DiscoverSection from './LandingPage/DiscoverSection'
 import AboutSection from './LandingPage/AboutSection'
 import ComunitySection from './LandingPage/ComunitySection'
-import Chat from './Chat/Chat'
 import LittleNews from './News/LittleNews'
 import SideBar from './SideBar/SideBar'
 import File from './Materials/File'
@@ -27,15 +26,23 @@ import ForumWrapper from './Forum/ForumWrapper'
 import Shortcut from './Home/Shortcut'
 import ClipComponent from './Home/ClipComponent'
 import FeedbackForm from './Home/FeedbackForm'
+import GoogleAuth from './Auth/GoogleAuth'
+import ContactAppLayout from './Home/Contact'
+import Message from './Chat/Message'
+import MessageWrapper from './Chat/MessageWrapper'
+import ChatBar from './Chat/ChatBar'
 
 export {
     DiscoverSection,
     AboutSection,
+    MessageWrapper,
     ClipComponent,
+    GoogleAuth,
     ComunitySection,
     ClipsWrapper,
     ForumWrapper,
-    Chat,
+    Message,
+    ChatBar,
     LittleNews,
     ForumIcon,
     Folder,
@@ -57,5 +64,6 @@ export {
     BigNews,
     News,
     FilterAndConfig,
-    FeedbackForm
+    FeedbackForm,
+    ContactAppLayout
 }

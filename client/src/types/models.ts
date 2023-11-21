@@ -13,13 +13,13 @@ export interface User {
   admin: boolean
   posts: Post[]
   otherInfo: {
-    avatar: string
-    bio: string
-    phone: string
-    city: string
-    state: string
-    country: string
-    grade: number
+    avatar?: string
+    bio?: string
+    phone?: string
+    city?: string
+    state?: string
+    country?: string
+    grade?: number
   }
 }
 
@@ -72,7 +72,7 @@ export interface Post {
   }
   postedBy: User
   postedAt: Date
-  postedIn: Group | Chat | Forum
+  postedIn: Group | Chat | Forum | string
   comments: Message[]
   likes: User[]
   views: User[]
@@ -83,7 +83,7 @@ export interface Forum {
   title: string
   description: string
   topic: string
-  createdAt: Date
+  createdAt: Date | string
   createdBy: User
   createdIn: Group | Chat | Forum
   closedAt?: Date

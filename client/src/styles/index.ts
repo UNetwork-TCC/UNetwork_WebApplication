@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100vw',
         overflowX: 'hidden',
         background: theme.palette.mode === 'dark' ?
-            ' #343342' 
+            '#1F1B24' 
             : 'none'
     },
 
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         background: 
             theme.palette.mode === 'light' ?
                 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3))'
-                : 'linear-gradient(to right bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3))',
+                : 'linear-gradient(to right bottom, rgba(80, 80, 80, 0.1), rgba(80, 80, 80, 0.3))',
         boxShadow: '5px 5px 10px black',
         transition: '.3s ease-in-out'
     },

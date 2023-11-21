@@ -1,7 +1,7 @@
-import { type SxProps, useMediaQuery, useTheme } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Box, Modal } from "@mui/material";
-import { type ReactElement } from "react";
+import { type SxProps, useMediaQuery, useTheme } from '@mui/material'
+import { Typography } from '@mui/material'
+import { Box, Modal } from '@mui/material'
+import { useEffect, type FormEventHandler, type ReactElement } from 'react'
 
 export default function FormModal({
     open,
@@ -14,12 +14,22 @@ export default function FormModal({
     open: boolean,
     title: string,
     onClose: () => void,
-    onSubmit?: (e: Event) => void,
+    onSubmit?: FormEventHandler<HTMLFormElement>,
     sx?: SxProps,
     children: ReactElement | ReactElement[]
 }): ReactElement {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.up('md'))
+
+    useEffect(() => {
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            const code: string = e.code
+
+            if (Number(code) === 27) {
+                onClose()
+            }
+        })
+    }, [ onClose ])
 
     return (
         <Modal

@@ -1,10 +1,50 @@
-import { Rate } from '$layout'
-import { Button } from '@mui/material'
+import { Button, useTheme } from '@mui/material'
 import { TextField } from '@mui/material'
 import { Box, Divider, Typography } from '@mui/material'
-import { type FormEvent, type ReactElement } from 'react'
+import { grey } from '@mui/material/colors'
+import { useState, type FormEvent, type ReactElement, type MouseEvent, useEffect, useRef } from 'react'
 
 export default function FeedbackForm({ handleSubmit }: { handleSubmit: (e: FormEvent<HTMLFormElement>) => void }): ReactElement {
+    const theme = useTheme()
+    
+    const [ feedbackValue, setFeedbackValue ] = useState<number | null>(null)
+   
+    function Rate({ 
+        value
+    } : {
+        value: number,
+    }): ReactElement {
+        const [ clicked, setClicked ] = useState(false)
+        
+        const handleRateClick = (): void => { 
+            setClicked(prevState => !prevState)
+            setFeedbackValue(value)
+        }
+
+        return (
+            <Box
+                onClick={handleRateClick}
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                height='4rem' 
+                width='4rem'
+                borderRadius='100%'
+                sx={{
+                    cursor: 'pointer',
+                    transition: '.1s ease-in-out',
+                    bgcolor: clicked ? 'primary.main' : (theme.palette.mode === 'light' ? grey[200] : '#211e24'),
+                    color: clicked ? 'primary.contrastText' : 'primary.text',
+                    ':hover': {
+                        bgcolor: !clicked ? (theme.palette.mode === 'light' ? grey[300] : '#2a272e') : undefined
+                    }
+                }}
+            >
+                {value}
+            </Box>
+        )
+    }
+
     return (
         <form onSubmit={handleSubmit}>
             <Box
@@ -34,16 +74,18 @@ export default function FeedbackForm({ handleSubmit }: { handleSubmit: (e: FormE
                         >
                             <Box gap={1} display='flex'>
                                 {[ 0, 1, 2, 3, 4, 5 ].map(item => (
-                                    <Rate key={item}>
-                                        {item}
-                                    </Rate>
+                                    <Rate 
+                                        key={item}
+                                        value={item}
+                                    />
                                 ))}
                             </Box>
                             <Box gap={1} display='flex'>
                                 {[ 6, 7, 8, 9, 10 ].map(item => (
-                                    <Rate key={item}>
-                                        {item}
-                                    </Rate>
+                                    <Rate 
+                                        key={item}
+                                        value={item}
+                                    />
                                 ))}
                             </Box>
                         </Box>

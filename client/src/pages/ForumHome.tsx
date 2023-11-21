@@ -1,24 +1,26 @@
 import { Search } from '@mui/icons-material'
-import { AppLayout, CustomInput, FormModal } from '$layout'
-import { Box, Button, TextField } from '@mui/material'
+import { AppLayout, CustomInput, FormModal, LoadingBackdrop } from '$layout'
+import { Box, Button, Stack, TextField } from '@mui/material'
 import { useTheme } from '@mui/material'
-import { useEffect, type ReactElement, useState } from 'react'
+import { useEffect, type ReactElement, useState, type FormEvent } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
-import { useAppDispatch, useAppSelector } from '$store'
-import { createForum, fetchForum } from '$features/forum/forum-slicer'
 import { type User, type Forum } from '$types'
+import { ForumIconSkeleton } from '$skeletons'
+import { useFetchForumsMutation } from '$features/forum'
 
 export default function ForumHome(): ReactElement {
     const theme = useTheme()
 
     const [ open, setOpen ] = useState<boolean>(false)
+    const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
 
-    const handleOpen = ():void => { setOpen(true) }
-    const handleClose = ():void => { setOpen(false) }
+    const handleOpen = (): void => { setOpen(true) }
+    const handleClose = (): void => { setOpen(false) }
 
-    const dispatch = useAppDispatch()
-    const forumState = useAppSelector(state => state.forum)
-    const forumsArr: Forum[] = forumState.forums
+    // const handleLoadingOpen = (): void => { setLoadingOpen(true) }
+    const handleLoadingClose = (): void => { setLoadingOpen(false) }
+
+    const [ fetchForums, { isLoading, data: forums } ] = useFetchForumsMutation()
 
     const [ forumForm, setForumForm ] = useState<{ title: string, description: string, topic: string, createdBy: User | string }>({
         title: '',
@@ -27,25 +29,21 @@ export default function ForumHome(): ReactElement {
         createdBy: 'Vitronks'
     })
 
-    const handleSubmit = (e: Event): void => {
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault()
 
-        dispatch(createForum(forumForm))
-
-        setTimeout(() => {
-            location.reload()
-        }, 1000)
+        location.reload()
     }
 
     useEffect(() => {
-        dispatch(fetchForum())
-    }, [ dispatch ])
-
-    console.log(forumsArr)
+        (async () => {
+            await fetchForums(null)
+        })()
+    }, [ fetchForums ])
 
     return (
-        <AppLayout withSidebars>
-            <Box overflow='hidden' display='flex' width='100%' flexDirection='column' p={2.5}>
+        <AppLayout>
+            <Box sx={{ overflowX: 'hidden' }} overflow='auto' display='flex' width='100%' flexDirection='column' p={2.5}>
                 <Box mb={3} display='flex' flexDirection='column' gap={3}>
                     <Box>
                         <CustomInput
@@ -63,15 +61,23 @@ export default function ForumHome(): ReactElement {
                     </Box>
                 </Box>
                 <ForumWrapper>
-                    {forumsArr.map((forum: Forum) => (
-                        <ForumIcon
-                            key={forum._id}
-                            id={forum._id}
-                            title={forum.title}
-                            topic={forum.topic}
-                            usersIn={forum.usersIn}
-                        />
-                    ))}
+                    {isLoading ? (
+                        <Stack width='100rem' gap={2}>
+                            {[ 0, 1, 2, 3, 4, 5, 6, 7, 8 ].map(item => (
+                                <ForumIconSkeleton key={item} />
+                            ))}
+                        </Stack>
+                    ) :
+                        forums?.map((forum: Forum) => (
+                            <ForumIcon
+                                key={forum._id}
+                                id={forum._id}
+                                title={forum.title}
+                                topic={forum.topic}
+                                usersIn={forum.usersIn}
+                            />
+                        ))
+                    }
                 </ForumWrapper>
             </Box>
             <FormModal
@@ -106,6 +112,10 @@ export default function ForumHome(): ReactElement {
                     </Box>
                 </>
             </FormModal>
+            <LoadingBackdrop
+                open={loadingOpen}
+                handleClose={handleLoadingClose}
+            />
         </AppLayout>
     )
 }

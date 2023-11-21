@@ -35,6 +35,7 @@
       "$features/*": ["features/*"],
       "$hooks": ["hooks/index.ts"],
       "$layout": ["layout/index.ts"],
+      "$skeletons": ["layout/skeletons/index.ts"],
       "$lib/*": ["lib/*"],
       "$api": ["lib/api/index.ts"],
       "$pages": ["pages/index.ts"],

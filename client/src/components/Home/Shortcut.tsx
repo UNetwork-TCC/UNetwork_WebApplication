@@ -1,28 +1,39 @@
 import { Circle } from '@mui/icons-material'
-import { Box, Tooltip, Typography, useTheme } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
 
 export default function Shortcut({ 
     title,
     category,
-    color 
+    color,
+    link
 } : {
     title: string,
     category: string,
-    color: string
+    color: string,
+    link?: string
 }) : ReactElement {
-    const theme = useTheme()
-
     return (
-        <Box p={1}
+        <Box  
             sx={{
-                cursor: 'pointer',
-                transition: 'ease .3s',
-                borderRadius: 2,
-                ':hover': { bgcolor: 'background.paper', boxShadow: theme.shadows[2] }
+                '&': {
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    mb: 2.5,
+                    gap: 2,
+                    borderRadius: 2,
+                    bgcolor: 'transparent',
+                    transition: '.3s ease-in-out',
+                    cursor: 'pointer'
+                },
+
+                ':hover': {
+                    transition: '.3s ease-in-out'
+                }
             }}
-            display='flex'
-            alignItems='center'>
+        >
+            
             <Box
                 display='flex'
                 justifyContent='center'
@@ -35,7 +46,7 @@ export default function Shortcut({
             >
                 <Circle sx={{ height: 12.5, color }} />
             </Box>
-            <Box ml={2} >
+            <Box>
                 {
                     title.length > 10 ?
                         <Tooltip title={title}>

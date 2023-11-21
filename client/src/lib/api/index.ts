@@ -9,6 +9,7 @@ import {
     type Post
 } from '$types'
 import axios, { type AxiosResponse } from 'axios'
+import { apiSlice } from './apiSlice'
 
 const host = 'https://unetwork-api.onrender.com'
 
@@ -19,12 +20,12 @@ type ApiRequest<T> = Promise<AxiosResponse<T, any>>
 // USERS REQUESTS
 
 export const fetchUsers = async (): ApiRequest<User[]> => await API.get<User[]>('/user')
-export const createUser = async (data: {
+export const createUser = async (data: Partial<User> | {
   name: string
   email: string
   password: string
 }): ApiRequest<typeof data> => await API.post<typeof data>('/user', data)
-export const loginUser = async (data: { email: string; password: string }): ApiRequest<typeof data> => await API.post<typeof data>('/user/login', data)
+export const loginUser = async (data: { email: string; password: string }): ApiRequest<typeof data & { token?: string }> => await API.post<typeof data>('/user/login', data)
 export const getUser = async (id: string): ApiRequest<User> => await API.get<User>('/user/' + id)
 export const deleteUser = async (id: string): ApiRequest<User> => await API.delete<User>('/user' + id)
 export const updateUser = async (id: string, data: Partial<User>): ApiRequest<User> => await API.patch<User>('/user' + id, data)
@@ -118,3 +119,5 @@ export const createPost = async (data: {
 
 export const deletePost = async (id: string): ApiRequest<Post> => await API.delete<Post>('/post/' + id)
 export const updatePost = async (id: string, data: Partial<Post>): ApiRequest<Post> => await API.patch<Post>('/post/' + id, data)
+
+export { apiSlice }

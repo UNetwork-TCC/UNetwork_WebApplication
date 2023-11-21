@@ -1,30 +1,32 @@
-import { Avatar, Box, MenuItem, Select, Typography } from '@mui/material'
-import FooterBackground from '../assets/svg/Home/FooterBackground.svg'
+import { Avatar, Box, MenuItem, Select, Typography, useMediaQuery, useTheme } from '@mui/material'
+import FooterBackground from '$assets/svg/Home/FooterBackground.svg'
 import { FacebookRounded, Instagram, Language, LinkedIn, Twitter } from '@mui/icons-material'
 import { type ReactElement, useEffect } from 'react'
 
-import FlagBR from '../assets/svg/Flags/BR.svg'
-import FlagUS from '../assets/svg/Flags/US.svg'
-import FlagDE from '../assets/svg/Flags/DE.svg'
-import FlagFR from '../assets/svg/Flags/FR.svg'
-import FlagES from '../assets/svg/Flags/ES.svg'
-import FlagRU from '../assets/svg/Flags/RU.svg'
-import FlagSA from '../assets/svg/Flags/SA.svg'
-import FlagCN from '../assets/svg/Flags/CN.svg'
-import FlagJP from '../assets/svg/Flags/JP.svg'
-import FlagIN from '../assets/svg/Flags/IN.svg'
+import FlagBR from '$assets/svg/Flags/BR.svg'
+import FlagUS from '$assets/svg/Flags/US.svg'
+import FlagDE from '$assets/svg/Flags/DE.svg'
+import FlagFR from '$assets/svg/Flags/FR.svg'
+import FlagES from '$assets/svg/Flags/ES.svg'
+import FlagRU from '$assets/svg/Flags/RU.svg'
+import FlagSA from '$assets/svg/Flags/SA.svg'
+import FlagCN from '$assets/svg/Flags/CN.svg'
+import FlagJP from '$assets/svg/Flags/JP.svg'
+import FlagIN from '$assets/svg/Flags/IN.svg'
 
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
 export default function Footer(): ReactElement {
     const { lang: language } = useParams()
-    const lang = navigator.language.split('-')[1].toLowerCase()
     const { t } = useTranslation()
+    const lang = navigator.language.split('-')[1].toLowerCase()
+
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
         if (language && language !== localStorage.getItem('lang')) {
-
             if (
                 language !== 'pt'
                 && language !== 'en'
@@ -46,20 +48,50 @@ export default function Footer(): ReactElement {
     return (
         <Box 
             sx={{ 
-                background: `url(${FooterBackground})`,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '180vh',
                 height: '70vh',
-                width: '100%' 
-            }}>
-            <Box display='flex' width='100%' height='100%' justifyContent='space-around' alignItems='center'>
-                <Box width='20%'>
-                    <Typography mb={2.5}>{t('footer.copyright')}</Typography>
-                    <Typography>{t('footer.copyright2')}</Typography>
-                </Box>
+                width: '100%',
+                [theme.breakpoints.only('xl')]: {
+                    backgroundSize: '205vh'
+                },
+                [theme.breakpoints.down('sm')]: {
+                    backgroundSize: '160vh',
+                    height: '60vh',
+                    width: '120%'
+                }
+            }}
+        >
+            <img 
+                src={FooterBackground} 
+                style={{
+                    position: 'absolute',
+                    height: '90%',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover'
+                }} 
+            />
+            <Box 
+                sx={{
+                    [theme.breakpoints.down('sm')]: {
+                        flexDirection: 'row'
+                    }
+                }} 
+                display='flex'
+                width='100%'
+                height='100%'
+                justifyContent='space-around'
+                alignItems='center'
+            >
+                {!matches && (
+                    <Box width='20%'>
+                        <Typography mb={2.5}>{t('footer.copyright')}</Typography>
+                        <Typography>{t('footer.copyright2')}</Typography>
+                    </Box>
+                )}
                 <Box display='flex' flexDirection='column' gap={2}>
                     <Typography mb={2} fontWeight={900} color='primary.main' variant='h6'>{t('footer.section1.title')}</Typography>
                     <Typography sx={{ cursor: 'pointer', ':hover': { textDecoration: 'underline' } }}>{t('footer.section1.option1')}</Typography>

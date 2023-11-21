@@ -1,14 +1,14 @@
-import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
-import { type ReactElement, useState } from 'react'
+import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography } from '@mui/material'
+import { type ReactElement, useState, useEffect } from 'react'
 import { LoadingBackdrop } from '$layout'
-// import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
-import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
-import { login } from '$features/auth/auth-slicer'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
 import { useAppDispatch } from '$store'
 import { useNavigate } from 'react-router-dom'
+import { setCredentials, useLoginMutation } from '$features/auth'
+import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
+import * as Yup from 'yup'
+import { useGetUserMutation } from '$features/user'
 
 function LoginForm(): ReactElement {
     const validationSchema = Yup.object().shape({
@@ -16,41 +16,65 @@ function LoginForm(): ReactElement {
         password: Yup.string().required('Este campo é obrigatório')
     })
 
+    const [ login, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError } ] = useLoginMutation()
+    const [ getUser, { data: userData } ] = useGetUserMutation()
+
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const [ openLoading, setOpenLoading ] = useState(false)
+    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
 
     const handleOpenLoading = (): void => { setOpenLoading(true) }
     const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    const handleSubmit = (user: { email: string, password: string }): void => {
+    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
+    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+
+    useEffect(() => {
+        (async () => {
+            if(isLoginSuccess) {
+                await getUser(loginData?.id ?? '')
+
+                dispatch(setCredentials({ user: userData, accessToken: loginData?.token }))
+                navigate('/app')
+            } else if (isLoginError) {
+                handleCloseLoading()
+                handleSnackbarOpen()    
+            }
+        })()
+    }, [ 
+        isLoginSuccess,
+        isLoginError,
+        loginData,
+        dispatch,
+        navigate,
+        getUser,
+        userData 
+    ])
+
+    const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
         handleOpenLoading()
-        // localStorage.setItem('user', 1)
 
         try {
-            dispatch(login(user))
-            
-            setTimeout(() => {
-                navigate('/app')
-            }, 2000)
-        } catch (error) {
-            setTimeout(() => {
-                handleCloseLoading()    
-            }, 2000)
+            await login({
+                email: user.email.toLowerCase(),
+                password: user.password
+            })
+
+        } catch (error: any) {
+            console.log(error)
+            navigate('/app/error')
         }
-
-        console.log(user)
-
     }
 
     return (
         <>
             <Box width='85.3%' p={2.5}>
-                <Formik 
+                <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={validationSchema}
-                    style={{ width: '100%' }} 
+                    style={{ width: '100%' }}
                     onSubmit={handleSubmit}
                 >
                     {({ errors, touched }) => (
@@ -80,6 +104,16 @@ function LoginForm(): ReactElement {
                 handleClose={handleCloseLoading}
                 open={openLoading}
             />
+            <Snackbar
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                autoHideDuration={5000}
+            >
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                    Usuário e/ou senha incorreta(os)!
+                </Alert>
+            </Snackbar>
         </>
     )
 }

@@ -1,15 +1,17 @@
 /* eslint-disable max-len */
 
-import { Box, Button, Checkbox, FormControl, TextField, Typography } from '@mui/material'
-import { type ReactElement, useState } from 'react'
+import { Box, Button, Checkbox, FormControl, Snackbar, TextField, Typography } from '@mui/material'
+import { type ReactElement, useState, useEffect } from 'react'
 import { LoadingBackdrop, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
+import { Alert } from '@mui/material'
+import { setCredentials, useLoginMutation, useSignupMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
-import { signup } from '$features/auth/auth-slicer'
+import { useGetUserMutation } from '$features/user'
 
 function RegisterForm(): ReactElement {
 
@@ -20,11 +22,22 @@ function RegisterForm(): ReactElement {
         confirmPassword: Yup.string().required('Este campo é obrigatório')
     })
 
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const [ open, setOpen ] = useState(false)
     const [ openLoading, setOpenLoading ] = useState(false)
+    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
+
+    const [ login, { data, isSuccess: isLoginSuccess } ] = useLoginMutation()
+    const [ signup, { isSuccess: isSignupSuccess } ] = useSignupMutation()
+    const [ getUser, { data: userData } ] = useGetUserMutation()
+
+    const [ isLoginSuccessState, setIsLoginSuccessState ] = useState(isLoginSuccess)
+    const [ isSignupSuccessState, setIsSignupSuccessState ] = useState(isSignupSuccess)
+
+    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
+    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
     const handleOpen = (): void => { setOpen(true) }
     const handleClose = (): void => { setOpen(false) }
@@ -32,34 +45,53 @@ function RegisterForm(): ReactElement {
     const handleOpenLoading = (): void => { setOpenLoading(true) }
     const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    const handleSubmit = (user: { name: string, email: string, password: string }): void => {
+    useEffect(() => {
+        setIsLoginSuccessState(isLoginSuccess)
+        setIsSignupSuccessState(isSignupSuccess)
+    }, [ isLoginSuccess, isSignupSuccess ])
+
+    const handleSubmit = async (user: { name: string, email: string, password: string }): Promise<void> => {
         handleOpenLoading()
 
         try {
-            dispatch(signup({
+            await signup({
                 name: user.name,
-                email: user.email,
+                email: user.email.toLowerCase(),
                 password: user.password
-            }))
+            })
 
-            console.log('oi')
+            if (isSignupSuccessState) {
+                await login({
+                    email: user.email.toLowerCase(),
+                    password: user.password
+                })
+                
+                if (isLoginSuccessState) {
+                    await getUser(data?.id ?? '')
+                    dispatch(setCredentials({ user: userData, accessToken: data?.token }))
+                    navigate('/app')
+                } else if (!isLoginSuccessState) {
+                    handleCloseLoading()
+                    handleSnackbarOpen()
+                }
+            } else if (!isSignupSuccessState) {
+                handleCloseLoading()
+                handleSnackbarOpen()
+            }
         } catch (error) {
-            console.log(error)            
+            console.log(error)
+            navigate('/app/error')
         }
-
-        setTimeout(() => {
-            navigate('/app')
-        }, 2000)
     }
 
     return (
         <>
-            <Box p={2.5}>
+            <Box width='85.3%' p={2.5}>
                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
                     <Formik
                         initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
                         validationSchema={validationSchema}
-                        style={{ width: '100%' }} 
+                        style={{ width: '100%' }}
                         onSubmit={handleSubmit}
                     >
                         {({ errors, touched }) => (
@@ -85,40 +117,39 @@ function RegisterForm(): ReactElement {
                                             )}
                                         </Box>
                                         <Box width='100%'>
-                                            <Field as ={TextField} fullWidth name='confirmPassword' label='Repetir senha' required type='password' />
+                                            <Field as={TextField} fullWidth name='confirmPassword' label='Repetir senha' required type='password' />
                                             {errors.confirmPassword && touched.confirmPassword && (
                                                 <p style={{ color: 'red' }}>{errors.confirmPassword}</p>
                                             )}
                                         </Box>
                                     </Box>
                                     <Box display='flex' justifyContent='space-between' mt={2} alignItems='center'>
-                                        <Button type='submit' variant='contained'>Entrar</Button>
+                                        <Button type='submit' variant='contained'>Cadastrar</Button>
                                     </Box>
                                 </FormControl>
+                                <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
+                                    <Box width='60%' display='flex' alignItems='center'>
+                                        <Checkbox required />
+                                        <Typography>Li e aceito os
+                                            <Typography
+                                                onClick={handleOpen}
+                                                sx={{
+                                                    cursor: 'pointer',
+                                                    ':hover': {
+                                                        textDecoration: 'underline'
+                                                    }
+                                                }} color='primary.main'
+                                                ml={0.5}
+                                                component='span'
+                                            >
+                                                Termos de Serviço e Política de Privacidade
+                                            </Typography>
+                                        </Typography>
+                                    </Box>
+                                </Box>
                             </Form>
                         )}
                     </Formik>
-                    <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
-                        <Box width='60%' display='flex' alignItems='center'>
-                            <Checkbox required />
-                            <Typography>Li e aceito os
-                                <Typography 
-                                    onClick={handleOpen} 
-                                    sx={{
-                                        cursor: 'pointer',
-                                        ':hover': {
-                                            textDecoration: 'underline'
-                                        } 
-                                    }} color='primary.main'
-                                    ml={0.5} 
-                                    component='span' 
-                                >
-                                    Termos de Serviço e Política de Privacidade
-                                </Typography>
-                            </Typography>
-                        </Box>
-                        <Button type='submit' variant='contained'>Cadastrar</Button>
-                    </Box>
                 </FormControl>
             </Box>
             <UNetworkModal
@@ -141,6 +172,16 @@ function RegisterForm(): ReactElement {
                 handleClose={handleCloseLoading}
                 open={openLoading}
             />
+            <Snackbar
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                autoHideDuration={5000}
+            >
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                    Usuário já cadastrado!
+                </Alert>
+            </Snackbar>
         </>
     )
 }

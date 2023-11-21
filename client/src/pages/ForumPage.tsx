@@ -1,29 +1,32 @@
 import { Post } from '$components'
-import { getForum } from '$features/forum/forum-slicer'
+import { useGetForumMutation } from '$features/forum'
 import { AppLayout } from '$layout'
-import { useAppDispatch, useAppSelector } from '$store'
-import { type Forum } from '$types'
+import { Typography } from '@mui/material'
 import { useEffect, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
 
 export default function ForumPage(): ReactElement {
     const { id } = useParams()
 
-    const dispatch = useAppDispatch()
-    const forum: Forum | Record<string, any> = useAppSelector(state => state.forum.forum)
+    const [ getForum, { data: forum, isLoading } ] = useGetForumMutation()
 
     useEffect(() => {
-        dispatch(getForum(id ?? ''))
-    }, [ dispatch, id ])
+        (async () => {
+            await getForum(id ?? '')
+        })()
+    }, [ getForum, id ])
 
     return (
-        <AppLayout withSidebars>
-            <Post
-                title={forum.title}
-                date={forum.createdAt}
-                user={{ name: 'Vitor' }}
-                content={forum.description}
-            />
+        <AppLayout>
+            {isLoading ? (
+                <Typography>Carregando...</Typography>
+            ) : (
+                <Post
+                    date={forum?.createdAt}
+                    user={{ name: forum?.createdBy.name }}
+                    content={forum?.description}
+                />
+            )}
         </AppLayout>
     )
 }

@@ -1,5 +1,5 @@
 import { Box, Modal, Typography, useTheme } from '@mui/material'
-import { type ReactNode, type ReactElement } from 'react'
+import { type ReactNode, type ReactElement, useEffect } from 'react'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/lightLogo.png'
 
@@ -15,6 +15,16 @@ export default function UNetworkModal({
     title: string
 }) : ReactNode {
     const theme = useTheme()
+
+    useEffect(() => {
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            const code: string = e.code
+
+            if (Number(code) === 27) {
+                handleClose()
+            }
+        })
+    }, [ handleClose ])
 
     return (
         <Modal

@@ -2,7 +2,7 @@ import { grey } from '@mui/material/colors'
 
 const defaultThemeProperties = {
     typography: {
-        fontFamily: '\'Public Sans\', sans-serif'
+        fontFamily: '\'Public Sans\', \'Poppins\', sans-serif'
     },
 
     components: {

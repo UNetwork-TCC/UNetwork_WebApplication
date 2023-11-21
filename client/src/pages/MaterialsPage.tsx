@@ -1,10 +1,11 @@
-import { Box, Button, Container, FormControl, Modal, TextField, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Container, FormControl, IconButton, MenuItem, Modal, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
 
 import { File, FilterAndConfig, FolderMaterials } from '$components'
 import { type ReactElement, useEffect, useState } from 'react'
-import { AppLayout, CustomCheckBox } from '$layout'
+import { AppLayout, CustomCheckBox, CustomMenu } from '$layout'
 import { type material } from 'types/dataTypes'
 import { useTheme } from '@mui/material'
+import { FilterList } from '@mui/icons-material'
 
 export default function MaterialsPage(): ReactElement {
     const theme = useTheme()
@@ -13,9 +14,42 @@ export default function MaterialsPage(): ReactElement {
 
     const [ open, setOpen ] = useState(false)
 
-    const [ Materials, setMaterials ] = useState<material[]>([])
+    const [ materials, setMaterials ] = useState<material[]>([
+        {
+            title: 'Bernardo',
+            visibility: 'Bernardo',
+            code: 'Bernardo',
+            setPassword: 'Bernardo',
+            getPassword: 'Bernardo'
+        },
 
-    const [ MaterialsAttributes, setMaterialsAttributes ] = useState<material>({
+        {
+            title: 'Alberto',
+            visibility: 'Alberto',
+            code: 'Alberto',
+            setPassword: 'Alberto',
+            getPassword: 'Alberto'
+        },
+        
+        {
+            title: 'Papá',
+            visibility: 'Papá',
+            code: 'Papá',
+            setPassword: 'Papá',
+            getPassword: 'Papá'
+        }
+    ]) 
+    const filteredMaterials = ():void => {
+        setMaterials(
+            materials.sort((a, b) => {
+                if (a.title < b.title) return -1
+                if (a.title > b.title) return 1
+                return 0
+            })
+        )
+    }
+
+    const [ materialsAttributes, setMaterialsAttributes ] = useState<material>({
         title: '',
         visibility: '',
         code: '',
@@ -37,10 +71,10 @@ export default function MaterialsPage(): ReactElement {
     const createMaterials = (): void => {
         // ...
 
-        if (MaterialsAttributes.visibility && MaterialsAttributes.title) {
+        if (materialsAttributes.visibility && materialsAttributes.title) {
             setMaterials([
-                ...Materials,
-                MaterialsAttributes
+                ...materials,
+                materialsAttributes
             ])
             handleClose()
         }
@@ -57,12 +91,77 @@ export default function MaterialsPage(): ReactElement {
         })
     }, [])
 
+    const onClickEvents = {
+        item1: () => {
+            filteredMaterials()
+            handleClose()
+        },
+
+        item2: () => {
+            console.log('tcchau')
+            handleClose()
+        }
+    }
+
+    const [ anchorEl, setAnchorEl ] = useState(null)
+    const [ menuContent, setMenuContent ] = useState<ReactElement[]>([])
+
+    const openOptions = Boolean(anchorEl)
+
+    const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
+        const mapedElements = elements.map((el, i) =>
+            <MenuItem onClick={onClickEventListeners[i]} key={i} disableRipple>{icons?.[i]}{el}</MenuItem>
+        )
+
+        setMenuContent(mapedElements)
+
+        setAnchorEl(e.currentTarget)
+    }
+
+    const handleCloseOptions = (): void => { setAnchorEl(null) }
+
     return (
-        <AppLayout withSidebars>
+        <AppLayout>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Seus Materiais</Typography>
-                    <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen}/>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Stack sx={{ display:'flex', flexDirection:'row' }} gap={3}>
+                            <IconButton
+                                onClick={
+                                    e => { handleClick(e, 
+                                        [ 'Ordem A-Z', 'Ordem Z-A', 'Recentes', 'Antigas' ],
+                                        [ onClickEvents.item1, onClickEvents.item2 ]
+                        
+                                    ) }
+                                }
+                            >
+                                <FilterList sx={{ cursor: 'pointer', fontSize: '2rem' ,':hover': { color: 'text.secondary' } }} />
+                            </IconButton>
+                
+                        </Stack>
+                        <Box sx={{ 
+                            height: '75%',
+                            bgcolor: '#673AB7',
+                            fontSize: '1rem',
+                            borderRadius: '3.1vh',
+                            color: 'white',
+                            padding: '0.3em 1em',
+                            ml: '2em',
+                            ':hover': {
+                                cursor: 'pointer',
+                                bgcolor: '#673AB7',
+                                opacity: '0.85' 
+                            } 
+                        }} onClick={handleOpen}>CRIAR PASTA</Box>
+                        <CustomMenu
+                            anchorEl={anchorEl}
+                            open={openOptions}
+                            onClose={handleCloseOptions}
+                        >
+                            {menuContent}
+                        </CustomMenu>
+                    </Box>
                 </Container>
                 
                 <Box display={'flex'} justifyContent={'start'} flexDirection={'column'}>
@@ -73,7 +172,7 @@ export default function MaterialsPage(): ReactElement {
                         <FolderMaterials folderName={'teste'} />
                         <FolderMaterials folderName={'teste'} />
                         <FolderMaterials folderName={'teste'} />
-                        {Materials.map((e) => (
+                        {materials.map((e) => (
                             <FolderMaterials folderName={e.title} key={e.title} />
                         ))}
                     </Box>
@@ -107,10 +206,10 @@ export default function MaterialsPage(): ReactElement {
                     </Box>
                     <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
                         <TextField
-                            onChange={e => { setMaterialsAttributes({ ...MaterialsAttributes, title: e.target.value }) }}
+                            onChange={e => { setMaterialsAttributes({ ...materialsAttributes, title: e.target.value }) }}
                             id="outline-basic"
                             label="Título"
-                            value={MaterialsAttributes.title}
+                            value={materialsAttributes.title}
                             fullWidth
                         />
                         <Typography variant='subtitle2'> Colocar visibilidade para </Typography>
@@ -119,7 +218,7 @@ export default function MaterialsPage(): ReactElement {
                                 onClick={
                                     () => {
                                         setCheckedButtons(state => ({ ...state, public: !state.public }))
-                                        setMaterialsAttributes({ ...MaterialsAttributes, visibility: 'public' })
+                                        setMaterialsAttributes({ ...materialsAttributes, visibility: 'public' })
                                     }}
                                 checked={checkedButtons.public}
                                 caption='Isso deixará sua pasta pública'
@@ -129,7 +228,7 @@ export default function MaterialsPage(): ReactElement {
                                 onClick={
                                     () => {
                                         setCheckedButtons(state => ({ ...state, private: !state.private }))
-                                        setMaterialsAttributes({ ...MaterialsAttributes, visibility: 'private' })
+                                        setMaterialsAttributes({ ...materialsAttributes, visibility: 'private' })
                                     }}
                                 checked={checkedButtons.private}
                                 caption='Isso deixará sua pasta privada'

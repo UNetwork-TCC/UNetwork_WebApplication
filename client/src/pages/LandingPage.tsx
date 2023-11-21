@@ -45,10 +45,28 @@ function LandingPage(): ReactElement {
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <LandingPageHeader />
             <Box>
-                <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='63%' bottom={90} position='absolute'>
+                <Box 
+                    sx={{ 
+                        pointerEvents: 'none',
+                        width: '100%',
+                        height: '100%',
+                        left: '63%',
+                        bottom: 90,
+                        position: 'absolute' 
+                    }} 
+                >
                     <Image src={liquidBg} duration={1000} />
                 </Box>
-                <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' left='56%' bottom={5} position='absolute'>
+                <Box 
+                    sx={{ 
+                        pointerEvents: 'none',
+                        width: '100%',
+                        height: '100%',
+                        left: '56%',
+                        bottom: 5,
+                        position: 'absolute'
+                    }} 
+                >
                     <Image src={peopleVector} duration={1000} />
                 </Box>
             </Box>
@@ -61,7 +79,7 @@ function LandingPage(): ReactElement {
                         <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
                         <Box mt={5} display='flex'>
                             <Button variant='contained'>
-                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/app'>{t('header.btn')}</Link>
+                                <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth/register'>{t('header.btn')}</Link>
                             </Button>
                             <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
                         </Box>
