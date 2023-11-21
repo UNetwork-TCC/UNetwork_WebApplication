@@ -4,6 +4,7 @@ import { type ReactElement, useEffect, useState } from 'react'
 import { AppLayout, CustomCheckBox, FormModal } from '$layout'
 import { Folder } from '$components'
 import { type folder } from '$types'
+import { blue } from '@mui/material/colors'
 
 export default function FavoritesPage(): ReactElement {
     const theme = useTheme()
@@ -69,7 +70,7 @@ export default function FavoritesPage(): ReactElement {
                                 justifyContent: 'start',
                                 flexDirection: 'column'
                             }}>
-                                <Box display='flex' mb={2} sx={{ cursor: 'pointer' }} onClick={handleOpen}>
+                                <Box display='flex' mb={2} sx={{ cursor: 'pointer' }} width={'18%'} onClick={handleOpen}>
                                     <Avatar sx={{ padding: '10px', margin: '10px', width: 20, height: 20, bgcolor: 'primary.main' }}>
                                         <Add sx={{ fontSize: '1em' }} />
                                     </Avatar>
@@ -90,6 +91,7 @@ export default function FavoritesPage(): ReactElement {
                 open={open}
                 onClose={handleClose}
                 title='Nova Pasta'
+                sx={{ pb:'31rem' }}
             >
                 <>
                     <TextField

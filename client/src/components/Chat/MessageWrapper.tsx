@@ -8,13 +8,15 @@ export default function MessageWrapper(): ReactElement {
             sx={{
                 p: 2.5,
                 width: '100%',
-                height: '80%',
+                height: '78%',
                 display: 'flex',
                 overflow: 'scroll',
                 overflowX: 'hidden',
                 gap: 1,
                 alignItems: 'start',
-                flexDirection: 'column' 
+                flexDirection: 'column'
+                // '::-webkit-scrollbar': { display: 'none' } /*Se não quiser barra de rolamento, descomenta isso*/
+                                
             }}
         >
             <Message 

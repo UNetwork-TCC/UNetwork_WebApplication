@@ -46,14 +46,15 @@ export default function SideBar(): ReactElement {
             position: 'absolute',
             height: 25,
             width: 25,
-            p: 0.75,
+            p: !dropdownButtonClicked ? 0.50 : 0.75 ,
             top: 10,
             left: !dropdownButtonClicked ? '105.5%' : '120%',
             cursor: 'pointer',
             bgcolor: 'primary.main',
             borderRadius: '50%',
             color: 'primary.contrastText',
-            transition: '.3s ease-in-out'
+            transition: '.3s ease-in-out',
+            pl: !dropdownButtonClicked ? 1 : 0.75
         },
 
         ':hover': {

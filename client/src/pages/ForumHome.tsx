@@ -45,11 +45,11 @@ export default function ForumHome(): ReactElement {
         <AppLayout>
             <Box sx={{ overflowX: 'hidden' }} overflow='auto' display='flex' width='100%' flexDirection='column' p={2.5}>
                 <Box mb={3} display='flex' flexDirection='column' gap={3}>
-                    <Box>
+                    <Box display='flex' justifyContent={'center'}>
                         <CustomInput
                             sx={{ boxShadow: theme.shadows[4] }}
                             fullWidth
-                            width='100%'
+                            width='90%'
                             placeholder='Pesquisar fóruns...'
                             color='primary.main'
                             iconColor={theme.palette.mode === 'light' ? '#dbdbdb' : undefined}

@@ -6,7 +6,6 @@ import { useEffect, type ReactElement } from 'react'
 import { PostSkeleton } from '$skeletons'
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
 import { useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'

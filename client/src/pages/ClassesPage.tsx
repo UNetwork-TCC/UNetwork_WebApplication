@@ -92,6 +92,9 @@ export default function ClassesPage(): ReactElement {
                     {_class.map(e => (
                         <Classes _class={{ name: e.title }} key={e.title} />
                     ))}
+                    
+                </Box>
+                <Box width='60%' display='flex' alignContent='center' alignItems='center' marginLeft={'15%'}>
                     <Carousel
                         autoPlay
                         centerMode
@@ -102,9 +105,6 @@ export default function ClassesPage(): ReactElement {
                     >
                         {arr}
                     </Carousel>
-                </Box>
-                <Box width='100%' height='30rem' display='flex' alignContent='center' alignItems='center'>
-
                 </Box>
             </Box>
 
@@ -271,6 +271,7 @@ export default function ClassesPage(): ReactElement {
                             </Box>
                         </Box>
                     )}
+                    
                 </Box>
             </Modal>
         </AppLayout>
