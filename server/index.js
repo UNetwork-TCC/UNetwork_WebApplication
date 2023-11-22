@@ -13,6 +13,7 @@ import {
     userRouter,
     classRouter,
     forumRouter,
+    materialRouter,
     pictureRouter
 } from './routes/index.js'
 
@@ -34,6 +35,7 @@ app.use('/chat', chatRouter)
 app.use('/post', postRouter)
 app.use('/class', classRouter)
 app.use('/forum', forumRouter)
+app.use('/material', maetrialRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001
