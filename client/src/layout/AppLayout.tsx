@@ -1,4 +1,4 @@
-import { type CSSProperties, useState, type ReactElement, useContext } from 'react'
+import { useState, type ReactElement, useContext } from 'react'
 import { Box, type SxProps, useTheme } from '@mui/material'
 import { useStyles } from '$styles'
 import { Header, LoadingBackdrop } from '.'

@@ -23,7 +23,7 @@ export default function ForumPage(): ReactElement {
             ) : (
                 <Post
                     date={forum?.createdAt}
-                    user={{ name: forum?.createdBy.name }}
+                    user={{ name: forum?.createdBy?.name }}
                     content={forum?.description}
                 />
             )}

@@ -9,8 +9,6 @@ import img1 from '$assets/img/paraPiada/ciclo.jpg'
 import img2 from '$assets/img/paraPiada/james.jpg'
 import img3 from '$assets/img/paraPiada/roubo.jpg'
 import { type class_ } from '$types'
-import { Carousel } from 'react-responsive-carousel'
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 export default function ClassesPage(): ReactElement {
     // const theme = useTheme()
@@ -93,18 +91,6 @@ export default function ClassesPage(): ReactElement {
                         <Classes _class={{ name: e.title }} key={e.title} />
                     ))}
                     
-                </Box>
-                <Box width='60%' display='flex' alignContent='center' alignItems='center' marginLeft={'15%'}>
-                    <Carousel
-                        autoPlay
-                        centerMode
-                        infiniteLoop
-                        showIndicators={false}
-                        showStatus={false}
-                        showThumbs={false}
-                    >
-                        {arr}
-                    </Carousel>
                 </Box>
             </Box>
 
