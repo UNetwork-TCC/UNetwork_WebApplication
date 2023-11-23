@@ -14,7 +14,7 @@ export const fetchPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
     try {
-        const {name, description, content} = req.body
+        const { name, description, content, postedAt } = req.body
 
         if (!name || !description || !content) {
             return res.status(400).send({message: 'Campos obrigatórios não foram preenchidos!'})
@@ -27,7 +27,7 @@ export const createPost = async (req, res) => {
             likes: 0,
             views: 0,
             comments: [],
-            postedAt: 0,
+            postedAt,
             postedIn: 0,
             postedBy: 0
         })

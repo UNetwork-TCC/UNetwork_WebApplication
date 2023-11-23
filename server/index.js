@@ -37,6 +37,8 @@ app.use('/class', classRouter)
 app.use('/forum', forumRouter)
 app.use('/material', materialRouter)
 
+app.use(express.static('uploads'))
+
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001
 

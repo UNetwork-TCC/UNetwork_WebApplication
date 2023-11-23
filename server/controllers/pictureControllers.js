@@ -6,9 +6,9 @@ export const postPictures = async (req, res) => {
         const file = req.file
 
         const newPicture = Picture({
-            name,
-            userId,
-            at,
+            name: JSON.parse(name),
+            userId: JSON.parse(userId),
+            at: JSON.parse(at),
             src: file.path
         })
 
@@ -33,8 +33,8 @@ export const deletePictures = async(req, res) => {
 
 export const getPicturesById = async (req, res) => {
     try {
-        const {id} = req.params
-        const gotten = await Picture.findById(id)
+        const { id } = req.params
+        const gotten = await Picture.find({ src: 'uploads/' + id })
         if (!gotten) return res.status(400).send({message: 'Imagem não encontrada!'})
         res.status(200).json(gotten)
     } catch (error) {
