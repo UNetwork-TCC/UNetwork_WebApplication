@@ -56,7 +56,7 @@ export default function ForumHome(): ReactElement {
                             icon={<Search />}
                         />
                     </Box>
-                    <Box>
+                    <Box ml={'4%'}>
                         <Button variant='contained' onClick={handleOpen}>Criar Fórum</Button>
                     </Box>
                 </Box>

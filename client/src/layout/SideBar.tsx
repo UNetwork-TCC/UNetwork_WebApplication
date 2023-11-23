@@ -89,12 +89,12 @@ export default function SideBar(): ReactElement {
                 }
                 sx={{
                     '&': {
-                        height: 60,
+                        height: 50,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: dropdownButtonClicked ? 'center' : undefined,
                         p: 3,
-                        mb: 2.5,
+                        mb: 1,
                         gap: 2,
                         borderRadius: 2,
                         bgcolor: 'transparent',
@@ -115,7 +115,7 @@ export default function SideBar(): ReactElement {
             >
                 {icon}
                 {!dropdownButtonClicked && (
-                    <Typography>{text}</Typography>
+                    <Typography fontSize={'1rem'}>{text}</Typography>
                 )}
             </Box>
         )
@@ -181,7 +181,7 @@ export default function SideBar(): ReactElement {
                                     ml: 1
                                 }
                             }} 
-                            height='500px' 
+                            height='430px' 
                             ml={!dropdownButtonClicked ? 3 : 2.4}
                         >
                             <Box
@@ -211,9 +211,9 @@ export default function SideBar(): ReactElement {
                             </Box>
                             {!dropdownButtonClicked &&
                                 <Stack
-                                    gap={3}
+                                    gap={1.5}
                                     sx={{
-                                        maxHeight: '450px',
+                                        maxHeight: '390px',
                                         display: shortcutsExpanded ? 'flex' : 'none',
                                         overflow: 'scroll',
                                         overflowX: 'hidden',
