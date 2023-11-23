@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 export const fetchUsers = async (_req, res) => {
     try {
-        const fetched= await User.find().select('-password')
+        const fetched = await User.find().select('-password')
         if (!fetched) {
             return res.status(400).send({message: 'Os usuários não foram encontrados!'})
         }
@@ -119,7 +119,7 @@ export const getFollowers = async (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body
-        const existingUser = await User.findOne({ email })
+        const existingUser = await User.findOne({ email }).select('-password')
         
         if (!(email && password )) return res.status(400).send({message: 'Por favor, insira todos os campos'})
         if (email !== existingUser.email) return res.status(400).send({ message: 'Email incorreto! Revise as informações!'})
@@ -139,7 +139,7 @@ export const loginUser = async (req, res) => {
 
         existingUser.token = token
       
-        res.status(200).send({email: email, id: existingUser._id, message: 'O login foi efetuado com sucesso!', token})
+        res.status(200).send({ user: existingUser, message: 'O login foi efetuado com sucesso!', token })
     } catch (error) {
         res.status(404).send({message: error.message})
     }

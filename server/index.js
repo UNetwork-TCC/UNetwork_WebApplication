@@ -35,7 +35,7 @@ app.use('/chat', chatRouter)
 app.use('/post', postRouter)
 app.use('/class', classRouter)
 app.use('/forum', forumRouter)
-app.use('/material', maetrialRouter)
+app.use('/material', materialRouter)
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 const PORT = process.env.PORT || 3001
