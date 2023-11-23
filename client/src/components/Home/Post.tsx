@@ -2,7 +2,7 @@ import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDrop
 import { Avatar, Box, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
 import React, { type ReactElement, useState } from 'react'
 import { CustomMenu } from '$layout'
-import { type Picture } from '$types'
+import { type User, type Picture } from '$types'
 
 export default function Post({ 
     date,
@@ -18,7 +18,7 @@ export default function Post({
     } | undefined | string,
     degree?: string,
     img?: string,
-    user: { name: string | undefined, avatar?: string }
+    user: Partial<User>
 }) : ReactElement {
     const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
@@ -121,8 +121,8 @@ export default function Post({
                                 }}
                             >
                                 <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
-                                    {user?.avatar ?
-                                        <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.avatar} alt="avatar" />
+                                    {user?.otherInfo?.avatar ?
+                                        <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.otherInfo.avatar} alt="avatar" />
                                         :
                                         <Avatar />
                                     }
@@ -132,7 +132,7 @@ export default function Post({
                                 </Avatar>
                             </Box>
                             <Box sx={{ ml: '1rem' }}>
-                                <Typography sx={{ fontSize: '1.25rem' }}>{user?.name}</Typography>
+                                <Typography sx={{ fontSize: '1.25rem' }}>@{user?.username}</Typography>
                                 <Typography sx={{ color: 'gray', fontSize: '1em' }}>{date?.toString()}</Typography>
                             </Box>
                         </Box>

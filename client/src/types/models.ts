@@ -69,10 +69,10 @@ export interface Post {
   description: string
   content: {
     text?: string
-    picture?: Picture
+    picture?: Picture | File
   }
-  postedBy: User
-  postedAt: Date
+  postedBy: User | Record<string, unknown>
+  postedAt: string
   postedIn: Group | Chat | Forum | string
   comments: Message[]
   likes: User[]

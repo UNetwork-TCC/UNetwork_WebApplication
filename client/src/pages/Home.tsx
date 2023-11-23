@@ -5,16 +5,17 @@ import { AppLayout, CustomInput } from '$layout'
 import { useEffect, type ReactElement, type FormEvent, useState, type ChangeEvent } from 'react'
 import { PostSkeleton } from '$skeletons'
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
-import { useFetchPostsMutation } from '$features/post'
+import { useCreatePostMutation, useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
 import { useUploadPictureMutation } from '$features/pictures'
 export default function Home(): ReactElement {
     const theme = useTheme()
 
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
-    const [ uploadPicture, { data } ] = useUploadPictureMutation()
+    const [ uploadPicture ] = useUploadPictureMutation()
+    const [ createPost ] = useCreatePostMutation()
 
-    const [ postContent, setPostContent ] = useState<{ text?: string, file?: File }>()
+    const [ postContent, setPostContent ] = useState<{ text?: string, picture?: File }>()
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
 
     const user = useAppSelector(state => state.auth.user)
@@ -26,15 +27,29 @@ export default function Home(): ReactElement {
         e.preventDefault()
 
         const formData = new FormData()
+        let picture: any
 
-        if ((postContent?.file?.size ?? 0) >= 6000000) {
+        if ((postContent?.picture?.size ?? 0) >= 6000000) {
             handleSnackbarOpen()
         } else {
-            formData.append('text', postContent?.text ?? '')
-            formData.append('file', postContent?.file ?? '')
-            await uploadPicture(formData)
+            if (postContent?.picture) {
+                formData.append('name', JSON.stringify(user?.name ?? ''))
+                formData.append('userId', JSON.stringify(user?._id ?? ''))
+                formData.append('at', JSON.stringify({ id: '123456789', type: 'post' }))
+                formData.append('file', postContent?.picture ?? '')
+                picture = await uploadPicture(formData)
+            }
 
-            console.log(data)
+            await createPost({
+                name: 'a',
+                postedBy: user,
+                description: 'a',
+                content: {
+                    text: postContent?.text,
+                    picture: postContent?.picture ? picture?.data?.file : undefined
+                },
+                postedAt: new Date().toLocaleDateString('pt-BR')
+            })
         }
 
     }
@@ -95,7 +110,7 @@ export default function Home(): ReactElement {
                                         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                                             const file = e.target.files?.[0]
                                             if (file) {
-                                                setPostContent({ ...postContent, file })
+                                                setPostContent({ ...postContent, picture: file })
                                             }
                                         }} 
                                         style={{ display: 'none' }} 
@@ -119,7 +134,7 @@ export default function Home(): ReactElement {
                                             <AttachFile />
                                         </Avatar>
                                         <Box width='80px' position='relative'>
-                                            {postContent?.file && (
+                                            {postContent?.picture && (
                                                 <Typography 
                                                     variant='body2' 
                                                     position='relative'
@@ -127,7 +142,7 @@ export default function Home(): ReactElement {
                                                     top='10px'
                                                     noWrap
                                                     width='100%'
-                                                >{ postContent.file.name }</Typography>
+                                                >{ postContent.picture.name }</Typography>
                                             )}
                                         </Box>
                                     </Box>
@@ -144,12 +159,12 @@ export default function Home(): ReactElement {
                                     <PostSkeleton />
                                 </>   
                             )
-                            : posts?.map(post => (
+                            : posts?.map((post: any) => (
                                 <Post
                                     key={post._id}
                                     content={post.content}
                                     date={post.postedAt}
-                                    user={{ name: post.postedBy?.name }}
+                                    user={post.postedBy}
                                 />
                             ))
                         }
@@ -158,7 +173,7 @@ export default function Home(): ReactElement {
                                 text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor saepe labore adipisci obcaecati cupiditate magnam neque doloremque dignissimos, rem deleniti modi ad sapiente itaque explicabo qui quidem, assumenda ab facilis esse sunt dolores sequi! Voluptatum facere quas nemo rem voluptatibus placeat ullam deleniti eveniet assumenda et, similique inventore! Vero exercitationem neque, esse officiis deleniti est incidunt atque a. Incidunt aperiam aut necessitatibus fuga ea, neque vero voluptatem ipsam? Ipsam consectetur blanditiis ipsa aliquid? Perferendis illo fugiat molestiae saepe a dicta odio rem quod laudantium. Iusto, exercitationem. Dolore expedita provident totam voluptas nam enim suscipit? Deleniti dicta harum tempore quod rem a fugiat. Aliquam at doloribus modi enim nesciunt optio alias repudiandae vero iure voluptatum nisi saepe asperiores ad amet laudantium veniam reiciendis, sapiente atque! Deleniti praesentium doloremque id incidunt, quis eos et adipisci consequuntur a dicta suscipit. Quibusdam odit optio, iure veniam rerum ipsa harum consequuntur sit suscipit perspiciatis ex quaerat dicta vitae officiis nesciunt. Itaque quas, sed possimus sequi mollitia ullam ipsam, aspernatur facilis accusantium esse, fugit inventore cumque architecto consectetur error corrupti ipsum quam. Pariatur omnis velit iusto corrupti, quibusdam distinctio natus ab placeat aut saepe impedit explicabo fuga perspiciatis nobis facere, porro eos, repellendus hic nemo quod.'
                             }}
                             date={'04/11/2023'}
-                            user={{ name: 'John Doe', avatar: johnDoe }}
+                            user={{ name: 'John Doe', otherInfo: { avatar: johnDoe } }}
                         />
                     </Box>
                 </Box>
