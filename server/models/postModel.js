@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 
 const postSchema = new mongoose.Schema({
-    name: { type: String, required: true, maxlenght: 50 },
-    description: { type: String, required: true, maxlenght: 100 },
     content: { type: Object, required: true },
     postedBy: { type: Object, required: true },
     postedAt: { type: String, required: true, default: new Date().getDate() },

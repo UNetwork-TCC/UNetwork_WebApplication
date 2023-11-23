@@ -14,22 +14,20 @@ export const fetchPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
     try {
-        const { name, description, content, postedAt } = req.body
+        const { content, postedIn, postedBy } = req.body
 
-        if (!name || !description || !content) {
+        if (!content) {
             return res.status(400).send({message: 'Campos obrigatórios não foram preenchidos!'})
         }
 
         const postUpdates = Post({
-            name, 
-            description,
             content,
             likes: 0,
             views: 0,
             comments: [],
-            postedAt,
-            postedIn: 0,
-            postedBy: 0
+            postedAt: new Date().toLocaleDateString('pt-BR'),
+            postedIn,
+            postedBy
         })
 
         await postUpdates.save()
