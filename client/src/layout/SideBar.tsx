@@ -89,12 +89,12 @@ export default function SideBar(): ReactElement {
                 }
                 sx={{
                     '&': {
-                        height: 60,
+                        height: 50,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: dropdownButtonClicked ? 'center' : undefined,
                         p: 3,
-                        mb: 2.5,
+                        mb: 1,
                         gap: 2,
                         borderRadius: 2,
                         bgcolor: 'transparent',
@@ -115,7 +115,7 @@ export default function SideBar(): ReactElement {
             >
                 {icon}
                 {!dropdownButtonClicked && (
-                    <Typography>{text}</Typography>
+                    <Typography fontSize={'1rem'}>{text}</Typography>
                 )}
             </Box>
         )
