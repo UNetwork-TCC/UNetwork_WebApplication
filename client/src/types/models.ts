@@ -108,4 +108,9 @@ export interface Picture {
   _id?: string
   name: string
   src: string
+  userId: string
+  at: {
+    id: string
+    type: 'post' | 'class' | 'chat'
+  }
 }

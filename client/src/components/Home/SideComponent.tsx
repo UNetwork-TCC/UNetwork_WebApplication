@@ -7,8 +7,6 @@ import { useNavigate } from 'react-router-dom'
 export default function SideComponent({ user }: { user: User | Record<string, unknown> }): ReactElement {
     const navigate = useNavigate()
 
-    console.log(user)
-
     return (
         <Box height='100%' display='flex' flexDirection='column' gap={2}>
             <Box display='flex' gap={2}>

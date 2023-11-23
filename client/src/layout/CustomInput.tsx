@@ -59,7 +59,7 @@ export default function CustomInput({
                     ...sx
                 }}
             />
-            <Avatar  variant="rounded" sx={{ 
+            <Avatar component='button' type='submit' variant="rounded" sx={{ 
                 position: 'relative',
                 right: '3.5rem',
                 top: '0.5rem',

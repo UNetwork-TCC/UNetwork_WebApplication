@@ -1,19 +1,43 @@
-import { Avatar, Box, useTheme } from '@mui/material'
+import { Alert, Avatar, Box, Snackbar, Typography, useTheme } from '@mui/material'
 import { ClipsWrapper, Post, SideComponent } from '$components'
 import { Add, AttachFile } from '@mui/icons-material'
 import { AppLayout, CustomInput } from '$layout'
-import { useEffect, type ReactElement } from 'react'
+import { useEffect, type ReactElement, type FormEvent, useState, type ChangeEvent } from 'react'
 import { PostSkeleton } from '$skeletons'
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
 import { useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
-import { type User } from '$types'
+import { useUploadPictureMutation } from '$features/pictures'
 export default function Home(): ReactElement {
     const theme = useTheme()
 
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
+    const [ uploadPicture, { data } ] = useUploadPictureMutation()
+
+    const [ postContent, setPostContent ] = useState<{ text?: string, file?: File }>()
+    const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
 
     const user = useAppSelector(state => state.auth.user)
+
+    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
+    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        if ((postContent?.file?.size ?? 0) >= 6000000) {
+            handleSnackbarOpen()
+        } else {
+            formData.append('text', postContent?.text ?? '')
+            formData.append('file', postContent?.file ?? '')
+            await uploadPicture(formData)
+
+            console.log(data)
+        }
+
+    }
 
     useEffect(() => {
         (async () => {
@@ -41,46 +65,74 @@ export default function Home(): ReactElement {
                     <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio">
                         <ClipsWrapper />
                         <Box>
-                            <CustomInput
-                                sx={{ boxShadow: theme.shadows[4] }}
-                                fullWidth
-                                width='100%'
-                                bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
-                                placeholder='No que estou pensando...'
-                                color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
-                                iconColor='#dbdbdb'
-                                icon={<Add />}
-                            />
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'end',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                    width: '50px',
-                                    bottom: 47,
-                                    right: '4rem',
-                                    [theme.breakpoints.down('xl')]: {
-                                        bottom: 44,
-                                        right: '5.25rem'
-                                    }
-                                }}>
-                                <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
-                                <Avatar
-                                    component='label'
-                                    htmlFor='file'
+                            <form onSubmit={(e) => { handleSubmit(e) }}>
+                                <CustomInput
+                                    onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
+                                    sx={{ boxShadow: theme.shadows[4] }}
+                                    fullWidth
+                                    width='100%'
+                                    bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
+                                    placeholder='No que estou pensando...'
+                                    color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
+                                    iconColor='#dbdbdb'
+                                    icon={<Add />}
+                                />
+                                <Box
                                     sx={{
-                                        cursor: 'pointer',
-                                        transition: '.3s',
-                                        bgcolor: 'primary.main',
-                                        ':hover': {
-                                            bgcolor: 'primary.light'
+                                        display: 'flex',
+                                        justifyContent: 'end',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        width: '50px',
+                                        bottom: 47,
+                                        right: '4rem',
+                                        [theme.breakpoints.down('xl')]: {
+                                            bottom: 44,
+                                            right: '5.25rem'
                                         }
-                                    }}
-                                >
-                                    <AttachFile />
-                                </Avatar>
-                            </Box>
+                                    }}>
+                                    <input
+                                        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                                            const file = e.target.files?.[0]
+                                            if (file) {
+                                                setPostContent({ ...postContent, file })
+                                            }
+                                        }} 
+                                        style={{ display: 'none' }} 
+                                        type='file' 
+                                        id='file' 
+                                        accept='image/*' 
+                                    />
+                                    <Box position='relative' left='2.5rem' display='flex' flexDirection='column'>
+                                        <Avatar
+                                            component='label'
+                                            htmlFor='file'
+                                            sx={{
+                                                cursor: 'pointer',
+                                                transition: '.3s',
+                                                bgcolor: 'primary.main',
+                                                ':hover': {
+                                                    bgcolor: 'primary.light'
+                                                }
+                                            }}
+                                        >
+                                            <AttachFile />
+                                        </Avatar>
+                                        <Box width='80px' position='relative'>
+                                            {postContent?.file && (
+                                                <Typography 
+                                                    variant='body2' 
+                                                    position='relative'
+                                                    right='1.5rem'
+                                                    top='10px'
+                                                    noWrap
+                                                    width='100%'
+                                                >{ postContent.file.name }</Typography>
+                                            )}
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </form>
                         </Box>
                     </Box>
                     <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
@@ -135,6 +187,16 @@ export default function Home(): ReactElement {
                     </Box>
                 </Box>
             </Box>
+            <Snackbar 
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                autoHideDuration={3000}
+            >
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                    A imagem colocada excede os limites de tamanho (6mb)!
+                </Alert>
+            </Snackbar>
         </AppLayout>
     )
 }
