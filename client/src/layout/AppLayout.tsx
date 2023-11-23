@@ -1,10 +1,10 @@
-import { useState, type ReactElement, useContext } from 'react'
+import { type ReactElement, useContext } from 'react'
 import { Box, type SxProps, useTheme } from '@mui/material'
 import { useStyles } from '$styles'
-import { Header, LoadingBackdrop } from '.'
+import { Header } from '.'
 import { SideBar } from '$layout'
-import { appLayoutContext, user, userContext } from '$contexts'
-import { type User } from '$types'
+import { appLayoutContext } from '$contexts'
+import { RequireAuth } from '$components'
 import bg from '$assets/img/bg.jpg'
 
 export default function AppLayout({
@@ -23,11 +23,6 @@ export default function AppLayout({
             setSize
         }
     } = useContext(appLayoutContext)
-
-    const [ userData, setUserData ] = useState<User>(user)
-    const [ open, setOpen ] = useState(false)
-    
-    const userContextValue: { userData: User, setUserData: typeof setUserData } = { userData, setUserData }
 
     const maximize = (): void => {
         if (size.height === '100vh' || size.height === '200px') {
@@ -62,7 +57,7 @@ export default function AppLayout({
     }
 
     return (
-        <userContext.Provider value={userContextValue}>
+        <RequireAuth>
             <Box sx={sx} display='flex' height='100vh' width='100%' justifyContent='center' alignItems='center'>
                 <Box className={classes.body}>
                     {theme.palette.mode === 'light' &&
@@ -94,7 +89,6 @@ export default function AppLayout({
                     </Box>
                 </Box>
             </Box>
-            <LoadingBackdrop open={open} />
-        </userContext.Provider>
+        </RequireAuth>
     )
 }

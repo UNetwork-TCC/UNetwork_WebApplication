@@ -4,12 +4,13 @@
 import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography } from '@mui/material'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
-import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp } from '@mui/icons-material'
+import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp, Dashboard } from '@mui/icons-material'
 import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { type ReactElement, useState, useContext, type FormEvent } from 'react'
 import { themeContext } from '$contexts'
 import { FeedbackForm } from '$components'
+import { useAppSelector } from '$store'
 
 export default function Header({ 
     minimize,
@@ -40,6 +41,8 @@ export default function Header({
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
+    const user = useAppSelector(state => state.auth.user)
+
     const handleFeedback = (): void => {
         handleModalOpen()
         handleMenuClose()
@@ -57,13 +60,21 @@ export default function Header({
         )
                 
         if (userMenu) setMenuContent([
-            <MenuItem onClick={() => { navigate('/app/profile') }} disableRipple key={-2}>
+            <MenuItem onClick={() => { navigate('/app/profile/' + String(user._id)) }} disableRipple key={-2}>
                 <Avatar sx={{ background: 'transparent' }} /> Perfil
             </MenuItem>,
             <Divider key={-1} />,
             ...mapedElements
         ]) 
         else setMenuContent(mapedElements)
+
+        if (user?.admin) setMenuContent([
+            <MenuItem onClick={() => { navigate('/app/admin/dashboard/') }} disableRipple key={-2}>
+                <Dashboard sx={{ background: 'transparent' }} /> Admin Dashboard
+            </MenuItem>,
+            <Divider key={-1} />,
+            ...mapedElements
+        ])
 
         setAnchorEl(e.currentTarget)
 

@@ -4,7 +4,7 @@ import { type User } from '$types'
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation<{
-            id: string, token: string, message: string
+            user: User, token: string, message: string
         }, {
            email: string, password: string
         }>({

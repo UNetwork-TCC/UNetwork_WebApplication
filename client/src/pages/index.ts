@@ -12,7 +12,8 @@ import Login from './Login'
 import ClassesPage from './ClassesPage'
 import ForumHome from './ForumHome'
 import ForumPage from './ForumPage'
-import Profile from './Profile'
+import ProfilePage from './ProfilePage'
+import AdminDashboardPage from './AdminDashboardPage'
 
 export {
     LandingPage,
@@ -20,8 +21,9 @@ export {
     FavoritesPage,
     Clips,
     Suggestion,
-    Profile,
+    ProfilePage,
     Home,
+    AdminDashboardPage,
     MaterialsPage,
     ChatPage,
     NewsPage,

@@ -77,7 +77,7 @@ export default function SideBar(): ReactElement {
     }: {
         icon: ReactElement,
         text: string,
-        link: string | (() => void)
+        link: string | (() => void) | (() => Promise<void>)
     }): ReactElement {
         return (
             <Box
@@ -155,115 +155,117 @@ export default function SideBar(): ReactElement {
                     flexDirection='column'
                     height='100%'
                 >
-                    <Box display='flex' gap={2} flexDirection='column'>
-                        <Stack>
-                            <Box>
-                                <NavLink
-                                    icon={<Home />}
-                                    text='Home'
-                                    link='/app'
-                                />
-                                <NavLink
-                                    icon={<Message />}
-                                    text='Conversas'
-                                    link='/app/chat'
-                                />
-                                <NavLink
-                                    icon={<Bookmark />}
-                                    text='Favoritos'
-                                    link='/app/favorites'
-                                />
-                            </Box>
-                        </Stack>
-                        <Box 
-                            sx={{
-                                [theme.breakpoints.down('xl')]: {
-                                    ml: 1
-                                }
-                            }} 
-                            height='430px' 
-                            ml={!dropdownButtonClicked ? 3 : 2.4}
-                        >
-                            <Box
-                                onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
-                                color='text.secondary'
-                                display='flex'
-                                mb={3}
-                                gap={2}
+                    <Box display='flex' gap={2} flexDirection='column' justifyContent='space-between'>
+                        <Box>
+                            <Stack>
+                                <Box>
+                                    <NavLink
+                                        icon={<Home />}
+                                        text='Home'
+                                        link='/app'
+                                    />
+                                    <NavLink
+                                        icon={<Message />}
+                                        text='Conversas'
+                                        link='/app/chat'
+                                    />
+                                    <NavLink
+                                        icon={<Bookmark />}
+                                        text='Favoritos'
+                                        link='/app/favorites'
+                                    />
+                                </Box>
+                            </Stack>
+                            <Box 
+                                sx={{
+                                    [theme.breakpoints.down('xl')]: {
+                                        ml: 1
+                                    }
+                                }} 
+                                height='500px' 
+                                ml={!dropdownButtonClicked ? 3 : 2.4}
                             >
-                                {!dropdownButtonClicked ?
-                                    <>
-                                        <Typography sx={{ userSelect: 'none' }}>Seus atalhos ({shortcuts})</Typography>
-                                        {shortcutsExpanded
-                                            ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
-                                            : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
-                                        }
-                                    </>
-                                    :
-                                    <Box onClick={e => { handleOpenPopover(e) }}>
-                                        { !open ?
-                                            <ExpandMore sx={{ cursor: 'pointer' }} />
-                                            :
-                                            <ExpandLess sx={{ cursor: 'pointer' }} />
-                                        }
-                                    </Box>
+                                <Box
+                                    onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
+                                    color='text.secondary'
+                                    display='flex'
+                                    mb={3}
+                                    gap={2}
+                                >
+                                    {!dropdownButtonClicked ?
+                                        <>
+                                            <Typography sx={{ userSelect: 'none' }}>Seus atalhos ({shortcuts})</Typography>
+                                            {shortcutsExpanded
+                                                ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
+                                                : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
+                                            }
+                                        </>
+                                        :
+                                        <Box onClick={e => { handleOpenPopover(e) }}>
+                                            { !open ?
+                                                <ExpandMore sx={{ cursor: 'pointer' }} />
+                                                :
+                                                <ExpandLess sx={{ cursor: 'pointer' }} />
+                                            }
+                                        </Box>
+                                    }
+                                </Box>
+                                {!dropdownButtonClicked &&
+                                    <Stack
+                                        gap={3}
+                                        sx={{
+                                            maxHeight: '450px',
+                                            display: shortcutsExpanded ? 'flex' : 'none',
+                                            overflow: 'scroll',
+                                            overflowX: 'hidden',
+                                            '::-webkit-slider-thumb': { display: 'none' }
+                                        }}
+                                    >
+                                        <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
+                                        <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
+                                        <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />
+                                        <Shortcut title='Matemática' category='Materiais' color={yellow[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                    </Stack>
                                 }
-                            </Box>
-                            {!dropdownButtonClicked &&
-                                <Stack
-                                    gap={1.5}
-                                    sx={{
-                                        maxHeight: '390px',
-                                        display: shortcutsExpanded ? 'flex' : 'none',
-                                        overflow: 'scroll',
-                                        overflowX: 'hidden',
-                                        '::-webkit-slider-thumb': { display: 'none' }
+                                <Popover
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClosePopover}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'right'
                                     }}
                                 >
-                                    <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
-                                    <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
-                                    <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />
-                                    <Shortcut title='Matemática' category='Materiais' color={yellow[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                </Stack>
-                            }
-                            <Popover
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={handleClosePopover}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right'
-                                }}
-                            >
-                                <Stack maxHeight={450} width={200} p={2.5}>
-                                    <Typography mb={2.5} textAlign='center'>Seus atalhos ({shortcuts})</Typography>
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
-                                    <Shortcut title='Estudos' category='Grupo' color={purple[600]} />   
-                                </Stack>
-                            </Popover>
+                                    <Stack maxHeight={450} width={200} p={2.5}>
+                                        <Typography mb={2.5} textAlign='center'>Seus atalhos ({shortcuts})</Typography>
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />
+                                        <Shortcut title='Estudos' category='Grupo' color={purple[600]} />   
+                                    </Stack>
+                                </Popover>
+                            </Box>
                         </Box>
                         <Stack>
                             <NavLink 

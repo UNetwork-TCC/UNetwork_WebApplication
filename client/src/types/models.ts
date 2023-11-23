@@ -1,4 +1,5 @@
 export interface User {
+  username?: string,
   _id?: string
   name: string
   email: string

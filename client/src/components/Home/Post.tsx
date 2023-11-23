@@ -27,18 +27,28 @@ export default function Post({
     const variant: any = 'iconWrapper'
 
     const onClickEvents = {
-        item1: () => {
+        like: () => {
             console.log('oi')
             handleClose()
         },
 
-        item2: () => {
+        follow: () => {
             console.log('tcchau')
             handleClose()
         },
 
-        item3: () => {
+        unfollow: () => {
+            console.log('tcchau')
+            handleClose()
+        },
+
+        report: () => {
             handleSnackbarOpen()
+            handleClose()
+        },
+
+        goToPost: () => {
+            console.log('tcchau')
             handleClose()
         }
     }
@@ -129,8 +139,8 @@ export default function Post({
                         <IconButton onClick={
                             e => {
                                 handleClick(e, 
-                                    [ 'Salvar', 'Favoritar', 'Seguir/Deseguir', 'Denunciar' ],
-                                    [ onClickEvents.item1, onClickEvents.item2 ]
+                                    [ 'Salvar', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
+                                    [ ]
                                 ) 
                             }
                         }>
@@ -238,8 +248,7 @@ export default function Post({
                 message='Feedback enviado!'
                 autoHideDuration={3000}
                 action={action}
-            >
-            </Snackbar>
+            />
         </>
     )
 }

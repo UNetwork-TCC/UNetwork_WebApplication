@@ -1,25 +1,20 @@
-import { Avatar, Box, Typography, useTheme } from '@mui/material'
-import { ClipsWrapper, Post } from '$components'
+import { Avatar, Box, useTheme } from '@mui/material'
+import { ClipsWrapper, Post, SideComponent } from '$components'
 import { Add, AttachFile } from '@mui/icons-material'
 import { AppLayout, CustomInput } from '$layout'
 import { useEffect, type ReactElement } from 'react'
 import { PostSkeleton } from '$skeletons'
-import { Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
 import { useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
+import { type User } from '$types'
 export default function Home(): ReactElement {
     const theme = useTheme()
 
-    const navigate = useNavigate()
-
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
 
-    const user = useAppSelector(state => state.auth)
+    const user = useAppSelector(state => state.auth.user)
 
-    console.log(user)
-    
     useEffect(() => {
         (async () => {
             await fetchPosts(null)
@@ -136,22 +131,7 @@ export default function Home(): ReactElement {
                         boxShadow={theme.shadows[15]}
                         p={3}
                     >
-                        <Box height='100%' display='flex' flexDirection='column' gap={2}>
-                            <Box display='flex' gap={2}>
-                                <Avatar></Avatar>
-                                <Box display='flex' flexDirection='column'>
-                                    <Typography variant='body1'>@vitronks</Typography>
-                                    <Typography variant='caption'>Vitor Hugo Rodrigues dos Santos</Typography>
-                                </Box>
-                            </Box>
-                            <Box display='flex' flexDirection='column'>
-                                <Typography>Brasil, São Paulo</Typography>
-                                <Typography>+11 992253966</Typography>
-                            </Box>
-                            <Box height='100%' display='flex' justifyContent='end' flexDirection='column'>
-                                <Button onClick={() => { navigate('/app/profile') }} variant='contained'>Ver perfil</Button>
-                            </Box>
-                        </Box>
+                        <SideComponent user={user} />
                     </Box>
                 </Box>
             </Box>
