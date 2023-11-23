@@ -60,7 +60,7 @@ export const deleteMaterial = async (req, res) => {
     }
 }
 
-export const updateMessage = async (req, res) => {
+export const updateMaterial = async (req, res) => {
     try {
         const {id} = req.params
         const oldMaterial = Material.findById(id)
