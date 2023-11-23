@@ -2,11 +2,13 @@ import { Picture } from '../models/index.js'
 
 export const postPictures = async (req, res) => {
     try {
-        const {name} = req.body
+        const { name, userId, at } = req.body
         const file = req.file
 
         const newPicture = Picture({
             name,
+            userId,
+            at,
             src: file.path
         })
 
@@ -43,7 +45,7 @@ export const getPicturesById = async (req, res) => {
 export const updatePictures = async(req, res) => {
     try {
         const {id} = req.params
-        const {name} = req.body
+        const { name, userId, at } = req.body
         const file = req.file
         if(!(id, name, file)) return res.status(400).send({message: 'Por favor, preencha todos os campos!'})
         const updates = {name, file}
