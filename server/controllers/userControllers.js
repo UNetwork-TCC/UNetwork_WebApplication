@@ -119,7 +119,7 @@ export const getFollowers = async (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body
-        const existingUser = await User.findOne({ email }).select('-password')
+        const existingUser = await User.findOne({ email })
         
         if (!(email && password )) return res.status(400).send({message: 'Por favor, insira todos os campos'})
         if (email !== existingUser.email) return res.status(400).send({ message: 'Email incorreto! Revise as informações!'})
@@ -139,6 +139,7 @@ export const loginUser = async (req, res) => {
 
         existingUser.token = token
       
+        delete existingUser.password
         res.status(200).send({ user: existingUser, message: 'O login foi efetuado com sucesso!', token })
     } catch (error) {
         res.status(404).send({message: error.message})
