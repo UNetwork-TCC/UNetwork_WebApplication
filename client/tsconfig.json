@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Paths */
+    "baseUrl": "src",
+    "paths": {
+      "$assets/*": ["assets/*"],
+      "$components": ["components/index.ts"],
+      "$constants": ["constants/index.ts"],
+      "$contexts": ["contexts/index.ts"],
+      "$features/*": ["features/*"],
+      "$hooks": ["hooks/index.ts"],
+      "$layout": ["layout/index.ts"],
+      "$skeletons": ["layout/skeletons/index.ts"],
+      "$lib/*": ["lib/*"],
+      "$api": ["lib/api/index.ts"],
+      "$pages": ["pages/index.ts"],
+      "$styles": ["styles/index.ts"],
+      "$themes": ["themes/index.ts"],
+      "$types": ["types/index.ts"],
+      "$utils/*": ["utils/*"],
+      "$store": ["store.ts"],
+    }
+  },
+  "include": ["src", ".eslintrc.json", "vite.config.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

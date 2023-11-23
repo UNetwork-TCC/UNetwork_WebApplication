@@ -1,0 +1,63 @@
+import { Circle } from '@mui/icons-material'
+import { Box, Tooltip, Typography } from '@mui/material'
+import { type ReactElement } from 'react'
+
+export default function Shortcut({ 
+    title,
+    category,
+    color,
+    link
+} : {
+    title: string,
+    category: string,
+    color: string,
+    link?: string
+}) : ReactElement {
+    return (
+        <Box  
+            sx={{
+                '&': {
+                    height: 60,
+                    display: 'flex',
+                    alignItems: 'center',
+                    mb: 2.5,
+                    gap: 2,
+                    borderRadius: 2,
+                    bgcolor: 'transparent',
+                    transition: '.3s ease-in-out',
+                    cursor: 'pointer'
+                },
+
+                ':hover': {
+                    transition: '.3s ease-in-out'
+                }
+            }}
+        >
+            
+            <Box
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                height={35}
+                width={35}
+                borderRadius={3}
+                border={`1px solid ${color}10`}
+                sx={{ background: `${color}10` }}
+            >
+                <Circle sx={{ height: 12.5, color }} />
+            </Box>
+            <Box>
+                {
+                    title.length > 10 ?
+                        <Tooltip title={title}>
+                            <Typography variant='body1'>{title.substring(10, 0) + '...'}
+                            </Typography>
+                        </Tooltip>
+                        :
+                        <Typography variant='body1'>{title}</Typography>
+                }
+                <Typography color='text.secondary' variant='subtitle2'>{category}</Typography>
+            </Box>
+        </Box>
+    )
+}

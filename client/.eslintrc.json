@@ -1,0 +1,130 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "react-hooks",
+        "prettier",
+        "unicorn"
+    ],
+    "extends": [
+        "plugin:react/recommended",
+        "standard-with-typescript",
+        "prettier",
+        "plugin:prettier/recommended"
+    ],
+    "overrides": [],
+    "settings": {
+        "react": {
+            "version": "18.2"
+        },
+        "import/resolver": {
+            "node": {
+                "paths": [
+                    "src"
+                ]
+            },
+            "typescript": {}
+        }
+    },
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "prettier/prettier": [
+            "off"
+        ],
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-floating-promises": [
+            "off"
+        ],
+        "@typescript-eslint/no-use-before-define": [
+            "error"
+        ],
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": [
+            "warn",
+            {
+                "extensions": [
+                    ".tsx",
+                    ".ts",
+                    ".js"
+                ]
+            }
+        ],
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": [
+            "error"
+        ],
+        "@typescript-eslint/strict-boolean-expressions": [
+            "off"
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": true
+            }
+        ],
+        "max-len": [
+            "warn",
+            {
+                "code": 180
+            }
+        ],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "react/function-component-definition": [
+            "error",
+            {
+                "namedComponents": "function-declaration"
+            }
+        ],
+        "import/prefer-default-export": "off",
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "import/no-extraneous-dependencies": [
+            "off"
+        ],
+        "import/no-duplicates": [
+            "off"
+        ],
+        "no-multiple-empty-lines": "error",
+        "indent": [
+            "error",
+            4
+        ],
+        "object-curly-spacing": [
+            2,
+            "always"
+        ],
+        "array-bracket-spacing": [
+            2,
+            "always"
+        ],
+        "space-infix-ops": "error",
+        "camelcase": "error",
+        "arrow-spacing": "error",
+        "space-before-blocks": "error",
+        "block-spacing": "error",
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ]
+    }
+}
