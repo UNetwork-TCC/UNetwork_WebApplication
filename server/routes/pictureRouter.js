@@ -4,7 +4,7 @@ import { deletePictures, getPicturesById, postPictures, updatePictures } from '.
 
 const router = Router()
 
-router.post('/post', upload.single('file'), postPictures)
+router.post('/', upload.single('file'), postPictures)
 router.get('/:id', getPicturesById)
 router.delete('/:id/', deletePictures)
 router.patch('/:id/', upload.single('file'), updatePictures)
