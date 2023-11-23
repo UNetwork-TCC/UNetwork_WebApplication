@@ -1,9 +1,9 @@
-import { type Picture } from '$types'
-import { apiSlice } from '../../lib/api/apiSlice'
+import { type MulterFile, type Picture } from '$types'
+import { apiSlice } from '$api'
 
 const pictureApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        uploadPicture: builder.mutation<any, FormData>({
+        uploadPicture: builder.mutation<{ file: MulterFile, message: string }, FormData>({
             query: formData => ({
                 url: '/pictures',
                 method: 'POST',
@@ -11,8 +11,8 @@ const pictureApiSlice = apiSlice.injectEndpoints({
             })
         }),
 
-        getPicture: builder.mutation<Picture, string>({
-            query: pictureId => `/pictures/${pictureId}`
+        getPictureData: builder.mutation<Picture, string>({
+            query: pictureId => `/uploads/${pictureId}`
         }),
 
         deletePicture: builder.mutation<any, string>({
@@ -26,6 +26,6 @@ const pictureApiSlice = apiSlice.injectEndpoints({
 
 export const { 
     useUploadPictureMutation,
-    useGetPictureMutation,
+    useGetPictureDataMutation,
     useDeletePictureMutation
 } = pictureApiSlice

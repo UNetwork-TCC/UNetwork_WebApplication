@@ -10,3 +10,5 @@ export const HTTP_STATUS = {
 export const GET_TYPE = (type: string): string => {
     return type.split('/')[2]
 }
+
+export const API_BASE_URL: string = 'https://unetwork-api.onrender.com' 

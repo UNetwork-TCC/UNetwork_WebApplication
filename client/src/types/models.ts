@@ -114,3 +114,14 @@ export interface Picture {
     type: 'post' | 'class' | 'chat'
   }
 }
+
+export interface MulterFile extends File {
+  fieldname: string
+  originalname: string
+  enconding: string
+  mimetype: string
+  destination: string
+  filename: string
+  path: string
+  size: number
+}

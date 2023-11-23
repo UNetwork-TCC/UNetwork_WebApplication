@@ -8,11 +8,12 @@ import johnDoe from '$assets/img/paraPiada/john_doe.png'
 import { useCreatePostMutation, useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
 import { useUploadPictureMutation } from '$features/pictures'
+import { MulterFile } from '$types'
 export default function Home(): ReactElement {
     const theme = useTheme()
 
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
-    const [ uploadPicture ] = useUploadPictureMutation()
+    const [ uploadPicture, { data } ] = useUploadPictureMutation()
     const [ createPost ] = useCreatePostMutation()
 
     const [ postContent, setPostContent ] = useState<{ text?: string, picture?: File }>()
@@ -27,7 +28,6 @@ export default function Home(): ReactElement {
         e.preventDefault()
 
         const formData = new FormData()
-        let picture: any
 
         if ((postContent?.picture?.size ?? 0) >= 6000000) {
             handleSnackbarOpen()
@@ -37,7 +37,7 @@ export default function Home(): ReactElement {
                 formData.append('userId', JSON.stringify(user?._id ?? ''))
                 formData.append('at', JSON.stringify({ id: '123456789', type: 'post' }))
                 formData.append('file', postContent?.picture ?? '')
-                picture = await uploadPicture(formData)
+                await uploadPicture(formData)
             }
 
             await createPost({
@@ -46,9 +46,9 @@ export default function Home(): ReactElement {
                 description: 'a',
                 content: {
                     text: postContent?.text,
-                    picture: postContent?.picture ? picture?.data?.file : undefined
+                    picture: postContent?.picture ? data?.file : undefined
                 },
-                postedAt: new Date().toLocaleDateString('pt-BR')
+                postedAt: new Date().toLocaleDateString()
             })
         }
 

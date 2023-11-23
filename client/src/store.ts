@@ -11,7 +11,7 @@ import {
     useDispatch,
     useSelector
 } from 'react-redux'
-import { apiSlice } from '$lib/api/apiSlice'
+import { apiSlice } from '$api'
 
 const store = configureStore({
     reducer: {

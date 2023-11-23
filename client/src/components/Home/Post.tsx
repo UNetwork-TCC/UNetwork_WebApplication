@@ -1,23 +1,23 @@
 import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
 import { Avatar, Box, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
-import React, { type ReactElement, useState } from 'react'
+import React, { type ReactElement, useState, useEffect } from 'react'
 import { CustomMenu } from '$layout'
-import { type User, type Picture } from '$types'
+import { type User, type MulterFile } from '$types'
+import { useGetPictureMutation } from '$features/pictures'
+import { API_BASE_URL } from '../../constants/index';
 
 export default function Post({ 
     date,
     content,
     degree,
-    img,
-    user
+    user,
 } : {
     date: Date | string | undefined,
     content: {
         text?: string,
-        picture?: Picture
-    } | undefined | string,
+        picture?: MulterFile
+    },
     degree?: string,
-    img?: string,
     user: Partial<User>
 }) : ReactElement {
     const theme = useTheme()
@@ -178,8 +178,8 @@ export default function Post({
                                 ) : content?.text
                                 }
                             </Typography>
-                            {img &&
-                                <img src={img} alt={'imagem de ' + user.name} />
+                            {content?.picture &&
+                                <img src={API_BASE_URL + '/' + content.picture.filename} alt={'imagem de ' + user.username} />
                             }
                         </Box>
                         <Box>
