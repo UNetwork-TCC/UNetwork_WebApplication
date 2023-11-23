@@ -13,6 +13,7 @@ import ClassesPage from './ClassesPage'
 import ForumHome from './ForumHome'
 import ForumPage from './ForumPage'
 import ProfilePage from './ProfilePage'
+import AdminDashboardPage from './AdminDashboardPage'
 
 export {
     LandingPage,
@@ -22,6 +23,7 @@ export {
     Suggestion,
     ProfilePage,
     Home,
+    AdminDashboardPage,
     MaterialsPage,
     ChatPage,
     NewsPage,

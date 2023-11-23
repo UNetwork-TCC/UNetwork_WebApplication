@@ -1,8 +1,11 @@
+import { type User } from '$types'
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
+import { useParams } from 'react-router-dom'
 
-export default function ProfileHeader(): ReactElement {
-    const yourAccount = false
+export default function ProfileHeader({ user }: { user: User }): ReactElement {
+    const { id } = useParams()
+    const yourAccount = id === user?._id
 
     return (
         <Box p={3} width='100%' display='flex' gap={8}>
@@ -14,7 +17,7 @@ export default function ProfileHeader(): ReactElement {
             ></Avatar>
             <Box width='100%' display='flex' flexDirection='column' gap={2.5}>
                 <Box display='flex' gap={4}>
-                    <Typography position='relative' top='7.5px'>@vitronks</Typography>
+                    <Typography position='relative' top='7.5px'>@{user?.username}</Typography>
                     { yourAccount ?
                         <Button variant='contained'>Editar Perfil</Button>
                         : (
@@ -31,11 +34,11 @@ export default function ProfileHeader(): ReactElement {
                 <Box display='flex' gap={4}>
                     <Box gap={1.5} display='flex'>
                         <Typography>Publicações</Typography>
-                        <b>0</b>
+                        <b>{user?.posts?.length}</b>
                     </Box>
                     <Box gap={1.5} display='flex'>
                         <Typography>Seguidores</Typography>
-                        <b>0</b>
+                        <b>{user?.followers?.length}</b>
                     </Box>
                     <Box gap={1.5} display='flex'>
                         <Typography>Seguindo</Typography>
@@ -43,8 +46,8 @@ export default function ProfileHeader(): ReactElement {
                     </Box>
                 </Box>
                 <Box width='50%'>
-                    <Typography fontWeight={900}>Vitor Hugo Rodrigues dos Santos</Typography>
-                    <Typography>{'Olá! Esta é a bio de um maluco aí.'}</Typography>
+                    <Typography fontWeight={900}>{user?.name}</Typography>
+                    <Typography>{user?.otherInfo?.bio}</Typography>
                 </Box>
             </Box>
         </Box>

@@ -16,6 +16,8 @@ import ThemeStore from './ThemeStore'
 import UNetworkModal from './UNetworkModal'
 import FormModal from './FormModal'
 import SearchBar from './SearchBar'
+import ProfileHeaderSkeleton from './skeletons/ProfileHeaderSkeleton'
+import ProfilePostsSkeleton from './skeletons/ProfilePostsSkeleton'
 
 export {
     LandingPageHeader,
@@ -27,6 +29,8 @@ export {
     Topic,
     SideBar,
     ThemeStore,
+    ProfileHeaderSkeleton,
+    ProfilePostsSkeleton,
     CustomMenu,
     SearchBar,
     FormModal,

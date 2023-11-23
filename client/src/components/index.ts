@@ -35,6 +35,7 @@ import ProfileHeader from './Profile/ProfileHeader'
 import Highlights from './Profile/Highlights'
 import ProfilePosts from './Profile/ProfilePosts'
 import RequireAuth from './Auth/RequireAuth'
+import SideComponent from './Home/SideComponent'
 
 export {
     DiscoverSection,
@@ -56,6 +57,7 @@ export {
     SideBar,
     File,
     Shortcut,
+    SideComponent,
     Contact,
     Classes,
     Highlights,

@@ -1,11 +1,22 @@
 import { Highlights, ProfileHeader, ProfilePosts } from '$components'
-import { AppLayout } from '$layout'
+import { useGetUserMutation } from '$features/user'
+import { AppLayout, ProfileHeaderSkeleton, ProfilePostsSkeleton } from '$layout'
 import { Box, Container, Divider, Typography } from '@mui/material'
-import { type ReactElement } from 'react'
+import { useEffect, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
+import { type User } from '$types'
 
 export default function ProfilePage(): ReactElement {
     const { id } = useParams()
+    const [ getUser, { data: user, isLoading } ] = useGetUserMutation()
+
+    useEffect(() => {
+        (async () => {
+            await getUser(id ?? '')
+        })()
+    }, [ getUser, id ])
+
+    const obj = {}
 
     return (
         <AppLayout>
@@ -27,14 +38,28 @@ export default function ProfilePage(): ReactElement {
                             gap: 4
                         }}
                     >
-                        <ProfileHeader />
-                        <Highlights />
-                        <Box width='100%' display='flex' gap={2}>
-                            <Divider sx={{ width: '46.1%' }} />
-                            <Typography position='relative' top='10px'>Posts</Typography>
-                            <Divider sx={{ width: '46.1%' }} />
-                        </Box>
-                        <ProfilePosts />
+                        {isLoading ? (
+                            <>
+                                <ProfileHeaderSkeleton />
+                                <Box width='100%' display='flex' gap={2}>
+                                    <Divider sx={{ width: '46.1%' }} />
+                                    <Typography position='relative' top='10px'>Posts</Typography>
+                                    <Divider sx={{ width: '46.1%' }} />
+                                </Box>
+                                <ProfilePostsSkeleton />
+                            </>
+                        ) : (
+                            <>
+                                <ProfileHeader user={user ?? (obj as User)} />
+                                <Highlights />
+                                <Box width='100%' display='flex' gap={2}>
+                                    <Divider sx={{ width: '46.1%' }} />
+                                    <Typography position='relative' top='10px'>Posts</Typography>
+                                    <Divider sx={{ width: '46.1%' }} />
+                                </Box>
+                                <ProfilePosts user={user ?? (obj as User)} />
+                            </>
+                        )}
                     </Container>
                 </Box>
             </Box>

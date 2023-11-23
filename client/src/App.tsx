@@ -15,7 +15,8 @@ import {
     ForumPage,
     MaterialsPage,
     ForumHome, 
-    ProfilePage
+    ProfilePage,
+    AdminDashboardPage
 } from '$pages'
 
 import '$utils/languages'
@@ -36,6 +37,7 @@ function App(): ReactElement {
                     <Route path='/app/profile/:id' element={<ProfilePage />} />
                     <Route path='/app/favorites' element={<FavoritesPage />} />
                     <Route path='/app/materials' element={<MaterialsPage />} />
+                    <Route path='/app/admin/dashboard' element={<AdminDashboardPage />} />
                     <Route path='/app/chat' element={<ChatPage />} />
                     <Route path='/app/news' element={<NewsPage />} />
                     <Route path='/app/forum' element={<ForumHome />} />

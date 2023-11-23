@@ -33,7 +33,7 @@ function LoginForm(): ReactElement {
         (async () => {
             if(isLoginSuccess) {
                 dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
-                // navigate('/app')
+                navigate('/app')
             } else if (isLoginError) {
                 handleCloseLoading()
                 handleSnackbarOpen()    
