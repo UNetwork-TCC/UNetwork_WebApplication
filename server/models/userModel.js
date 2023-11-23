@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, maxlenght: 30 }, 
     name: { type: String, required: true, maxlenght: 50 },
     email: { type: String, required: true, maxlenght: 50 },
     followers: { type: Array, required: true },
@@ -10,6 +11,7 @@ const userSchema = new mongoose.Schema({
     chats: { type: Array, required: true },
     admin: { type: Boolean, required: false },
     posts: { type: Array, required: true },
+    createdAt: { type: String, default: String(new Date()) },
     otherInfo: { type: Object, required: true, maxlength: 50, default: {
         avatar: '',
         bio: '',
@@ -19,7 +21,6 @@ const userSchema = new mongoose.Schema({
         country: '',
         grade: 1
     } },
-    icon: { type: String, default: 'random_icon.png' }
 })
 
 const userModel = mongoose.model('Users', userSchema, 'Users')
