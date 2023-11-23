@@ -31,6 +31,10 @@ import ContactAppLayout from './Home/Contact'
 import Message from './Chat/Message'
 import MessageWrapper from './Chat/MessageWrapper'
 import ChatBar from './Chat/ChatBar'
+import ProfileHeader from './Profile/ProfileHeader'
+import Highlights from './Profile/Highlights'
+import ProfilePosts from './Profile/ProfilePosts'
+import RequireAuth from './Auth/RequireAuth'
 
 export {
     DiscoverSection,
@@ -41,16 +45,20 @@ export {
     ComunitySection,
     ClipsWrapper,
     ForumWrapper,
+    ProfileHeader,
     Message,
     ChatBar,
     LittleNews,
+    RequireAuth,
     ForumIcon,
+    ProfilePosts,
     Folder,
     SideBar,
     File,
     Shortcut,
     Contact,
     Classes,
+    Highlights,
     Post,
     Auth,
     Comment,
