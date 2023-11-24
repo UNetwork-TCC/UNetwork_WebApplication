@@ -61,10 +61,13 @@ export const createUser = async (req, res) => {
                 avatar: '',
                 bio: '',
                 phone: '',
-                city: '',
-                state: '',
-                country: '',
-                grade: 1
+                grade: 1,
+                shortcuts: {
+                    title: '',
+                    category: '',
+                    color: '',
+                    link: ''
+                }
             },
         })
 
