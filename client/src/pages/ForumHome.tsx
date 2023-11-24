@@ -1,15 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Search } from '@mui/icons-material'
 import { AppLayout, CustomInput, FormModal, LoadingBackdrop } from '$layout'
 import { Box, Button, Stack, TextField } from '@mui/material'
 import { useTheme } from '@mui/material'
 import { useEffect, type ReactElement, useState, type FormEvent } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
-import { type User, type Forum } from '$types'
+import { type Forum  } from '$types'
 import { ForumIconSkeleton } from '$skeletons'
-import { useFetchForumsMutation } from '$features/forum'
+import { useCreateForumMutation, useFetchForumsMutation } from '$features/forum'
+import { useAppSelector } from '$store'
 
 export default function ForumHome(): ReactElement {
     const theme = useTheme()
+
+    const user = useAppSelector(state => state.auth.user)
 
     const [ open, setOpen ] = useState<boolean>(false)
     const [ loadingOpen, setLoadingOpen ] = useState<boolean>(false)
@@ -21,18 +25,29 @@ export default function ForumHome(): ReactElement {
     const handleLoadingClose = (): void => { setLoadingOpen(false) }
 
     const [ fetchForums, { isLoading, data: forums } ] = useFetchForumsMutation()
+    const [ createForum, { isLoading: isForumLoading } ] = useCreateForumMutation()
 
-    const [ forumForm, setForumForm ] = useState<{ title: string, description: string, topic: string, createdBy: User | string }>({
+    const [ forumForm, setForumForm ] = useState<{ title: string, description: string, topic: string }>({
         title: '',
         description: '',
-        topic: '',
-        createdBy: 'Vitronks'
+        topic: ''
     })
 
     const handleSubmit = (e: FormEvent): void => {
-        e.preventDefault()
+        (async () => {
+            e.preventDefault()
+            handleClose()
+            setLoadingOpen(true)
 
-        location.reload()
+            await createForum({
+                title: forumForm.title,
+                description: forumForm.description,
+                topic: forumForm.topic,
+                createdBy: user._id
+            })
+
+            setLoadingOpen(false)
+        })()
     }
 
     useEffect(() => {
@@ -40,6 +55,14 @@ export default function ForumHome(): ReactElement {
             await fetchForums(null)
         })()
     }, [ fetchForums ])
+
+    useEffect(() => {
+        (async () => {
+            if (!isForumLoading) {
+                await fetchForums(null)
+            }
+        })()
+    }, [ isForumLoading ])
 
     return (
         <AppLayout>
@@ -75,6 +98,7 @@ export default function ForumHome(): ReactElement {
                                 title={forum.title}
                                 topic={forum.topic}
                                 usersIn={forum.usersIn}
+                                userId={forum.createdBy ?? ''}
                             />
                         ))
                     }

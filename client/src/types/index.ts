@@ -17,7 +17,8 @@ import {
     type contact,
     type class_,
     type news,
-    type folder 
+    type folder,
+    type shortcut
 } from './dataTypes'
 
 export interface AppLayout {
@@ -40,6 +41,7 @@ export type {
     Forum,
     MulterFile,
     News,
+    shortcut,
     Class,
     Picture,
     contact,

@@ -1,6 +1,6 @@
 import { apiSlice } from '$api'
 import { type Post } from '$types'
-import { type MulterFile, type User } from '../../types/models'
+import { type MulterFile } from '../../types/models'
 
 const postApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -13,7 +13,7 @@ const postApiSlice = apiSlice.injectEndpoints({
         }),
 
         createPost: builder.mutation<Post, {
-            postedBy: User | Record<string, unknown>,
+            postedBy: string,
             postedIn: 'feed' | 'chat' | 'class',
             content: {
                 text: string | undefined,

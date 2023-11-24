@@ -1,3 +1,5 @@
+import { type shortcut } from './dataTypes'
+
 export interface User {
   username?: string,
   _id?: string
@@ -17,10 +19,8 @@ export interface User {
     avatar?: string
     bio?: string
     phone?: string
-    city?: string
-    state?: string
-    country?: string
     grade?: number
+    shortcuts?: shortcut[]
   }
 }
 
@@ -28,8 +28,8 @@ export interface Group {
   _id?: string
   title: string
   description: string
-  usersOnGroup: User[]
-  createdAt: Date
+  usersOnGroup: string[]
+  createdAt: string
   messages: any[]
 }
 
@@ -39,11 +39,11 @@ export interface Class {
   title: string
   description: string
   theme: string
-  usersOnClass: User[]
+  usersOnClass: string[]
   messages: Message[]
   voiceChannels: any[]
   chatChannels: any[]
-  createdAt: Date
+  createdAt: string
   createdBy: User
   createdIn: Group
 }
@@ -51,15 +51,15 @@ export interface Class {
 export interface Message {
   _id?: string
   content: string
-  sendedBy: User
-  sendedAt: Date
+  sendedBy: string
+  sendedAt: string
   sendedIn: Group
   type: 'text' | 'audio' | 'video' | 'sticker'
 }
 
 export interface Chat {
   _id?: string
-  users: User[]
+  users: string[]
   messages: Message[]
 }
 
@@ -71,7 +71,7 @@ export interface Post {
     text?: string
     picture?: MulterFile
   }
-  postedBy: User | Record<string, unknown>
+  postedBy: string
   postedAt: string
   postedIn: Group | Chat | Forum | string
   comments: Message[]
@@ -84,10 +84,10 @@ export interface Forum {
   title: string
   description: string
   topic: string
-  createdAt: Date | string
-  createdBy: User
-  createdIn: Group | Chat | Forum
-  closedAt?: Date
+  createdAt: string
+  createdBy: string
+  createdIn: Group | Chat | Forum | string
+  closedAt?: string
   comments: Message[]
   likes: User[]
   usersIn: User[]
@@ -98,7 +98,7 @@ export interface News {
   name: string
   description: string
   content: string
-  postedAt: Date
+  postedAt: string
   comments: Message[]
   likes: User[]
   views: User[]

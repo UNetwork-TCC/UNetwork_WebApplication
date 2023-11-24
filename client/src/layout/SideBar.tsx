@@ -7,12 +7,14 @@ import { useNavigate } from 'react-router-dom'
 import { type MouseEvent } from 'react'
 import { appLayoutContext, themeContext } from '$contexts'
 import { darkTheme, lightTheme } from '$themes'
-import { useAppDispatch } from '$store'
+import { useAppDispatch, useAppSelector } from '$store'
 import { logOut } from '$features/auth'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
     
+    const user = useAppSelector(state => state.auth.user)
+
     const { 
         sideBar: {
             dropdownButtonClicked,
@@ -216,6 +218,16 @@ export default function SideBar(): ReactElement {
                                             '::-webkit-slider-thumb': { display: 'none' }
                                         }}
                                     >
+                                        {user.otherInfo?.shortcuts?.map((shortcut, index) => {
+                                            return (
+                                                <Shortcut
+                                                    key={index}
+                                                    title={shortcut.title}
+                                                    category={shortcut.category}
+                                                    color={shortcut.color}
+                                                />
+                                            )
+                                        })}
                                         <Shortcut title='Leonardo' category='Conversas' color={red[600]} />
                                         <Shortcut title='Alfa' category='Conversas' color={blue[600]} />
                                         <Shortcut title='Filhos do Jhonatas' category='Classes' color={green[600]} />

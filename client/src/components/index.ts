@@ -35,6 +35,8 @@ import Highlights from './Profile/Highlights'
 import ProfilePosts from './Profile/ProfilePosts'
 import RequireAuth from './Auth/RequireAuth'
 import SideComponent from './Home/SideComponent'
+import Forum from './Forum/Forum'
+import UserAvatar from './Profile/UserAvatar'
 
 export {
     DiscoverSection,
@@ -48,12 +50,14 @@ export {
     ProfileHeader,
     Message,
     ChatBar,
+    UserAvatar,
     LittleNews,
     RequireAuth,
     ForumIcon,
     ProfilePosts,
     Folder,
     File,
+    Forum,
     Shortcut,
     SideComponent,
     Contact,

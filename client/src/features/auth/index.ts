@@ -1,12 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { type User } from '$types'
 import { apiSlice } from '$lib/api'
 
+const obj = {}
+
 const initialState: { 
-    user: User | Record<string, unknown>,
+    user: User,
     token: string | undefined
 } = {
-    user: {},
+    user: obj as User,
     token: undefined
 }
 
@@ -16,7 +18,7 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setCredentials: (state, action) => {
+        setCredentials: (state, action: PayloadAction<{user: User, accessToken: string}>) => {
             const { user, accessToken } = action.payload
 
             state.user = user
@@ -24,7 +26,7 @@ export const authSlice = createSlice({
         },
 
         logOut: state => {
-            state.user = {}
+            state.user = obj as User
             state.token = ''
         }
     }
@@ -50,7 +52,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             name: string, email: string, password: string, username: string
         }>({
             query: credentials => ({
-                url: '/user/login',
+                url: '/user',
                 method: 'POST',
                 body: { ...credentials }
             })

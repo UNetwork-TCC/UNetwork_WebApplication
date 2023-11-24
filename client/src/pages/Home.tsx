@@ -10,7 +10,6 @@ import { useAppSelector } from '$store'
 import { useUploadPictureMutation } from '$features/pictures'
 import { type MulterFile, type Picture } from '$types'
 import johnDoe from '$assets/img/paraPiada/john_doe.png'
-
 export default function Home(): ReactElement {
     const theme = useTheme()
 
@@ -51,7 +50,7 @@ export default function Home(): ReactElement {
             console.log(picture)
 
             await createPost({
-                postedBy: user,
+                postedBy: user._id ?? '',
                 postedIn: 'feed',
                 content: {
                     text: postContent?.text,
@@ -184,18 +183,10 @@ export default function Home(): ReactElement {
                                     id={post._id ?? ''}
                                     content={post.content}
                                     date={post.postedAt}
-                                    user={post.postedBy}
+                                    postedBy={post.postedBy}
                                 />
                             ))
                         }
-                        <Post
-                            id='0'
-                            content={{
-                                text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor saepe labore adipisci obcaecati cupiditate magnam neque doloremque dignissimos, rem deleniti modi ad sapiente itaque explicabo qui quidem, assumenda ab facilis esse sunt dolores sequi! Voluptatum facere quas nemo rem voluptatibus placeat ullam deleniti eveniet assumenda et, similique inventore! Vero exercitationem neque, esse officiis deleniti est incidunt atque a. Incidunt aperiam aut necessitatibus fuga ea, neque vero voluptatem ipsam? Ipsam consectetur blanditiis ipsa aliquid? Perferendis illo fugiat molestiae saepe a dicta odio rem quod laudantium. Iusto, exercitationem. Dolore expedita provident totam voluptas nam enim suscipit? Deleniti dicta harum tempore quod rem a fugiat. Aliquam at doloribus modi enim nesciunt optio alias repudiandae vero iure voluptatum nisi saepe asperiores ad amet laudantium veniam reiciendis, sapiente atque! Deleniti praesentium doloremque id incidunt, quis eos et adipisci consequuntur a dicta suscipit. Quibusdam odit optio, iure veniam rerum ipsa harum consequuntur sit suscipit perspiciatis ex quaerat dicta vitae officiis nesciunt. Itaque quas, sed possimus sequi mollitia ullam ipsam, aspernatur facilis accusantium esse, fugit inventore cumque architecto consectetur error corrupti ipsum quam. Pariatur omnis velit iusto corrupti, quibusdam distinctio natus ab placeat aut saepe impedit explicabo fuga perspiciatis nobis facere, porro eos, repellendus hic nemo quod.'
-                            }}
-                            date={'04/11/2023'}
-                            user={{ name: 'John Doe', otherInfo: { avatar: johnDoe } }}
-                        />
                     </Box>
                 </Box>
                 <Box

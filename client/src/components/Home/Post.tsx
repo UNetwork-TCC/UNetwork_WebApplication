@@ -1,18 +1,21 @@
 import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
-import { Avatar, Box, Button, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
-import React, { type ReactElement, useState } from 'react'
-import { CustomMenu, FormModal, LoadingBackdrop, WarningModal } from '$layout'
-import { type User, type MulterFile } from '$types'
-import { GET_IMAGE } from '../../constants/index'
+import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
+import React, { type ReactElement, useState, useEffect } from 'react'
+import { CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
+import { type MulterFile } from '$types'
+import { GET_IMAGE } from '$constants'
 import { useAppSelector } from '$store'
 import { useDeletePostMutation } from '$features/post'
 import { red } from '@mui/material/colors'
+import { UserAvatar } from '$components'
+import { useGetUserMutation } from '$features/user'
+import { type User } from '$types'
 
 export default function Post({ 
     date,
     content,
     degree,
-    user,
+    postedBy,
     id
 } : {
     date: Date | string | undefined,
@@ -21,7 +24,7 @@ export default function Post({
         picture?: MulterFile
     },
     degree?: string,
-    user: Partial<User>,
+    postedBy: string,
     id: string,
 }) : ReactElement {
     const theme = useTheme()
@@ -67,6 +70,7 @@ export default function Post({
 
     const loggedUser = useAppSelector(state => state.auth.user)
 
+    const [ getUser, { isLoading } ] = useGetUserMutation()
     const [ deletePost ] = useDeletePostMutation()
 
     const handleBackdropClose = (): void => { setBackdropOpen(false) }
@@ -75,7 +79,9 @@ export default function Post({
     const handleModalClose = (): void => { setModalOpen(false) }
     const handleModalOpen = (): void => { setModalOpen(true) }
 
-    const ownedPost = user._id === loggedUser._id
+    const postOwner = postedBy === loggedUser._id
+
+    const [ user, setUser ] = useState<User | null>(null)
 
     const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
         const mapedElements: React.ReactNode[] = elements.map((el, i) =>
@@ -84,7 +90,7 @@ export default function Post({
 
         setMenuContent(mapedElements)
         
-        if (ownedPost) {
+        if (postOwner) {
             setMenuContent([
                 ...mapedElements,
                 <MenuItem sx={{ color: red[600] }} onClick={() => { handleModalOpen(); handleClose() }} key={-1} disableRipple>Deletar publicação</MenuItem>
@@ -119,6 +125,14 @@ export default function Post({
             <CloseSharp fontSize="small" />
         </IconButton>
     )
+
+    useEffect(() => {
+        (async () => {
+            const response: any = await getUser(postedBy)
+
+            setUser(response.data)
+        })()
+    }, [ getUser, postOwner, postedBy ])
 
     return (
         <>
@@ -155,20 +169,26 @@ export default function Post({
                                     }
                                 }}
                             >
-                                <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
-                                    {user?.otherInfo?.avatar ?
-                                        <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.otherInfo.avatar} alt="avatar" />
-                                        :
-                                        <Avatar />
-                                    }
-                                </Avatar>
+                                <UserAvatar
+                                    user={user as User}
+                                    isLoading={isLoading}
+                                />
                                 <Avatar sx={{ position: 'relative', height: '1.75rem', width: '1.75rem', bottom: '1em', right: '0.5em', bgcolor: 'primary.dark', color: '' }}>
                                     {degree}
                                 </Avatar>
                             </Box>
                             <Box sx={{ ml: '1rem' }}>
-                                <Typography sx={{ fontSize: '1.25rem' }}>@{user?.username}</Typography>
-                                <Typography sx={{ color: 'gray', fontSize: '1em' }}>{date?.toString()}</Typography>
+                                {isLoading ? (
+                                    <Box width='10rem'>
+                                        <Skeleton variant='text' />
+                                        <Skeleton variant='text' />
+                                    </Box>
+                                ) : (
+                                    <>
+                                        <Typography sx={{ fontSize: '1.25rem' }}>@{user?.username}</Typography>
+                                        <Typography sx={{ color: 'gray', fontSize: '1em' }}>{date?.toString()}</Typography>
+                                    </>
+                                )}
                             </Box>
                         </Box>
                         <IconButton onClick={
@@ -214,7 +234,7 @@ export default function Post({
                                 }
                             </Typography>
                             {content?.picture &&
-                                <img src={GET_IMAGE(content?.picture?.filename)} alt={'imagem de ' + user.username} />
+                                <img src={GET_IMAGE(content?.picture?.filename)} alt={'imagem de ' + user?.username} />
                             }
                         </Box>
                         <Box>
@@ -231,7 +251,7 @@ export default function Post({
                             >
                                 <Box display='flex' width='100%' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
                                     <Box display='flex' gap={2}>
-                                        {!ownedPost && (
+                                        {!postOwner && (
                                             <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
                                                 <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
                                                     {favoriteClicked ?
