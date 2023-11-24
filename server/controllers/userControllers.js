@@ -62,12 +62,12 @@ export const createUser = async (req, res) => {
                 bio: '',
                 phone: '',
                 grade: 1,
-                shortcuts: {
+                shortcuts: [{
                     title: '',
                     category: '',
                     color: '',
                     link: ''
-                }
+                }]
             },
         })
 
