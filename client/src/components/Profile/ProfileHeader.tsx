@@ -1,3 +1,4 @@
+import { useAppSelector } from '$store'
 import { type User } from '$types'
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
@@ -5,7 +6,10 @@ import { useParams } from 'react-router-dom'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
     const { id } = useParams()
-    const yourAccount = id === user?._id
+
+    const ownId = useAppSelector(state => state.auth.user._id)
+
+    const onwedAccount = id === ownId
 
     return (
         <Box p={3} width='100%' display='flex' gap={8}>
@@ -18,7 +22,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
             <Box width='100%' display='flex' flexDirection='column' gap={2.5}>
                 <Box display='flex' gap={4}>
                     <Typography position='relative' top='7.5px'>@{user?.username}</Typography>
-                    { yourAccount ?
+                    { onwedAccount ?
                         <Button variant='contained'>Editar Perfil</Button>
                         : (
                             <>
