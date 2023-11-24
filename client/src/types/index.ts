@@ -1,3 +1,5 @@
+import { type CSSProperties } from 'react'
+
 import {
     type User,
     type Group,
@@ -11,7 +13,23 @@ import {
     type MulterFile
 } from './models'
 
-import { type contact, type class_, type news, type folder } from './dataTypes'
+import { 
+    type contact,
+    type class_,
+    type news,
+    type folder 
+} from './dataTypes'
+
+export interface AppLayout {
+    sideBar: {
+        dropdownButtonClicked: boolean
+        shortcutsExpanded: boolean
+    }
+
+    window: {
+        size: CSSProperties,
+    }
+}
 
 export type {
     User,

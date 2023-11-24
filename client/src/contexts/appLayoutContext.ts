@@ -1,16 +1,16 @@
-import { type Dispatch, type SetStateAction, createContext, type CSSProperties } from 'react'
+import { createContext, type CSSProperties } from 'react'
 
 interface AppLayout {
     sideBar: {
         dropdownButtonClicked: boolean
-        setDropdownButtonClicked: Dispatch<SetStateAction<boolean>>
+        setDropdownButtonClicked: () => void
         shortcutsExpanded: boolean
-        setShortcutsExpanded: Dispatch<SetStateAction<boolean>>
+        setShortcutsExpanded: () => void
     }
 
     window: {
         size: CSSProperties,
-        setSize: Dispatch<SetStateAction<CSSProperties>>
+        setSize: (css: CSSProperties) => void
     }
 }
 

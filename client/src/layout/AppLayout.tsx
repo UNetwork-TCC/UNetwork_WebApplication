@@ -49,8 +49,6 @@ export default function AppLayout({
     }
 
     const close = (): void => {
-        setOpen(true)
-
         setTimeout(() => {
             window.location.href = '/auth/login'
         }, 2000)

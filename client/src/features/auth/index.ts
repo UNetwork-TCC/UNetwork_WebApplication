@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { type User } from '$types'
-import { authApiSlice } from './authApiSlice'
-import { useLoginMutation, useSignupMutation } from '$features/auth/authApiSlice'
+import { apiSlice } from '$lib/api'
 
 const initialState: { 
     user: User | Record<string, unknown>,
@@ -10,6 +9,8 @@ const initialState: {
     user: {},
     token: undefined
 }
+
+// REDUCERS
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -29,6 +30,34 @@ export const authSlice = createSlice({
     }
 })
 
-export const authReducer = authSlice.reducer
+// AUTH API SLICE
+
+export const authApiSlice = apiSlice.injectEndpoints({
+    endpoints: builder => ({
+        login: builder.mutation<{
+            user: User, token: string, message: string
+        }, {
+           email: string, password: string
+        }>({
+            query: credentials => ({
+                url: '/user/login',
+                method: 'POST',
+                body: { ...credentials }
+            })
+        }),
+
+        signup: builder.mutation<User, {
+            name: string, email: string, password: string, username: string
+        }>({
+            query: credentials => ({
+                url: '/user/login',
+                method: 'POST',
+                body: { ...credentials }
+            })
+        })
+    })
+})
+
+export const { useLoginMutation, useSignupMutation } = authApiSlice
 export const { logOut, setCredentials } = authSlice.actions
-export { authApiSlice, useLoginMutation, useSignupMutation }
+export const authReducer = authSlice.reducer
