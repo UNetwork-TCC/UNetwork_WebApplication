@@ -69,7 +69,7 @@ export interface Post {
   description: string
   content: {
     text?: string
-    picture?: Picture | File
+    picture?: MulterFile
   }
   postedBy: User | Record<string, unknown>
   postedAt: string

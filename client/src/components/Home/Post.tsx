@@ -1,16 +1,18 @@
 import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
-import { Avatar, Box, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
-import React, { type ReactElement, useState, useEffect } from 'react'
-import { CustomMenu } from '$layout'
+import { Avatar, Box, Button, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
+import React, { type ReactElement, useState } from 'react'
+import { CustomMenu, FormModal, LoadingBackdrop, WarningModal } from '$layout'
 import { type User, type MulterFile } from '$types'
-import { useGetPictureMutation } from '$features/pictures'
-import { API_BASE_URL } from '../../constants/index';
+import { GET_IMAGE } from '../../constants/index'
+import { useAppSelector } from '$store'
+import { useDeletePostMutation } from '$features/post'
 
 export default function Post({ 
     date,
     content,
     degree,
     user,
+    id
 } : {
     date: Date | string | undefined,
     content: {
@@ -18,7 +20,8 @@ export default function Post({
         picture?: MulterFile
     },
     degree?: string,
-    user: Partial<User>
+    user: Partial<User>,
+    id: string,
 }) : ReactElement {
     const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
@@ -56,8 +59,19 @@ export default function Post({
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ menuContent, setMenuContent ] = useState<React.ReactNode[]>([])
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
+    const [ backdropOpen, setBackdropOpen ] = useState<boolean>(false)
+    const [ modalOpen, setModalOpen ] = useState<boolean>(false)
 
     const open = Boolean(anchorEl)
+
+    const loggedUser = useAppSelector(state => state.auth.user)
+    const [ deletePost ] = useDeletePostMutation()
+
+    const handleBackdropClose = (): void => { setBackdropOpen(false) }
+    const handleBackdropOpen = (): void => { setBackdropOpen(true) }
+
+    const handleModalClose = (): void => { setModalOpen(false) }
+    const handleModalOpen = (): void => { setModalOpen(true) }
 
     const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
         const mapedElements: React.ReactNode[] = elements.map((el, i) =>
@@ -65,6 +79,13 @@ export default function Post({
         )
 
         setMenuContent(mapedElements)
+        
+        if (user._id === loggedUser._id) {
+            setMenuContent([
+                ...mapedElements,
+                <MenuItem onClick={() => { handleModalOpen(); handleClose() }} key={-1} disableRipple>Deletar Publicação</MenuItem>
+            ])
+        }
 
         setAnchorEl(e.currentTarget)
     }
@@ -73,6 +94,16 @@ export default function Post({
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+
+    const onConfirm = (): void => {
+        (async () => {
+            handleModalClose()
+            handleBackdropOpen()
+            await deletePost(id)
+            handleBackdropClose()                        
+            location.reload()
+        })()
+    }
 
     const action = (
         <IconButton
@@ -179,7 +210,7 @@ export default function Post({
                                 }
                             </Typography>
                             {content?.picture &&
-                                <img src={API_BASE_URL + '/' + content.picture.filename} alt={'imagem de ' + user.username} />
+                                <img src={GET_IMAGE(content?.picture?.filename)} alt={'imagem de ' + user.username} />
                             }
                         </Box>
                         <Box>
@@ -248,6 +279,16 @@ export default function Post({
                 message='Feedback enviado!'
                 autoHideDuration={3000}
                 action={action}
+            />
+            <LoadingBackdrop 
+                open={backdropOpen}
+                handleClose={handleBackdropClose}
+            />
+            <WarningModal
+                open={modalOpen}
+                onClose={handleModalClose}
+                onConfirm={onConfirm}
+                text='Esta ação irá deletar este post.'
             />
         </>
     )

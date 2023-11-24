@@ -1,10 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-
 import { authReducer, authSlice } from '$features/auth'
-import { newsReducer, newsSlice } from '$features/news'
-import { forumReducer, forumSlice } from '$features/forum'
-import { userReducer, userSlice } from '$features/user'
-import { postReducer, postSlice } from '$features/post'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
 import {
     type TypedUseSelectorHook,
@@ -12,14 +9,18 @@ import {
     useSelector
 } from 'react-redux'
 import { apiSlice } from '$api'
+import { REDUX_PERSIST_STORE_KEY } from '$constants'
+
+const persistConfig = {
+    key: REDUX_PERSIST_STORE_KEY,
+    storage
+}
+
+const persistAuthReducer = persistReducer(persistConfig, authReducer)
 
 const store = configureStore({
     reducer: {
-        [authSlice.name]: authReducer,
-        [newsSlice.name]: newsReducer,
-        [forumSlice.name]: forumReducer,
-        [userSlice.name]: userReducer,
-        [postSlice.name]: postReducer,
+        [authSlice.name]: persistAuthReducer,
         [apiSlice.reducerPath]: apiSlice.reducer
     },
     
@@ -32,4 +33,5 @@ export const useAppSelector: TypedUseSelectorHook<
     ReturnType<typeof store.getState>
 > = useSelector
 
+export const persistedStore = persistStore(store)
 export default store

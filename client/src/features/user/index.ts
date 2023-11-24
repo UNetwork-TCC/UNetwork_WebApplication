@@ -1,18 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from '$api'
 import { type User } from '$types'
-
-const initialState: { user: User | Record<string, unknown> } = {
-    user: {}
-}
-
-export const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {}
-})
-
-// User API Slice
 
 const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -49,5 +36,3 @@ export const {
     useGetUserMutation,
     useUpdateUserMutation
 } = userApiSlice
-
-export const userReducer = userSlice.reducer

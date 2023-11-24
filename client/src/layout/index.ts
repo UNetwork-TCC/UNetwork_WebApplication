@@ -18,6 +18,7 @@ import FormModal from './FormModal'
 import SearchBar from './SearchBar'
 import ProfileHeaderSkeleton from './skeletons/ProfileHeaderSkeleton'
 import ProfilePostsSkeleton from './skeletons/ProfilePostsSkeleton'
+import WarningModal from './WarningModal'
 
 export {
     LandingPageHeader,
@@ -33,6 +34,7 @@ export {
     ProfilePostsSkeleton,
     CustomMenu,
     SearchBar,
+    WarningModal,
     FormModal,
     UNetworkModal,
     Clip,
