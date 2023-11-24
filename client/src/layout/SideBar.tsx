@@ -12,6 +12,7 @@ import { logOut } from '$features/auth'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
+    
     const { 
         sideBar: {
             dropdownButtonClicked,
@@ -23,12 +24,9 @@ export default function SideBar(): ReactElement {
     const navigate = useNavigate()
 
     const [ anchorEl, setAnchorEl ] = useState<HTMLDivElement | null>(null)
-    const toogleDropdown = (): void => { setDropdownButtonClicked(prevState => !prevState) }
+    const toogleDropdown = setDropdownButtonClicked
     
     const dispatch = useAppDispatch()
-
-    const shortcutsExpand = (): void => { setShortcutsExpanded(true) }
-    const shortcutsCollapse = (): void => { setShortcutsExpanded(false) }
 
     const shortcuts = 5
     const open = Boolean(anchorEl)
@@ -131,7 +129,6 @@ export default function SideBar(): ReactElement {
                     left: 0,
                     p: 3,
                     width: !dropdownButtonClicked ? '20rem' : '7rem',
-                    // borderRight: `1px solid ${theme.palette.divider}`,
                     bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
                     transition: '.3s ease-in-out'
                 }}
@@ -156,25 +153,23 @@ export default function SideBar(): ReactElement {
                     height='100%'
                 >
                     <Box display='flex' gap={2} flexDirection='column' justifyContent='space-between'>
-                        <Box>
-                            <Stack>
-                                <Box>
-                                    <NavLink
-                                        icon={<Home />}
-                                        text='Home'
-                                        link='/app'
-                                    />
-                                    <NavLink
-                                        icon={<Message />}
-                                        text='Conversas'
-                                        link='/app/chat'
-                                    />
-                                    <NavLink
-                                        icon={<Bookmark />}
-                                        text='Favoritos'
-                                        link='/app/favorites'
-                                    />
-                                </Box>
+                        <Box display='flex' flexDirection='column' gap={3} >
+                            <Stack gap={1}>
+                                <NavLink
+                                    icon={<Home />}
+                                    text='Home'
+                                    link='/app'
+                                />
+                                <NavLink
+                                    icon={<Message />}
+                                    text='Conversas'
+                                    link='/app/chat'
+                                />
+                                <NavLink
+                                    icon={<Bookmark />}
+                                    text='Favoritos'
+                                    link='/app/favorites'
+                                />
                             </Stack>
                             <Box 
                                 sx={{
@@ -186,7 +181,7 @@ export default function SideBar(): ReactElement {
                                 ml={!dropdownButtonClicked ? 3 : 2.4}
                             >
                                 <Box
-                                    onClick={shortcutsExpanded ? shortcutsCollapse : shortcutsExpand}
+                                    onClick={setShortcutsExpanded}
                                     color='text.secondary'
                                     display='flex'
                                     mb={3}
@@ -194,10 +189,10 @@ export default function SideBar(): ReactElement {
                                 >
                                     {!dropdownButtonClicked ?
                                         <>
-                                            <Typography sx={{ userSelect: 'none' }}>Seus atalhos ({shortcuts})</Typography>
+                                            <Typography sx={{ userSelect: 'none', cursor: 'pointer' }}>Seus atalhos ({shortcuts})</Typography>
                                             {shortcutsExpanded
-                                                ? <ExpandLess sx={{ cursor: 'pointer' }} onClick={shortcutsCollapse} />
-                                                : <ExpandMore sx={{ cursor: 'pointer' }} onClick={shortcutsExpand} />
+                                                ? <ExpandLess sx={{ cursor: 'pointer' }} />
+                                                : <ExpandMore sx={{ cursor: 'pointer' }} />
                                             }
                                         </>
                                         :

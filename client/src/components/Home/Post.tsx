@@ -1,24 +1,28 @@
 import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
-import { Avatar, Box, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
+import { Avatar, Box, Button, Card, IconButton, MenuItem, Snackbar, Typography, useTheme } from '@mui/material'
 import React, { type ReactElement, useState } from 'react'
-import { CustomMenu } from '$layout'
-import { type Picture } from '$types'
+import { CustomMenu, FormModal, LoadingBackdrop, WarningModal } from '$layout'
+import { type User, type MulterFile } from '$types'
+import { GET_IMAGE } from '../../constants/index'
+import { useAppSelector } from '$store'
+import { useDeletePostMutation } from '$features/post'
+import { red } from '@mui/material/colors'
 
 export default function Post({ 
     date,
     content,
     degree,
-    img,
-    user
+    user,
+    id
 } : {
     date: Date | string | undefined,
     content: {
         text?: string,
-        picture?: Picture
-    } | undefined | string,
+        picture?: MulterFile
+    },
     degree?: string,
-    img?: string,
-    user: { name: string | undefined, avatar?: string }
+    user: Partial<User>,
+    id: string,
 }) : ReactElement {
     const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
@@ -56,8 +60,22 @@ export default function Post({
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ menuContent, setMenuContent ] = useState<React.ReactNode[]>([])
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
+    const [ backdropOpen, setBackdropOpen ] = useState<boolean>(false)
+    const [ modalOpen, setModalOpen ] = useState<boolean>(false)
 
     const open = Boolean(anchorEl)
+
+    const loggedUser = useAppSelector(state => state.auth.user)
+
+    const [ deletePost ] = useDeletePostMutation()
+
+    const handleBackdropClose = (): void => { setBackdropOpen(false) }
+    const handleBackdropOpen = (): void => { setBackdropOpen(true) }
+
+    const handleModalClose = (): void => { setModalOpen(false) }
+    const handleModalOpen = (): void => { setModalOpen(true) }
+
+    const ownedPost = user._id === loggedUser._id
 
     const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
         const mapedElements: React.ReactNode[] = elements.map((el, i) =>
@@ -65,6 +83,13 @@ export default function Post({
         )
 
         setMenuContent(mapedElements)
+        
+        if (ownedPost) {
+            setMenuContent([
+                ...mapedElements,
+                <MenuItem sx={{ color: red[600] }} onClick={() => { handleModalOpen(); handleClose() }} key={-1} disableRipple>Deletar publicação</MenuItem>
+            ])
+        }
 
         setAnchorEl(e.currentTarget)
     }
@@ -73,6 +98,16 @@ export default function Post({
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+
+    const onConfirm = (): void => {
+        (async () => {
+            handleModalClose()
+            handleBackdropOpen()
+            await deletePost(id)
+            handleBackdropClose()                        
+            location.reload()
+        })()
+    }
 
     const action = (
         <IconButton
@@ -121,8 +156,8 @@ export default function Post({
                                 }}
                             >
                                 <Avatar variant='rounded' sx={{ borderRadius: 3, height: '3.5rem', width: '3.5rem' }}>
-                                    {user?.avatar ?
-                                        <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.avatar} alt="avatar" />
+                                    {user?.otherInfo?.avatar ?
+                                        <img style={{ backgroundRepeat: 'no-repeat' }} src={user?.otherInfo.avatar} alt="avatar" />
                                         :
                                         <Avatar />
                                     }
@@ -132,7 +167,7 @@ export default function Post({
                                 </Avatar>
                             </Box>
                             <Box sx={{ ml: '1rem' }}>
-                                <Typography sx={{ fontSize: '1.25rem' }}>{user?.name}</Typography>
+                                <Typography sx={{ fontSize: '1.25rem' }}>@{user?.username}</Typography>
                                 <Typography sx={{ color: 'gray', fontSize: '1em' }}>{date?.toString()}</Typography>
                             </Box>
                         </Box>
@@ -178,8 +213,8 @@ export default function Post({
                                 ) : content?.text
                                 }
                             </Typography>
-                            {img &&
-                                <img src={img} alt={'imagem de ' + user.name} />
+                            {content?.picture &&
+                                <img src={GET_IMAGE(content?.picture?.filename)} alt={'imagem de ' + user.username} />
                             }
                         </Box>
                         <Box>
@@ -196,14 +231,16 @@ export default function Post({
                             >
                                 <Box display='flex' width='100%' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
                                     <Box display='flex' gap={2}>
-                                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
-                                            <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
-                                                {favoriteClicked ?
-                                                    <Favorite sx={{ color: 'red' }} /> :
-                                                    <FavoriteBorder/>
-                                                }
-                                            </IconButton>
-                                        </Avatar>
+                                        {!ownedPost && (
+                                            <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                                <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
+                                                    {favoriteClicked ?
+                                                        <Favorite sx={{ color: 'red' }} /> :
+                                                        <FavoriteBorder/>
+                                                    }
+                                                </IconButton>
+                                            </Avatar>
+                                        )}
                                         <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
                                             <IconButton>
                                                 <ChatBubbleRounded />
@@ -249,7 +286,16 @@ export default function Post({
                 autoHideDuration={3000}
                 action={action}
             />
-            
+            <LoadingBackdrop 
+                open={backdropOpen}
+                handleClose={handleBackdropClose}
+            />
+            <WarningModal
+                open={modalOpen}
+                onClose={handleModalClose}
+                onConfirm={onConfirm}
+                text='Essa ação irá deletar esta publicação.'
+            />
         </>
     )
 }

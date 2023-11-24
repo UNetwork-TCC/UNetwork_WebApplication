@@ -11,12 +11,13 @@ import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { Alert } from '@mui/material'
 import { setCredentials, useLoginMutation, useSignupMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
-import { useGetUserMutation } from '$features/user'
 
 function RegisterForm(): ReactElement {
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Este campo é obrigatório'),
+        fname: Yup.string().required('Este campo é obrigatório'),
+        lname: Yup.string().required('Este campo é obrigatório'),
+        username: Yup.string().required('Este campo é obrigatório'),
         email: Yup.string().email().required('Este campo é obrigatório'),
         password: Yup.string().min(8, 'A senha precisa ter 8 digitos').required('Este campo é obrigatório'),
         confirmPassword: Yup.string().required('Este campo é obrigatório')
@@ -29,9 +30,8 @@ function RegisterForm(): ReactElement {
     const [ openLoading, setOpenLoading ] = useState(false)
     const [ snackbarOpen, setSnackbarOpen ] = useState(false)
 
-    const [ login, { data, isSuccess: isLoginSuccess } ] = useLoginMutation()
+    const [ login, { data: loginData, isSuccess: isLoginSuccess } ] = useLoginMutation()
     const [ signup, { isSuccess: isSignupSuccess } ] = useSignupMutation()
-    const [ getUser, { data: userData } ] = useGetUserMutation()
 
     const [ isLoginSuccessState, setIsLoginSuccessState ] = useState(isLoginSuccess)
     const [ isSignupSuccessState, setIsSignupSuccessState ] = useState(isSignupSuccess)
@@ -50,12 +50,15 @@ function RegisterForm(): ReactElement {
         setIsSignupSuccessState(isSignupSuccess)
     }, [ isLoginSuccess, isSignupSuccess ])
 
-    const handleSubmit = async (user: { name: string, email: string, password: string }): Promise<void> => {
+    const handleSubmit = async (user: { fname: string, lname: string, email: string, password: string, username: string }): Promise<void> => {
         handleOpenLoading()
+
+        const name = user.fname + ' ' + user.lname
 
         try {
             await signup({
-                name: user.name,
+                name,
+                username: user.username,
                 email: user.email.toLowerCase(),
                 password: user.password
             })
@@ -67,8 +70,7 @@ function RegisterForm(): ReactElement {
                 })
                 
                 if (isLoginSuccessState) {
-                    await getUser(data?.id ?? '')
-                    dispatch(setCredentials({ user: userData, accessToken: data?.token }))
+                    dispatch(setCredentials({ user: loginData?.user, accessToken: loginData?.token }))
                     navigate('/app')
                 } else if (!isLoginSuccessState) {
                     handleCloseLoading()
@@ -84,12 +86,21 @@ function RegisterForm(): ReactElement {
         }
     }
 
+    const formInitialValues = { 
+        fname: '',
+        lname: '',
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    }
+
     return (
         <>
             <Box width='85.3%' p={2.5}>
                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
                     <Formik
-                        initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
+                        initialValues={formInitialValues}
                         validationSchema={validationSchema}
                         style={{ width: '100%' }}
                         onSubmit={handleSubmit}
@@ -97,10 +108,24 @@ function RegisterForm(): ReactElement {
                         {({ errors, touched }) => (
                             <Form action='/'>
                                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
+                                    <Box display='flex' gap={2.5}>
+                                        <Box width='100%'>
+                                            <Field as={TextField} fullWidth name='fname' label='Primeiro nome' required type='text' />
+                                            {errors.fname && touched.fname && (
+                                                <p style={{ color: 'red' }}>{errors.fname}</p>
+                                            )}
+                                        </Box>
+                                        <Box width='100%'>
+                                            <Field as={TextField} fullWidth name='lname' label='Segundo nome' required type='text' />
+                                            {errors.lname && touched.lname && (
+                                                <p style={{ color: 'red' }}>{errors.lname}</p>
+                                            )}
+                                        </Box>
+                                    </Box>
                                     <Box>
-                                        <Field as={TextField} name='name' label='Nome' required fullWidth />
-                                        {errors.name && touched.name && (
-                                            <p style={{ color: 'red' }}>{errors.name}</p>
+                                        <Field as={TextField} name='username' label='Nome de usuário' required fullWidth />
+                                        {errors.username && touched.username && (
+                                            <p style={{ color: 'red' }}>{errors.username}</p>
                                         )}
                                     </Box>
                                     <Box gap={2.5}>

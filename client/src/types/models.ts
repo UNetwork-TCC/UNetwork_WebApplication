@@ -69,10 +69,10 @@ export interface Post {
   description: string
   content: {
     text?: string
-    picture?: Picture
+    picture?: MulterFile
   }
-  postedBy: User
-  postedAt: Date
+  postedBy: User | Record<string, unknown>
+  postedAt: string
   postedIn: Group | Chat | Forum | string
   comments: Message[]
   likes: User[]
@@ -108,4 +108,20 @@ export interface Picture {
   _id?: string
   name: string
   src: string
+  userId: string
+  at: {
+    id: string
+    type: 'post' | 'class' | 'chat'
+  }
+}
+
+export interface MulterFile extends File {
+  fieldname: string
+  originalname: string
+  enconding: string
+  mimetype: string
+  destination: string
+  filename: string
+  path: string
+  size: number
 }

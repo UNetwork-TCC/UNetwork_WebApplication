@@ -2,7 +2,6 @@ import DiscoverSection from './LandingPage/DiscoverSection'
 import AboutSection from './LandingPage/AboutSection'
 import ComunitySection from './LandingPage/ComunitySection'
 import LittleNews from './News/LittleNews'
-import SideBar from './SideBar/SideBar'
 import File from './Materials/File'
 import Contact from './Chat/Contact'
 import Classes from './Classes/Classes'
@@ -54,7 +53,6 @@ export {
     ForumIcon,
     ProfilePosts,
     Folder,
-    SideBar,
     File,
     Shortcut,
     SideComponent,

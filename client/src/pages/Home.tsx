@@ -1,25 +1,83 @@
-import { Avatar, Box, useTheme } from '@mui/material'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Alert, Avatar, Box, Snackbar, Typography, useTheme } from '@mui/material'
 import { ClipsWrapper, Post, SideComponent } from '$components'
 import { Add, AttachFile } from '@mui/icons-material'
-import { AppLayout, CustomInput } from '$layout'
-import { useEffect, type ReactElement } from 'react'
+import { AppLayout, CustomInput, LoadingBackdrop } from '$layout'
+import { useEffect, type ReactElement, type FormEvent, useState, type ChangeEvent } from 'react'
 import { PostSkeleton } from '$skeletons'
-import johnDoe from '$assets/img/paraPiada/john_doe.png'
-import { useFetchPostsMutation } from '$features/post'
+import { useCreatePostMutation, useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
-import { type User } from '$types'
+import { useUploadPictureMutation } from '$features/pictures'
+import { type MulterFile, type Picture } from '$types'
+import johnDoe from '$assets/img/paraPiada/john_doe.png'
+
 export default function Home(): ReactElement {
     const theme = useTheme()
 
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
+    const [ uploadPicture ] = useUploadPictureMutation()
+    const [ createPost ] = useCreatePostMutation()
+
+    const [ postContent, setPostContent ] = useState<{ text?: string, picture?: Partial<MulterFile> & Partial<Picture> & File }>()
+    const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
 
     const user = useAppSelector(state => state.auth.user)
+
+    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
+    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+
+    const [ loading, setLoading ] = useState<boolean>(false)
+
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
+        e.preventDefault()
+        setLoading(true)
+
+        const formData = new FormData()
+        let picture: any
+
+        if ((postContent?.picture?.size ?? 0) >= 8000000) {
+            handleSnackbarOpen()
+        } else {
+            console.log(postContent?.picture)
+
+            if (postContent?.picture) {
+                formData.append('name', JSON.stringify(user?.username ?? ''))
+                formData.append('userId', JSON.stringify(user?._id ?? ''))
+                formData.append('at', JSON.stringify({ id: '123456789', type: 'post' }))
+                formData.append('file', postContent?.picture ?? '')
+                picture = await uploadPicture(formData)
+            }
+
+            console.log(picture)
+
+            await createPost({
+                postedBy: user,
+                postedIn: 'feed',
+                content: {
+                    text: postContent?.text,
+                    picture: picture?.data?.file ?? null
+                }
+            })
+            
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
         (async () => {
             await fetchPosts(null)
         })()
     }, [ fetchPosts ])
+
+    useEffect(() => {
+        if (!loading) {
+            (async () => {
+                await fetchPosts(null)
+            })()
+        }
+    }, [ loading ])
+
+    const closeBackdrop = (): void => { setLoading(false) }
 
     return (
         <AppLayout>
@@ -41,46 +99,74 @@ export default function Home(): ReactElement {
                     <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio">
                         <ClipsWrapper />
                         <Box>
-                            <CustomInput
-                                sx={{ boxShadow: theme.shadows[4] }}
-                                fullWidth
-                                width='100%'
-                                bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
-                                placeholder='No que estou pensando...'
-                                color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
-                                iconColor='#dbdbdb'
-                                icon={<Add />}
-                            />
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'end',
-                                    alignItems: 'center',
-                                    position: 'relative',
-                                    width: '50px',
-                                    bottom: 47,
-                                    right: '4rem',
-                                    [theme.breakpoints.down('xl')]: {
-                                        bottom: 44,
-                                        right: '5.25rem'
-                                    }
-                                }}>
-                                <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
-                                <Avatar
-                                    component='label'
-                                    htmlFor='file'
+                            <form onSubmit={(e) => { handleSubmit(e) }}>
+                                <CustomInput
+                                    onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
+                                    sx={{ boxShadow: theme.shadows[4] }}
+                                    fullWidth
+                                    width='100%'
+                                    bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
+                                    placeholder='No que estou pensando...'
+                                    color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
+                                    iconColor='#dbdbdb'
+                                    icon={<Add />}
+                                />
+                                <Box
                                     sx={{
-                                        cursor: 'pointer',
-                                        transition: '.3s',
-                                        bgcolor: 'primary.main',
-                                        ':hover': {
-                                            bgcolor: 'primary.light'
+                                        display: 'flex',
+                                        justifyContent: 'end',
+                                        alignItems: 'center',
+                                        position: 'relative',
+                                        width: '50px',
+                                        bottom: 47,
+                                        right: '4rem',
+                                        [theme.breakpoints.down('xl')]: {
+                                            bottom: 44,
+                                            right: '5.25rem'
                                         }
-                                    }}
-                                >
-                                    <AttachFile />
-                                </Avatar>
-                            </Box>
+                                    }}>
+                                    <input
+                                        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+                                            const file = e.target.files?.[0]
+                                            if (file) {
+                                                setPostContent({ ...postContent, picture: file })
+                                            }
+                                        }} 
+                                        style={{ display: 'none' }} 
+                                        type='file' 
+                                        id='file' 
+                                        accept='image/*' 
+                                    />
+                                    <Box position='relative' left='2.5rem' display='flex' flexDirection='column'>
+                                        <Avatar
+                                            component='label'
+                                            htmlFor='file'
+                                            sx={{
+                                                cursor: 'pointer',
+                                                transition: '.3s',
+                                                bgcolor: 'primary.main',
+                                                ':hover': {
+                                                    bgcolor: 'primary.light'
+                                                }
+                                            }}
+                                        >
+                                            <AttachFile />
+                                        </Avatar>
+                                        <Box width='80px' position='relative'>
+                                            {postContent?.picture && (
+                                                <Typography 
+                                                    variant='body2' 
+                                                    position='relative'
+                                                    right='1.5rem'
+                                                    top='10px'
+                                                    noWrap
+                                                    width='100%'
+                                                >{ postContent.picture.name }</Typography>
+                                            )}
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </form>
                         </Box>
                     </Box>
                     <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
@@ -92,21 +178,23 @@ export default function Home(): ReactElement {
                                     <PostSkeleton />
                                 </>   
                             )
-                            : posts?.map(post => (
+                            : posts?.slice(0).reverse().map((post) => (
                                 <Post
                                     key={post._id}
+                                    id={post._id ?? ''}
                                     content={post.content}
                                     date={post.postedAt}
-                                    user={{ name: post.postedBy?.name }}
+                                    user={post.postedBy}
                                 />
                             ))
                         }
                         <Post
+                            id='0'
                             content={{
                                 text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor saepe labore adipisci obcaecati cupiditate magnam neque doloremque dignissimos, rem deleniti modi ad sapiente itaque explicabo qui quidem, assumenda ab facilis esse sunt dolores sequi! Voluptatum facere quas nemo rem voluptatibus placeat ullam deleniti eveniet assumenda et, similique inventore! Vero exercitationem neque, esse officiis deleniti est incidunt atque a. Incidunt aperiam aut necessitatibus fuga ea, neque vero voluptatem ipsam? Ipsam consectetur blanditiis ipsa aliquid? Perferendis illo fugiat molestiae saepe a dicta odio rem quod laudantium. Iusto, exercitationem. Dolore expedita provident totam voluptas nam enim suscipit? Deleniti dicta harum tempore quod rem a fugiat. Aliquam at doloribus modi enim nesciunt optio alias repudiandae vero iure voluptatum nisi saepe asperiores ad amet laudantium veniam reiciendis, sapiente atque! Deleniti praesentium doloremque id incidunt, quis eos et adipisci consequuntur a dicta suscipit. Quibusdam odit optio, iure veniam rerum ipsa harum consequuntur sit suscipit perspiciatis ex quaerat dicta vitae officiis nesciunt. Itaque quas, sed possimus sequi mollitia ullam ipsam, aspernatur facilis accusantium esse, fugit inventore cumque architecto consectetur error corrupti ipsum quam. Pariatur omnis velit iusto corrupti, quibusdam distinctio natus ab placeat aut saepe impedit explicabo fuga perspiciatis nobis facere, porro eos, repellendus hic nemo quod.'
                             }}
                             date={'04/11/2023'}
-                            user={{ name: 'John Doe', avatar: johnDoe }}
+                            user={{ name: 'John Doe', otherInfo: { avatar: johnDoe } }}
                         />
                     </Box>
                 </Box>
@@ -135,6 +223,20 @@ export default function Home(): ReactElement {
                     </Box>
                 </Box>
             </Box>
+            <Snackbar 
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                autoHideDuration={3000}
+            >
+                <Alert onClose={handleSnackbarClose} severity='error'>
+                    A imagem colocada excede os limites de tamanho (6mb)!
+                </Alert>
+            </Snackbar>
+            <LoadingBackdrop 
+                open={loading}
+                handleClose={closeBackdrop}
+            />
         </AppLayout>
     )
 }
