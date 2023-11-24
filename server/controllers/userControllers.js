@@ -30,7 +30,7 @@ export const getUserById = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body
+        const { name, email, password, username } = req.body
         const existingUser = await User.findOne({ email })
         const hashedPassword = bcrypt.hashSync(password, 10)
 
@@ -44,7 +44,8 @@ export const createUser = async (req, res) => {
         
         const newUser = User({
             name,
-            email, 
+            email,
+            username,
             password: hashedPassword,
             followers: [{}],
             settings: {
