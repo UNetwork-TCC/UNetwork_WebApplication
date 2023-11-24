@@ -1,5 +1,5 @@
 import { themeContext } from '$contexts'
-import { Avatar, Box, type SxProps, TextField } from '@mui/material'
+import { Avatar, Box, type SxProps, TextField, type InputProps } from '@mui/material'
 import { useContext, type ReactElement } from 'react'
 
 export default function CustomInput({ 
@@ -9,6 +9,7 @@ export default function CustomInput({
     bgcolor,
     color,
     sx,
+    type,
     value,
     defaultValue,
     placeholder,
@@ -23,6 +24,7 @@ export default function CustomInput({
     bgcolor?: string,
     color?: string,
     sx?: SxProps,
+    type?: InputProps['type'],
     value?: string,
     defaultValue?: string,
     placeholder?: string,
@@ -35,6 +37,7 @@ export default function CustomInput({
     return (
         <Box width={ width ? `calc(${width} + 2.75rem)` : 'calc(100% + 2rem)'} display='flex' justifyContent='center'>
             <TextField
+                type={type}
                 placeholder={placeholder}
                 variant="outlined"
                 fullWidth={fullWidth}

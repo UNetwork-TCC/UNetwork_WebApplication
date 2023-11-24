@@ -1,7 +1,7 @@
 import { Search } from '@mui/icons-material'
 import CustomInput from './CustomInput'
-import { Autocomplete } from '@mui/material'
-import { useEffect, type ReactElement, useState, type ChangeEvent } from 'react'
+import { Autocomplete, Box } from '@mui/material'
+import { useEffect, type ReactElement, useState, type ChangeEvent, FormEvent } from 'react'
 import { useFetchUsersMutation } from '$features/user'
 
 export default function SearchBar(): ReactElement {
@@ -14,6 +14,12 @@ export default function SearchBar(): ReactElement {
     //     })()
     // }
     
+    const handleSubmit = (e: FormEvent): void => {
+        e.preventDefault()
+
+        console.log(text)
+    }
+
     useEffect(() => {
         (async () => {
             if (text?.includes('@')) {
@@ -26,24 +32,33 @@ export default function SearchBar(): ReactElement {
     }, [ fetchUsers, text ])
 
     return (
-        <Autocomplete
-            disablePortal
-            options={
-                text?.includes('@') ? (
-                    isLoading ? (
-                        [ 'Carregando' ]
-                    ) : users?.map(e => '@' + e.username) ?? [ '' ]
-                ) : [ 'a', 'b' ]
-            }
-            renderInput={params => 
-                <CustomInput 
-                    placeholder='Pesquise...' 
-                    icon={<Search />}
-                    value={text ?? ''} 
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => { setText(e.currentTarget.value) }}
-                    {...params} 
-                />}
-            fullWidth
-        />
+        <Box 
+            component='form' 
+            width='100%'
+            onSubmit={handleSubmit}
+        >
+            <Autocomplete
+                disablePortal
+                options={
+                    text?.includes('@') ? (
+                        isLoading ? (
+                            [ 'Carregando' ]
+                        ) : users?.map(e => '@' + e.username) ?? [ '' ]
+                    ) : [ 'a', 'b' ]
+                }
+                renderInput={
+                    (params) => (
+                        <CustomInput 
+                            placeholder='Pesquise...' 
+                            icon={<Search />}
+                            value={text ?? ''}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => { setText(e.currentTarget.value) }}
+                            {...params} 
+                        />
+                    ) 
+                }
+                fullWidth
+            />
+        </Box>
     )
 }
