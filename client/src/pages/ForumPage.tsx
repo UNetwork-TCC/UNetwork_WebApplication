@@ -1,7 +1,7 @@
 import { Post } from '$components'
 import { useGetForumMutation } from '$features/forum'
 import { AppLayout } from '$layout'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useEffect, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -21,11 +21,13 @@ export default function ForumPage(): ReactElement {
             {isLoading ? (
                 <Typography>Carregando...</Typography>
             ) : (
-                <Post
-                    date={forum?.createdAt}
-                    user={{ name: forum?.createdBy?.name }}
-                    content={forum?.description}
-                />
+                <Box width={'100%'} height={'100%'} display={'flex'} justifyContent={'center'} >
+                    <Post
+                        date={forum?.createdAt}
+                        user={{ name: forum?.createdBy?.name }}
+                        content={forum?.description}
+                    />
+                </Box>
             )}
         </AppLayout>
     )

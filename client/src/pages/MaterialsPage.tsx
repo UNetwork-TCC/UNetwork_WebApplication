@@ -51,7 +51,7 @@ export default function MaterialsPage(): ReactElement {
 
     const [ materialsAttributes, setMaterialsAttributes ] = useState<material>({
         title: '',
-        visibility: '',
+        visibility: 'public',
         code: '',
         setPassword: '',
         getPassword: ''
@@ -118,54 +118,16 @@ export default function MaterialsPage(): ReactElement {
         setAnchorEl(e.currentTarget)
     }
 
-    const handleCloseOptions = (): void => { setAnchorEl(null) }
-
     return (
         <AppLayout>
-            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} fontSize={'1rem'}>
-                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
+                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%', justifyItems:'center' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Seus Materiais</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Stack sx={{ display:'flex', flexDirection:'row' }} gap={3}>
-                            <IconButton
-                                onClick={
-                                    e => { handleClick(e, 
-                                        [ 'Ordem A-Z', 'Ordem Z-A', 'Recentes', 'Antigas' ],
-                                        [ onClickEvents.item1, onClickEvents.item2 ]
-                        
-                                    ) }
-                                }
-                            >
-                                <FilterList sx={{ cursor: 'pointer', fontSize: '2rem' ,':hover': { color: 'text.secondary' } }} />
-                            </IconButton>
-                
-                        </Stack>
-                        <Box sx={{ 
-                            height: '75%',
-                            bgcolor: '#673AB7',
-                            fontSize: '1rem',
-                            borderRadius: '3.1vh',
-                            color: 'white',
-                            padding: '0.3em 1em',
-                            ml: '2em',
-                            ':hover': {
-                                cursor: 'pointer',
-                                bgcolor: '#673AB7',
-                                opacity: '0.85' 
-                            } 
-                        }} onClick={handleOpen}>CRIAR PASTA</Box>
-                        <CustomMenu
-                            anchorEl={anchorEl}
-                            open={openOptions}
-                            onClose={handleCloseOptions}
-                        >
-                            {menuContent}
-                        </CustomMenu>
-                    </Box>
+                    <FilterAndConfig text='CRIAR PASTA' handleOpen={handleOpen}/>
                 </Container>
                 
                 <Box display={'flex'} justifyContent={'start'} flexDirection={'column'}>
-                    <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '4rem', columnGap: '11rem' }} >
+                    <Box flexDirection='column' m={5} sx={{ display: 'grid', gridTemplateColumns: 'auto auto auto', justifyItems: 'center', rowGap: '4rem' }} >
                         <FolderMaterials folderName={'teste'} />
                         <FolderMaterials folderName={'teste'} />
                         <FolderMaterials folderName={'teste'} />
@@ -176,7 +138,7 @@ export default function MaterialsPage(): ReactElement {
                             <FolderMaterials folderName={e.title} key={e.title} />
                         ))}
                     </Box>
-                    <Box display={ 'grid' } gridTemplateColumns={ 'auto auto' } gridTemplateRows={ 'auto' } flexDirection={ 'column' } m={5} >
+                    <Box display={ 'grid' } gridTemplateColumns={ 'auto auto' } gridTemplateRows={ 'auto' } flexDirection={ 'column' } m={5} justifyItems={'center'} >
                         <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
                         <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />
                         <File fileName={'teste'} description={'segundo adm rouba em olimpiadas'} />

@@ -57,7 +57,7 @@ export default function NewsPage(): ReactElement {
         <AppLayout>
             <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%', mb: '2%' }}>
-                    <Typography sx={{ fontSize: '2.5em', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
+                    <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
                     <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                 </Container>
                 <Box sx={{ display: 'flex', width: '100%' }}>

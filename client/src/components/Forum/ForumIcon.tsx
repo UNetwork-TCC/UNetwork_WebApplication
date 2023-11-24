@@ -32,7 +32,7 @@ export default function ForumIcon({
                         <img src={src} alt={'Fórum ' + title} />
                         :
                         title.charAt(0).toUpperCase()
-                    }
+                    }   
                 </Avatar>
             </IconButton>
             <Box display='flex' justifyContent='center' flexDirection='column'>
