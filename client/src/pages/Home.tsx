@@ -178,7 +178,7 @@ export default function Home(): ReactElement {
                                     <PostSkeleton />
                                 </>   
                             )
-                            : posts?.map((post) => (
+                            : posts?.slice(0).reverse().map((post) => (
                                 <Post
                                     key={post._id}
                                     id={post._id ?? ''}
