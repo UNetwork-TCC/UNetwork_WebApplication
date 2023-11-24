@@ -156,25 +156,23 @@ export default function SideBar(): ReactElement {
                     height='100%'
                 >
                     <Box display='flex' gap={2} flexDirection='column' justifyContent='space-between'>
-                        <Box>
-                            <Stack>
-                                <Box>
-                                    <NavLink
-                                        icon={<Home />}
-                                        text='Home'
-                                        link='/app'
-                                    />
-                                    <NavLink
-                                        icon={<Message />}
-                                        text='Conversas'
-                                        link='/app/chat'
-                                    />
-                                    <NavLink
-                                        icon={<Bookmark />}
-                                        text='Favoritos'
-                                        link='/app/favorites'
-                                    />
-                                </Box>
+                        <Box display='flex' flexDirection='column' gap={3} >
+                            <Stack gap={1}>
+                                <NavLink
+                                    icon={<Home />}
+                                    text='Home'
+                                    link='/app'
+                                />
+                                <NavLink
+                                    icon={<Message />}
+                                    text='Conversas'
+                                    link='/app/chat'
+                                />
+                                <NavLink
+                                    icon={<Bookmark />}
+                                    text='Favoritos'
+                                    link='/app/favorites'
+                                />
                             </Stack>
                             <Box 
                                 sx={{
