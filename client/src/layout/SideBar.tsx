@@ -94,7 +94,7 @@ export default function SideBar(): ReactElement {
                         alignItems: 'center',
                         justifyContent: dropdownButtonClicked ? 'center' : undefined,
                         p: 3,
-                        mb: 1,
+                        mb: 1.5,
                         gap: 2,
                         borderRadius: 2,
                         bgcolor: 'transparent',
@@ -179,7 +179,7 @@ export default function SideBar(): ReactElement {
                                         ml: 1
                                     }
                                 }} 
-                                height='500px' 
+                                height='450px' 
                                 ml={!dropdownButtonClicked ? 3 : 2.4}
                             >
                                 <Box
@@ -209,9 +209,9 @@ export default function SideBar(): ReactElement {
                                 </Box>
                                 {!dropdownButtonClicked &&
                                     <Stack
-                                        gap={3}
+                                        gap={2}
                                         sx={{
-                                            maxHeight: '450px',
+                                            maxHeight: '410px',
                                             display: shortcutsExpanded ? 'flex' : 'none',
                                             overflow: 'scroll',
                                             overflowX: 'hidden',
