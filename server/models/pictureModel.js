@@ -1,11 +1,11 @@
 import mongoose from 'mongoose'
 
 const pictureSchema = new mongoose.Schema({
-    src: { type: String, required: true },
-    userId: { type: String, required: true },
+    userId: { type: String },
+    filename: { type: String, required: true },
     at: {
-        id: { type: String, required: true },
-        type: { type: String, required: true }
+        id: { type: String },
+        type: { type: String }
     } 
 })
 
