@@ -1,15 +1,47 @@
+import { useUpdateUserMutation } from '$features/user'
 import { useAppSelector } from '$store'
 import { type User } from '$types'
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material'
-import { type ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
     const { id } = useParams()
+    const [ updateUser ] = useUpdateUserMutation()
 
     const ownId = useAppSelector(state => state.auth.user._id)
-
     const onwedAccount = id === ownId
+
+    const [ followingUser, setFollowingUser ] = useState(user.followers?.some(followerId => followerId === ownId))
+
+    const follow = (): void => {
+        (async () => {
+            await updateUser({
+                _id: id,
+                followers: [
+                    ...user.followers,
+                    ownId as string
+                ]
+            })
+
+            setFollowingUser(true)
+        })()
+    }
+
+    const unfollow = (): void => {
+        (async () => {
+            const followers = [
+                ...user.followers
+            ].filter(item => item !== ownId)
+
+            await updateUser({
+                _id: id,
+                followers
+            })
+
+            setFollowingUser(false)
+        })()
+    }
 
     return (
         <Box p={3} width='100%' display='flex' gap={8}>
@@ -26,7 +58,11 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                         <Button variant='contained'>Editar Perfil</Button>
                         : (
                             <>
-                                <Button variant='contained'>Seguir</Button>
+                                {followingUser ? (
+                                    <Button onClick={unfollow} variant='contained'>Desseguir</Button>
+                                ) : (
+                                    <Button onClick={follow} variant='contained'>Seguir</Button>
+                                )}
                                 <Button variant='contained'>Enviar Mensagem</Button>
                                 <IconButton>
 

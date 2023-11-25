@@ -5,7 +5,7 @@ export interface User {
   _id?: string
   name: string
   email: string
-  followers: User[]
+  followers: string[]
   settings: {
     theme: 'dark' | 'light'
     account: 'public' | 'private'
