@@ -88,15 +88,17 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const {id} = req.params
-        const {email, password } = req.body
-        
-        if (!email || !password) {
-            return res.status(400).send({message: 'Todos campos devem ser preenchidos!'})
+        const {id} = req.params        
+        let hashedPassword
+        let userUpdates
+
+        if (req.body.password) {
+            hashedPassword = bcrypt.hashSync(req.body.password)
+            userUpdates = { ...req.body, password: hashedPassword }
+        } else {
+            userUpdates = { ...req.body }
         }
-        const hashedPassword = bcrypt.hashSync(password)
         
-        const userUpdates = {...req.body, password: hashedPassword}
         const userUptaded = await User.findByIdAndUpdate(id, userUpdates)
 
         res.status(200).send({userUptaded, message: 'Usuário atualizado com sucesso!'})
