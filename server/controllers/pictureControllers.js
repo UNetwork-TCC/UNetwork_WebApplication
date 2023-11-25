@@ -1,20 +1,41 @@
 import { Picture } from '../models/index.js'
+import azure from 'azure-storage'
+import { v4 as uuid } from 'uuid'
 
 export const postPictures = async (req, res) => {
+    const CONNECTION_URL = process.env.AZURE_STORAGE_CONNECTION_URL
+
+    const blobSvc = azure.createBlobService(CONNECTION_URL)
+    const filename = uuid().toString() + '.jpg'
+
     try {
-        const { name, userId, at } = req.body
-        const file = req.file
+        const { userId, at, file64Based } = req.body
 
-        const newPicture = Picture({
-            name: JSON.parse(name),
-            userId: JSON.parse(userId),
-            at: JSON.parse(at),
-            src: file.path
-        })
+        const container = 'images'
+        const storage = 'unetworkblobapi'
 
-        await newPicture.save()
+        const matches = file64Based.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
+        const type = matches[1]
+        const buffer = new Buffer(matches[2], 'base64')
 
-        res.status(200).send({ file, message: 'Imagem salva com sucesso!'})
+        blobSvc.createBlockBlobFromText('images', filename, buffer, {
+            contentType: type
+        }, async (error, _result, _response) => {
+            if (error) {
+                filename = 'default.png'
+            }
+            
+            const newPicture = Picture({
+                userId,
+                at,
+                filename
+            })
+
+            const fileUrl = `https://${storage}.blob.core.windows.net/${container}/${filename}`
+
+            await newPicture.save()
+            res.status(200).send({ newPicture, src: fileUrl, message: 'Imagem salva com sucesso!'})
+        })        
     } catch (error) {
         res.status(404).send({message: error.message})
     }

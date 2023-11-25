@@ -1,12 +1,11 @@
 import { Router } from 'express'
-import { upload } from '../multer/multerConfig.js'
 import { deletePictures, getPicturesById, postPictures, updatePictures } from '../controllers/pictureControllers.js'
 
 const router = Router()
 
-router.post('/', upload.single('file'), postPictures)
+router.post('/', postPictures)
 router.get('/:id', getPicturesById)
 router.delete('/:id/', deletePictures)
-router.patch('/:id/', upload.single('file'), updatePictures)
+router.patch('/:id/', updatePictures)
 
 export default router
