@@ -9,7 +9,7 @@ import { useCreatePostMutation, useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
 import { useUploadPictureMutation } from '$features/pictures'
 import { type MulterFile, type Picture } from '$types'
-import johnDoe from '$assets/img/paraPiada/john_doe.png'
+
 export default function Home(): ReactElement {
     const theme = useTheme()
 
@@ -31,35 +31,51 @@ export default function Home(): ReactElement {
         e.preventDefault()
         setLoading(true)
 
-        const formData = new FormData()
-        let picture: any
-
-        if ((postContent?.picture?.size ?? 0) >= 8000000) {
+        if ((postContent?.picture?.size ?? 0) >= 32000000) {
             handleSnackbarOpen()
         } else {
-            console.log(postContent?.picture)
+            let picture: any
+            const reader = new FileReader()
 
             if (postContent?.picture) {
-                formData.append('name', JSON.stringify(user?.username ?? ''))
-                formData.append('userId', JSON.stringify(user?._id ?? ''))
-                formData.append('at', JSON.stringify({ id: '123456789', type: 'post' }))
-                formData.append('file', postContent?.picture ?? '')
-                picture = await uploadPicture(formData)
+                let picture64Based: string | ArrayBuffer | null = ''
+
+                reader.addEventListener('load', () => {
+                    picture64Based = reader.result
+                })
+    
+                reader.readAsDataURL(postContent.picture)
+
+                setTimeout(() => {
+                    (async () => {
+                        picture = await uploadPicture({
+                            userId: user?._id ?? '',
+                            at: { id: 'null', type: 'post' },
+                            file64Based: picture64Based as string
+                        })
+
+                        await createPost({
+                            postedBy: user._id ?? '',
+                            postedIn: 'feed',
+                            content: {
+                                text: postContent?.text,
+                                picture: picture?.data?.src ?? null
+                            }
+                        })
+                    })()
+                }, 100)
+            } else {
+                await createPost({
+                    postedBy: user._id ?? '',
+                    postedIn: 'feed',
+                    content: {
+                        text: postContent?.text
+                    }
+                })
             }
-
-            console.log(picture)
-
-            await createPost({
-                postedBy: user._id ?? '',
-                postedIn: 'feed',
-                content: {
-                    text: postContent?.text,
-                    picture: picture?.data?.file ?? null
-                }
-            })
-            
-            setLoading(false)
         }
+
+        setLoading(false)
     }
 
     useEffect(() => {

@@ -2,8 +2,6 @@ import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDrop
 import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
-import { type MulterFile } from '$types'
-import { GET_IMAGE } from '$constants'
 import { useAppSelector } from '$store'
 import { useDeletePostMutation } from '$features/post'
 import { red } from '@mui/material/colors'
@@ -21,7 +19,7 @@ export default function Post({
     date: Date | string | undefined,
     content: {
         text?: string,
-        picture?: MulterFile
+        picture?: string
     },
     degree?: string,
     postedBy: string,
@@ -234,7 +232,7 @@ export default function Post({
                                 }
                             </Typography>
                             {content?.picture &&
-                                <img src={GET_IMAGE(content?.picture?.filename)} alt={'imagem de ' + user?.username} />
+                                <img src={content.picture} alt={'imagem de ' + user?.username} />
                             }
                         </Box>
                         <Box>

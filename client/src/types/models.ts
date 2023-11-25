@@ -69,7 +69,7 @@ export interface Post {
   description: string
   content: {
     text?: string
-    picture?: MulterFile
+    picture?: string
   }
   postedBy: string
   postedAt: string

@@ -16,8 +16,8 @@ const postApiSlice = apiSlice.injectEndpoints({
             postedBy: string,
             postedIn: 'feed' | 'chat' | 'class',
             content: {
-                text: string | undefined,
-                picture: MulterFile
+                text?: string,
+                picture?: MulterFile
             }
         }>({
             query: data => ({
