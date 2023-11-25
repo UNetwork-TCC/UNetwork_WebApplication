@@ -79,18 +79,12 @@ export default function Home(): ReactElement {
     }
 
     useEffect(() => {
-        (async () => {
-            await fetchPosts(null)
-        })()
-    }, [ fetchPosts ])
-
-    useEffect(() => {
         if (!loading) {
             (async () => {
                 await fetchPosts(null)
             })()
         }
-    }, [ loading ])
+    }, [ loading, fetchPosts ])
 
     const closeBackdrop = (): void => { setLoading(false) }
 
