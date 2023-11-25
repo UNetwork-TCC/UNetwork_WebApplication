@@ -2,17 +2,17 @@ import { Picture } from '../models/index.js'
 import azure from 'azure-storage'
 import { v4 as uuid } from 'uuid'
 
-export const postPictures = async (req, res) => {
-    const CONNECTION_URL = process.env.AZURE_STORAGE_CONNECTION_URL
+const container = 'images'
+const storage = 'unetworkblobapi'
 
-    const blobSvc = azure.createBlobService(CONNECTION_URL)
+const CONNECTION_URL = process.env.AZURE_STORAGE_CONNECTION_URL
+const blobSvc = azure.createBlobService(CONNECTION_URL)
+
+export const postPictures = async (req, res) => {
     const filename = uuid().toString() + '.jpg'
 
     try {
         const { userId, at, file64Based } = req.body
-
-        const container = 'images'
-        const storage = 'unetworkblobapi'
 
         const matches = file64Based.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
         const type = matches[1]
@@ -42,10 +42,15 @@ export const postPictures = async (req, res) => {
 }
 
 export const deletePictures = async(req, res) => {
+    const blobSvc = azure.createBlobService(CONNECTION_URL)
+
     try {
         const {id} = req.params
         const deletedPicture = await Picture.findByIdAndDelete(id)
         if (!deletedPicture) return res.status(400).send({message: 'Imagem não encontrada!'})
+
+        blobSvc.deleteBlobIfExists(container, deletedPicture.filename)
+
         res.status(200).send({deletedPicture, message: 'Imagem deletada com sucesso!'})
     } catch (error) {
         res.status(404).send({message: error.message})
@@ -68,9 +73,12 @@ export const updatePictures = async(req, res) => {
         const {id} = req.params
         const { name, userId, at } = req.body
         const file = req.file
+
         if(!(id, name, file)) return res.status(400).send({message: 'Por favor, preencha todos os campos!'})
+        
         const updates = {name, file}
         const updated = await Picture.findByIdAndUpdate(id, updates)
+        
         if (!updated) return res.status(400).send({message: 'Alterações não feitas!'})
         res.status(200).send({updated, message:'Os dados foram atualizados!'})
     } catch (error) {
