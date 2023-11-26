@@ -7,12 +7,16 @@ export default function UserAvatar({
     sx,
     user,
     variant,
-    isLoading 
+    isLoading,
+    avatar,
+    onClick
 }: {
     sx?: SxProps,
     user: User,
     variant?: AvatarOwnProps['variant'],
-    isLoading?: boolean 
+    isLoading?: boolean,
+    avatar?: string,
+    onClick?: () => void
 }): ReactElement {
     const navigate = useNavigate()
 
@@ -30,7 +34,7 @@ export default function UserAvatar({
             ) : (
                 <Avatar 
                     variant={variant ?? 'rounded'}
-                    onClick={() => { navigate('/app/profile/' + user?._id) }}
+                    onClick={!onClick ? () => { navigate('/app/profile/' + user?._id) } : onClick}
                     sx={{
                         cursor: 'pointer',
                         borderRadius: 3,
@@ -40,12 +44,22 @@ export default function UserAvatar({
                         ...sx 
                     }}
                 >
-                    {!user?.otherInfo?.avatar ? 
+                    {!user?.otherInfo?.avatar && !avatar ? 
                         (
                             user?.username?.charAt(0).toUpperCase()
                         ) : 
                         (
-                            <img style={{ backgroundRepeat: 'no-repeat' }} alt={'Avatar de ' + user?.username} src={user?.otherInfo?.avatar}></img>
+                            <img 
+                                alt={'Avatar de ' + user?.username} 
+                                src={user?.otherInfo?.avatar ?? avatar}
+                                style={{
+                                    height: '100%',
+                                    width: '100%',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'conver',
+                                    resize: 'both'
+                                }}
+                            />
                         )
                     }
                 </Avatar>

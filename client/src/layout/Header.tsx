@@ -9,7 +9,7 @@ import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { type ReactElement, useState, useContext, type FormEvent } from 'react'
 import { themeContext } from '$contexts'
-import { FeedbackForm } from '$components'
+import { FeedbackForm, UserAvatar } from '$components'
 import { useAppSelector } from '$store'
 
 export default function Header({ 
@@ -60,8 +60,28 @@ export default function Header({
         )
                 
         if (userMenu) setMenuContent([
-            <MenuItem onClick={() => { navigate('/app/profile/' + String(user._id)) }} disableRipple key={-2}>
-                <Avatar sx={{ background: 'transparent' }} /> Perfil
+            <MenuItem 
+                key={-2} 
+                disableRipple
+                sx={{ display: 'flex', gap: 1.5 }} 
+                onClick={() => { navigate('/app/profile/' + String(user._id)) }} 
+            >
+                <Avatar sx={{ background: 'transparent' }}>
+                    {user?.otherInfo?.avatar && (
+                        <img 
+                            src={user?.otherInfo?.avatar}
+                            alt={'Avatar de' + user?.username}
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'conver',
+                                resize: 'both'
+                            }}
+                        />
+                    )}
+                </Avatar>
+                <Typography>Perfil</Typography>
             </MenuItem>,
             <Divider key={-1} />,
             ...mapedElements
@@ -171,7 +191,17 @@ export default function Header({
                                 ],
                                 true
                             ) }}>
-                                <Avatar sx={{ background: 'white', color: 'grey.400' }} />
+                                <Avatar sx={{ background: 'white', color: 'grey.400' }}>
+                                    <UserAvatar 
+                                        user={user}
+                                        onClick={() => {}}
+                                        sx={{
+                                            borderRadius: '50%',
+                                            height: '100%',
+                                            width: '100%' 
+                                        }}
+                                    />
+                                </Avatar>
                             </IconButton>
                             <CustomMenu
                                 anchorEl={anchorEl}

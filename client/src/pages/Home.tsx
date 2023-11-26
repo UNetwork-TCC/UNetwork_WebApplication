@@ -119,6 +119,7 @@ export default function Home(): ReactElement {
                                     color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
                                     iconColor='#dbdbdb'
                                     icon={<Add />}
+                                    multiline
                                 />
                                 <Box
                                     sx={{

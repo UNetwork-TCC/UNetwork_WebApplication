@@ -1,5 +1,5 @@
 import { themeContext } from '$contexts'
-import { Avatar, Box, type SxProps, TextField, type InputProps } from '@mui/material'
+import { Avatar, Box, type SxProps, TextField, type InputProps, TextFieldProps } from '@mui/material'
 import { useContext, type ReactElement } from 'react'
 
 export default function CustomInput({ 
@@ -16,6 +16,7 @@ export default function CustomInput({
     onChange,
     fullWidth,
     iconColor,
+    multiline,
     ...props
 } : {
     inputWidth?: string | number,
@@ -30,7 +31,9 @@ export default function CustomInput({
     placeholder?: string,
     onChange?: any,
     fullWidth?: boolean,
-    iconColor?: string
+    iconColor?: string,
+    multiline: boolean,
+    props?: TextFieldProps
 }) : ReactElement {
     const { theme } = useContext(themeContext)
 
@@ -44,11 +47,12 @@ export default function CustomInput({
                 value={value}
                 defaultValue={defaultValue}
                 onChange={onChange}
+                multiline={multiline}
                 {...props}
                 sx={{ 
                     bgcolor: bgcolor ?? (theme.palette.mode === 'light' ? 'grey.100' : 'background.paper'), 
                     width: inputWidth ?? '100%',
-                    height: '3.5rem',
+                    minHeight: '3.5rem',
                     [theme.breakpoints.down('xl')]: {
                         height: '4rem'
                     },

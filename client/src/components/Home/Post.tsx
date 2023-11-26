@@ -183,8 +183,8 @@ export default function Post({
                                     </Box>
                                 ) : (
                                     <>
-                                        <Typography sx={{ fontSize: '1.25rem' }}>@{user?.username}</Typography>
-                                        <Typography sx={{ color: 'gray', fontSize: '1em' }}>{date?.toString()}</Typography>
+                                        <Typography sx={{ fontSize: '1rem' }}>@{user?.username}</Typography>
+                                        <Typography sx={{ color: 'gray', fontSize: '0.75rem' }}>{date?.toString()}</Typography>
                                     </>
                                 )}
                             </Box>
