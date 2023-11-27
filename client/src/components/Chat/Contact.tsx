@@ -29,8 +29,8 @@ export default function Contact({
                 fontSize: '10px'
             }}>
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>
-                {user.otherInfo.avatar?.src ?
-                    <img src={user.otherInfo.avatar?.src} alt="Avatar" />
+                {user?.otherInfo?.avatar?.src ?
+                    <img src={user?.otherInfo.avatar?.src} alt="Avatar" />
                     :
                     user.name.charAt(0).toUpperCase()
                 }
