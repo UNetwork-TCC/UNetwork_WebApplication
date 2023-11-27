@@ -32,7 +32,7 @@ export const postPictures = async (req, res) => {
             const newPicture = Picture({
                 userId,
                 at,
-                filename
+                filename: filename || uuidFilename
             })
 
             const fileUrl = `https://${storage}.blob.core.windows.net/${container}/${filename}`
