@@ -15,8 +15,7 @@ import {
     ForumPage,
     MaterialsPage,
     ForumHome, 
-    Profile,
-    PostPage
+    PostPage,
     ProfilePage,
     AdminDashboardPage
 } from '$pages'

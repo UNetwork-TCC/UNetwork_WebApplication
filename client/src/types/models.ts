@@ -94,6 +94,10 @@ export interface Forum {
   comments: Message[]
   likes: User[]
   usersIn: User[]
+  picture?: {
+    name: string
+    src: string
+  }
 }
 
 export interface News {

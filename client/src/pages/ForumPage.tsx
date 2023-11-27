@@ -3,7 +3,7 @@ import { useGetForumMutation } from '$features/forum'
 import { AppLayout } from '$layout'
 import { useAppSelector } from '$store'
 import { type Forum as ForumInterface } from '$types'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useEffect, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -25,7 +25,7 @@ export default function ForumPage(): ReactElement {
                 <Typography>Carregando...</Typography>
             ) : (
                 <Forum
-                    data={forum as ForumInterface}
+                    forum={forum as ForumInterface}
                     user={user}
                     // date={forum?.createdAt}
                     // user={{ name: forum?.createdBy?.name }}

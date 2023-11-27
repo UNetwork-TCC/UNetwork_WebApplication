@@ -80,7 +80,7 @@ export default function AppLayout({
                         />
                         <Box height='100%' display='flex' justifyContent='center' width='100%'>
                             <SideBar />
-                            <Box display='flex' justifyContent='start' overflow='auto' mb={13} width={'100%'}>
+                            <Box overflow='auto' width={'100%'}>
                                 {children}
                             </Box>
                         </Box>
