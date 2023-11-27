@@ -51,7 +51,7 @@ export default function UserAvatar({
                         (
                             <img 
                                 alt={'Avatar de ' + user?.username} 
-                                src={user?.otherInfo?.avatar ?? avatar}
+                                src={user?.otherInfo?.avatar?.src ?? avatar}
                                 style={{
                                     height: '100%',
                                     width: '100%',

@@ -1,7 +1,7 @@
 import { Search } from '@mui/icons-material'
 import CustomInput from './CustomInput'
 import { Autocomplete, Box } from '@mui/material'
-import { useEffect, type ReactElement, useState, type ChangeEvent, FormEvent } from 'react'
+import { useEffect, type ReactElement, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useFetchUsersMutation } from '$features/user'
 
 export default function SearchBar(): ReactElement {

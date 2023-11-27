@@ -1,15 +1,15 @@
-import { UserAvatar } from "$components";
-import { useGetForumMutation } from "$features/forum";
-import { CustomMenu } from "$layout";
-import { useAppSelector } from "$store";
-import { type Forum as ForumInterface, User } from "$types";
-import { ArrowDropDown, ChatBubbleRounded, CloseSharp, Favorite, FavoriteBorder, MoreVert, Reply } from "@mui/icons-material";
-import { IconButton, MenuItem, Typography } from "@mui/material";
-import { Avatar } from "@mui/material";
-import { Box, Card, useTheme } from "@mui/material";
-import { red } from "@mui/material/colors";
-import { ReactElement, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { UserAvatar } from '$components'
+import { useGetForumMutation } from '$features/forum'
+import { CustomMenu } from '$layout'
+import { useAppSelector } from '$store'
+import { type Forum as ForumInterface, type User } from '$types'
+import { ArrowDropDown, ChatBubbleRounded, CloseSharp, Favorite, FavoriteBorder, MoreVert, Reply } from '@mui/icons-material'
+import { IconButton, MenuItem, Typography } from '@mui/material'
+import { Avatar } from '@mui/material'
+import { Box, Card, useTheme } from '@mui/material'
+import { red } from '@mui/material/colors'
+import { type ReactElement, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 export default function Forum({ 
     forum,

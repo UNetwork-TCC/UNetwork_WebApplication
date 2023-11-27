@@ -8,11 +8,13 @@ import UserAvatar from './UserAvatar'
 import { AddPhotoAlternate } from '@mui/icons-material'
 import { LoadingBackdrop } from '$layout'
 import { setCredentials } from '$features/auth'
+import { useUploadPictureMutation } from '$features/pictures'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
     const { id } = useParams()
 
     const [ updateUser ] = useUpdateUserMutation()
+    const [ uploadPicture ] = useUploadPictureMutation()
 
     const dispatch = useAppDispatch()
     const userState = useAppSelector(state => state.auth.user)
@@ -67,13 +69,22 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
             setOpenLoading(true)
             setOpen(false)
 
+            const { data: picture }: any = await uploadPicture({
+                userId: user._id as string,
+                file64Based: String(userAvatar ?? userState.otherInfo.avatar),
+                filename: user.otherInfo.avatar?.name
+            })
+
             const { data }: any = await updateUser({
                 _id: id,
                 username: userUpdateInfo.username ?? userState.username,
                 otherInfo: {
                     ...userState.otherInfo,
                     bio: userUpdateInfo.bio,
-                    avatar: userAvatar ?? userState.otherInfo.avatar
+                    avatar: {
+                        src: picture.src,
+                        name: picture.newPicture.filename
+                    }
                 }
             })
 
@@ -153,6 +164,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                 onClose={(): void => { setOpen(false) }}
             >
                 <Card 
+                    component='form'
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -183,9 +195,9 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                                         alt={'Imagem de ' + user?.username}
                                         style={imgStyle}
                                     />
-                                ) : user?.otherInfo?.avatar ? (
+                                ) : user?.otherInfo?.avatar?.src ? (
                                     <img 
-                                        src={user?.otherInfo?.avatar} 
+                                        src={user?.otherInfo?.avatar?.src} 
                                         alt={'Imagem de ' + user?.username}
                                         style={imgStyle}
                                     />
@@ -257,8 +269,8 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     </Box>
                     <Box height='100%' display='flex' justifyContent='flex-end' mt={3}>
                         <Box display='flex' alignItems='end' gap={3}>
-                            <Button onClick={updateProfile} variant='outlined'>Confirmar</Button>
-                            <Button onClick={() => { setOpen(false) }} variant='contained'>Cancelar</Button>
+                            <Button type='submit' onClick={updateProfile} variant='outlined'>Confirmar</Button>
+                            <Button type='submit' onClick={() => { setOpen(false) }} variant='contained'>Cancelar</Button>
                         </Box>
                     </Box>
                 </Card>

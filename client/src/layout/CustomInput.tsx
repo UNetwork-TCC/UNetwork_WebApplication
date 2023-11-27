@@ -1,5 +1,5 @@
 import { themeContext } from '$contexts'
-import { Avatar, Box, type SxProps, TextField, type InputProps, TextFieldProps } from '@mui/material'
+import { Avatar, Box, type SxProps, TextField, type InputProps, type TextFieldProps } from '@mui/material'
 import { useContext, type ReactElement } from 'react'
 
 export default function CustomInput({ 

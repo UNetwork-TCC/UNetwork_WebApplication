@@ -29,7 +29,7 @@ export default function SideBar(): ReactElement {
     
     const dispatch = useAppDispatch()
 
-    const [ shortcutsLength, setShortcutsLength ] = useState(user?.otherInfo?.shortcuts?.length ?? 0)
+    const [ shortcutsLength ] = useState(user?.otherInfo?.shortcuts?.length ?? 0)
 
     const open = Boolean(anchorEl)
 
@@ -238,6 +238,14 @@ export default function SideBar(): ReactElement {
                                 >
                                     <Stack maxHeight={450} width={200} p={2.5}>
                                         <Typography mb={2.5} textAlign='center'>Seus atalhos ({ shortcutsLength })</Typography>
+                                        {user.otherInfo?.shortcuts?.map((shortcut, index) => (
+                                            <Shortcut
+                                                key={index}
+                                                title={shortcut.title}
+                                                category={shortcut.category}
+                                                color={shortcut.color}
+                                            />
+                                        ))}
                                     </Stack>
                                 </Popover>
                             </Box>

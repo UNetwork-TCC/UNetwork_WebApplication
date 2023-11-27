@@ -16,7 +16,10 @@ export interface User {
   admin: boolean
   posts: Post[]
   otherInfo: {
-    avatar?: string
+    avatar?: {
+      src: string,
+      name: string
+    }
     bio?: string
     phone?: string
     grade?: number

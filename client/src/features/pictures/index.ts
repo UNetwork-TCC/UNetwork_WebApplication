@@ -15,7 +15,8 @@ const pictureApiSlice = apiSlice.injectEndpoints({
         uploadPicture: builder.mutation<{ file: filetype & { _id?: string }, message: string }, {
             userId: string,
             file64Based: string,
-            at: {
+            filename?: string,
+            at?: {
                 id?: string,
                 type?: string
             }

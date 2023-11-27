@@ -206,7 +206,7 @@ export default function Post({
                             e => {
                                 handleClick(e, 
                                     [ 'Salvar como Atalho', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
-                                    [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ],
+                                    [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ]
                                 ) 
                             }
                         }>

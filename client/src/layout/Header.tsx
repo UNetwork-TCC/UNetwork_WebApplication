@@ -67,9 +67,9 @@ export default function Header({
                 onClick={() => { navigate('/app/profile/' + String(user._id)) }} 
             >
                 <Avatar sx={{ background: 'transparent' }}>
-                    {user?.otherInfo?.avatar && (
+                    {user?.otherInfo?.avatar?.src && (
                         <img 
-                            src={user?.otherInfo?.avatar}
+                            src={user?.otherInfo?.avatar.src}
                             alt={'Avatar de' + user?.username}
                             style={{
                                 height: '100%',

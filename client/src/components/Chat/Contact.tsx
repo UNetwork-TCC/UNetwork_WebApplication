@@ -1,3 +1,4 @@
+import { type User } from '$types'
 import { Avatar, Box, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
 export default function Contact({ 
@@ -5,7 +6,7 @@ export default function Contact({
     date,
     notification 
 } : {
-    user: { name: string, avatar?: string },
+    user: User,
     date?: Date | string,
     notification?: number
 }) : ReactElement {
@@ -28,8 +29,8 @@ export default function Contact({
                 fontSize: '10px'
             }}>
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>
-                {user.avatar ?
-                    <img src={user.avatar} alt="Avatar" />
+                {user.otherInfo.avatar?.src ?
+                    <img src={user.otherInfo.avatar?.src} alt="Avatar" />
                     :
                     user.name.charAt(0).toUpperCase()
                 }

@@ -1,11 +1,11 @@
-import { Box, Button, Modal, TextField } from "@mui/material";
-import { useState } from "react";
-import FormModal from "./FormModal";
-import { Shortcut } from "$components";
-import { useTheme } from "@mui/material";
-import LoadingBackdrop from "./LoadingBackdrop";
-import { useUpdateUserMutation } from "$features/user";
-import { useAppDispatch, useAppSelector } from "$store";
+import { Box, Button, Modal, TextField } from '@mui/material'
+import { useState } from 'react'
+import FormModal from './FormModal'
+import { Shortcut } from '$components'
+import { useTheme } from '@mui/material'
+import LoadingBackdrop from './LoadingBackdrop'
+import { useUpdateUserMutation } from '$features/user'
+import { useAppDispatch, useAppSelector } from '$store'
 
 import { 
     amber,
@@ -26,8 +26,8 @@ import {
     lightBlue,
     lightGreen,
     grey 
-} from "@mui/material/colors";
-import { setCredentials } from "$features/auth";
+} from '@mui/material/colors'
+import { setCredentials } from '$features/auth'
 
 export default function CreateShortcutsModal({
     open,
@@ -93,10 +93,10 @@ export default function CreateShortcutsModal({
         })()
     }
 
-    const ColorPalette = ({ color }: { color: string }) => {
+    function ColorPalette({ color }: { color: string }) {
         return (
             <Box
-                onClick={() => setColor(color)}
+                onClick={() => { setColor(color) }}
                 sx={{
                     height: '2rem',
                     width: '2rem',
@@ -174,7 +174,7 @@ export default function CreateShortcutsModal({
                     </Box>
                     <Box pt={2}>
                         <TextField
-                            onChange={e => setShortcutName(e.currentTarget.value)}
+                            onChange={e => { setShortcutName(e.currentTarget.value) }}
                             value={shortcutName}
                             fullWidth
                             helperText={shortcutName.length + '/15'}
