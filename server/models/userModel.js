@@ -13,7 +13,10 @@ const userSchema = new mongoose.Schema({
     posts: { type: Array, required: true },
     createdAt: { type: String, default: String(new Date()) },
     otherInfo: { type: Object, required: true, maxlength: 50, default: {
-        avatar: '',
+        avatar: {
+            src: '',
+            name: ''
+        },
         bio: '',
         phone: '',
         grade: 1,
