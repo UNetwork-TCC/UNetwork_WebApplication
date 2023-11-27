@@ -55,13 +55,13 @@ export default function NewsPage(): ReactElement {
 
     return (
         <AppLayout>
-            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
-                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%', mb: '2%' }}>
+            <Box display='flex' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
+                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
                     <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                 </Container>
-                <Box sx={{ display: 'flex', width: '100%' }}>
-                    <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%' }} >
+                <Box sx={{ display: 'flex', width: '100%', justifyContent:'center' }}>
+                    <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', justifyContent:'center' }} >
                         {isLoading ? (
                             <>
                                 <NewsSkeleton />
