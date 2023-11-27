@@ -2,7 +2,6 @@ import DiscoverSection from './LandingPage/DiscoverSection'
 import AboutSection from './LandingPage/AboutSection'
 import ComunitySection from './LandingPage/ComunitySection'
 import LittleNews from './News/LittleNews'
-import SideBar from './SideBar/SideBar'
 import File from './Materials/File'
 import Contact from './Chat/Contact'
 import Classes from './Classes/Classes'
@@ -31,6 +30,13 @@ import ContactAppLayout from './Home/Contact'
 import Message from './Chat/Message'
 import MessageWrapper from './Chat/MessageWrapper'
 import ChatBar from './Chat/ChatBar'
+import ProfileHeader from './Profile/ProfileHeader'
+import Highlights from './Profile/Highlights'
+import ProfilePosts from './Profile/ProfilePosts'
+import RequireAuth from './Auth/RequireAuth'
+import SideComponent from './Home/SideComponent'
+import Forum from './Forum/Forum'
+import UserAvatar from './Profile/UserAvatar'
 
 export {
     DiscoverSection,
@@ -41,16 +47,22 @@ export {
     ComunitySection,
     ClipsWrapper,
     ForumWrapper,
+    ProfileHeader,
     Message,
     ChatBar,
+    UserAvatar,
     LittleNews,
+    RequireAuth,
     ForumIcon,
+    ProfilePosts,
     Folder,
-    SideBar,
     File,
+    Forum,
     Shortcut,
+    SideComponent,
     Contact,
     Classes,
+    Highlights,
     Post,
     Auth,
     Comment,

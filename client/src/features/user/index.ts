@@ -1,18 +1,47 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from '$api'
-import { type User } from '$types'
+import { type AppLayout, type User } from '$types'
+import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
+// INITIAL VALUES
 
-const initialState: { user: User | Record<string, unknown> } = {
-    user: {}
+const appLayout: AppLayout = {
+    sideBar: {
+        dropdownButtonClicked: false,
+        shortcutsExpanded: true
+    },
+
+    window: {
+        size: {
+            height: '95vh',
+            width: '95vw',
+            borderRadius: '1rem'
+        }
+    }
 }
 
-export const userSlice = createSlice({
-    name: 'user',
+const theme: string = 'light'
+
+const initialState = {
+    appLayout,
+    theme
+}
+
+// REDUCERS
+
+export const configSlice = createSlice({
     initialState,
-    reducers: {}
+    name: 'config',
+    reducers: {
+        setTheme: (state, action: PayloadAction<'light' | 'dark'>) => {
+            state.theme = action.payload
+        },
+
+        setAppLayout: (state, action: PayloadAction<AppLayout>) => {
+            state.appLayout = action.payload
+        }
+    }
 })
 
-// User API Slice
+// USER API SLICE
 
 const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -43,11 +72,12 @@ const userApiSlice = apiSlice.injectEndpoints({
 
 // Exports
 
+export const { setAppLayout, setTheme } = configSlice.actions
+export const configReducer = configSlice.reducer
+
 export const {
     useDeleteUserMutation,
     useFetchUsersMutation,
     useGetUserMutation,
     useUpdateUserMutation
 } = userApiSlice
-
-export const userReducer = userSlice.reducer

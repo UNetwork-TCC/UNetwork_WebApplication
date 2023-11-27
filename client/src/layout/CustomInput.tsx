@@ -1,5 +1,5 @@
 import { themeContext } from '$contexts'
-import { Avatar, Box, type SxProps, TextField } from '@mui/material'
+import { Avatar, Box, type SxProps, TextField, type InputProps, type TextFieldProps } from '@mui/material'
 import { useContext, type ReactElement } from 'react'
 
 export default function CustomInput({ 
@@ -9,12 +9,14 @@ export default function CustomInput({
     bgcolor,
     color,
     sx,
+    type,
     value,
     defaultValue,
     placeholder,
     onChange,
     fullWidth,
     iconColor,
+    multiline,
     ...props
 } : {
     inputWidth?: string | number,
@@ -23,29 +25,34 @@ export default function CustomInput({
     bgcolor?: string,
     color?: string,
     sx?: SxProps,
+    type?: InputProps['type'],
     value?: string,
     defaultValue?: string,
     placeholder?: string,
     onChange?: any,
     fullWidth?: boolean,
-    iconColor?: string
+    iconColor?: string,
+    multiline: boolean,
+    props?: TextFieldProps
 }) : ReactElement {
     const { theme } = useContext(themeContext)
 
     return (
         <Box width={ width ? `calc(${width} + 2.75rem)` : 'calc(100% + 2rem)'} display='flex' justifyContent='center'>
             <TextField
+                type={type}
                 placeholder={placeholder}
                 variant="outlined"
                 fullWidth={fullWidth}
                 value={value}
                 defaultValue={defaultValue}
                 onChange={onChange}
+                multiline={multiline}
                 {...props}
                 sx={{ 
                     bgcolor: bgcolor ?? (theme.palette.mode === 'light' ? 'grey.100' : 'background.paper'), 
                     width: inputWidth ?? '100%',
-                    height: '3.5rem',
+                    minHeight: '3.5rem',
                     [theme.breakpoints.down('xl')]: {
                         height: '4rem'
                     },
@@ -59,7 +66,7 @@ export default function CustomInput({
                     ...sx
                 }}
             />
-            <Avatar  variant="rounded" sx={{ 
+            <Avatar component='button' type='submit' variant="rounded" sx={{ 
                 position: 'relative',
                 right: '3.5rem',
                 top: '0.5rem',

@@ -35,3 +35,10 @@ export interface news {
   setPassword: string
   getPassword: string
 }
+
+export interface shortcut {
+  title: string
+  category: string
+  color: string
+  link?: string
+}

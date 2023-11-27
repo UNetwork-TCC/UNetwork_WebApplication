@@ -49,15 +49,14 @@ export default function UNetworkModal({
                     <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }} />
                 </Box>
                 <Box m={2.5} 
-                p={2} 
-                sx={{ '::-webkit-scrollbar': { height: 5, width: 5 }, maxHeight: matches ? 'calc(80vh - 15rem)' : 'calc(80vh - 12rem)' }} 
-                overflow='scroll' 
-                borderRadius={2} 
-                bgcolor='background.card'>
+                    p={2} 
+                    sx={{ '::-webkit-scrollbar': { height: 5, width: 5 }, maxHeight: matches ? 'calc(80vh - 15rem)' : 'calc(80vh - 12rem)' }} 
+                    overflow='scroll' 
+                    borderRadius={2} 
+                    bgcolor='background.card'>
                     {children}
                 </Box>
             </Box>
         </Modal>
     )
 }
- 

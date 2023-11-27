@@ -3,11 +3,10 @@ import { FilterList } from '@mui/icons-material'
 import { Box, IconButton, MenuItem, Stack } from '@mui/material'
 import { CustomMenu } from '$layout'
 import { type ReactElement, useState } from 'react'
-export default function FilterAndConfig({ text, handleOpen, filteredMaterials }: { text: string, handleOpen: () => void, filteredMaterials: () => void}): ReactElement {
+export default function FilterAndConfig({ text, handleOpen }: { text: string, handleOpen: () => void }): ReactElement {
     
     const onClickEvents = {
-        item1: () => {
-            filteredMaterials()
+        item1: () => {    
             handleClose()
         },
 

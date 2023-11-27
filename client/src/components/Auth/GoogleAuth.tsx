@@ -6,10 +6,9 @@ import { IconButton } from '@mui/material'
 import { type ReactElement, useEffect, useState } from 'react'
 import { gapi } from 'gapi-script'
 import { LoadingBackdrop } from '$layout'
-import { useSignupMutation, useLoginMutation } from '$features/auth/authApiSlice'
+import { useSignupMutation, useLoginMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
 import { setCredentials } from '$features/auth'
-import { useGetUserMutation } from '$features/user'
 
 export default function GoogleAuth(): ReactElement {
     const navigate = useNavigate()
@@ -18,7 +17,6 @@ export default function GoogleAuth(): ReactElement {
 
     const [ login, { data } ] = useLoginMutation()
     const [ signup ] = useSignupMutation()
-    const [ getUser, { data: userData } ] = useGetUserMutation()
 
     const dispatch = useAppDispatch()
 
@@ -27,7 +25,8 @@ export default function GoogleAuth(): ReactElement {
 
         try {
             await signup({
-                name: result.name,
+                username: result.name,
+                name: result.familyName,
                 email: result.email.toLowerCase(),
                 password: result.googleId
             })
@@ -37,9 +36,7 @@ export default function GoogleAuth(): ReactElement {
                 password: result.googleId
             })
 
-            await getUser(data?.id ?? '')
-
-            dispatch(setCredentials({ user: userData, accessToken: data?.token }))
+            dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
 
             navigate('/app')
         } catch (error) {

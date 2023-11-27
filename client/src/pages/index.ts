@@ -14,6 +14,8 @@ import ForumHome from './ForumHome'
 import ForumPage from './ForumPage'
 import Profile from './Profile'
 import PostPage from './PostPage'
+import ProfilePage from './ProfilePage'
+import AdminDashboardPage from './AdminDashboardPage'
 
 export {
     LandingPage,
@@ -22,8 +24,9 @@ export {
     Clips,
     PostPage,
     Suggestion,
-    Profile,
+    ProfilePage,
     Home,
+    AdminDashboardPage,
     MaterialsPage,
     ChatPage,
     NewsPage,

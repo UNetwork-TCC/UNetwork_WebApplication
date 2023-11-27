@@ -1,33 +1,27 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
-import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
-import React, { type ReactElement, useState, useEffect } from 'react'
-import { CreateShortcutsModal, CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
-import { useAppSelector } from '$store'
-import { useDeletePostMutation } from '$features/post'
-import { red } from '@mui/material/colors'
 import { UserAvatar } from '$components'
-import { useGetUserMutation } from '$features/user'
-import { type User } from '$types'
+import { useGetForumMutation } from '$features/forum'
+import { CustomMenu } from '$layout'
+import { useAppSelector } from '$store'
+import { type Forum as ForumInterface, type User } from '$types'
+import { ArrowDropDown, ChatBubbleRounded, CloseSharp, Favorite, FavoriteBorder, MoreVert, Reply } from '@mui/icons-material'
+import { IconButton, MenuItem, Typography } from '@mui/material'
+import { Avatar } from '@mui/material'
+import { Box, Card, useTheme } from '@mui/material'
+import { red } from '@mui/material/colors'
+import { type ReactElement, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-export default function Post({ 
-    date,
-    content,
-    degree,
-    postedBy,
-    id
-} : {
-    date: Date | string | undefined,
-    content: {
-        text?: string,
-        picture?: string
-    },
-    degree?: string,
-    postedBy: string,
-    id: string,
-}) : ReactElement {
+export default function Forum({ 
+    forum,
+    user
+}: {
+    forum: ForumInterface,
+    user: User 
+}): ReactElement {
     const theme = useTheme()
+
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
-    const [ contentTextLength, setContentTextLength ] = useState(content?.text?.length)
+    const [ contentTextLength, setContentTextLength ] = useState<number | null>(forum?.description.length)
 
     const variant: any = 'iconWrapper'
 
@@ -55,15 +49,6 @@ export default function Post({
         goToPost: () => {
             console.log('tcchau')
             handleClose()
-        },
-
-        favorite: () => {
-            handleClose()
-        },
-
-        saveAsShortcut: () => {
-            handleClose()
-            handleShortcutModalOpen()
         }
     }
 
@@ -72,14 +57,10 @@ export default function Post({
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
     const [ backdropOpen, setBackdropOpen ] = useState<boolean>(false)
     const [ modalOpen, setModalOpen ] = useState<boolean>(false)
-    const [ shortcutModalOpen, setShortcutModalOpen ] = useState<boolean>(false)
 
     const open = Boolean(anchorEl)
 
     const loggedUser = useAppSelector(state => state.auth.user)
-
-    const [ getUser, { isLoading } ] = useGetUserMutation()
-    const [ deletePost ] = useDeletePostMutation()
 
     const handleBackdropClose = (): void => { setBackdropOpen(false) }
     const handleBackdropOpen = (): void => { setBackdropOpen(true) }
@@ -87,12 +68,7 @@ export default function Post({
     const handleModalClose = (): void => { setModalOpen(false) }
     const handleModalOpen = (): void => { setModalOpen(true) }
 
-    const handleShortcutModalClose = (): void => { setShortcutModalOpen(false) }
-    const handleShortcutModalOpen = (): void => { setShortcutModalOpen(true) }
-
-    const postOwner = postedBy === loggedUser._id
-
-    const [ user, setUser ] = useState<User | null>(null)
+    const ownedPost = user._id === loggedUser._id
 
     const handleClick = (e: any, elements: string[], onClickEventListeners = elements.map(() => handleClose), icons: ReactElement[] = []): void => {
         const mapedElements: React.ReactNode[] = elements.map((el, i) =>
@@ -101,7 +77,7 @@ export default function Post({
 
         setMenuContent(mapedElements)
         
-        if (postOwner) {
+        if (ownedPost) {
             setMenuContent([
                 ...mapedElements,
                 <MenuItem sx={{ color: red[600] }} onClick={() => { handleModalOpen(); handleClose() }} key={-1} disableRipple>Deletar publicação</MenuItem>
@@ -116,49 +92,18 @@ export default function Post({
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
-    const onConfirm = (): void => {
-        (async () => {
-            handleModalClose()
-            handleBackdropOpen()
-            await deletePost(id)
-            handleBackdropClose()                        
-            location.reload()
-        })()
-    }
-
-    const action = (
-        <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={handleSnackbarClose}
-        >
-            <CloseSharp fontSize="small" />
-        </IconButton>
-    )
-
-    useEffect(() => {
-        (async () => {
-            const response: any = await getUser(postedBy)
-
-            setUser(response.data)
-        })()
-    }, [ getUser, postOwner, postedBy ])
-
     return (
-        <>
+        <Box display='flex' justifyContent='center' p={5} height='100%' width='100%'>
             <Card variant="elevation" elevation={2} sx={{
-                minHeight: '40rem',
-                width: '75%',
-                [theme.breakpoints.down('xl')]: {
-                    width: '85%'
-                },
-                borderRadius: '15px',
+                minHeight: '50%',
+                width: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 fontSize: '10px',
                 bgcolor: 'background.secondary',
-                mb: '3em'
+                [theme.breakpoints.down('xl')]: {
+                    width: '60%'
+                }
             }}>
                 <Box 
                     sx={{
@@ -180,36 +125,20 @@ export default function Post({
                                     }
                                 }}
                             >
-                                <UserAvatar
-                                    user={user as User}
-                                    isLoading={isLoading}
+                                <UserAvatar 
+                                    user={user}
                                 />
                                 <Avatar sx={{ position: 'relative', height: '1.75rem', width: '1.75rem', bottom: '1em', right: '0.5em', bgcolor: 'primary.dark', color: '' }}>
-                                    {degree}
+                                    {user?.otherInfo?.grade}
                                 </Avatar>
                             </Box>
                             <Box sx={{ ml: '1rem' }}>
-                                {isLoading ? (
-                                    <Box width='10rem'>
-                                        <Skeleton variant='text' />
-                                        <Skeleton variant='text' />
-                                    </Box>
-                                ) : (
-                                    <>
-                                        <Typography sx={{ fontSize: '1rem' }}>@{user?.username}</Typography>
-                                        <Typography sx={{ color: 'gray', fontSize: '0.75rem' }}>{date?.toString()}</Typography>
-                                    </>
-                                )}
+                                <Typography sx={{ fontSize: '1.25rem' }}>{forum?.title}</Typography>
+                                <Typography sx={{ fontSize: '1rem' }}>@{user?.username}</Typography>
+                                <Typography sx={{ color: 'gray', fontSize: '1em' }}>{forum?.createdAt?.toString()}</Typography>
                             </Box>
                         </Box>
-                        <IconButton onClick={
-                            e => {
-                                handleClick(e, 
-                                    [ 'Salvar como Atalho', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
-                                    [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ]
-                                ) 
-                            }
-                        }>
+                        <IconButton onClick={() => {}}>
                             <MoreVert sx={{ fontSize: '1.2em' }} />
                         </IconButton>
                         <CustomMenu
@@ -236,16 +165,16 @@ export default function Post({
                             mb='2rem'
                         >
                             <Typography variant='body1' fontSize='1rem'>
-                                {contentTextLength !== undefined && contentTextLength >= 999 ? (
+                                {contentTextLength !== null && contentTextLength >= 999 ? (
                                     <>
-                                        {content?.text?.substring(0, 999) + '...'}
-                                        <ArrowDropDown sx={{ cursor: 'pointer' }} onClick={() => { setContentTextLength(undefined) }} />
+                                        {forum?.description.substring(0, 999) + '...'}
+                                        <ArrowDropDown sx={{ cursor: 'pointer' }} onClick={() => { setContentTextLength(null) }} />
                                     </>
-                                ) : content?.text
+                                ) : forum?.description
                                 }
                             </Typography>
-                            {content?.picture &&
-                                <img src={content.picture} alt={'imagem de ' + user?.username} />
+                            {forum?.picture &&
+                                <img src={GET_IMAGE(content?.picture?.filename)} alt={'imagem de ' + user.username} />
                             }
                         </Box>
                         <Box>
@@ -262,7 +191,7 @@ export default function Post({
                             >
                                 <Box display='flex' width='100%' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
                                     <Box display='flex' gap={2}>
-                                        {!postOwner && (
+                                        {!ownedPost && (
                                             <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
                                                 <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
                                                     {favoriteClicked ?
@@ -309,30 +238,6 @@ export default function Post({
                     </Box>
                 </Box>
             </Card>
-            <Snackbar
-                open={snackbarOpen}
-                onClose={handleSnackbarClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                message='Feedback enviado!'
-                autoHideDuration={3000}
-                action={action}
-            />
-            <LoadingBackdrop 
-                open={backdropOpen}
-                handleClose={handleBackdropClose}
-            />
-            <WarningModal
-                open={modalOpen}
-                onClose={handleModalClose}
-                onConfirm={onConfirm}
-                text='Essa ação irá deletar esta publicação.'
-            />
-            <CreateShortcutsModal 
-                open={shortcutModalOpen}
-                onClose={handleShortcutModalClose}
-                link={'/app/post/' + id}
-                category='Post'
-            />
-        </>
+        </Box>
     )
 }
