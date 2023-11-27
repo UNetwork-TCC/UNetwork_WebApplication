@@ -1,7 +1,7 @@
 import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
 import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
 import React, { type ReactElement, useState, useEffect } from 'react'
-import { CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
+import { CreateShortcutsModal, CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
 import { useAppSelector } from '$store'
 import { useDeletePostMutation } from '$features/post'
 import { red } from '@mui/material/colors'
@@ -55,6 +55,15 @@ export default function Post({
         goToPost: () => {
             console.log('tcchau')
             handleClose()
+        },
+
+        favorite: () => {
+            handleClose()
+        },
+
+        saveAsShortcut: () => {
+            handleClose()
+            handleShortcutModalOpen()
         }
     }
 
@@ -63,6 +72,7 @@ export default function Post({
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
     const [ backdropOpen, setBackdropOpen ] = useState<boolean>(false)
     const [ modalOpen, setModalOpen ] = useState<boolean>(false)
+    const [ shortcutModalOpen, setShortcutModalOpen ] = useState<boolean>(false)
 
     const open = Boolean(anchorEl)
 
@@ -76,6 +86,9 @@ export default function Post({
 
     const handleModalClose = (): void => { setModalOpen(false) }
     const handleModalOpen = (): void => { setModalOpen(true) }
+
+    const handleShortcutModalClose = (): void => { setShortcutModalOpen(false) }
+    const handleShortcutModalOpen = (): void => { setShortcutModalOpen(true) }
 
     const postOwner = postedBy === loggedUser._id
 
@@ -192,8 +205,8 @@ export default function Post({
                         <IconButton onClick={
                             e => {
                                 handleClick(e, 
-                                    [ 'Salvar', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
-                                    [ ]
+                                    [ 'Salvar como Atalho', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
+                                    [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ],
                                 ) 
                             }
                         }>
@@ -313,6 +326,12 @@ export default function Post({
                 onClose={handleModalClose}
                 onConfirm={onConfirm}
                 text='Essa ação irá deletar esta publicação.'
+            />
+            <CreateShortcutsModal 
+                open={shortcutModalOpen}
+                onClose={handleShortcutModalClose}
+                link={'/app/post/' + id}
+                category='Post'
             />
         </>
     )
