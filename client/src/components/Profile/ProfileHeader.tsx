@@ -2,7 +2,7 @@ import { useUpdateUserMutation } from '$features/user'
 import { useAppDispatch, useAppSelector } from '$store'
 import { type User } from '$types'
 import { Avatar, Box, Button, Card, Modal, Switch, TextField, Typography } from '@mui/material'
-import { useState, type ReactElement, type ChangeEvent, type CSSProperties } from 'react'
+import { useState, type ReactElement, type ChangeEvent, type CSSProperties, FormEvent } from 'react'
 import { useParams } from 'react-router-dom'
 import UserAvatar from './UserAvatar'
 import { AddPhotoAlternate } from '@mui/icons-material'
@@ -64,8 +64,10 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
         })()
     }
 
-    const updateProfile = (): void => {
+    const updateProfile = (e: FormEvent): void => {
         (async () => {
+            e.preventDefault()
+
             setOpenLoading(true)
             setOpen(false)
 
@@ -165,6 +167,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
             >
                 <Card 
                     component='form'
+                    onSubmit={updateProfile}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
