@@ -15,7 +15,8 @@ import {
     ForumPage,
     MaterialsPage,
     ForumHome, 
-    Profile
+    Profile,
+    PostPage
 } from '$pages'
 
 import '$utils/languages'
@@ -39,8 +40,9 @@ function App(): ReactElement {
                     <Route path='/app/chat' element={<ChatPage />} />
                     <Route path='/app/news' element={<NewsPage />} />
                     <Route path='/app/forum' element={<ForumHome />} />
-                    <Route path='/app/forum/:id' element={<ForumPage />} />
                     <Route path='/app/classes' element={<ClassesPage />} />
+                    <Route path='/app/post/:id' element={<PostPage />} />
+                    <Route path='/app/forum/:id' element={<ForumPage />} />
                     <Route path='/app/*' element={<Navigate to='/error' />} />
                 </Routes>
             </Router>

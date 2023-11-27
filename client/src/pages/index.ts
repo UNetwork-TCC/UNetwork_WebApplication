@@ -13,12 +13,14 @@ import ClassesPage from './ClassesPage'
 import ForumHome from './ForumHome'
 import ForumPage from './ForumPage'
 import Profile from './Profile'
+import PostPage from './PostPage'
 
 export {
     LandingPage,
     ErrorPage,
     FavoritesPage,
     Clips,
+    PostPage,
     Suggestion,
     Profile,
     Home,
