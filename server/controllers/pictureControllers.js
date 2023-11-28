@@ -9,26 +9,29 @@ const CONNECTION_URL = process.env.AZURE_STORAGE_CONNECTION_URL
 const blobSvc = azure.createBlobService(CONNECTION_URL)
 
 export const postPictures = async (req, res) => {
-    let uuidFilename = uuid.toString() + '.jpg'
-
     try {
-        const { userId, at, file64Based, filename } = req.body
+        const { userId, at, file64Based } = req.body
+        let filename = req.body?.filename
+
+        if (!filename) {
+            filename = uuid().toString() + '.jpg'
+        }
 
         const matches = file64Based.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
         const type = matches[1]
         const buffer = new Buffer(matches[2], 'base64')
 
-        blobSvc.createBlockBlobFromText('images', filename || uuidFilename, buffer, {
+        blobSvc.createBlockBlobFromText('images', filename, buffer, {
             contentType: type
         }, async (error, _result, _response) => {
             if (error) {
-                uuidFilename = 'default.png'
+                filename = 'default.jpg'
             }
-            
+
             const newPicture = Picture({
                 userId,
                 at,
-                filename: !filename ? uuidFilename : filename
+                filename
             })
 
             const fileUrl = `https://${storage}.blob.core.windows.net/${container}/${filename}`
