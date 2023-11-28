@@ -32,7 +32,7 @@ export default function CustomInput({
     onChange?: any,
     fullWidth?: boolean,
     iconColor?: string,
-    multiline: boolean,
+    multiline?: boolean,
     props?: TextFieldProps
 }) : ReactElement {
     const { theme } = useContext(themeContext)

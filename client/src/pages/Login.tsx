@@ -95,7 +95,7 @@ function LoginForm(): ReactElement {
                 </Formik>
             </Box>
             <LoadingBackdrop
-                handleClose={handleCloseLoading}
+                // handleClose={handleCloseLoading}
                 open={openLoading}
             />
             <Snackbar

@@ -6,12 +6,12 @@ import { LoadingBackdrop, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { Alert } from '@mui/material'
 import { setCredentials, useLoginMutation, useSignupMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
 import { type User } from '$types'
+import * as Yup from 'yup'
+import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 
 function RegisterForm(): ReactElement {
 
@@ -197,7 +197,7 @@ function RegisterForm(): ReactElement {
                 <Box component='span' fontWeight={600}>Disposições Gerais</Box><br />Estes termos de serviço constituem o acordo integral entre você e a UNetwork em relação ao uso do nosso serviço. Podemos alterar estes termos de serviço a qualquer momento. Se houver uma disputa entre você e a UNetwork, ela será resolvida de acordo com as leis do país em que nossa empresa está sediada.<br /><br />
             </UNetworkModal>
             <LoadingBackdrop
-                handleClose={handleCloseLoading}
+                // handleClose={handleCloseLoading}
                 open={openLoading}
             />
             <Snackbar

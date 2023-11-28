@@ -1,13 +1,15 @@
-import { useState, type ReactElement } from 'react'
-import { Avatar, Box, FormHelperText, IconButton, Typography } from '@mui/material'
+import { useState, type ReactElement, useEffect } from 'react'
+import { Avatar, Box, FormHelperText, IconButton, Typography, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { type User } from '$types'
 import { useAppSelector } from '$store'
-import { MoreVert } from '@mui/icons-material'
+import { MoreVert, School } from '@mui/icons-material'
 import { CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
 import { MenuItem } from '@mui/material'
 import { red } from '@mui/material/colors'
 import { useDeleteForumMutation } from '$features/forum'
+import { UserAvatar } from '$components'
+import { useGetUserMutation } from '$features/user'
 
 export default function ForumIcon({ 
     title,
@@ -24,10 +26,13 @@ export default function ForumIcon({
     id: string | undefined,
     image?: string 
 }): ReactElement {
+    const theme = useTheme()
+
     const navigate = useNavigate()
     const user = useAppSelector(state => state.auth.user)
 
     const [ deleteForum ] = useDeleteForumMutation()
+    const [ getUser, { data: forumUser, isLoading } ] = useGetUserMutation()
     
     const ownForum = user._id === userId
 
@@ -38,6 +43,12 @@ export default function ForumIcon({
 
     const [ openModal, setOpenModal ] = useState(false)
     const [ openBackdrop, setOpenBackdrop ] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+            await getUser(userId)
+        })()
+    }, [ getUser, userId ])
 
     const onConfirm = (): void => {
         (async () => {
@@ -50,7 +61,7 @@ export default function ForumIcon({
     }
 
     return (
-        <Box display='flex' width='calc(100vw - 100%)'>
+        <Box display='flex' width='calc(100vw - 120%)'>
             <Box 
                 display='flex'
                 width='100%' 
@@ -58,23 +69,21 @@ export default function ForumIcon({
             >
                 <Box 
                     display='flex'
+                    gap={1}
                     sx={{ cursor: 'pointer' }} 
                     onClick={(): void => { navigate('/app/forum/' + id) }}
                 >
-                    <IconButton>
-                        <Avatar 
-                            sx={{
-                                height: 50,
-                                width: 50
-                            }} 
-                            variant='rounded'
-                        >
-                            {(src ?? false) ? 
-                                <img src={src} alt={'Fórum ' + title} />
-                                :
-                                title.charAt(0).toUpperCase()
-                            }
-                        </Avatar>
+                    <IconButton sx={{ height: '5rem' }}>
+                        <Box position='relative' top='0.8rem'>
+                            <UserAvatar
+                                isLoading={isLoading}
+                                user={forumUser || {} as User}
+                                onClick={() => {}}
+                            />
+                            <Avatar sx={{ position: 'relative', height: '1.75rem', width: '1.75rem', bottom: '1em', right: '0.5em', bgcolor: 'primary.dark', color: '' }}>
+                                <School />
+                            </Avatar>
+                        </Box>
                     </IconButton>
                     <Box display='flex' justifyContent='center' flexDirection='column'>
                         <Typography>{title.charAt(0).toUpperCase() + title.slice(1)}</Typography>

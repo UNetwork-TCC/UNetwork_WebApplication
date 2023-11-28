@@ -1,9 +1,7 @@
 import { Forum } from '$components'
 import { useGetForumMutation } from '$features/forum'
-import { AppLayout } from '$layout'
-import { useAppSelector } from '$store'
+import { AppLayout, LoadingBackdrop } from '$layout'
 import { type Forum as ForumInterface } from '$types'
-import { Box, Typography } from '@mui/material'
 import { useEffect, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -11,7 +9,6 @@ export default function ForumPage(): ReactElement {
     const { id } = useParams()
 
     const [ getForum, { data: forum, isLoading } ] = useGetForumMutation()
-    const user = useAppSelector(state => state.auth.user)
 
     useEffect(() => {
         (async () => {
@@ -22,15 +19,12 @@ export default function ForumPage(): ReactElement {
     return (
         <AppLayout>
             {isLoading ? (
-                <Typography>Carregando...</Typography>
-            ) : (
-                <Forum
-                    forum={forum as ForumInterface}
-                    user={user}
-                    // date={forum?.createdAt}
-                    // user={{ name: forum?.createdBy?.name }}
-                    // content={forum?.description}
+                <LoadingBackdrop 
+                    open={true}
+                    handleClose={() => {}}
                 />
+            ) : (
+                <Forum forum={forum as ForumInterface} />
             )}
         </AppLayout>
     )

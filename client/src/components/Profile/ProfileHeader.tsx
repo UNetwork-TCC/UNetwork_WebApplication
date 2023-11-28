@@ -37,7 +37,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
 
     const follow = (): void => {
         (async () => {
-            await updateUser({
+           const a = await updateUser({
                 _id: id,
                 followers: [
                     ...user.followers,
@@ -95,7 +95,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     // TODO: ATUALIZAR REQUISIÇÃO NO BACKEND
                     // TODO: COLCAR BLOBS NO AZURE STORAGE
                     // TODO: FILTRAGEM PARA PREENCIMENTO DOS CAMPOS
-                    ...data.userUptaded
+                    ...data
                 }
             }))
 
@@ -272,8 +272,8 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     </Box>
                     <Box height='100%' display='flex' justifyContent='flex-end' mt={3}>
                         <Box display='flex' alignItems='end' gap={3}>
-                            <Button type='submit' onClick={updateProfile} variant='outlined'>Confirmar</Button>
-                            <Button type='submit' onClick={() => { setOpen(false) }} variant='contained'>Cancelar</Button>
+                            <Button type='submit' onClick={updateProfile} variant='contained'>Confirmar</Button>
+                            <Button type='submit' onClick={() => { setOpen(false) }} variant='outlined'>Cancelar</Button>
                         </Box>
                     </Box>
                 </Card>

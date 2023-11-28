@@ -1,14 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Search } from '@mui/icons-material'
+import { AddPhotoAlternate, Close, Search } from '@mui/icons-material'
 import { AppLayout, CustomInput, FormModal, LoadingBackdrop } from '$layout'
-import { Box, Button, Stack, TextField } from '@mui/material'
+import { Alert, Avatar, Box, Button, FormControl, IconButton, InputLabel, ListSubheader, Select, Stack, TextField, Typography } from '@mui/material'
 import { useTheme } from '@mui/material'
-import { useEffect, type ReactElement, useState, type FormEvent } from 'react'
+import { useEffect, type ReactElement, useState, ChangeEvent } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
 import { type Forum  } from '$types'
 import { ForumIconSkeleton } from '$skeletons'
 import { useCreateForumMutation, useFetchForumsMutation } from '$features/forum'
 import { useAppSelector } from '$store'
+import { Formik, Form, Field } from 'formik'
+import { MenuItem } from '@mui/material'
+import { grey } from '@mui/material/colors'
+import { useUploadPictureMutation } from '$features/pictures'
+import * as Yup from 'yup'
 
 export default function ForumHome(): ReactElement {
     const theme = useTheme()
@@ -26,28 +31,63 @@ export default function ForumHome(): ReactElement {
 
     const [ fetchForums, { isLoading, data: forums } ] = useFetchForumsMutation()
     const [ createForum, { isLoading: isForumLoading } ] = useCreateForumMutation()
+    const [ uploadPicture ] = useUploadPictureMutation()
 
-    const [ forumForm, setForumForm ] = useState<{ title: string, description: string, topic: string }>({
-        title: '',
-        description: '',
-        topic: ''
+    const [ image, setImage ] = useState<File | undefined>()
+    
+    const validationSchema = Yup.object().shape({
+        title: Yup.string().required(),
+        description: Yup.string().required(),
+        topic: Yup.string().required(),
     })
 
-    const handleSubmit = (e: FormEvent): void => {
-        (async () => {
-            e.preventDefault()
-            handleClose()
-            setLoadingOpen(true)
+    const formInitialValues: {
+        title: string
+        description: string
+        topic: string
+    } = {
+        title: '',
+        description: '',
+        topic: '',
+    }
 
-            await createForum({
-                title: forumForm.title,
-                description: forumForm.description,
-                topic: forumForm.topic,
-                createdBy: user._id
-            })
+    const handleSubmit = (forum: typeof formInitialValues): void => {
+        if (forum.title && forum.description && forum.topic) {
+            (async () => {
+                handleClose()
+                setLoadingOpen(true)
+                
+                if (image) {
+                    const reader = new FileReader()
+                    reader.readAsDataURL(image as File)
+        
+                    reader.addEventListener('load', async () => {
+                        const { data }: any = await uploadPicture({
+                            file64Based: reader.result as string,
+                            userId: user?._id ?? '',
+                            at: { id: 'null', type: 'forum' }
 
-            setLoadingOpen(false)
-        })()
+                        })
+
+                        await createForum({
+                            title: forum.title,
+                            description: forum.description,
+                            topic: forum.topic,
+                            createdBy: user._id,
+                            image: data.src
+                        })
+
+                    })
+                } else await createForum({
+                    title: forum.title,
+                    description: forum.description,
+                    topic: forum.topic,
+                    createdBy: user._id
+                })
+                
+                handleLoadingClose()
+            })()
+        }
     }
 
     useEffect(() => {
@@ -105,36 +145,117 @@ export default function ForumHome(): ReactElement {
                 </ForumWrapper>
             </Box>
             <FormModal
+                title='Criar Fórum'
                 open={open}
                 onClose={handleClose}
-                title='Criar Fórum'
-                onSubmit={handleSubmit}
+                sx={{ minHeight: 0 }}
             >
-                <>
-                    <TextField
-                        value={forumForm.title}
-                        onChange={(e): void => { setForumForm(state => ({ ...state, title: e.currentTarget.value })) }}
-                        label='Título'
-                        fullWidth
-                    />
-                    <TextField
-                        value={forumForm.description}
-                        onChange={(e): void => { setForumForm(state => ({ ...state, description: e.currentTarget.value })) }}
-                        label='Descrição'
-                        fullWidth
-                    />
-                    <TextField
-                        value={forumForm.topic}
-                        onChange={(e): void => { setForumForm(state => ({ ...state, topic: e.currentTarget.value })) }}
-                        label='Tópico (opcional)'
-                        fullWidth
-                    />
-                    <Box>
-                        <Button type='submit' variant='contained'>
-                            Confirmar
-                        </Button>
-                    </Box>
-                </>
+                <Box >
+                    <Formik
+                        initialValues={formInitialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={handleSubmit}
+                        style={{ width: '100%', height: '100%' }}
+                    >
+                        {({ values, errors, touched }) => (
+                            <Form
+                                onSubmit={e => e.preventDefault()}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '1rem',
+                                    height: '100%'
+                                }}
+                            >
+                                <Field 
+                                    as={TextField}
+                                    label='Título'
+                                    name='title'
+                                    type='text'
+                                    fullWidth
+                                    required
+                                    inputProps={{ maxLength: 50 }}
+                                    helperText={`${values.title.length}/50`}
+                                    error={errors.title && touched.title}
+                                />
+                                <FormControl>
+                                    <InputLabel htmlFor='topic'>Tópico *</InputLabel>
+                                    <Field 
+                                        as={Select}
+                                        type='text'
+                                        id='topic'
+                                        required
+                                        name='topic'
+                                        fullWidth
+                                        error={errors.topic && touched.topic}
+                                    >
+                                        <ListSubheader>Escola</ListSubheader>
+                                        <MenuItem value='Escola' >Escola</MenuItem>
+                                        <MenuItem value='Trabalho/Atividade'>Trabalho/Atividade</MenuItem>
+                                        <MenuItem value='Tutoria'>Tutoria</MenuItem>
+                                        <MenuItem value='Professores'>Professores</MenuItem>
+                                        <MenuItem value='Funcionários'>Funcionários</MenuItem>
+                                        <MenuItem value='Eventos'>Eventos</MenuItem>
+                                        <MenuItem value='TCC'>TCC</MenuItem>
+                                        <ListSubheader>Cursos</ListSubheader>
+                                        <MenuItem value='Desenvolvimento de Sistemas'>Desenvolvimento de Sistemas</MenuItem>
+                                        <MenuItem value='Administração'>Administração</MenuItem>
+                                        <MenuItem value='Nutrição'>Nutrição</MenuItem>
+                                        <MenuItem value='Enfermagem'>Enfermagem</MenuItem>
+                                        <ListSubheader>Vida</ListSubheader>
+                                        <MenuItem value='Vida Pessoal'>Vida Pessoal</MenuItem>
+                                        <MenuItem value='Carreira'>Carreira</MenuItem>
+                                        <ListSubheader>Outro</ListSubheader>
+                                        <MenuItem value='Outro'>Outro</MenuItem>
+                                    </Field>
+                                </FormControl>
+                                <Field 
+                                    as={TextField}
+                                    label='Descrição'
+                                    name='description'
+                                    type='text'
+                                    fullWidth
+                                    required
+                                    error={errors.description && touched.description}
+                                    multiline
+                                    sx={{ mt: 1 }}
+                                />
+                                <input 
+                                    style={{ display: 'none' }}
+                                    type='file'
+                                    id='image'
+                                    name='image'
+                                    accept='image/*'
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setImage(e.target.files?.[0])}
+                                />
+                                {(
+                                    (!values.title && touched.title) ||
+                                    (!values.description && touched.description) ||
+                                    (!values.topic && touched.topic)
+                                    ) && (
+                                    <Alert severity='error'>Preencha todos os campos!</Alert>
+                                )}
+                                <Box display='flex' gap={1} justifyContent='space-between' alignItems='center'>
+                                    <IconButton component='label' htmlFor='image'>
+                                        <Avatar 
+                                            sx={{ cursor: 'pointer', bgcolor: image ? 'primary.main' : grey[400] }}
+                                        >
+                                            <AddPhotoAlternate />
+                                        </Avatar>
+                                    </IconButton>
+                                    <Typography noWrap>{image?.name}</Typography>
+                                    { image && (
+                                        <Close sx={{ cursor: 'pointer' }} onClick={() => setImage(undefined)} />
+                                    )}
+                                    <Box sx={{ display: 'flex', gap: 2 }}>
+                                        <Button onClick={() => handleSubmit(values)} type='submit' variant='contained'>Confirmar</Button>
+                                        <Button onClick={handleClose} variant='outlined'>Cancelar</Button>
+                                    </Box>
+                                </Box>
+                            </Form>
+                        )}
+                    </Formik>
+                </Box>
             </FormModal>
             <LoadingBackdrop
                 open={loadingOpen}

@@ -4,6 +4,7 @@ import { apiSlice } from '$api'
 interface filetype {
     userId: string
     filename: string
+    file64Based: string,
     at: { 
         id?: string
         type?: 'post' | 'group' | 'class' 

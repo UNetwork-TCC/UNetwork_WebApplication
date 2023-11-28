@@ -1,4 +1,4 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp } from '@mui/icons-material'
+import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp, School } from '@mui/icons-material'
 import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
 import React, { type ReactElement, useState, useEffect } from 'react'
 import { CreateShortcutsModal, CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
@@ -148,7 +148,7 @@ export default function Post({
     return (
         <>
             <Card variant="elevation" elevation={2} sx={{
-                minHeight: '30rem',
+                minHeight: '32.5rem',
                 width: '75%',
                 [theme.breakpoints.down('xl')]: {
                     width: '85%'
@@ -183,7 +183,7 @@ export default function Post({
                                     isLoading={isLoading}
                                 />
                                 <Avatar sx={{ position: 'relative', height: '1.75rem', width: '1.75rem', bottom: '1em', right: '0.5em', bgcolor: 'primary.dark', color: '' }}>
-                                    {degree}
+                                    <School />
                                 </Avatar>
                             </Box>
                             <Box sx={{ ml: '1rem' }}>
