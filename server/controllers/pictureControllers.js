@@ -22,7 +22,7 @@ export const postPictures = async (req, res) => {
             contentType: type
         }, async (error, _result, _response) => {
             if (error) {
-                filename = 'default.png'
+                uuidFilename = 'default.png'
             }
             
             const newPicture = Picture({
