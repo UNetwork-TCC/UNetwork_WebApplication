@@ -28,7 +28,7 @@ export const getForumById = async (req, res) => {
 
 export const createForums = async (req, res) => {
     try {
-        const { title, description, topic, createdBy } = req.body
+        const { title, description, topic, createdBy, image } = req.body
         if (!title || !description || !topic || !createdBy) {
             return res.status(400).send({message: 'Preencha todos os campos!'})
         }
@@ -38,6 +38,7 @@ export const createForums = async (req, res) => {
             description, 
             topic,
             createdBy,
+            image,
             createdAt: formatDate(new Date())
         })
         
