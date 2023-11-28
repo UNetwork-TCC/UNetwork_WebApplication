@@ -99,9 +99,9 @@ export const updateUser = async (req, res) => {
             userUpdates = { ...req.body }
         }
         
-        const userUptaded = await User.findByIdAndUpdate(id, userUpdates)
+        const userUpdated = await User.findByIdAndUpdate(id, userUpdates)
 
-        res.status(200).send({userUptaded, message: 'Usuário atualizado com sucesso!'})
+        res.status(200).json(userUpdated)
     } catch (error) {
         res.status(404).send({message: error.message})
     }
