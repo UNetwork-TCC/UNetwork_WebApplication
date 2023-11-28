@@ -21,7 +21,8 @@ function RegisterForm(): ReactElement {
         username: Yup.string().required('Este campo é obrigatório'),
         email: Yup.string().email().required('Este campo é obrigatório'),
         password: Yup.string().min(8, 'A senha precisa ter 8 digitos').required('Este campo é obrigatório'),
-        confirmPassword: Yup.string().required('Este campo é obrigatório')
+        confirmPassword: Yup.string().required('Este campo é obrigatório'),
+        rm: Yup.string().required('Este campo é obrigatório')
     })
 
     const dispatch = useAppDispatch()
@@ -85,7 +86,8 @@ function RegisterForm(): ReactElement {
         username: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        rm: ''
     }
 
     return (
@@ -115,11 +117,19 @@ function RegisterForm(): ReactElement {
                                             )}
                                         </Box>
                                     </Box>
-                                    <Box>
-                                        <Field as={TextField} name='username' label='Nome de usuário' required fullWidth />
-                                        {errors.username && touched.username && (
-                                            <p style={{ color: 'red' }}>{errors.username}</p>
-                                        )}
+                                    <Box display='flex' gap={2.5}>
+                                        <Box width='100%'>
+                                            <Field as={TextField} name='username' inputProps={{ maxLength: 15 }} label='Nome de usuário' required fullWidth />
+                                            {errors.username && touched.username && (
+                                                <p style={{ color: 'red' }}>{errors.username}</p>
+                                            )}
+                                        </Box>
+                                        <Box width='100%'>
+                                            <Field as={TextField} name='rm' label='RM' inputProps={{ maxLength: 4 }} required fullWidth />
+                                            {errors.rm && touched.rm && (
+                                                <p style={{ color: 'red' }}>{errors.rm}</p>
+                                            )}
+                                        </Box>
                                     </Box>
                                     <Box gap={2.5}>
                                         <Field as={TextField} name='email' fullWidth label='Email' required type='email' />

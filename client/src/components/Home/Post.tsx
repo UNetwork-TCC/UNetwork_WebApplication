@@ -148,14 +148,13 @@ export default function Post({
     return (
         <>
             <Card variant="elevation" elevation={2} sx={{
-                minHeight: '40rem',
+                minHeight: '30rem',
                 width: '75%',
                 [theme.breakpoints.down('xl')]: {
                     width: '85%'
                 },
                 borderRadius: '15px',
                 display: 'flex',
-                alignItems: 'center',
                 fontSize: '10px',
                 bgcolor: 'background.secondary',
                 mb: '3em'
@@ -163,15 +162,14 @@ export default function Post({
                 <Box 
                     sx={{
                         width: '100%',
-                        height: '100%',
                         [theme.breakpoints.down('xl')]: {
                             p: 3
                         } 
                     }} 
                     p={4}
                 >
-                    <Box mb='1rem' sx={{ minHeight: '7em', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ minHeight: '7em', display: 'flex', justifyContent: 'space-between' }}>
+                        <Box sx={{ display: 'flex' }}>
                             <Box
                                 sx={{
                                     height: '5.6em',
@@ -228,12 +226,11 @@ export default function Post({
                                     minHeight: '60%'
                                 }
                             }}
+                            mt={1.5}
                             minHeight='70%' 
                             display='flex' 
                             gap='1rem' 
                             flexDirection='column' 
-                            mt='1rem' 
-                            mb='2rem'
                         >
                             <Typography variant='body1' fontSize='1rem'>
                                 {contentTextLength !== undefined && contentTextLength >= 999 ? (
@@ -260,7 +257,7 @@ export default function Post({
                                     }
                                 }}
                             >
-                                <Box display='flex' width='100%' justifyContent='space-between' sx={{ height: '5em', mt: '1.5em' }}>
+                                <Box display='flex' width='100%' justifyContent='space-between' sx={{ mt: '1.5em' }}>
                                     <Box display='flex' gap={2}>
                                         {!postOwner && (
                                             <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>

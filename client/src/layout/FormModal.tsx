@@ -10,6 +10,7 @@ export default function FormModal({
     onClose,
     onSubmit,
     sx,
+    modalStyle,
     children
 }: {
     open: boolean,
@@ -17,6 +18,7 @@ export default function FormModal({
     onClose: () => void,
     onSubmit?: FormEventHandler<HTMLFormElement>,
     sx?: SxProps,
+    modalStyle?: SxProps,
     children: ReactElement | ReactElement[]
 }): ReactElement {
     const theme = useTheme()
@@ -36,7 +38,7 @@ export default function FormModal({
         <Modal
             open={open}
             onClose={onClose}
-            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', ...modalStyle }}
             disableAutoFocus
             disableEnforceFocus
             disableRestoreFocus

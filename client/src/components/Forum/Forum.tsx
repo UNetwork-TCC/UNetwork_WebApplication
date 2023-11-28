@@ -118,10 +118,7 @@ export default function Forum({
                                             {forum?.description.substring(0, 999) + '...'}
                                             <ArrowDropDown sx={{ cursor: 'pointer' }} onClick={() => { setContentTextLength(null) }} />
                                         </>
-                                    ) : forum?.description + `
-                                    ASDIAJSDAJIDSOJAIOSDIOAJSIODJAIOJDIOAJSIOJAIOSDAOISJDOIAOSIDJAIODSOAIDSIAODJOIAJSIODJAIOSDJIOASDIOAJISODJAOISDJIAOSJDOIAJSIDOAJSOIDJAISOD
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ad odit hic facere at. Saepe, ut eaque distinctio fugit magnam commodi, fugiat illum veritatis explicabo reprehenderit dolores quia suscipit vitae qui! Dolore facere sunt numquam aspernatur cum nobis est veniam.
-                                    `
+                                    ) : forum?.description
                                 }
                             </Typography>
                             {forum?.picture &&
