@@ -18,6 +18,7 @@ import {
 } from './routes/index.js'
 import { URLSearchParams } from 'url'
 import { log } from 'console'
+import { callbackify } from 'util'
 
 
 dotenv.config()
@@ -46,7 +47,7 @@ io.on('connection', socket => {
   })
 
 
-  socket.on('select_room', data => {
+  socket.on('select_room', (data) => {
     socket.join(data.room)
 
     let user = {
@@ -61,22 +62,29 @@ io.on('connection', socket => {
   })
 
 
+
   socket.on('message', data => {
-    console.log(data);
     const message = {
-      text: data
+      text: data.message,
+      sendedAt: data.sendedAt,
+      sendedBy: data.sendedBy,
+      room: data.room,
     }
-    console.log(message);
     messages.push(message)
-    io.to('leon').emit('message', message.text)
-    
+    io.to(data.room).emit('message', message.text)
+
   })
 })
+
+const getMessages = (room) => {
+  let fetchedMessages = messages.filter(message => message.room === room)
+  return fetchedMessages
+}
 
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
-app.use(cors({ origin: 'https://5173-unetworktcc-unetworkweb-0cx5kotb7wu.ws-us105.gitpod.io' }))
+app.use(cors({ origin: 'https://studious-cod-p6x6pgr94gp27rvg-5173.app.github.dev/' }))
 
 app.use('/pictures', pictureRouter)
 app.use('/user', userRouter)

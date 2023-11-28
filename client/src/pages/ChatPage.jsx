@@ -47,13 +47,17 @@ export default function ChatPage() {
     const room = 'leon'
     console.log(username);
     const handleSubmit = async () => {
-        const socket = await io.connect('https://3001-unetworktcc-unetworkweb-0cx5kotb7wu.ws-us105.gitpod.io')
-        
-        const message = prompt('digita a mensagem truta:')
+        const socket = await io.connect('https://studious-cod-p6x6pgr94gp27rvg-3001.app.github.dev/')
+        let message = prompt('digita a mensagem truta:')
+        let data = {
+            message, 
+            sendedAt: '', 
+            sendedBy: '', 
+            room}
 
         console.log(socket);
         socket.emit('select_room', {room, username})
-        socket.emit('message', message)
+        socket.emit('message', data)
         socket.on('message', data => setChatArr([...chatArr, data]))
     }
 

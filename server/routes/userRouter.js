@@ -6,7 +6,7 @@ const router = Router()
 
 router.get('/', checkToken, fetchUsers)
 router.get('/:id', checkToken, getUserById)
-router.get('/:id/followers', getFollowers)
+router.get('/:id/followers', checkToken, getFollowers)
 router.post('/create', createUser)
 router.delete('/:id/delete', checkToken, deleteUser)
 router.patch('/:id/update', checkToken, updateUser)
