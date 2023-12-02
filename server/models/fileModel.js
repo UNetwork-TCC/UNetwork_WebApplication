@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const pictureSchema = new mongoose.Schema({
+const fileSchema = new mongoose.Schema({
     userId: { type: String },
     filename: { type: String, required: true },
     at: {
@@ -9,6 +9,6 @@ const pictureSchema = new mongoose.Schema({
     } 
 })
 
-const pictureModel = mongoose.model('Pictures', pictureSchema, 'Pictures')
+const fileModel = mongoose.model('Files', fileSchema, 'Files')
 
-export default pictureModel
+export default fileModel

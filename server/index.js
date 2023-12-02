@@ -14,7 +14,7 @@ import {
     classRouter,
     forumRouter,
     materialRouter,
-    pictureRouter
+    fileRouter
 } from './routes/index.js'
 
 
@@ -26,7 +26,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
-app.use('/pictures', pictureRouter)
+app.use('/files', fileRouter)
 app.use('/user', userRouter)
 app.use('/news', newsRouter)
 app.use('/group', groupRouter)
