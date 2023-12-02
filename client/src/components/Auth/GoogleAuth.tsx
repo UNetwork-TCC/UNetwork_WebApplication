@@ -89,7 +89,7 @@ export default function GoogleAuth(): ReactElement {
             />
             <FormModal
                 open={modalOpen}
-                onClose={() => setModalOpen(false)}
+                onClose={() => { setModalOpen(false) }}
                 title='Insira seu RM'
                 sx={{
                     minHeight: '10rem'

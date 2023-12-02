@@ -1,7 +1,7 @@
-import { MoreHoriz, MoreVert } from "@mui/icons-material"
-import { IconButton, Skeleton, useTheme } from "@mui/material"
-import { Card } from "@mui/material"
-import { Box } from "@mui/material"
+import { MoreHoriz, MoreVert } from '@mui/icons-material'
+import { IconButton, Skeleton, useTheme } from '@mui/material'
+import { Card } from '@mui/material'
+import { Box } from '@mui/material'
 
 export default function ForumSkeleton() {
     const theme = useTheme()

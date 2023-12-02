@@ -1,21 +1,21 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp, School } from '@mui/icons-material'
+import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp, School, Send } from '@mui/icons-material'
 import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
-import React, { type ReactElement, useState, useEffect } from 'react'
-import { CreateShortcutsModal, CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
+import React, { type ReactElement, useState, useEffect, type ChangeEvent, type FormEvent } from 'react'
+import { CreateShortcutsModal, CustomInput, CustomMenu, LoadingBackdrop, MiscMessage, WarningModal } from '$layout'
 import { useAppSelector } from '$store'
-import { useDeletePostMutation } from '$features/post'
+import { useDeletePostMutation, useUpdatePostMutation } from '$features/post'
 import { red } from '@mui/material/colors'
 import { UserAvatar } from '$components'
 import { useGetUserMutation } from '$features/user'
 import { type User } from '$types'
 
-export default function Post({ 
+export default function Post({
     date,
     content,
     degree,
     postedBy,
     id
-} : {
+}: {
     date: Date | string | undefined,
     content: {
         text?: string,
@@ -24,7 +24,7 @@ export default function Post({
     degree?: string,
     postedBy: string,
     id: string,
-}) : ReactElement {
+}): ReactElement {
     const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
     const [ contentTextLength, setContentTextLength ] = useState(content?.text?.length)
@@ -73,6 +73,8 @@ export default function Post({
     const [ backdropOpen, setBackdropOpen ] = useState<boolean>(false)
     const [ modalOpen, setModalOpen ] = useState<boolean>(false)
     const [ shortcutModalOpen, setShortcutModalOpen ] = useState<boolean>(false)
+    const [ displayMessageChat, setDisplayMessageChat ] = useState<boolean>(false)
+    const [ comment, setComment ] = useState<string>('')
 
     const open = Boolean(anchorEl)
 
@@ -80,6 +82,7 @@ export default function Post({
 
     const [ getUser, { isLoading } ] = useGetUserMutation()
     const [ deletePost ] = useDeletePostMutation()
+    const [ updatePost ] = useUpdatePostMutation()
 
     const handleBackdropClose = (): void => { setBackdropOpen(false) }
     const handleBackdropOpen = (): void => { setBackdropOpen(true) }
@@ -100,7 +103,7 @@ export default function Post({
         )
 
         setMenuContent(mapedElements)
-        
+
         if (postOwner) {
             setMenuContent([
                 ...mapedElements,
@@ -116,12 +119,34 @@ export default function Post({
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
+    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+        e.preventDefault()
+
+        (async () => {
+            handleModalClose()
+            handleBackdropOpen()
+            await updatePost({
+                _id: id,
+                comments: [
+                    ...comment,
+                    {
+                        sendedBy: loggedUser._id,
+                        content: comment,
+                        sendedIn: 'post'
+                    }
+                ]
+            })
+            handleBackdropClose()
+            location.reload()
+        })()
+    }
+
     const onConfirm = (): void => {
         (async () => {
             handleModalClose()
             handleBackdropOpen()
             await deletePost(id)
-            handleBackdropClose()                        
+            handleBackdropClose()
             location.reload()
         })()
     }
@@ -159,13 +184,13 @@ export default function Post({
                 bgcolor: 'background.secondary',
                 mb: '3em'
             }}>
-                <Box 
+                <Box
                     sx={{
                         width: '100%',
                         [theme.breakpoints.down('xl')]: {
                             p: 3
-                        } 
-                    }} 
+                        }
+                    }}
                     p={4}
                 >
                     <Box sx={{ minHeight: '7em', display: 'flex', justifyContent: 'space-between' }}>
@@ -202,10 +227,10 @@ export default function Post({
                         </Box>
                         <IconButton onClick={
                             e => {
-                                handleClick(e, 
+                                handleClick(e,
                                     [ 'Salvar como Atalho', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
                                     [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ]
-                                ) 
+                                )
                             }
                         }>
                             <MoreVert sx={{ fontSize: '1.2em' }} />
@@ -227,13 +252,13 @@ export default function Post({
                                 }
                             }}
                             mt={1.5}
-                            minHeight='70%' 
-                            display='flex' 
-                            gap='1rem' 
-                            flexDirection='column' 
+                            minHeight='70%'
+                            display='flex'
+                            gap='1rem'
+                            flexDirection='column'
                         >
-                            <Typography 
-                                whiteSpace='pre-wrap' 
+                            <Typography
+                                whiteSpace='pre-wrap'
                                 fontSize='1rem'
                                 variant='body1'
                             >
@@ -248,6 +273,32 @@ export default function Post({
                             {content?.picture &&
                                 <img src={content.picture} alt={'imagem de ' + user?.username} />
                             }
+                        </Box>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 3,
+                                mt: 5,
+                                mb: 5
+                            }}
+                        >
+                            <Box component='form' sx={{
+                                display: displayMessageChat ? 'flex' : 'none',
+                                flexDirection: 'column',
+                                gap: 3,
+                                mb: 2
+                            }}>
+                                <CustomInput
+                                    multiline
+                                    icon={<Send onClick={handleSubmit} />}
+                                    placeholder='Comente algo...'
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => { setComment(e.currentTarget.value) }}
+                                />
+                            </Box>
+                            <Box sx={{}}>
+                                <MiscMessage />
+                            </Box>
                         </Box>
                         <Box>
                             <Box
@@ -268,12 +319,12 @@ export default function Post({
                                                 <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
                                                     {favoriteClicked ?
                                                         <Favorite sx={{ color: 'red' }} /> :
-                                                        <FavoriteBorder/>
+                                                        <FavoriteBorder />
                                                     }
                                                 </IconButton>
                                             </Avatar>
                                         )}
-                                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                        <Avatar onClick={() => { setDisplayMessageChat(prevState => !prevState) }} sx={{ bgcolor: 'background.paper' }} variant={variant}>
                                             <IconButton>
                                                 <ChatBubbleRounded />
                                             </IconButton>
@@ -296,8 +347,8 @@ export default function Post({
                                             <Avatar sx={{ borderRadius: 3.5, position: 'relative', right: '.75em', zIndex: 2 }} variant='rounded'>
 
                                             </Avatar>
-                                            <Avatar 
-                                                sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }} 
+                                            <Avatar
+                                                sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }}
                                                 variant={variant}
                                             >
                                                 +11
@@ -318,7 +369,7 @@ export default function Post({
                 autoHideDuration={3000}
                 action={action}
             />
-            <LoadingBackdrop 
+            <LoadingBackdrop
                 open={backdropOpen}
                 handleClose={handleBackdropClose}
             />
@@ -328,7 +379,7 @@ export default function Post({
                 onConfirm={onConfirm}
                 text='Essa ação irá deletar esta publicação.'
             />
-            <CreateShortcutsModal 
+            <CreateShortcutsModal
                 open={shortcutModalOpen}
                 onClose={handleShortcutModalClose}
                 link={'/app/post/' + id}

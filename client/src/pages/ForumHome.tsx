@@ -3,9 +3,9 @@ import { AddPhotoAlternate, Close, Search } from '@mui/icons-material'
 import { AppLayout, CustomInput, FormModal, LoadingBackdrop } from '$layout'
 import { Alert, Avatar, Box, Button, FormControl, IconButton, InputLabel, ListSubheader, Select, Stack, TextField, Typography } from '@mui/material'
 import { useTheme } from '@mui/material'
-import { useEffect, type ReactElement, useState, ChangeEvent } from 'react'
+import { useEffect, type ReactElement, useState, type ChangeEvent } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
-import { Topic, type Forum  } from '$types'
+import { type Topic, type Forum  } from '$types'
 import { ForumIconSkeleton } from '$skeletons'
 import { useCreateForumMutation, useFetchForumsMutation } from '$features/forum'
 import { useAppSelector } from '$store'
@@ -38,7 +38,7 @@ export default function ForumHome(): ReactElement {
     const validationSchema = Yup.object().shape({
         title: Yup.string().required(),
         description: Yup.string().required(),
-        topic: Yup.string().required(),
+        topic: Yup.string().required()
     })
 
     const formInitialValues: {
@@ -48,7 +48,7 @@ export default function ForumHome(): ReactElement {
     } = {
         title: '',
         description: '',
-        topic: 'Outro',
+        topic: 'Outro'
     }
 
     const handleSubmit = (forum: typeof formInitialValues): void => {
@@ -59,7 +59,7 @@ export default function ForumHome(): ReactElement {
                 
                 if (image) {
                     const reader = new FileReader()
-                    reader.readAsDataURL(image as File)
+                    reader.readAsDataURL(image )
         
                     reader.addEventListener('load', async () => {
                         const { data }: any = await uploadPicture({
@@ -159,7 +159,7 @@ export default function ForumHome(): ReactElement {
                     >
                         {({ values, errors, touched }) => (
                             <Form
-                                onSubmit={e => e.preventDefault()}
+                                onSubmit={e => { e.preventDefault() }}
                                 style={{
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -226,13 +226,13 @@ export default function ForumHome(): ReactElement {
                                     id='image'
                                     name='image'
                                     accept='image/*'
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setImage(e.target.files?.[0])}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => { setImage(e.target.files?.[0]) }}
                                 />
                                 {(
                                     (!values.title && touched.title) ||
                                     (!values.description && touched.description) ||
                                     (!values.topic && touched.topic)
-                                    ) && (
+                                ) && (
                                     <Alert severity='error'>Preencha todos os campos!</Alert>
                                 )}
                                 <Box display='flex' gap={1} justifyContent='space-between' alignItems='center'>
@@ -245,10 +245,10 @@ export default function ForumHome(): ReactElement {
                                     </IconButton>
                                     <Typography noWrap>{image?.name}</Typography>
                                     { image && (
-                                        <Close sx={{ cursor: 'pointer' }} onClick={() => setImage(undefined)} />
+                                        <Close sx={{ cursor: 'pointer' }} onClick={() => { setImage(undefined) }} />
                                     )}
                                     <Box sx={{ display: 'flex', gap: 2 }}>
-                                        <Button onClick={() => handleSubmit(values)} type='submit' variant='contained'>Confirmar</Button>
+                                        <Button onClick={() => { handleSubmit(values) }} type='submit' variant='contained'>Confirmar</Button>
                                         <Button onClick={handleClose} variant='outlined'>Cancelar</Button>
                                     </Box>
                                 </Box>

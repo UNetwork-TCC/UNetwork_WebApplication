@@ -11,7 +11,7 @@ import { Box, Card, useTheme } from '@mui/material'
 import { type ReactElement, useState, useEffect } from 'react'
 
 export default function Forum({ 
-    forum,
+    forum
 }: {
     forum: ForumInterface,
 }): ReactElement {
@@ -119,11 +119,11 @@ export default function Forum({
                                     <Typography variant='h5'>{forum?.title}</Typography>
                                     <Typography variant='body1' fontSize='1rem'>
                                         {contentTextLength !== null && contentTextLength >= 999 ? (
-                                                <>
-                                                    {forum?.description.substring(0, 999) + '...'}
-                                                    <ArrowDropDown sx={{ cursor: 'pointer' }} onClick={() => { setContentTextLength(null) }} />
-                                                </>
-                                            ) : forum?.description
+                                            <>
+                                                {forum?.description.substring(0, 999) + '...'}
+                                                <ArrowDropDown sx={{ cursor: 'pointer' }} onClick={() => { setContentTextLength(null) }} />
+                                            </>
+                                        ) : forum?.description
                                         }
                                     </Typography>
                                     {forum?.image &&
@@ -171,7 +171,7 @@ export default function Forum({
                         </Box>
                     </Card>
                     <ForumDiscussion 
-                        forum={forum as ForumInterface}
+                        forum={forum }
                     />
                 </>
             )}
