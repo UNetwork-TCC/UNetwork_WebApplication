@@ -4,39 +4,41 @@ import { FilterAndConfig, News } from '$components'
 import { type ReactElement, useEffect, useState } from 'react'
 import { type news } from '$types'
 import { NewsSkeleton } from '$skeletons'
-import { useFetchNewsMutation } from '$features/news'
+import { useCreateNewsMutation, useFetchNewsMutation } from '$features/news'
+import { Alert } from '@mui/material'
+import { useAppSelector } from '$store'
 
 export default function NewsPage(): ReactElement {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.up('md'))
 
     const [ fetchNews, { data: newsData, isLoading } ] = useFetchNewsMutation()
+    const [ postNews ] = useCreateNewsMutation()
 
+    const user = useAppSelector(state => state.auth.user)
+    
+    const [ alertDisplay, setAlertDisplay ] = useState<string>('none')
     const [ open, setOpen ] = useState(false)
     const [ news, setNews ] = useState<news[]>([])
     const [ NewsAttributes, setNewsAttributes ] = useState<news>({
         title: '',
         description: '',
         visibility: 'public',
-        code: '',
-        setPassword: '',
-        getPassword: ''
+        topic: 'Outro',
+        image: '',
+        file: ''
     })
 
     const handleOpen = (): void => { setOpen(true) }
     const handleClose = (): void => { setOpen(false) }
 
     const createNews = (): void => {
-        // ...
-
-        if (NewsAttributes.title) {
-            setNews([
-                ...news,
-                NewsAttributes
-            ])
-            handleClose()
-        }
-        else alert('preencha todos os campos!')
+        (async () => {
+            if (NewsAttributes.title) {
+                await postNews(NewsAttributes)
+                handleClose()
+            } else setAlertDisplay('flex')
+        })()
     }
 
     useEffect(() => {
@@ -58,7 +60,9 @@ export default function NewsPage(): ReactElement {
             <Box display='flex' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
-                    <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
+                    {user.admin && (
+                        <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
+                    )}
                 </Container>
                 <Box sx={{ display: 'flex', width: '100%', justifyContent:'center' }}>
                     <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', justifyContent:'center' }} >
@@ -149,12 +153,12 @@ export default function NewsPage(): ReactElement {
                             value={NewsAttributes.description}
                             fullWidth
                         />
-
+                        <Alert sx={{ display: alertDisplay }} severity='error'>Preencha todos os campos!</Alert>
                         <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
                             <Button onClick={handleClose} variant='outlined' fullWidth>
                                 Cancelar
                             </Button>
-                            <Button onClick={createNews} variant='outlined' fullWidth>
+                            <Button onClick={postNews} variant='outlined' fullWidth>
                                 Criar
                             </Button>
                         </Box>

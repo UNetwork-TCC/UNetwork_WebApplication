@@ -18,6 +18,7 @@ import {
     type class_,
     type news,
     type folder,
+    type Topic,
     type shortcut
 } from './dataTypes'
 
@@ -41,6 +42,7 @@ export type {
     Forum,
     MulterFile,
     News,
+    Topic,
     shortcut,
     Class,
     Picture,

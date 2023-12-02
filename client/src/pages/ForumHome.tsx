@@ -5,7 +5,7 @@ import { Alert, Avatar, Box, Button, FormControl, IconButton, InputLabel, ListSu
 import { useTheme } from '@mui/material'
 import { useEffect, type ReactElement, useState, ChangeEvent } from 'react'
 import { ForumIcon, ForumWrapper } from '$components'
-import { type Forum  } from '$types'
+import { Topic, type Forum  } from '$types'
 import { ForumIconSkeleton } from '$skeletons'
 import { useCreateForumMutation, useFetchForumsMutation } from '$features/forum'
 import { useAppSelector } from '$store'
@@ -44,11 +44,11 @@ export default function ForumHome(): ReactElement {
     const formInitialValues: {
         title: string
         description: string
-        topic: string
+        topic: Topic
     } = {
         title: '',
         description: '',
-        topic: '',
+        topic: 'Outro',
     }
 
     const handleSubmit = (forum: typeof formInitialValues): void => {
