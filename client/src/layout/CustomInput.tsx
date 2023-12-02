@@ -17,6 +17,7 @@ export default function CustomInput({
     fullWidth,
     iconColor,
     multiline,
+    helperText,
     ...props
 } : {
     inputWidth?: string | number,
@@ -33,6 +34,7 @@ export default function CustomInput({
     fullWidth?: boolean,
     iconColor?: string,
     multiline?: boolean,
+    helperText?: string,
     props?: TextFieldProps
 }) : ReactElement {
     const { theme } = useContext(themeContext)
@@ -48,6 +50,7 @@ export default function CustomInput({
                 defaultValue={defaultValue}
                 onChange={onChange}
                 multiline={multiline}
+                helperText={helperText}
                 {...props}
                 sx={{ 
                     bgcolor: bgcolor ?? (theme.palette.mode === 'light' ? 'grey.100' : 'background.paper'), 

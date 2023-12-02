@@ -20,6 +20,7 @@ import ProfileHeaderSkeleton from './skeletons/ProfileHeaderSkeleton'
 import ProfilePostsSkeleton from './skeletons/ProfilePostsSkeleton'
 import WarningModal from './WarningModal'
 import CreateShortcutsModal from './CreateShortcutsModal'
+import MiscMessage from './MiscMessage'
 
 export {
     LandingPageHeader,
@@ -34,6 +35,7 @@ export {
     ThemeStore,
     ProfileHeaderSkeleton,
     ProfilePostsSkeleton,
+    MiscMessage,
     CustomMenu,
     SearchBar,
     WarningModal,

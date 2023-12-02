@@ -232,7 +232,11 @@ export default function Post({
                             gap='1rem' 
                             flexDirection='column' 
                         >
-                            <Typography variant='body1' fontSize='1rem'>
+                            <Typography 
+                                whiteSpace='pre-wrap' 
+                                fontSize='1rem'
+                                variant='body1'
+                            >
                                 {contentTextLength !== undefined && contentTextLength >= 999 ? (
                                     <>
                                         {content?.text?.substring(0, 999) + '...'}

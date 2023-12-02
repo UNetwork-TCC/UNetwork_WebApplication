@@ -30,7 +30,7 @@ export default function ForumHome(): ReactElement {
     const handleLoadingClose = (): void => { setLoadingOpen(false) }
 
     const [ fetchForums, { isLoading, data: forums } ] = useFetchForumsMutation()
-    const [ createForum, { isLoading: isForumLoading } ] = useCreateForumMutation()
+    const [ createForum ] = useCreateForumMutation()
     const [ uploadPicture ] = useUploadPictureMutation()
 
     const [ image, setImage ] = useState<File | undefined>()
@@ -98,11 +98,11 @@ export default function ForumHome(): ReactElement {
 
     useEffect(() => {
         (async () => {
-            if (!isForumLoading) {
+            if (!loadingOpen) {
                 await fetchForums(null)
             }
         })()
-    }, [ isForumLoading ])
+    }, [ loadingOpen ])
 
     return (
         <AppLayout>

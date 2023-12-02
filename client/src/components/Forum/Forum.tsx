@@ -1,10 +1,10 @@
-import { UserAvatar } from '$components'
+import { ForumDiscussion, UserAvatar } from '$components'
 import { useGetUserMutation } from '$features/user'
 import { CustomMenu } from '$layout'
-import { PostSkeleton } from '$skeletons'
+import { ForumSkeleton } from '$skeletons'
 import { useAppSelector } from '$store'
 import { type Forum as ForumInterface, type User } from '$types'
-import { ArrowDropDown, ChatBubbleRounded, Favorite, FavoriteBorder, MoreVert, Reply, School } from '@mui/icons-material'
+import { ArrowDropDown, MoreVert, Reply, School } from '@mui/icons-material'
 import { IconButton, Typography } from '@mui/material'
 import { Avatar } from '@mui/material'
 import { Box, Card, useTheme } from '@mui/material'
@@ -46,7 +46,7 @@ export default function Forum({
     return (
         <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column' gap={5} p={5} width='100%'>
             {isLoading ? (
-                <PostSkeleton />
+                <ForumSkeleton />
             ) : (
                 <>
                     <Card variant="elevation" elevation={2} sx={{
@@ -142,22 +142,6 @@ export default function Forum({
                                 >
                                     <Box display='flex' width='100%' alignItems='flex-end' justifyContent='space-between'>
                                         <Box display='flex' gap={2}>
-                                            {!ownedPost && (
-                                                <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
-                                                    <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
-                                                        {favoriteClicked ?
-                                                            <Favorite sx={{ color: 'red' }} /> :
-                                                            <FavoriteBorder/>
-                                                        }
-                                                    </IconButton>
-                                                </Avatar>
-                                            )}
-                                            <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
-                                                <IconButton>
-                                                    <ChatBubbleRounded />
-                                                </IconButton>
-                                            </Avatar>
-
                                             <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
                                                 <IconButton>
                                                     <Reply sx={{ transform: 'scaleX(-1)' }} />
@@ -186,9 +170,9 @@ export default function Forum({
                             </Box>
                         </Box>
                     </Card>
-                    <Box sx={{ height: 500, width: '50%', bgcolor: 'primary.main' }}>
-
-                    </Box>
+                    <ForumDiscussion 
+                        forum={forum as ForumInterface}
+                    />
                 </>
             )}
         </Box>

@@ -37,6 +37,7 @@ import RequireAuth from './Auth/RequireAuth'
 import SideComponent from './Home/SideComponent'
 import Forum from './Forum/Forum'
 import UserAvatar from './Profile/UserAvatar'
+import ForumDiscussion from './Forum/ForumDiscussion'
 
 export {
     DiscoverSection,
@@ -48,6 +49,7 @@ export {
     ClipsWrapper,
     ForumWrapper,
     ProfileHeader,
+    ForumDiscussion,
     Message,
     ChatBar,
     UserAvatar,
