@@ -12,7 +12,7 @@ import { useAppSelector } from '$store'
 import { Formik, Form, Field } from 'formik'
 import { MenuItem } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { useUploadPictureMutation } from '$features/pictures'
+import { useUploadFileMutation } from '$features/file'
 import * as Yup from 'yup'
 
 export default function ForumHome(): ReactElement {
@@ -31,7 +31,7 @@ export default function ForumHome(): ReactElement {
 
     const [ fetchForums, { isLoading, data: forums } ] = useFetchForumsMutation()
     const [ createForum ] = useCreateForumMutation()
-    const [ uploadPicture ] = useUploadPictureMutation()
+    const [ uploadPicture ] = useUploadFileMutation()
 
     const [ image, setImage ] = useState<File | undefined>()
     

@@ -1,9 +1,9 @@
 import { UserAvatar } from "$components";
-import { CustomMenu, FormModal } from "$layout";
+import { CustomMenu } from "$layout";
 import { useAppSelector } from "$store";
 import { MoreHoriz, SubdirectoryArrowRight } from "@mui/icons-material";
 import { Box, Chip, IconButton, MenuItem, Typography } from "@mui/material";
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 
 export default function MiscMessage({
     text,
@@ -16,11 +16,6 @@ export default function MiscMessage({
 
     const [ anchorEl, setAnchorEl ] = useState(null)
     const [ menuOpen, setMenuOpen ] = useState(false)
-    const [ formModalOpen, setFormModalOpen ] = useState(false)
-
-    const handleFormModalOpen = (): void => { setFormModalOpen(true) }
-    const handleFormModalClose = (): void => { setFormModalOpen(false) }
-
 
     const handleMenuClose = (): void => { setMenuOpen(false) }
     const handleMenuOpen = (e: any): void => { 
@@ -99,15 +94,8 @@ export default function MiscMessage({
             open={menuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleFormModalOpen}>Responder</MenuItem>
+            <MenuItem onClick={() => {}}>Responder</MenuItem>
         </CustomMenu>
-        <FormModal
-            title='Responder'
-            open={formModalOpen}
-            onClose={handleFormModalClose}
-        >
-
-        </FormModal>
     </>
   )
 }

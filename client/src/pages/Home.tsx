@@ -7,14 +7,14 @@ import { useEffect, type ReactElement, type FormEvent, useState, type ChangeEven
 import { PostSkeleton } from '$skeletons'
 import { useCreatePostMutation, useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
-import { useUploadPictureMutation } from '$features/pictures'
+import { useUploadFileMutation } from '$features/file'
 import { type MulterFile, type Picture } from '$types'
 
 export default function Home(): ReactElement {
     const theme = useTheme()
 
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
-    const [ uploadPicture ] = useUploadPictureMutation()
+    const [ uploadPicture ] = useUploadFileMutation()
     const [ createPost ] = useCreatePostMutation()
 
     const [ postContent, setPostContent ] = useState<{ text?: string, picture?: Partial<MulterFile> & Partial<Picture> & File }>()

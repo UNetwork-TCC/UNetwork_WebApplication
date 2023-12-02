@@ -8,13 +8,13 @@ import UserAvatar from './UserAvatar'
 import { AddPhotoAlternate } from '@mui/icons-material'
 import { LoadingBackdrop } from '$layout'
 import { setCredentials } from '$features/auth'
-import { useUploadPictureMutation } from '$features/pictures'
+import { useUploadFileMutation } from '$features/file'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
     const { id } = useParams()
 
     const [ updateUser ] = useUpdateUserMutation()
-    const [ uploadPicture ] = useUploadPictureMutation()
+    const [ uploadPicture ] = useUploadFileMutation()
 
     const dispatch = useAppDispatch()
     const userState = useAppSelector(state => state.auth.user)
