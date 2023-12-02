@@ -9,6 +9,7 @@ import { useCreatePostMutation, useFetchPostsMutation } from '$features/post'
 import { useAppSelector } from '$store'
 import { useUploadFileMutation } from '$features/file'
 import { type MulterFile, type Picture } from '$types'
+import { useUpdateUserMutation } from '$features/user'
 
 export default function Home(): ReactElement {
     const theme = useTheme()
@@ -16,6 +17,7 @@ export default function Home(): ReactElement {
     const [ fetchPosts, { isLoading, data: posts } ] = useFetchPostsMutation()
     const [ uploadPicture ] = useUploadFileMutation()
     const [ createPost ] = useCreatePostMutation()
+    const [ updateUser ] = useUpdateUserMutation()
 
     const [ postContent, setPostContent ] = useState<{ text?: string, picture?: Partial<MulterFile> & Partial<Picture> & File }>()
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
@@ -30,6 +32,8 @@ export default function Home(): ReactElement {
     const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault()
         setLoading(true)
+
+        let data: any
 
         if ((postContent?.picture?.size ?? 0) >= 32000000) {
             handleSnackbarOpen()
@@ -54,7 +58,7 @@ export default function Home(): ReactElement {
                             file64Based: picture64Based as string
                         })
 
-                        await createPost({
+                        data = await createPost({
                             postedBy: user._id ?? '',
                             postedIn: 'feed',
                             content: {
@@ -62,10 +66,18 @@ export default function Home(): ReactElement {
                                 picture: picture?.data?.src ?? null
                             }
                         })
+
+                        await updateUser({
+                            _id: user._id ?? '',
+                            posts: [
+                                ...user.posts,
+                                data.postUpdates
+                            ]
+                        })
                     })()
                 }, 100)
             } else {
-                await createPost({
+                data = await createPost({
                     postedBy: user._id ?? '',
                     postedIn: 'feed',
                     content: {
@@ -73,6 +85,14 @@ export default function Home(): ReactElement {
                     }
                 })
             }
+            
+            await updateUser({
+                _id: user._id ?? '',
+                posts: [
+                    ...user.posts,
+                    data.postUpdates
+                ]
+            })
         }
 
         setLoading(false)
