@@ -1,6 +1,9 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { type User } from '$types'
 import { type ReactElement } from 'react'
+import UserAvatar from './UserAvatar'
+import { grey } from '@mui/material/colors'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProfilePosts({ user }: { user: User }): ReactElement {
     
@@ -11,7 +14,12 @@ export default function ProfilePosts({ user }: { user: User }): ReactElement {
             <Grid gap={2} container>
                 {user?.posts?.map(e => (
                     <Grid key={e?._id} item>
-                        <ProfilePost image={e?.content?.picture} />
+                        <ProfilePost 
+                            user={user} 
+                            image={e?.content?.picture}
+                            desc={e?.description}
+                            postId={e?._id ?? ''}
+                        />
                     </Grid>
                 ))}
             </Grid>
@@ -21,13 +29,63 @@ export default function ProfilePosts({ user }: { user: User }): ReactElement {
 }
 
 function ProfilePost({
-    image
+    image,
+    user,
+    postId,
+    desc
 }: {
-    image?: string
+    user: User,
+    postId: string,
+    image?: string,
+    desc?: string
 }): ReactElement {
+    const navigate = useNavigate()
+
     return (
-        <Box bgcolor='red' height='23rem' width='23rem'>
-            <img src={image} alt="" />
+        <Box 
+            sx={{ cursor: 'pointer' }} 
+            onClick={() => { navigate(`/app/post/${postId}`) }} 
+            height='23rem' 
+            width='23rem'
+        >
+            {image ? (
+                <img
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        backgroundImage: 'no-repeat'
+                    }} 
+                    src={image} 
+                    alt={'Post de ' + user.username} 
+                />
+            ) : (
+                <Box 
+                    display='flex' 
+                    justifyContent='center' 
+                    alignItems='center' 
+                    height='100%' 
+                    width='100%' 
+                    bgcolor={grey[500]}
+                    p={5}
+                >
+                    <Box 
+                        display='flex'
+                        justifyContent='center'
+                        alignItems='center'
+                        gap={2}
+                        width='100%'
+                    >
+                        <UserAvatar 
+                            user={user}
+                            onClick={() => {}}
+                        />
+                        <Typography color='white'>
+                            {(desc?.length ?? 0) > 40 ? desc?.slice(0, 40) + '...' : desc}
+                        </Typography>
+                    </Box>
+                </Box>
+            )}
         </Box>
     )
 }

@@ -8,6 +8,7 @@ import { red } from '@mui/material/colors'
 import { UserAvatar } from '$components'
 import { useGetUserMutation } from '$features/user'
 import { type User } from '$types'
+import { useNavigate } from 'react-router-dom'
 
 export default function Post({
     date,
@@ -28,6 +29,8 @@ export default function Post({
     const theme = useTheme()
     const [ favoriteClicked, setFavoriteCLicked ] = useState(false)
     const [ contentTextLength, setContentTextLength ] = useState(content?.text?.length)
+
+    const navigate = useNavigate()
 
     const variant: any = 'iconWrapper'
 
@@ -53,8 +56,7 @@ export default function Post({
         },
 
         goToPost: () => {
-            console.log('tcchau')
-            handleClose()
+            navigate('/app/post/' + id)
         },
 
         favorite: () => {
@@ -120,19 +122,19 @@ export default function Post({
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-        e.preventDefault()
-
         (async () => {
+            e.preventDefault()
             handleModalClose()
             handleBackdropOpen()
             await updatePost({
                 _id: id,
                 comments: [
-                    ...comment,
                     {
-                        sendedBy: loggedUser._id,
+                        sendedBy: loggedUser._id ?? '',
                         content: comment,
-                        sendedIn: 'post'
+                        sendedIn: 'post',
+                        sendedAt: new Date().toString(),
+                        type: 'text'
                     }
                 ]
             })
@@ -145,7 +147,9 @@ export default function Post({
         (async () => {
             handleModalClose()
             handleBackdropOpen()
+
             await deletePost(id)
+            
             handleBackdropClose()
             location.reload()
         })()

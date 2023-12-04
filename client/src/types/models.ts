@@ -56,7 +56,7 @@ export interface Message {
   content: string
   sendedBy: string
   sendedAt: string
-  sendedIn: Group
+  sendedIn: 'group' | 'chat' | 'forum' | 'post'
   type: 'text' | 'audio' | 'video' | 'sticker'
 }
 
@@ -76,7 +76,7 @@ export interface Post {
   }
   postedBy: string
   postedAt: string
-  postedIn: Group | Chat | Forum | string
+  postedIn: 'group' | 'chat' | 'forum' | 'post'
   comments: Message[]
   likes: User[]
   views: User[]
