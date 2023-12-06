@@ -23,7 +23,12 @@ export default function ProfilePage(): ReactElement {
 
     return (
         <AppLayout>
-            <Box height='100%' width='100%'>
+            <Box
+                width='100%'
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+            >
                 <Box
                     display='flex'
                     flexDirection='column'

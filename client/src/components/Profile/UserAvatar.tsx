@@ -12,7 +12,7 @@ export default function UserAvatar({
     onClick
 }: {
     sx?: SxProps,
-    user: User,
+    user: Partial<User>,
     variant?: AvatarOwnProps['variant'],
     isLoading?: boolean,
     avatar?: string,
@@ -56,7 +56,8 @@ export default function UserAvatar({
                                     height: '100%',
                                     width: '100%',
                                     backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'conver',
+                                    backgroundSize: 'cover',
+                                    objectFit: 'cover',
                                     resize: 'both'
                                 }}
                             />
