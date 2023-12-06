@@ -15,11 +15,11 @@ function Folder({
     }
 
     return(
-        <Box maxWidth={200} sx={{ bgcolor: grey[300] }} borderRadius={5} height={'4rem'} width={'12.5em'} display={'flex'} alignItems={'center'}>
+        <Box maxWidth={215} sx={{ bgcolor: grey[300] }} borderRadius={5} height={'4rem'} width={'15em'} display={'flex'} alignItems={'center'}>
             <List>
                 <ListItem>
                     <ListItemAvatar>
-                        <Avatar  sx={{ bgcolor: 'primary.main' }}>
+                        <Avatar sx={{ bgcolor: 'primary.main' }}>
                             <FolderIcon/>
                         </Avatar>
                     </ListItemAvatar>

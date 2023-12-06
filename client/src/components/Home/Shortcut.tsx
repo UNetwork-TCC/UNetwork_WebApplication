@@ -1,6 +1,7 @@
 import { Circle } from '@mui/icons-material'
 import { Box, Tooltip, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Shortcut({ 
     title,
@@ -13,6 +14,8 @@ export default function Shortcut({
     color: string,
     link?: string
 }) : ReactElement {
+    const navigate = useNavigate()
+
     return (
         <Box  
             sx={{
@@ -30,6 +33,11 @@ export default function Shortcut({
 
                 ':hover': {
                     transition: '.3s ease-in-out'
+                }
+            }}
+            onClick={() => {
+                if (link) {
+                    navigate(link)
                 }
             }}
         >

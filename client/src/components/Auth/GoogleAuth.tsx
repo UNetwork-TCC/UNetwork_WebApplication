@@ -2,14 +2,13 @@ import { GoogleLogin, type GoogleLoginResponse } from 'react-google-login'
 import { GOOGLE_CLIENT_ID } from '../../constants'
 import { useNavigate } from 'react-router-dom'
 import googleLogo from '$assets/svg/Auth/GoogleLogo.svg'
-import { IconButton } from '@mui/material'
+import { Box, Button, IconButton, TextField } from '@mui/material'
 import { type ReactElement, useEffect, useState } from 'react'
 import { gapi } from 'gapi-script'
-import { LoadingBackdrop } from '$layout'
-import { useSignupMutation, useLoginMutation } from '$features/auth/authApiSlice'
+import { FormModal, LoadingBackdrop } from '$layout'
+import { useSignupMutation, useLoginMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
 import { setCredentials } from '$features/auth'
-import { useGetUserMutation } from '$features/user'
 
 export default function GoogleAuth(): ReactElement {
     const navigate = useNavigate()
@@ -18,34 +17,39 @@ export default function GoogleAuth(): ReactElement {
 
     const [ login, { data } ] = useLoginMutation()
     const [ signup ] = useSignupMutation()
-    const [ getUser, { data: userData } ] = useGetUserMutation()
+
+    const [ modalOpen, setModalOpen ] = useState(false)
+
+    const [ userRM, setUserRM ] = useState<string>('')
+    const [ result, setResult ] = useState<GoogleLoginResponse | null>(null)
 
     const dispatch = useAppDispatch()
 
     const googleSuccess: any = async (response: GoogleLoginResponse): Promise<void> => {
-        const result = response?.profileObj
+        setResult(response)
+        setModalOpen(true)
+    }
 
-        try {
+    const onConfirm = (): void => {
+        (async () => {
+            setModalOpen(false)
+    
             await signup({
-                name: result.name,
-                email: result.email.toLowerCase(),
-                password: result.googleId
+                username: result?.profileObj.name as string,
+                name: result?.profileObj.familyName as string,
+                email: result?.profileObj.email.toLowerCase() as string,
+                password: result?.profileObj.googleId as string
             })
-
+    
             await login({
-                email: result.email.toLowerCase(),
-                password: result.googleId
+                email: result?.profileObj.email.toLowerCase() as string,
+                password: result?.profileObj.googleId as string
             })
-
-            await getUser(data?.id ?? '')
-
-            dispatch(setCredentials({ user: userData, accessToken: data?.token }))
-
+    
+            dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
+    
             navigate('/app')
-        } catch (error) {
-            console.log(error)
-            navigate('/app/error')
-        }
+        })()
     }
 
     const googleFailure = (error: any): void => {
@@ -60,27 +64,52 @@ export default function GoogleAuth(): ReactElement {
     }, [])
 
     return (
-        <GoogleLogin
-            render={
-                (renderProps) => (
-                    <>
-                        <IconButton onClick={() => {
-                            setLoadingOpen(true)
-                            renderProps.onClick()
-                        }}>
-                            <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
-                        </IconButton>
-                        <LoadingBackdrop
-                            open={loadingOpen}
-                            handleClose={(): void => { setLoadingOpen(false) }}
-                        />
-                    </>
-                )
-            }
-            clientId={GOOGLE_CLIENT_ID}
-            redirectUri='/'
-            onSuccess={googleSuccess}
-            onFailure={googleFailure}
-        />
+        <>
+            <GoogleLogin
+                render={
+                    (renderProps) => (
+                        <>
+                            <IconButton onClick={() => {
+                                setLoadingOpen(true)
+                                renderProps.onClick()
+                            }}>
+                                <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
+                            </IconButton>
+                            <LoadingBackdrop
+                                open={loadingOpen}
+                                handleClose={(): void => { setLoadingOpen(false) }}
+                            />
+                        </>
+                    )
+                }
+                clientId={GOOGLE_CLIENT_ID}
+                redirectUri='/'
+                onSuccess={googleSuccess}
+                onFailure={googleFailure}
+            />
+            <FormModal
+                open={modalOpen}
+                onClose={() => { setModalOpen(false) }}
+                title='Insira seu RM'
+                sx={{
+                    minHeight: '10rem'
+                }}
+            >
+                <Box>
+                    <TextField 
+                        fullWidth
+                        placeholder='Insira seu RM'
+                        label='RM'
+                        onChange={e => { setUserRM(e.currentTarget.value) }}
+                        value={userRM}
+                        inputProps={{ maxLength: 4 }}
+                    />
+                    <Box display='flex' justifyContent='space-between' mt={5}>
+                        <Button onClick={onConfirm} variant='contained'>Confirmar</Button>
+                        <Button onClick={() => { setModalOpen(false); setLoadingOpen(false) }} variant='outlined' >Cancelar</Button>
+                    </Box>
+                </Box>
+            </FormModal>
+        </>
     )
 }

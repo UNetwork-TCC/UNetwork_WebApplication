@@ -1,4 +1,4 @@
-import { Box, Modal, Typography, useTheme } from '@mui/material'
+import { Box, Modal, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type ReactNode, type ReactElement, useEffect } from 'react'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/lightLogo.png'
@@ -15,6 +15,7 @@ export default function UNetworkModal({
     title: string
 }) : ReactNode {
     const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('xl'))
 
     useEffect(() => {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -24,6 +25,7 @@ export default function UNetworkModal({
                 handleClose()
             }
         })
+
     }, [ handleClose ])
 
     return (
@@ -46,7 +48,12 @@ export default function UNetworkModal({
                     <Typography variant='h6' m='0 20px' fontWeight={900}>{title}</Typography>
                     <Box sx={{ width: '8rem', height: '1px', bgcolor: 'tinyElements' }} />
                 </Box>
-                <Box m={2.5} p={2} sx={{ '::-webkit-scrollbar': { height: 5, width: 5 } }} overflow='scroll' borderRadius={2} height='78%' bgcolor='background.card'>
+                <Box m={2.5} 
+                    p={2} 
+                    sx={{ '::-webkit-scrollbar': { height: 5, width: 5 }, maxHeight: matches ? 'calc(80vh - 15rem)' : 'calc(80vh - 12rem)' }} 
+                    overflow='scroll' 
+                    borderRadius={2} 
+                    bgcolor='background.card'>
                     {children}
                 </Box>
             </Box>

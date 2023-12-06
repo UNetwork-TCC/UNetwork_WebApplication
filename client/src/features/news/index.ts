@@ -1,18 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { type News } from '$types'
 import { apiSlice } from '$api'
-
-const initialState: { news: News[] } = {
-    news: []
-}
-
-export const newsSlice = createSlice({
-    name: 'news',
-    initialState,
-    reducers: {}
-})
-
-// News API Slice
 
 const newsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -59,6 +46,3 @@ export const {
     useUpdateNewsMutation,
     useDeleteNewsMutation
 } = newsApiSlice
-
-// export const { fetchNews } = newsSlice.actions
-export const newsReducer = newsSlice.reducer

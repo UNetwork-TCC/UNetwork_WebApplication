@@ -1,8 +1,11 @@
+import { type shortcut } from './dataTypes'
+
 export interface User {
+  username?: string,
   _id?: string
   name: string
   email: string
-  followers: User[]
+  followers: string[]
   settings: {
     theme: 'dark' | 'light'
     account: 'public' | 'private'
@@ -13,13 +16,14 @@ export interface User {
   admin: boolean
   posts: Post[]
   otherInfo: {
-    avatar?: string
+    avatar?: {
+      src: string,
+      name: string
+    }
     bio?: string
     phone?: string
-    city?: string
-    state?: string
-    country?: string
     grade?: number
+    shortcuts?: shortcut[]
   }
 }
 
@@ -27,8 +31,8 @@ export interface Group {
   _id?: string
   title: string
   description: string
-  usersOnGroup: User[]
-  createdAt: Date
+  usersOnGroup: string[]
+  createdAt: string
   messages: any[]
 }
 
@@ -38,11 +42,11 @@ export interface Class {
   title: string
   description: string
   theme: string
-  usersOnClass: User[]
+  usersOnClass: string[]
   messages: Message[]
   voiceChannels: any[]
   chatChannels: any[]
-  createdAt: Date
+  createdAt: string
   createdBy: User
   createdIn: Group
 }
@@ -50,15 +54,15 @@ export interface Class {
 export interface Message {
   _id?: string
   content: string
-  sendedBy: User
-  sendedAt: Date
-  sendedIn: Group
+  sendedBy: string
+  sendedAt: string
+  sendedIn: 'group' | 'chat' | 'forum' | 'post'
   type: 'text' | 'audio' | 'video' | 'sticker'
 }
 
 export interface Chat {
   _id?: string
-  users: User[]
+  users: string[]
   messages: Message[]
 }
 
@@ -68,11 +72,11 @@ export interface Post {
   description: string
   content: {
     text?: string
-    picture?: Picture
+    picture?: string
   }
-  postedBy: User
-  postedAt: Date
-  postedIn: Group | Chat | Forum | string
+  postedBy: string
+  postedAt: string
+  postedIn: 'group' | 'chat' | 'forum' | 'post'
   comments: Message[]
   likes: User[]
   views: User[]
@@ -83,13 +87,14 @@ export interface Forum {
   title: string
   description: string
   topic: string
-  createdAt: Date | string
-  createdBy: User
-  createdIn: Group | Chat | Forum
-  closedAt?: Date
+  createdAt: string
+  createdBy: string
+  createdIn: Group | Chat | Forum | string
+  closedAt?: string
   comments: Message[]
   likes: User[]
   usersIn: User[]
+  image?: string
 }
 
 export interface News {
@@ -97,7 +102,7 @@ export interface News {
   name: string
   description: string
   content: string
-  postedAt: Date
+  postedAt: string
   comments: Message[]
   likes: User[]
   views: User[]
@@ -107,4 +112,20 @@ export interface Picture {
   _id?: string
   name: string
   src: string
+  userId: string
+  at: {
+    id: string
+    type: 'post' | 'class' | 'chat'
+  }
+}
+
+export interface MulterFile extends File {
+  fieldname: string
+  originalname: string
+  enconding: string
+  mimetype: string
+  destination: string
+  filename: string
+  path: string
+  size: number
 }

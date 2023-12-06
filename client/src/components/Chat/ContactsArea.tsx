@@ -42,7 +42,6 @@ export default function ContactsArea(): ReactElement {
                 width='30%'
                 pt={4.5}
                 sx={{
-                    overflow: 'scroll', '::-webkit-scrollbar': { display: 'none' }, overflowX: 'hidden',
                     boxSizing: 'border-box'
                 }}>
                 <Box sx={{ width: '100%', height: '100%' }} >
@@ -111,7 +110,7 @@ export default function ContactsArea(): ReactElement {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{ height: matches ? '45vh' : '40vh', width: '35vw', bgcolor: 'background.paper' }} borderRadius={2} >
+                <Box p={1} sx={{ height: matches ? '24vh' : '20vh', width: '35vw', bgcolor: 'background.paper', display:'flex', flexDirection:'column' }} borderRadius={2} >
                     <Box p={0}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
                             Adicionar contato

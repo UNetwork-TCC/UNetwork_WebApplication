@@ -1,17 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from '$api'
 import { type Forum } from '$types'
-
-const initialState: { forum: Partial<Forum> } = {
-    forum: {}
-}
-export const forumSlice = createSlice({
-    name: 'forum',
-    initialState,
-    reducers: {}
-})
-
-// Forum Api Slice
 
 const forumApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -57,5 +45,3 @@ export const {
     useUpdateForumMutation,
     useDeleteForumMutation
 } = forumApiSlice
-
-export const forumReducer = forumSlice.reducer

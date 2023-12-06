@@ -48,7 +48,7 @@ export default function Message({
                 display='flex'
                 width='100%'
                 position='relative'
-                left={messageFrom === 'me' && '98%'}
+                left={messageFrom === 'me' ? '98%' : ''}
             >
                 <Avatar 
                     sx={{

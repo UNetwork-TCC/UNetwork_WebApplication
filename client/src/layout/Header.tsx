@@ -4,12 +4,13 @@
 import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography } from '@mui/material'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
-import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp } from '@mui/icons-material'
+import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp, Dashboard } from '@mui/icons-material'
 import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { type ReactElement, useState, useContext, type FormEvent } from 'react'
 import { themeContext } from '$contexts'
-import { FeedbackForm } from '$components'
+import { FeedbackForm, UserAvatar } from '$components'
+import { useAppSelector } from '$store'
 
 export default function Header({ 
     minimize,
@@ -40,6 +41,8 @@ export default function Header({
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
 
+    const user = useAppSelector(state => state.auth.user)
+
     const handleFeedback = (): void => {
         handleModalOpen()
         handleMenuClose()
@@ -57,13 +60,41 @@ export default function Header({
         )
                 
         if (userMenu) setMenuContent([
-            <MenuItem onClick={() => { navigate('/app/profile') }} disableRipple key={-2}>
-                <Avatar sx={{ background: 'transparent' }} /> Perfil
+            <MenuItem 
+                key={-2} 
+                disableRipple
+                sx={{ display: 'flex', gap: 1.5 }} 
+                onClick={() => { navigate('/app/profile/' + String(user._id)) }} 
+            >
+                <Avatar sx={{ background: 'transparent' }}>
+                    {user?.otherInfo?.avatar?.src && (
+                        <img 
+                            src={user?.otherInfo?.avatar.src}
+                            alt={'Avatar de' + user?.username}
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'conver',
+                                resize: 'both'
+                            }}
+                        />
+                    )}
+                </Avatar>
+                <Typography>Perfil</Typography>
             </MenuItem>,
             <Divider key={-1} />,
             ...mapedElements
         ]) 
         else setMenuContent(mapedElements)
+
+        if (user?.admin) setMenuContent([
+            <MenuItem onClick={() => { navigate('/app/admin/dashboard/') }} disableRipple key={-2}>
+                <Dashboard sx={{ background: 'transparent' }} /> Admin Dashboard
+            </MenuItem>,
+            <Divider key={-1} />,
+            ...mapedElements
+        ])
 
         setAnchorEl(e.currentTarget)
 
@@ -124,8 +155,8 @@ export default function Header({
                         </Box>
                         <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
                             <CustomLink to='/app/forum' name='Fóruns' />
-                            <CustomLink to='/app/classes' name='Classes' />
-                            <CustomLink to='/app/materials' name='Materiais' />
+                            {/* <CustomLink to='/app/classes' name='Classes' /> */}
+                            {/* <CustomLink to='/app/materials' name='Materiais' /> */}
                             <CustomLink to='/app/news' name='Notícias' />
                         </Box>
                         <Box gap={3} display='flex'>
@@ -160,7 +191,17 @@ export default function Header({
                                 ],
                                 true
                             ) }}>
-                                <Avatar sx={{ background: 'white', color: 'grey.400' }} />
+                                <Avatar sx={{ background: 'white', color: 'grey.400' }}>
+                                    <UserAvatar 
+                                        user={user}
+                                        onClick={() => {}}
+                                        sx={{
+                                            borderRadius: '50%',
+                                            height: '100%',
+                                            width: '100%' 
+                                        }}
+                                    />
+                                </Avatar>
                             </IconButton>
                             <CustomMenu
                                 anchorEl={anchorEl}

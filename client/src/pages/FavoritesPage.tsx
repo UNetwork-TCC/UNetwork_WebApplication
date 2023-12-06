@@ -4,6 +4,7 @@ import { type ReactElement, useEffect, useState } from 'react'
 import { AppLayout, CustomCheckBox, FormModal } from '$layout'
 import { Folder } from '$components'
 import { type folder } from '$types'
+import { blue } from '@mui/material/colors'
 
 export default function FavoritesPage(): ReactElement {
     const theme = useTheme()
@@ -55,21 +56,23 @@ export default function FavoritesPage(): ReactElement {
 
     return (
         <AppLayout>
-            <Box>
-                <Box sx={{ display: 'flex', height: '88vh' }}>
-                    <Box p={1}>
-                        <Box>
+            <Box display={'flex'} width={'100%'} height={'100%'} justifyContent={'center'} alignContent={'center'}>
+                <Box sx={{ display: 'flex', height:'100%' }}>
+                    <Box p={0}>
+                        <Box height={'100%'}>
                             <Card sx={{
                                 background: 'linear-gradient(45deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3))',
                                 boxShadow: '1px 1px 3px grey',
-                                height: '70rem',
-                                width: '65rem',
+                                height:'100%',
+                                width: '67rem',
                                 display: 'flex',
                                 p: 8,
                                 justifyContent: 'start',
-                                flexDirection: 'column'
+                                flexDirection: 'column',
+                                overflow: 'scroll'
+                                // '::-webkit-scrollbar': { display: 'none' }
                             }}>
-                                <Box display='flex' mb={2} sx={{ cursor: 'pointer' }} onClick={handleOpen}>
+                                <Box display='flex' mb={2} sx={{ cursor: 'pointer' }} width={'18%'} onClick={handleOpen}>
                                     <Avatar sx={{ padding: '10px', margin: '10px', width: 20, height: 20, bgcolor: 'primary.main' }}>
                                         <Add sx={{ fontSize: '1em' }} />
                                     </Avatar>
@@ -90,6 +93,7 @@ export default function FavoritesPage(): ReactElement {
                 open={open}
                 onClose={handleClose}
                 title='Nova Pasta'
+                sx={{ pb:'31rem' }}
             >
                 <>
                     <TextField

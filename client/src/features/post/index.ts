@@ -1,18 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { apiSlice } from '$api'
 import { type Post } from '$types'
-
-const initialState: { post: Partial<Post> } = {
-    post: {}
-}
-
-export const postSlice = createSlice({
-    name: 'post',
-    initialState,
-    reducers: {}
-})
-
-// Posts API Slice
+import { type MulterFile } from '../../types/models'
 
 const postApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -24,7 +12,14 @@ const postApiSlice = apiSlice.injectEndpoints({
             query: id => `/post/${id}`
         }),
 
-        createPost: builder.mutation<Post, Partial<Post>>({
+        createPost: builder.mutation<Post, {
+            postedBy: string,
+            postedIn: 'feed' | 'chat' | 'class',
+            content: {
+                text?: string,
+                picture?: MulterFile
+            }
+        }>({
             query: data => ({
                 url: '/post',
                 method: 'POST',
@@ -50,8 +45,6 @@ const postApiSlice = apiSlice.injectEndpoints({
 })
 
 // Exports
-
-export const postReducer = postSlice.reducer
 
 export const { 
     useGetPostMutation,

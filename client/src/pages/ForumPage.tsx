@@ -1,7 +1,7 @@
-import { Post } from '$components'
+import { Forum } from '$components'
 import { useGetForumMutation } from '$features/forum'
-import { AppLayout } from '$layout'
-import { Typography } from '@mui/material'
+import { AppLayout, LoadingBackdrop } from '$layout'
+import { type Forum as ForumInterface } from '$types'
 import { useEffect, type ReactElement } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -19,13 +19,12 @@ export default function ForumPage(): ReactElement {
     return (
         <AppLayout>
             {isLoading ? (
-                <Typography>Carregando...</Typography>
-            ) : (
-                <Post
-                    date={forum?.createdAt}
-                    user={{ name: forum?.createdBy.name }}
-                    content={forum?.description}
+                <LoadingBackdrop 
+                    open={true}
+                    handleClose={() => {}}
                 />
+            ) : (
+                <Forum forum={forum as ForumInterface} />
             )}
         </AppLayout>
     )

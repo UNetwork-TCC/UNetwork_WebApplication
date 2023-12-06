@@ -1,40 +1,40 @@
 /* eslint-disable max-len */
 
 import { Box, Button, Checkbox, FormControl, Snackbar, TextField, Typography } from '@mui/material'
-import { type ReactElement, useState, useEffect } from 'react'
+import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
 import { Auth } from '$components'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 import { Alert } from '@mui/material'
 import { setCredentials, useLoginMutation, useSignupMutation } from '$features/auth'
 import { useAppDispatch } from '$store'
-import { useGetUserMutation } from '$features/user'
+import { type User } from '$types'
+import * as Yup from 'yup'
+import authDecoration from '$assets/svg/Auth/AuthDecoration.svg'
 
 function RegisterForm(): ReactElement {
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Este campo é obrigatório'),
+        fname: Yup.string().required('Este campo é obrigatório'),
+        lname: Yup.string().required('Este campo é obrigatório'),
+        username: Yup.string().required('Este campo é obrigatório'),
         email: Yup.string().email().required('Este campo é obrigatório'),
         password: Yup.string().min(8, 'A senha precisa ter 8 digitos').required('Este campo é obrigatório'),
-        confirmPassword: Yup.string().required('Este campo é obrigatório')
+        confirmPassword: Yup.string().required('Este campo é obrigatório'),
+        rm: Yup.string().required('Este campo é obrigatório')
     })
 
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
+
+    const navigate = useNavigate()
 
     const [ open, setOpen ] = useState(false)
     const [ openLoading, setOpenLoading ] = useState(false)
     const [ snackbarOpen, setSnackbarOpen ] = useState(false)
 
-    const [ login, { data, isSuccess: isLoginSuccess } ] = useLoginMutation()
     const [ signup, { isSuccess: isSignupSuccess } ] = useSignupMutation()
-    const [ getUser, { data: userData } ] = useGetUserMutation()
-
-    const [ isLoginSuccessState, setIsLoginSuccessState ] = useState(isLoginSuccess)
-    const [ isSignupSuccessState, setIsSignupSuccessState ] = useState(isSignupSuccess)
+    const [ login ] = useLoginMutation()
 
     const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
     const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
@@ -45,36 +45,32 @@ function RegisterForm(): ReactElement {
     const handleOpenLoading = (): void => { setOpenLoading(true) }
     const handleCloseLoading = (): void => { setOpenLoading(false) }
 
-    useEffect(() => {
-        setIsLoginSuccessState(isLoginSuccess)
-        setIsSignupSuccessState(isSignupSuccess)
-    }, [ isLoginSuccess, isSignupSuccess ])
-
-    const handleSubmit = async (user: { name: string, email: string, password: string }): Promise<void> => {
+    const handleSubmit = async (user: { fname: string, lname: string, email: string, password: string, username: string }): Promise<void> => {
         handleOpenLoading()
 
+        const name = user.fname + ' ' + user.lname
+
         try {
-            await signup({
-                name: user.name,
+            const response: any = await signup({
+                name,
+                username: user.username,
                 email: user.email.toLowerCase(),
                 password: user.password
             })
 
-            if (isSignupSuccessState) {
-                await login({
+            if (!response.error) {
+                const data: any = await login({
                     email: user.email.toLowerCase(),
                     password: user.password
                 })
-                
-                if (isLoginSuccessState) {
-                    await getUser(data?.id ?? '')
-                    dispatch(setCredentials({ user: userData, accessToken: data?.token }))
-                    navigate('/app')
-                } else if (!isLoginSuccessState) {
-                    handleCloseLoading()
-                    handleSnackbarOpen()
-                }
-            } else if (!isSignupSuccessState) {
+
+                dispatch(setCredentials({
+                    user: data.data?.user as User,
+                    accessToken: data.data?.token as string
+                }))
+
+                navigate('/app')
+            } else if (!isSignupSuccess) {
                 handleCloseLoading()
                 handleSnackbarOpen()
             }
@@ -84,12 +80,22 @@ function RegisterForm(): ReactElement {
         }
     }
 
+    const formInitialValues = { 
+        fname: '',
+        lname: '',
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        rm: ''
+    }
+
     return (
         <>
             <Box width='85.3%' p={2.5}>
                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
                     <Formik
-                        initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
+                        initialValues={formInitialValues}
                         validationSchema={validationSchema}
                         style={{ width: '100%' }}
                         onSubmit={handleSubmit}
@@ -97,11 +103,33 @@ function RegisterForm(): ReactElement {
                         {({ errors, touched }) => (
                             <Form action='/'>
                                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
-                                    <Box>
-                                        <Field as={TextField} name='name' label='Nome' required fullWidth />
-                                        {errors.name && touched.name && (
-                                            <p style={{ color: 'red' }}>{errors.name}</p>
-                                        )}
+                                    <Box display='flex' gap={2.5}>
+                                        <Box width='100%'>
+                                            <Field as={TextField} fullWidth name='fname' label='Primeiro nome' required type='text' />
+                                            {errors.fname && touched.fname && (
+                                                <p style={{ color: 'red' }}>{errors.fname}</p>
+                                            )}
+                                        </Box>
+                                        <Box width='100%'>
+                                            <Field as={TextField} fullWidth name='lname' label='Segundo nome' required type='text' />
+                                            {errors.lname && touched.lname && (
+                                                <p style={{ color: 'red' }}>{errors.lname}</p>
+                                            )}
+                                        </Box>
+                                    </Box>
+                                    <Box display='flex' gap={2.5}>
+                                        <Box width='100%'>
+                                            <Field as={TextField} name='username' inputProps={{ maxLength: 15 }} label='Nome de usuário' required fullWidth />
+                                            {errors.username && touched.username && (
+                                                <p style={{ color: 'red' }}>{errors.username}</p>
+                                            )}
+                                        </Box>
+                                        <Box width='100%'>
+                                            <Field as={TextField} name='rm' label='RM' inputProps={{ maxLength: 4 }} required fullWidth />
+                                            {errors.rm && touched.rm && (
+                                                <p style={{ color: 'red' }}>{errors.rm}</p>
+                                            )}
+                                        </Box>
                                     </Box>
                                     <Box gap={2.5}>
                                         <Field as={TextField} name='email' fullWidth label='Email' required type='email' />
@@ -169,7 +197,7 @@ function RegisterForm(): ReactElement {
                 <Box component='span' fontWeight={600}>Disposições Gerais</Box><br />Estes termos de serviço constituem o acordo integral entre você e a UNetwork em relação ao uso do nosso serviço. Podemos alterar estes termos de serviço a qualquer momento. Se houver uma disputa entre você e a UNetwork, ela será resolvida de acordo com as leis do país em que nossa empresa está sediada.<br /><br />
             </UNetworkModal>
             <LoadingBackdrop
-                handleClose={handleCloseLoading}
+                // handleClose={handleCloseLoading}
                 open={openLoading}
             />
             <Snackbar

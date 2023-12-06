@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import { setCredentials, useLoginMutation } from '$features/auth'
 import loginDecoration from '$assets/svg/Auth/LoginDecoration.svg'
 import * as Yup from 'yup'
-import { useGetUserMutation } from '$features/user'
 
 function LoginForm(): ReactElement {
     const validationSchema = Yup.object().shape({
@@ -16,8 +15,7 @@ function LoginForm(): ReactElement {
         password: Yup.string().required('Este campo é obrigatório')
     })
 
-    const [ login, { data: loginData, isSuccess: isLoginSuccess, isError: isLoginError } ] = useLoginMutation()
-    const [ getUser, { data: userData } ] = useGetUserMutation()
+    const [ login, { data, isSuccess: isLoginSuccess, isError: isLoginError } ] = useLoginMutation()
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -34,9 +32,7 @@ function LoginForm(): ReactElement {
     useEffect(() => {
         (async () => {
             if(isLoginSuccess) {
-                await getUser(loginData?.id ?? '')
-
-                dispatch(setCredentials({ user: userData, accessToken: loginData?.token }))
+                dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
                 navigate('/app')
             } else if (isLoginError) {
                 handleCloseLoading()
@@ -46,11 +42,9 @@ function LoginForm(): ReactElement {
     }, [ 
         isLoginSuccess,
         isLoginError,
-        loginData,
         dispatch,
         navigate,
-        getUser,
-        userData 
+        data 
     ])
 
     const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
@@ -101,7 +95,7 @@ function LoginForm(): ReactElement {
                 </Formik>
             </Box>
             <LoadingBackdrop
-                handleClose={handleCloseLoading}
+                // handleClose={handleCloseLoading}
                 open={openLoading}
             />
             <Snackbar
