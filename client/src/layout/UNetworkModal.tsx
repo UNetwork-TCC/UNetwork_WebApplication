@@ -1,7 +1,7 @@
 import { Box, Modal, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type ReactNode, type ReactElement, useEffect } from 'react'
 import logo from '$assets/img/Logo.png'
-import lightLogo from '$assets/img/lightLogo.png'
+import lightLogo from '$assets/img/LightLogo.png'
 
 export default function UNetworkModal({
     children,
