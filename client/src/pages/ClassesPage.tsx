@@ -75,7 +75,7 @@ export default function ClassesPage(): ReactElement {
 
     return (
         <AppLayout>
-            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
+            <Box display='flex' justifyContent='start' flexDirection='column' p={3} mt={5} width='100%' minHeight={'calc(100vh - 13rem)'} fontSize={'1rem'}>
                 <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '90%' }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Suas Classes</Typography>
                     <FilterAndConfig text={'CRIAR PASTA'} handleOpen={handleOpen} />

@@ -13,7 +13,7 @@ export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
     
     const user = useAppSelector(state => state.auth.user)
-
+    
     const { 
         sideBar: {
             dropdownButtonClicked,
@@ -89,12 +89,12 @@ export default function SideBar(): ReactElement {
                 }
                 sx={{
                     '&': {
-                        height: 50,
+                        height: '3.1rem',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: dropdownButtonClicked ? 'center' : undefined,
-                        p: 3,
-                        mb: 1.5,
+                        p: '6%',
+                        mb: '2%',
                         gap: 2,
                         borderRadius: 2,
                         bgcolor: 'transparent',
