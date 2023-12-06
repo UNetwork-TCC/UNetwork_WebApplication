@@ -85,7 +85,7 @@ export default function Home(): ReactElement {
                     }
                 })
             }
-            
+
             await updateUser({
                 _id: user._id ?? '',
                 posts: [

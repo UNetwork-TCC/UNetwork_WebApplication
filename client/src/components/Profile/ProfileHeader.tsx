@@ -37,7 +37,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
 
     const follow = (): void => {
         (async () => {
-            const a = await updateUser({
+            await updateUser({
                 _id: id,
                 followers: [
                     ...user.followers,
@@ -89,6 +89,9 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     }
                 }
             })
+
+            console.log(data);
+            
 
             dispatch(setCredentials({
                 user: {

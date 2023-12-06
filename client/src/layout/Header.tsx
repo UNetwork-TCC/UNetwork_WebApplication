@@ -155,8 +155,8 @@ export default function Header({
                         </Box>
                         <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
                             <CustomLink to='/app/forum' name='Fóruns' />
-                            <CustomLink to='/app/classes' name='Classes' />
-                            <CustomLink to='/app/materials' name='Materiais' />
+                            {/* <CustomLink to='/app/classes' name='Classes' /> */}
+                            {/* <CustomLink to='/app/materials' name='Materiais' /> */}
                             <CustomLink to='/app/news' name='Notícias' />
                         </Box>
                         <Box gap={3} display='flex'>

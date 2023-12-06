@@ -154,7 +154,7 @@ export default function SideBar(): ReactElement {
                     flexDirection='column'
                     height='100%'
                 >
-                    <Box display='flex' gap={2} flexDirection='column' justifyContent='space-between'>
+                    <Box display='flex' gap={2} flexDirection='column'>
                         <Box display='flex' flexDirection='column' gap={3} >
                             <Stack gap={1}>
                                 <NavLink
@@ -176,10 +176,13 @@ export default function SideBar(): ReactElement {
                             <Box 
                                 sx={{
                                     [theme.breakpoints.down('xl')]: {
-                                        ml: 1
+                                        ml: 1,
+                                        maxHeight: '24rem',
+                                        minHeight: '20rem'
                                     }
                                 }} 
-                                height='450px' 
+                                maxHeight='28rem' 
+                                minHeight='14rem' 
                                 ml={!dropdownButtonClicked ? 3 : 2.4}
                             >
                                 <Box
@@ -214,7 +217,10 @@ export default function SideBar(): ReactElement {
                                             display: shortcutsExpanded ? 'flex' : 'none',
                                             overflow: 'scroll',
                                             overflowX: 'hidden',
-                                            '::-webkit-slider-thumb': { display: 'none' }
+                                            '::-webkit-slider-thumb': { display: 'none' },
+                                            [theme.breakpoints.down('xl')]: {
+                                                maxHeight: '20rem'
+                                            }
                                         }}
                                     >
                                         {user.otherInfo?.shortcuts?.map((shortcut, index) => (

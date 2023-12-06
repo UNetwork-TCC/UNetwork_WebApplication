@@ -278,7 +278,7 @@ export default function Post({
                                 <img src={content.picture} alt={'imagem de ' + user?.username} />
                             }
                         </Box>
-                        <Box
+                        {/* <Box
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -303,7 +303,7 @@ export default function Post({
                             <Box sx={{}}>
                                 <MiscMessage />
                             </Box>
-                        </Box>
+                        </Box> */}
                         <Box>
                             <Box
                                 display='flex'

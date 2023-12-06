@@ -20,28 +20,16 @@ export default function MessageWrapper(): ReactElement {
             }}
         >
             <Message 
-                text='Eae mano, tranquilo?' 
-                messageFrom='him'
-            />
-            <Message 
-                text='To suave man, e vc?'
-                messageFrom='me'
-            />
-            <Message 
-                text='tranquilo?'
-                messageFrom='me'
-            />
-            <Message 
-                text='tranquilo'
-                messageFrom='him'
-            />
-            <Message 
                 text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
                 messageFrom='him'
             />
             <Message 
-                text='ah tá... Não entedi merda nenhuma mas beleza 👍'
+                text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
                 messageFrom='me'
+            />
+            <Message 
+                text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
+                messageFrom='him'
             />
         </Box>
     )
