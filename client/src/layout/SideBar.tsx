@@ -4,10 +4,8 @@ import { ArrowBackIos,
     DarkMode,
     ExpandLess,
     ExpandMore,
-    Folder,
     Home,
     LightMode,
-    LocationOn,
     LogoutOutlined,
     Message,
     Newspaper,
@@ -15,7 +13,7 @@ import { ArrowBackIos,
 } from '@mui/icons-material'
 
 import { Box, Stack, type SxProps, Typography, Popover, Divider, useMediaQuery, BottomNavigation } from '@mui/material'
-import { type ReactElement, useState, useContext, SyntheticEvent, useRef, useEffect } from 'react'
+import { type ReactElement, useState, useContext, type SyntheticEvent } from 'react'
 import { Shortcut } from '$components'
 import { useNavigate } from 'react-router-dom'
 import { type MouseEvent } from 'react'
@@ -24,9 +22,6 @@ import { darkTheme, lightTheme } from '$themes'
 import { useAppDispatch, useAppSelector } from '$store'
 import { logOut } from '$features/auth'
 import { BottomNavigationAction } from '@mui/material'
-
-import logo from '$assets/img/Logo.png'
-import lightLogo from '$assets/img/LightLogo.png'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)

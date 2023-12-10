@@ -11,7 +11,6 @@ import Folder from './FavoritePage/Folder'
 import Clips from './Timeline/Clips'
 import Comment from './Timeline/Comment'
 import TimelinePost from './Timeline/Post'
-import Suggestion from './Timeline/Suggestion'
 import Auth from './Auth/Auth'
 import FolderMaterials from './Materials/FolderMaterials'
 import ContactsArea from './Chat/ContactsArea'
@@ -72,7 +71,6 @@ export {
     AnimateOnScroll,
     ContactsArea,
     ChatArea,
-    Suggestion,
     TimelinePost,
     Clips,
     BigNews,

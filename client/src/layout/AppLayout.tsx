@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { type ReactElement, useContext, useEffect } from 'react'
+import { type ReactElement, useContext } from 'react'
 import { Box, type SxProps, useTheme, useMediaQuery, IconButton } from '@mui/material'
 import { useStyles } from '$styles'
 import { Header, SearchBar } from '.'
@@ -7,10 +7,8 @@ import { SideBar } from '$layout'
 import { appLayoutContext } from '$contexts'
 import { RequireAuth, UserAvatar } from '$components'
 import bg from '$assets/img/bg.jpg'
-import { Typography } from '@mui/material'
 import { Badge } from '@mui/material'
 import { Avatar } from '@mui/material'
-import { Notifications } from '@mui/icons-material'
 import { useAppSelector } from '$store'
 
 import logo from '$assets/img/Logo.png'
@@ -114,7 +112,9 @@ export default function AppLayout({
                         ) : (
                             <Box bgcolor={theme.palette.mode === 'light' ? 'white' : '#221f24'} >
                                 <Box p='1.25rem' display='flex' gap={1} alignItems='center' >
-                                    <IconButton onClick={() => { navigate('/app') }} display='flex' justifyContent='center' flexDirection='column' alignItems='center'>
+                                    <IconButton 
+                                        onClick={() => { navigate('/app') }} 
+                                    >
                                         <img height={30} width={30} src={ theme.palette.mode === 'light' ? logo : lightLogo}></img>
                                     </IconButton>
                                     <Box ml={2} display='flex' width='66%'>

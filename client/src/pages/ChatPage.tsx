@@ -51,7 +51,7 @@ export default function ChatPage(): ReactElement {
         setAnchorEl(null)
     }
 
-    const { theme, setTheme } = useContext(themeContext)
+    const { theme } = useContext(themeContext)
 
     return (
         <AppLayout>

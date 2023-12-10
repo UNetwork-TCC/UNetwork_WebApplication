@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from '@mui/material'
+import { Box, IconButton, Typography, useMediaQuery } from '@mui/material'
 import { Footer, LandingPageHeader } from '$layout'
 import facebookLogo from '$assets/svg/Auth/FacebookLogo.svg'
 import React, { type ReactElement } from 'react'
@@ -16,6 +16,8 @@ export default function Auth({
 }): ReactElement {
     const theme = useTheme()
 
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
+
     return (
         <Box bgcolor='background.paper'>
             <LandingPageHeader />
@@ -27,7 +29,8 @@ export default function Auth({
                         alignItems='center'
                         justifyContent='start'
                         minHeight='60vh'
-                        width='80%'
+                        width={!matches ? '80%' : '100%'}
+                        mb={!matches ? 0 : 15}
                         borderRadius={5}
                         border={`1px solid ${theme.palette.primary.main}`}
                     >
@@ -46,9 +49,11 @@ export default function Auth({
                         {form}
                     </Box>
                 </Box>
-                <Box height='100%' width='100%' display='flex' justifyContent='center' alignItems='center'>
-                    {side}
-                </Box>
+                {!matches && (
+                    <Box height='100%' width='100%' display='flex' justifyContent='center' alignItems='center'>
+                        {side}
+                    </Box>
+                )}
             </Box>
             <Footer />
         </Box>

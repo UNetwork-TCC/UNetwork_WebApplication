@@ -3,7 +3,6 @@ import ErrorPage from './ErrorPage'
 import FavoritesPage from './FavoritesPage'
 import Clips from '../components/Timeline/Clips'
 import Home from './Home'
-import Suggestion from '../components/Timeline/Suggestion'
 import MaterialsPage from './MaterialsPage'
 import ChatPage from './ChatPage'
 import NewsPage from './NewsPage'
@@ -22,7 +21,6 @@ export {
     FavoritesPage,
     Clips,
     PostPage,
-    Suggestion,
     ProfilePage,
     Home,
     AdminDashboardPage,

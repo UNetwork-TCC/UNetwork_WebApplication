@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Alert, Avatar, Box, Snackbar, SxProps, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Alert, Avatar, Box, Snackbar, type SxProps, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { ClipsWrapper, Post, SideComponent } from '$components'
 import { Add, AttachFile } from '@mui/icons-material'
 import { AppLayout, CustomInput, LoadingBackdrop } from '$layout'
