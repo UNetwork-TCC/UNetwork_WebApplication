@@ -1,6 +1,21 @@
-import { ArrowBackIos, ArrowForwardIos, Bookmark, DarkMode, ExpandLess, ExpandMore, Home, LightMode, LogoutOutlined, Message } from '@mui/icons-material'
-import { Box, Stack, type SxProps, Typography, Popover, Divider } from '@mui/material'
-import { type ReactElement, useState, useContext } from 'react'
+import { ArrowBackIos,
+    ArrowForwardIos,
+    Bookmark,
+    DarkMode,
+    ExpandLess,
+    ExpandMore,
+    Folder,
+    Home,
+    LightMode,
+    LocationOn,
+    LogoutOutlined,
+    Message,
+    Newspaper,
+    Forum as ForumIcon
+} from '@mui/icons-material'
+
+import { Box, Stack, type SxProps, Typography, Popover, Divider, useMediaQuery, BottomNavigation } from '@mui/material'
+import { type ReactElement, useState, useContext, SyntheticEvent, useRef, useEffect } from 'react'
 import { Shortcut } from '$components'
 import { useNavigate } from 'react-router-dom'
 import { type MouseEvent } from 'react'
@@ -8,6 +23,10 @@ import { appLayoutContext, themeContext } from '$contexts'
 import { darkTheme, lightTheme } from '$themes'
 import { useAppDispatch, useAppSelector } from '$store'
 import { logOut } from '$features/auth'
+import { BottomNavigationAction } from '@mui/material'
+
+import logo from '$assets/img/Logo.png'
+import lightLogo from '$assets/img/LightLogo.png'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
@@ -121,157 +140,225 @@ export default function SideBar(): ReactElement {
         )
     }
 
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
+
+    const [ value, setValue ] = useState(location.href.split('/')[4])
+
+    const handleChange = (_event: SyntheticEvent, newValue: string): void => {
+        if (newValue === 'theme') {
+            setTheme(theme === darkTheme ? lightTheme : darkTheme)
+        } else {
+            setValue(newValue)
+            navigate('/app/' + newValue)
+        }
+    }
+
     return (
         <>
-            <Box
-                sx={{
-                    height: '100%',
-                    position: 'relative',
-                    top: 0,
-                    left: 0,
-                    p: 3,
-                    width: !dropdownButtonClicked ? '20rem' : '7rem',
-                    bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
-                    transition: '.3s ease-in-out'
-                }}
-            >
-                <Box position='relative'>
-                    {
-                        dropdownButtonClicked ?
-                            <ArrowForwardIos
-                                sx={arrowStyle}
-                                onClick={toogleDropdown}
-                            />
-                            :
-                            <ArrowBackIos
-                                sx={arrowStyle}
-                                onClick={toogleDropdown}
-                            />
-                    }
-                </Box>
-                <Box
-                    display='flex'
-                    flexDirection='column'
-                    height='100%'
-                >
-                    <Box display='flex' gap={2} flexDirection='column'>
-                        <Box display='flex' flexDirection='column' gap={3} >
-                            <Stack gap={1}>
-                                <NavLink
-                                    icon={<Home />}
-                                    text='Home'
-                                    link='/app'
-                                />
-                                <NavLink
-                                    icon={<Message />}
-                                    text='Conversas'
-                                    link='/app/chat'
-                                />
-                                <NavLink
-                                    icon={<Bookmark />}
-                                    text='Favoritos'
-                                    link='/app/favorites'
-                                />
-                            </Stack>
-                            <Box 
-                                sx={{
-                                    [theme.breakpoints.down('xl')]: {
-                                        ml: 1,
-                                        maxHeight: '24rem',
-                                        minHeight: '20rem'
-                                    }
-                                }} 
-                                maxHeight='28rem' 
-                                minHeight='14rem' 
-                                ml={!dropdownButtonClicked ? 3 : 2.4}
-                            >
-                                <Box
-                                    onClick={setShortcutsExpanded}
-                                    color='text.secondary'
-                                    display='flex'
-                                    mb={3}
-                                    gap={2}
-                                >
-                                    {!dropdownButtonClicked ?
-                                        <>
-                                            <Typography sx={{ userSelect: 'none', cursor: 'pointer' }}>Seus atalhos ({shortcutsLength})</Typography>
-                                            {shortcutsExpanded
-                                                ? <ExpandLess sx={{ cursor: 'pointer' }} />
-                                                : <ExpandMore sx={{ cursor: 'pointer' }} />
+            {!matches ? (
+                <>
+                    <Box
+                        sx={{
+                            height: '100%',
+                            position: 'relative',
+                            top: 0,
+                            left: 0,
+                            p: 3,
+                            width: !dropdownButtonClicked ? '20rem' : '7rem',
+                            bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
+                            transition: '.3s ease-in-out'
+                        }}
+                    >
+                        <Box position='relative'>
+                            {
+                                dropdownButtonClicked ?
+                                    <ArrowForwardIos
+                                        sx={arrowStyle}
+                                        onClick={toogleDropdown}
+                                    />
+                                    :
+                                    <ArrowBackIos
+                                        sx={arrowStyle}
+                                        onClick={toogleDropdown}
+                                    />
+                            }
+                        </Box>
+                        <Box
+                            display='flex'
+                            flexDirection='column'
+                            height='100%'
+                        >
+                            <Box display='flex' gap={2} flexDirection='column'>
+                                <Box display='flex' flexDirection='column' gap={3} >
+                                    <Stack gap={1}>
+                                        <NavLink
+                                            icon={<Home />}
+                                            text='Home'
+                                            link='/app'
+                                        />
+                                        <NavLink
+                                            icon={<Message />}
+                                            text='Conversas'
+                                            link='/app/chat'
+                                        />
+                                        <NavLink
+                                            icon={<Bookmark />}
+                                            text='Favoritos'
+                                            link='/app/favorites'
+                                        />
+                                    </Stack>
+                                    <Box 
+                                        sx={{
+                                            [theme.breakpoints.down('xl')]: {
+                                                ml: 1,
+                                                maxHeight: '24rem',
+                                                minHeight: '20rem'
                                             }
-                                        </>
-                                        :
-                                        <Box onClick={e => { handleOpenPopover(e) }}>
-                                            { !open ?
-                                                <ExpandMore sx={{ cursor: 'pointer' }} />
+                                        }} 
+                                        maxHeight='28rem' 
+                                        minHeight='14rem' 
+                                        ml={!dropdownButtonClicked ? 3 : 2.4}
+                                    >
+                                        <Box
+                                            onClick={setShortcutsExpanded}
+                                            color='text.secondary'
+                                            display='flex'
+                                            mb={3}
+                                            gap={2}
+                                        >
+                                            {!dropdownButtonClicked ?
+                                                <>
+                                                    <Typography sx={{ userSelect: 'none', cursor: 'pointer' }}>Seus atalhos ({shortcutsLength})</Typography>
+                                                    {shortcutsExpanded
+                                                        ? <ExpandLess sx={{ cursor: 'pointer' }} />
+                                                        : <ExpandMore sx={{ cursor: 'pointer' }} />
+                                                    }
+                                                </>
                                                 :
-                                                <ExpandLess sx={{ cursor: 'pointer' }} />
+                                                <Box onClick={e => { handleOpenPopover(e) }}>
+                                                    { !open ?
+                                                        <ExpandMore sx={{ cursor: 'pointer' }} />
+                                                        :
+                                                        <ExpandLess sx={{ cursor: 'pointer' }} />
+                                                    }
+                                                </Box>
                                             }
                                         </Box>
-                                    }
+                                        {!dropdownButtonClicked &&
+                                            <Stack
+                                                sx={{
+                                                    maxHeight: '410px',
+                                                    display: shortcutsExpanded ? 'flex' : 'none',
+                                                    overflow: 'scroll',
+                                                    overflowX: 'hidden',
+                                                    '::-webkit-slider-thumb': { display: 'none' },
+                                                    [theme.breakpoints.down('xl')]: {
+                                                        maxHeight: '20rem'
+                                                    }
+                                                }}
+                                            >
+                                                {user.otherInfo?.shortcuts?.map((shortcut, index) => (
+                                                    <Shortcut
+                                                        key={index}
+                                                        title={shortcut.title}
+                                                        category={shortcut.category}
+                                                        color={shortcut.color}
+                                                    />
+                                                ))}
+                                            </Stack>
+                                        }
+                                        <Popover
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            onClose={handleClosePopover}
+                                            anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'right'
+                                            }}
+                                        >
+                                            <Stack maxHeight={450} width={200} p={2.5}>
+                                                <Typography mb={2.5} textAlign='center'>Seus atalhos ({ shortcutsLength })</Typography>
+                                                {user.otherInfo?.shortcuts?.map((shortcut, index) => (
+                                                    <Shortcut
+                                                        key={index}
+                                                        title={shortcut.title}
+                                                        category={shortcut.category}
+                                                        color={shortcut.color}
+                                                    />
+                                                ))}
+                                            </Stack>
+                                        </Popover>
+                                    </Box>
                                 </Box>
-                                {!dropdownButtonClicked &&
-                                    <Stack
-                                        sx={{
-                                            maxHeight: '410px',
-                                            display: shortcutsExpanded ? 'flex' : 'none',
-                                            overflow: 'scroll',
-                                            overflowX: 'hidden',
-                                            '::-webkit-slider-thumb': { display: 'none' },
-                                            [theme.breakpoints.down('xl')]: {
-                                                maxHeight: '20rem'
-                                            }
-                                        }}
-                                    >
-                                        {user.otherInfo?.shortcuts?.map((shortcut, index) => (
-                                            <Shortcut
-                                                key={index}
-                                                title={shortcut.title}
-                                                category={shortcut.category}
-                                                color={shortcut.color}
-                                            />
-                                        ))}
-                                    </Stack>
-                                }
-                                <Popover
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClosePopover}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'right'
-                                    }}
-                                >
-                                    <Stack maxHeight={450} width={200} p={2.5}>
-                                        <Typography mb={2.5} textAlign='center'>Seus atalhos ({ shortcutsLength })</Typography>
-                                        {user.otherInfo?.shortcuts?.map((shortcut, index) => (
-                                            <Shortcut
-                                                key={index}
-                                                title={shortcut.title}
-                                                category={shortcut.category}
-                                                color={shortcut.color}
-                                            />
-                                        ))}
-                                    </Stack>
-                                </Popover>
+                                <Stack>
+                                    <NavLink 
+                                        icon={<LogoutOutlined />}
+                                        text='Sair'
+                                        link={logout}
+                                    />
+                                    <NavLink 
+                                        icon={theme.palette.mode === 'dark' ? <LightMode /> : <DarkMode />}
+                                        text={theme.palette.mode === 'dark' ? 'Tema claro' : 'Tema escuro'}
+                                        link={(): void => { setTheme(theme.palette.mode === 'dark' ? lightTheme : darkTheme) }}
+                                    />
+                                </Stack>
                             </Box>
                         </Box>
-                        <Stack>
-                            <NavLink 
-                                icon={<LogoutOutlined />}
-                                text='Sair'
-                                link={logout}
-                            />
-                            <NavLink 
-                                icon={theme.palette.mode === 'dark' ? <LightMode /> : <DarkMode />}
-                                text={theme.palette.mode === 'dark' ? 'Tema claro' : 'Tema escuro'}
-                                link={(): void => { setTheme(theme.palette.mode === 'dark' ? lightTheme : darkTheme) }}
-                            />
-                        </Stack>
                     </Box>
-                </Box>
-            </Box>
-            <Divider orientation='vertical' role='presentation' flexItem sx={{ height: '100%' }} />
+                    <Divider orientation='vertical' role='presentation' flexItem sx={{ height: '100%' }} />
+                </>
+            ) : (
+                <BottomNavigation 
+                    showLabels 
+                    value={value} 
+                    onChange={handleChange}
+                    sx={{ width: '100vw' }} 
+                >
+                    <BottomNavigationAction
+                        label="Home"
+                        value=""
+                        icon={<Home />}
+                        sx={{ mr: -1.5 }}
+                    />
+                    <BottomNavigationAction
+                        label="Conversas"
+                        value="chat"
+                        icon={<Message />}
+                        sx={{ mr: -1.5 }}
+
+                    />
+                    <BottomNavigationAction
+                        label="Favoritos"
+                        value="favorites"
+                        icon={<Bookmark />}
+                        sx={{ mr: -1.5 }}
+
+                    />
+                    <BottomNavigationAction
+                        label="Fóruns"
+                        value="forum"
+                        icon={<ForumIcon />}
+                        sx={{ mr: -1.5 }}
+
+                    />
+                    <BottomNavigationAction 
+                        label="Notícias" 
+                        value="news" 
+                        icon={<Newspaper />} 
+                        sx={{ mr: -1.5 }}
+                    />
+                    <BottomNavigationAction 
+                        label={theme.palette.mode === 'dark' ? 'Tema claro' : 'Tema escuro'} 
+                        icon={theme.palette.mode === 'dark' ? <LightMode /> : <DarkMode />} 
+                        value="theme"
+                    />
+                    {/* <BottomNavigationAction 
+                        label="Notícias" 
+                        value="news" 
+                        icon={logo} 
+                    /> */}
+                </BottomNavigation>
+            )}
         </>
     )
 }

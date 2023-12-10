@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Alert, Avatar, Box, Snackbar, Typography, useTheme } from '@mui/material'
+import { Alert, Avatar, Box, Snackbar, SxProps, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { ClipsWrapper, Post, SideComponent } from '$components'
 import { Add, AttachFile } from '@mui/icons-material'
 import { AppLayout, CustomInput, LoadingBackdrop } from '$layout'
@@ -29,9 +29,17 @@ export default function Home(): ReactElement {
 
     const [ loading, setLoading ] = useState<boolean>(false)
 
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
+
     const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault()
         setLoading(true)
+
+        if (!postContent?.text && !postContent?.picture) {
+            setLoading(false)
+            alert('Você precisa de pelo menos um conteúdo para publicar!')
+            return
+        }
 
         let data: any
 
@@ -74,6 +82,8 @@ export default function Home(): ReactElement {
                                 data.postUpdates
                             ]
                         })
+
+                        setLoading(false)
                     })()
                 }, 100)
             } else {
@@ -94,7 +104,6 @@ export default function Home(): ReactElement {
                 ]
             })
         }
-
         setLoading(false)
     }
 
@@ -108,6 +117,15 @@ export default function Home(): ReactElement {
 
     const closeBackdrop = (): void => { setLoading(false) }
 
+    const fileInputStyle: SxProps = {
+        display: 'flex',
+        justifyContent: 'end',
+        alignItems: 'center',
+        position: 'relative',
+        width: '50px',
+        bottom: 47
+    }
+
     return (
         <AppLayout>
             <Box
@@ -116,24 +134,23 @@ export default function Home(): ReactElement {
                 width='100%'
             >
                 <Box 
-                    width='50%' 
+                    width={matches ? '100%' : '50%'} 
                     height='100%'
                     display='flex' 
                     justifyContent='start' 
                     alignItems='center' 
                     flexDirection='column' 
                     p={3} 
-                    m={5} 
+                    m={!matches ? 5 : 2} 
                 >
                     <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio">
-                        <ClipsWrapper />
+                        {/* <ClipsWrapper /> */}
                         <Box>
                             <form onSubmit={(e) => { handleSubmit(e) }}>
                                 <CustomInput
                                     onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
                                     sx={{ boxShadow: theme.shadows[4] }}
-                                    fullWidth
-                                    width='100%'
+                                    width='80%'
                                     bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                                     placeholder='No que estou pensando...'
                                     color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
@@ -142,18 +159,17 @@ export default function Home(): ReactElement {
                                     multiline
                                 />
                                 <Box
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'end',
-                                        alignItems: 'center',
-                                        position: 'relative',
-                                        width: '50px',
-                                        bottom: 47,
+                                    sx={!matches ? {
+                                        ...fileInputStyle,
                                         right: '4rem',
                                         [theme.breakpoints.down('xl')]: {
                                             bottom: 44,
                                             right: '5.25rem'
                                         }
+                                    } : {
+                                        ...fileInputStyle,
+                                        left: '85%',
+                                        bottom: 43.5
                                     }}>
                                     <input
                                         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -199,7 +215,14 @@ export default function Home(): ReactElement {
                             </form>
                         </Box>
                     </Box>
-                    <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' width='100%' m={5}>
+                    <Box 
+                        display='flex' 
+                        flexDirection='column' 
+                        justifyContent='center' 
+                        alignItems='center' 
+                        width='100%' 
+                        m={!matches ? 5 : 1}
+                    >
                         { isLoading
                             ? (
                                 <>
@@ -220,30 +243,32 @@ export default function Home(): ReactElement {
                         }
                     </Box>
                 </Box>
-                <Box
-                    sx={{
-                        width: '20%',
-                        [theme.breakpoints.down('xl')]: {
-                            width: '25%'
-                        }
-                    }}
-                    display='flex'
-                    justifyContent='center'
-                    height='100%' 
-                    p={3} 
-                    m={5} 
-                >
-                    <Box 
-                        bgcolor='background.paper'
-                        borderRadius={5}
-                        height='15rem'
-                        width='100%'
-                        boxShadow={theme.shadows[15]}
-                        p={3}
+                {!matches && (
+                    <Box
+                        sx={{
+                            width: '20%',
+                            [theme.breakpoints.down('xl')]: {
+                                width: '25%'
+                            }
+                        }}
+                        display='flex'
+                        justifyContent='center'
+                        height='100%' 
+                        p={3} 
+                        m={5} 
                     >
-                        <SideComponent user={user} />
+                        <Box 
+                            bgcolor='background.paper'
+                            borderRadius={5}
+                            height='15rem'
+                            width='100%'
+                            boxShadow={theme.shadows[15]}
+                            p={3}
+                        >
+                            <SideComponent user={user} />
+                        </Box>
                     </Box>
-                </Box>
+                )}
             </Box>
             <Snackbar 
                 open={snackbarOpen}
@@ -252,7 +277,7 @@ export default function Home(): ReactElement {
                 autoHideDuration={3000}
             >
                 <Alert onClose={handleSnackbarClose} severity='error'>
-                    A imagem colocada excede os limites de tamanho (6mb)!
+                    A imagem colocada excede os limites de tamanho (32mb)!
                 </Alert>
             </Snackbar>
             <LoadingBackdrop 
