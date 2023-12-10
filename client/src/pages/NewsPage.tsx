@@ -57,15 +57,21 @@ export default function NewsPage(): ReactElement {
 
     return (
         <AppLayout>
-            <Box display='flex' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'}>
-                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%' }}>
+            <Box display='flex' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'} sx={{ [theme.breakpoints.down('xl')]: { mt: 3 },
+                [theme.breakpoints.down('lg')]: { mt: 1 }
+            }}>
+                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%', [theme.breakpoints.down('lg')]: { mb:'0' } }}>
                     <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
                     {user.admin && (
                         <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                     )}
                 </Container>
                 <Box sx={{ display: 'flex', width: '100%', justifyContent:'center' }}>
-                    <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', justifyContent:'center' }} >
+                    <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', justifyContent:'center', 
+                        [theme.breakpoints.down('lg')]: {
+                            width:'65%'
+                        }
+                    }} >
                         {isLoading ? (
                             <>
                                 <NewsSkeleton />
@@ -83,37 +89,39 @@ export default function NewsPage(): ReactElement {
                         ))}
                     </Box>
                     <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
-                        <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem' }}>
+                        <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem',
+                            [theme.breakpoints.down('lg')]: { ml:'10%', height:'80%', mb:'15%' }
+                        }}>
                             <Typography sx={{ m: '5% 0 5% 5%', fontWeight: 'bold' }}>Mais Lidas</Typography>
                             <Divider />
-                            <Stack sx={{ width: '100%', height: '90%', pt: '1rem' }} gap={2}>
+                            <Stack sx={{ width: '100%', height: '90%', pt: '1rem', [theme.breakpoints.down('lg')]: { gap: 1, pt: 1 } }} gap={2}>
                                 <Link sx={{ color: 'black', display: 'flex', width: '100%', height: '15%', alignItems: 'center', cursor: 'pointer' }}>
                                     <Typography variant='h5' sx={{ mr: '5%', color: 'gray' }}>1</Typography>
-                                    <Typography variant='h6'>Titulo da noticia mais curtida</Typography>
+                                    <Typography variant='h6' sx={{ [theme.breakpoints.down('lg')]: { fontSize:'1.1rem' } }} >Titulo da noticia mais curtida</Typography>
                                 </Link>
                                 <Divider />
 
                                 <Link sx={{ color: 'black', display: 'flex', width: '100%', height: '15%', alignItems: 'center', cursor: 'pointer' }}>
                                     <Typography variant='h5' sx={{ mr: '5%', color: 'gray' }}>2</Typography>
-                                    <Typography variant='h6'>Titulo da segunda noticia mais curtida</Typography>
+                                    <Typography variant='h6' sx={{ [theme.breakpoints.down('lg')]: { fontSize:'1.1rem' } }} >Titulo da segunda noticia mais curtida</Typography>
                                 </Link>
                                 <Divider />
 
                                 <Link sx={{ color: 'black', display: 'flex', width: '100%', height: '15%', alignItems: 'center', cursor: 'pointer' }}>
                                     <Typography variant='h5' sx={{ mr: '5%', color: 'gray' }}>3</Typography>
-                                    <Typography variant='h6'>Titulo da terceira noticia mais curtida</Typography>
+                                    <Typography variant='h6' sx={{ [theme.breakpoints.down('lg')]: { fontSize:'1.1rem' } }} >Titulo da terceira noticia mais curtida</Typography>
                                 </Link>
                                 <Divider />
 
                                 <Link sx={{ color: 'black', display: 'flex', width: '100%', height: '15%', alignItems: 'center', cursor: 'pointer' }}>
                                     <Typography variant='h5' sx={{ mr: '5%', color: 'gray' }}>4</Typography>
-                                    <Typography variant='h6'>Titulo da quarta noticia mais curtida</Typography>
+                                    <Typography variant='h6' sx={{ [theme.breakpoints.down('lg')]: { fontSize:'1.1rem' } }} >Titulo da quarta noticia mais curtida</Typography>
                                 </Link>
                                 <Divider />
 
                                 <Link sx={{ color: 'black', display: 'flex', width: '100%', height: '15%', alignItems: 'center', cursor: 'pointer' }}>
                                     <Typography variant='h5' sx={{ mr: '5%', color: 'gray' }}>5</Typography>
-                                    <Typography variant='h6'>Titulo da  noticia mais curtida</Typography>
+                                    <Typography variant='h6' sx={{ [theme.breakpoints.down('lg')]: { fontSize:'1.1rem' } }} >Titulo da  noticia mais curtida</Typography>
                                 </Link>
                                 <Divider />
 
@@ -131,7 +139,8 @@ export default function NewsPage(): ReactElement {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{ height: matches ? '45  vh' : '40vh', width: '35vw', bgcolor: 'background.paper' }} borderRadius={2} >
+                <Box p={1} sx={{ height: matches ? '25rem' : '40%', width: '40%', bgcolor: 'background.paper', 
+                    [theme.breakpoints.down('lg')]: { height:'28rem' } }} borderRadius={2} >
                     <Box p={0}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
                             Criar Notícia
@@ -154,7 +163,7 @@ export default function NewsPage(): ReactElement {
                             fullWidth
                         />
                         <Alert sx={{ display: alertDisplay }} severity='error'>Preencha todos os campos!</Alert>
-                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} >
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} gap={3} marginTop={'3rem'} >
                             <Button onClick={handleClose} variant='outlined' fullWidth>
                                 Cancelar
                             </Button>

@@ -73,7 +73,9 @@ export default function SideBar(): ReactElement {
             borderRadius: '50%',
             color: 'primary.contrastText',
             transition: '.3s ease-in-out',
-            pl: !dropdownButtonClicked ? 1 : 0.75
+            pl: !dropdownButtonClicked ? 1 : 0.75,
+            [theme.breakpoints.down('lg')]:{ left: !dropdownButtonClicked ? '111%' : '145%', top: 3, height:20, width:20, p: !dropdownButtonClicked ? 0.3 : 0.55,
+                pl: !dropdownButtonClicked ? 0.8 : 0.60 }
         },
 
         ':hover': {
@@ -121,6 +123,11 @@ export default function SideBar(): ReactElement {
                         cursor: 'pointer',
                         [theme.breakpoints.down('xl')]: {
                             p: 2
+                        },
+                        [theme.breakpoints.down('lg')]: {
+                            height:'2.5rem',
+                            p:'5%'                          ,
+                            gap:1.5
                         }
                     },
 
@@ -134,7 +141,7 @@ export default function SideBar(): ReactElement {
             >
                 {icon}
                 {!dropdownButtonClicked && (
-                    <Typography fontSize={'1rem'}>{text}</Typography>
+                    <Typography fontSize={'1rem'} sx={{ [theme.breakpoints.down('lg')]: { fontSize:'0.9rem' } }}>{text}</Typography>
                 )}
             </Box>
         )
@@ -166,7 +173,8 @@ export default function SideBar(): ReactElement {
                             p: 3,
                             width: !dropdownButtonClicked ? '20rem' : '7rem',
                             bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
-                            transition: '.3s ease-in-out'
+                            transition: '.3s ease-in-out',
+                            [theme.breakpoints.down('lg')]: { width: !dropdownButtonClicked ? '17rem' : '7rem' }
                         }}
                     >
                         <Box position='relative'>
@@ -189,7 +197,7 @@ export default function SideBar(): ReactElement {
                             height='100%'
                         >
                             <Box display='flex' gap={2} flexDirection='column'>
-                                <Box display='flex' flexDirection='column' gap={3} >
+                                <Box display='flex' flexDirection='column' gap={2} sx={{ [theme.breakpoints.down('lg')]:{ gap:1 } }}>
                                     <Stack gap={1}>
                                         <NavLink
                                             icon={<Home />}
@@ -211,11 +219,14 @@ export default function SideBar(): ReactElement {
                                         sx={{
                                             [theme.breakpoints.down('xl')]: {
                                                 ml: 1,
-                                                maxHeight: '24rem',
+                                                maxHeight: '27rem',
                                                 minHeight: '20rem'
+                                            },
+                                            [theme.breakpoints.down('lg')]:{
+                                                maxHeight:'22rem'
                                             }
                                         }} 
-                                        maxHeight='28rem' 
+                                        // height={'26rem'}
                                         minHeight='14rem' 
                                         ml={!dropdownButtonClicked ? 3 : 2.4}
                                     >
@@ -225,10 +236,15 @@ export default function SideBar(): ReactElement {
                                             display='flex'
                                             mb={3}
                                             gap={2}
+        
+                                            sx={{ [theme.breakpoints.down('lg')]:{ mb:1 } }}
                                         >
                                             {!dropdownButtonClicked ?
                                                 <>
-                                                    <Typography sx={{ userSelect: 'none', cursor: 'pointer' }}>Seus atalhos ({shortcutsLength})</Typography>
+                                                    <Typography sx={{ 
+                                                        userSelect: 'none', cursor: 'pointer', 
+                                                        [theme.breakpoints.down('lg')]: { fontSize:'0.9rem' }
+                                                    }}>Seus atalhos ({shortcutsLength})</Typography>
                                                     {shortcutsExpanded
                                                         ? <ExpandLess sx={{ cursor: 'pointer' }} />
                                                         : <ExpandMore sx={{ cursor: 'pointer' }} />
@@ -247,13 +263,17 @@ export default function SideBar(): ReactElement {
                                         {!dropdownButtonClicked &&
                                             <Stack
                                                 sx={{
-                                                    maxHeight: '410px',
+                                                    maxHeight: '24rem',
                                                     display: shortcutsExpanded ? 'flex' : 'none',
                                                     overflow: 'scroll',
                                                     overflowX: 'hidden',
                                                     '::-webkit-slider-thumb': { display: 'none' },
                                                     [theme.breakpoints.down('xl')]: {
-                                                        maxHeight: '20rem'
+                                                        maxHeight: '23rem'
+                                                    },
+                                                    [theme.breakpoints.down('lg')]: {
+                                                        maxHeight:'20rem',
+                                                        '::-webkit-scrollbar': { width:'5px' }
                                                     }
                                                 }}
                                             >
@@ -276,7 +296,7 @@ export default function SideBar(): ReactElement {
                                                 horizontal: 'right'
                                             }}
                                         >
-                                            <Stack maxHeight={450} width={200} p={2.5}>
+                                            <Stack maxWidth={450} p={2.5}>
                                                 <Typography mb={2.5} textAlign='center'>Seus atalhos ({ shortcutsLength })</Typography>
                                                 {user.otherInfo?.shortcuts?.map((shortcut, index) => (
                                                     <Shortcut
@@ -290,7 +310,7 @@ export default function SideBar(): ReactElement {
                                         </Popover>
                                     </Box>
                                 </Box>
-                                <Stack>
+                                <Stack gap={2} >
                                     <NavLink 
                                         icon={<LogoutOutlined />}
                                         text='Sair'

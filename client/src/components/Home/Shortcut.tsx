@@ -1,6 +1,7 @@
+import { themeContext } from '$contexts'
 import { Circle } from '@mui/icons-material'
 import { Box, Tooltip, Typography } from '@mui/material'
-import { type ReactElement } from 'react'
+import { useContext, type ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Shortcut({ 
@@ -16,6 +17,8 @@ export default function Shortcut({
 }) : ReactElement {
     const navigate = useNavigate()
 
+    const { theme, setTheme } = useContext(themeContext)
+
     return (
         <Box  
             sx={{
@@ -28,7 +31,9 @@ export default function Shortcut({
                     borderRadius: 2,
                     bgcolor: 'transparent',
                     transition: '.3s ease-in-out',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    [theme.breakpoints.down('lg')]: { height:40, mb:2 }
+
                 },
 
                 ':hover': {
@@ -50,7 +55,7 @@ export default function Shortcut({
                 width={35}
                 borderRadius={3}
                 border={`1px solid ${color}10`}
-                sx={{ background: `${color}10` }}
+                sx={{ background: `${color}10`, [theme.breakpoints.down('lg')]: { height:30, width:30 } }}
             >
                 <Circle sx={{ height: 12.5, color }} />
             </Box>

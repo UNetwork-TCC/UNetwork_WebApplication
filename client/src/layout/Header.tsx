@@ -160,11 +160,11 @@ export default function Header({
                             <CustomLink to='/app/news' name='Notícias' />
                         </Box>
                         <Box gap={3} display='flex'>
-                            <Box> {
+                            <Box sx={{ [theme.breakpoints.down('lg')]: { mt:'8%' } }}> {
                                 notification ?
                                     <Badge badgeContent='+99' color='primary'>
-                                        <IconButton onClick={e => { handleClick(e, [ 'Message1', 'Message2' ]) }}>
-                                            <Avatar>
+                                        <IconButton sx={{ [theme.breakpoints.down('lg')]: { width:'3rem', mt:'20%', height:'2rem' } }} onClick={e => { handleClick(e, [ 'Message1', 'Message2' ]) }}>
+                                            <Avatar sx={{ [theme.breakpoints.down('lg')]: { width:'2.5rem', height:'2.5rem' } }}>
                                                 <Notifications />
                                             </Avatar>
                                         </IconButton>
@@ -178,31 +178,33 @@ export default function Header({
                             }
                                 
                             </Box>
-                            <IconButton onClick={e => { handleClick(e, 
-                                [ 'Configurações', 'Ajuda e suporte', 'Dar feedback' ],
-                                [ 
-                                    <Settings key={0} />,
-                                    <Help key={1} />,
-                                    <Feedback key={2} />
-                                ],
-                                [   () => {},
-                                    handleHelp,
-                                    handleFeedback
-                                ],
-                                true
-                            ) }}>
-                                <Avatar sx={{ background: 'white', color: 'grey.400' }}>
-                                    <UserAvatar 
-                                        user={user}
-                                        onClick={() => {}}
-                                        sx={{
-                                            borderRadius: '50%',
-                                            height: '100%',
-                                            width: '100%' 
-                                        }}
-                                    />
-                                </Avatar>
-                            </IconButton>
+                            <Box sx={{ [theme.breakpoints.down('lg')]: { pt:'5%' } }}>
+                                <IconButton sx={{ [theme.breakpoints.down('lg')]: { } }} onClick={e => { handleClick(e, 
+                                    [ 'Configurações', 'Ajuda e suporte', 'Dar feedback' ],
+                                    [ 
+                                        <Settings key={0} />,
+                                        <Help key={1} />,
+                                        <Feedback key={2} />
+                                    ],
+                                    [   () => {},
+                                        handleHelp,
+                                        handleFeedback
+                                    ],
+                                    true
+                                ) }}>
+                                    <Avatar sx={{ background: 'white', color: 'grey.400', [theme.breakpoints.down('lg')]: { height:'2.5rem', width:'2.5rem' } }}>
+                                        <UserAvatar 
+                                            user={user}
+                                            onClick={() => {}}
+                                            sx={{
+                                                borderRadius: '50%',
+                                                height: '100%',
+                                                width: '100%' 
+                                            }}
+                                        />
+                                    </Avatar>
+                                </IconButton>
+                            </Box>
                             <CustomMenu
                                 anchorEl={anchorEl}
                                 open={open}

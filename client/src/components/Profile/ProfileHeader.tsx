@@ -90,8 +90,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                 }
             })
 
-            console.log(data);
-            
+            console.log(data)
 
             dispatch(setCredentials({
                 user: {

@@ -8,8 +8,8 @@ export default function ChatArea({ children } : { children: ReactNode }): ReactE
             position='sticky' 
             display='flex' 
             alignItems='start' 
-            height='99%' 
-            maxHeight='99%' 
+            height='100%' 
+            maxHeight='100%' 
             width='70%' 
         >
             <Box width='100%' height={'100%'}>

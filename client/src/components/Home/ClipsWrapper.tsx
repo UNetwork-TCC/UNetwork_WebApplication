@@ -1,8 +1,12 @@
 import { Box } from '@mui/material'
 import { Clip } from '$layout'
-import { type ReactElement } from 'react'
+import { useContext, type ReactElement } from 'react'
+import { themeContext } from '$contexts'
 
 export default function ClipsWrapper(): ReactElement {
+
+    const { theme, setTheme } = useContext(themeContext)
+
     const clipsData = {
         postedBy: {
             id: 'asd2312',
@@ -56,7 +60,7 @@ export default function ClipsWrapper(): ReactElement {
     }
 
     return (
-        <Box display='flex' gap={2} m={2} mb={7.5}>
+        <Box display='flex' gap={2} m={2} mb={7.5} sx={{ [theme.breakpoints.down('lg')]: { m:0, mb:5 } }}>
             {clipsData.clips.map(clip => (
                 <Clip
                     key={clip.id}

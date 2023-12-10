@@ -142,6 +142,7 @@ export default function Home(): ReactElement {
                     flexDirection='column' 
                     p={3} 
                     m={!matches ? 5 : 2} 
+                    sx={{ [theme.breakpoints.down('lg')]: { width:'60%', ml:'15%' } }}
                 >
                     <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio">
                         {/* <ClipsWrapper /> */}
@@ -165,6 +166,10 @@ export default function Home(): ReactElement {
                                         [theme.breakpoints.down('xl')]: {
                                             bottom: 44,
                                             right: '5.25rem'
+                                        },
+                                        [theme.breakpoints.down('lg')]: {
+                                            right:'4rem',
+                                            bottom: 41
                                         }
                                     } : {
                                         ...fileInputStyle,
@@ -193,6 +198,10 @@ export default function Home(): ReactElement {
                                                 bgcolor: 'primary.main',
                                                 ':hover': {
                                                     bgcolor: 'primary.light'
+                                                },
+                                                [theme.breakpoints.down('lg')]: {
+                                                    width:'35px',
+                                                    height:'35px'
                                                 }
                                             }}
                                         >
@@ -249,6 +258,9 @@ export default function Home(): ReactElement {
                             width: '20%',
                             [theme.breakpoints.down('xl')]: {
                                 width: '25%'
+                            },
+                            [theme.breakpoints.down('lg')]:{
+                                ml:'-3%'
                             }
                         }}
                         display='flex'
@@ -264,6 +276,7 @@ export default function Home(): ReactElement {
                             width='100%'
                             boxShadow={theme.shadows[15]}
                             p={3}
+                            sx={{ [theme.breakpoints.down('lg')]: { height:'16rem' } }}
                         >
                             <SideComponent user={user} />
                         </Box>
