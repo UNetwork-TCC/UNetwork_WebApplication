@@ -5,11 +5,6 @@ export default function ContactSkeleton() : ReactElement {
     return (
         <Box 
             sx={{
-                ':hover': { 
-                    bgcolor: 'lightgray',
-                    borderRadius: '15px',
-                    cursor: 'pointer'
-                },
                 p: '3% 3%',
                 mb: '1%',
                 ml: '5%',
@@ -19,7 +14,7 @@ export default function ContactSkeleton() : ReactElement {
                 transition: 'ease .3s',
                 fontSize: '10px'
             }}>
-            <Skeleton variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3.5rem' }} />
+            <Skeleton variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3.75rem' }} />
             <Box width='100%' sx={{ display: 'flex', flexDirection: 'column', ml: '1.2em', width: '100%', maxWidth: '90%' }}>
                 <Box width='90%' display='flex' justifyContent='space-between'>
                     <Box sx={{ width: '70%' }}>

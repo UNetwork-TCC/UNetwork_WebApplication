@@ -59,7 +59,7 @@ export default function ProfilePage(): ReactElement {
                         ) : (
                             <>
                                 <ProfileHeader user={user ?? (obj as User)} />
-                                <Highlights />
+                                {/* <Highlights /> */}
                                 <Box width='100%' display='flex' gap={2}>
                                     <Divider sx={{ width: '46.1%' }} />
                                     <Typography position='relative' top='10px'>Posts</Typography>

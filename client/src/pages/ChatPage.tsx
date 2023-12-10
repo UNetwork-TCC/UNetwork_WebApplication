@@ -9,6 +9,8 @@ import { type Chat } from '$types'
 import { ContactsAreaSkeleton } from '$skeletons'
 import { useParams } from 'react-router-dom'
 
+import chatbg from '$assets/svg/Chat/chatbg.svg'
+
 export default function ChatPage(): ReactElement {
     const theme = useTheme()
 
@@ -196,10 +198,10 @@ export default function ChatPage(): ReactElement {
                             flexDirection='column'
                             gap={5}
                             sx={{
-                                animation: 'anim 2s ease-in-out infinite alternate',
+                                animation: 'anim 3s ease-in-out infinite alternate',
                                 '@keyframes anim': {
                                     '0%': {
-                                        transform: 'translateY(-10%)'
+                                        transform: 'translateY(-5%)'
                                     },
 
                                     '100%': {
@@ -208,13 +210,14 @@ export default function ChatPage(): ReactElement {
                                 }
                             }}
                         >
-                            <ChatIcon 
-                                sx={{ 
-                                    height: '80%', 
-                                    width: '80%'
-                                }} 
+                            <img 
+                                src={chatbg}
+                                style={{ 
+                                    height: '70%', 
+                                    width: '70%'
+                                }}
                             />
-                            <Typography variant='h4'>Selecione uma conversa! </Typography>
+                            <Typography variant='h4'>Selecione uma conversa!</Typography>
                         </Box>
                     </Box>
                 )}

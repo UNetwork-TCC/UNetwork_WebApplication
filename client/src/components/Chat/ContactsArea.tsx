@@ -5,6 +5,7 @@ import { useState, type ReactElement, useEffect } from 'react'
 import { Contact } from '$components'
 import { type User, type Chat, type contact } from '$types'
 import { useFetchUsersMutation } from '$features/user'
+import { ContactSkeleton } from '$skeletons'
 
 export default function ContactsArea({ chats, userId }: { chats: Chat[], userId: string }): ReactElement {
     const theme = useTheme()
@@ -96,7 +97,7 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                         '::-webkit-scrollbar': { display: 'none' }
                     }}>
                         <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'6%' } }}>
-                            {!isLoading && (() => {
+                            {!isLoading ? (() => {
 
                                 const usersToChat = usersChat
                                     .map(
@@ -118,7 +119,11 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                                         />
                                     ))
                                 )
-                            })()}
+                            })() : (
+                                [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map(e => (
+                                    <ContactSkeleton key={e} />
+                                ))
+                            )}
                         </Stack>
                     </Box>
                 </Box>
