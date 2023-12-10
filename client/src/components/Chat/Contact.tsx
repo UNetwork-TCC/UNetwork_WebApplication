@@ -1,3 +1,4 @@
+import { UserAvatar } from '$components';
 import { type User } from '$types'
 import { Avatar, Box, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
@@ -6,7 +7,7 @@ export default function Contact({
     date,
     notification 
 } : {
-    user: User,
+    user: Partial<User>,
     date?: Date | string,
     notification?: number
 }) : ReactElement {
@@ -30,15 +31,18 @@ export default function Contact({
             }}>
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>
                 {user?.otherInfo?.avatar?.src ?
-                    <img src={user?.otherInfo.avatar?.src} alt="Avatar" />
+                    <UserAvatar 
+                        user={user}
+                        onClick={() => {}}
+                    />
                     :
-                    user.name.charAt(0).toUpperCase()
+                    user?.username?.charAt(0).toUpperCase()
                 }
             </Avatar>
             <Box sx={{ display: 'flex', flexDirection: 'column', ml: '1.2em', width: '100%', maxWidth: '90%' }}>
                 <Box display={'flex'}>
                     <Box sx={{ width: '85%' }}>
-                        <Typography noWrap >{user.name}</Typography>
+                        <Typography noWrap >{user.username}</Typography>
 
                     </Box>
                     <Box sx={{ width: '15%', textAlign: 'end' }}>

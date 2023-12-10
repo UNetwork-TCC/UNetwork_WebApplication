@@ -1,12 +1,21 @@
 import { CustomInput } from '$layout'
 import { Add, Search, Settings } from '@mui/icons-material'
 import { Box, Button, IconButton, Modal, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { useState, type ReactElement } from 'react'
+import { useState, type ReactElement, useEffect } from 'react'
 import { Contact } from '$components'
-import { type contact } from '$types'
+import { type User, type Chat, type contact } from '$types'
+import { useFetchUsersMutation } from '$features/user'
 
-export default function ContactsArea(): ReactElement {
+export default function ContactsArea({ chats, userId }: { chats: Chat[], userId: string }): ReactElement {
     const theme = useTheme()
+
+    const [ fetchUsers, { isLoading, data: users } ] = useFetchUsersMutation()
+
+    const usersChat = chats
+        .map(chat => chat.users)
+        .map(arr => arr.filter(id => id !== userId))
+        .join()
+        .split(',')
 
     const [ Contacts, setContacts ] = useState<contact[]>([])
     const [ ContactsAttributes, setContactsAttributes ] = useState<contact>({ name: '', code: '', date: '', notification: '' })
@@ -31,6 +40,12 @@ export default function ContactsArea(): ReactElement {
         else alert('preencha todos os campos!')
     }
 
+    useEffect(() => {
+        (async () => {    
+            await fetchUsers(null)
+        })()
+    }, [ fetchUsers ])
+
     return (
         <>
             <Box
@@ -39,14 +54,14 @@ export default function ContactsArea(): ReactElement {
                 position='sticky'
                 alignItems='start'
                 maxHeight='99%'
-                width='30%'
+                width='25%'
                 pt={4.5}
                 sx={{
                     boxSizing: 'border-box',
                     [theme.breakpoints.only('md')]: { pt:2.5 }
                 }}>
                 <Box sx={{ width: '100%', height: '100%' }} >
-                    <Box sx={{ width: '100%', height: '17%' }}>
+                    <Box sx={{ width: '100%', height: '12.5%' }}>
                         <Stack gap={2} sx={{ position: 'sticky', top: '0' }}>
                             <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
                                 <Box sx={{ width: '70%', [theme.breakpoints.only('md')]: { ml:'5%', width:'63%' } }}>
@@ -81,24 +96,29 @@ export default function ContactsArea(): ReactElement {
                         '::-webkit-scrollbar': { display: 'none' }
                     }}>
                         <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'6%' } }}>
-                            <Contact notification={8} date={'19:45'} user={{ name: 'Alfa' }} />
-                            <Contact notification={6} date={'3 Dias'} user={{ name: 'Leonardo' }} />
-                            <Contact notification={3} date={'1 Ano'} user={{ name: 'Torugo' }} />
-                            <Contact date={'3 Dias'} user={{ name: 'Guilherme Lima' }} />
-                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
-                            <Contact notification={14} date={'3 Dias'} user={{ name: 'Jhow' }} />
-                            <Contact notification={56} date={'3 Dias'} user={{ name: 'Luizinho' }} />
-                            <Contact notification={99} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
-                            <Contact notification={7} date={'3 Dias'} user={{ name: 'Rian' }} />
-                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={2} date={'2h'} user={{ name: 'Paulin' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            {Contacts.map(e => (
-                                <Contact user={{ name: e.name }} key={e.name} />
-                            ))}
+                            {!isLoading && (() => {
+
+                                const usersToChat = usersChat
+                                    .map(
+                                        id => users?.filter(
+                                            (user: any) => user._id === id
+                                        )[0]
+                                    )
+
+                                console.log(usersToChat)
+
+                                return (
+                                    usersToChat.map(user => (
+                                        <Contact 
+                                            key={user?._id} 
+                                            user={{
+                                                username: user?.username,
+                                                otherInfo: { avatar: user?.otherInfo?.avatar } 
+                                            }} 
+                                        />
+                                    ))
+                                )
+                            })()}
                         </Stack>
                     </Box>
                 </Box>

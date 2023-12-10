@@ -2,10 +2,18 @@ import { Avatar, Box, Divider, IconButton, MenuItem, Typography, useTheme } from
 import { ChatBar, ChatArea, ContactsArea, MessageWrapper } from '$components'
 import { AppLayout, CustomMenu } from '$layout'
 import { Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Delete, Report } from '@mui/icons-material'
-import { type ReactElement, useState, useContext } from 'react'
-import { themeContext } from '$contexts'
+import { type ReactElement, useState, useEffect } from 'react'
+import { useFindUserChatsMutation } from '$features/chat'
+import { useAppSelector } from '$store'
+import { type Chat } from '$types'
+import { ContactsAreaSkeleton } from '$skeletons'
 
 export default function ChatPage(): ReactElement {
+    const theme = useTheme()
+
+    const [ findUserChats, { data: chats, isLoading } ] = useFindUserChatsMutation()
+    const userId = useAppSelector(state => state.auth.user._id)
+
     const onClickEvents = {
         item1: () => {
             console.log('oi')
@@ -51,12 +59,23 @@ export default function ChatPage(): ReactElement {
         setAnchorEl(null)
     }
 
-    const theme = useTheme()
+    useEffect(() => {
+        (async () => {
+            await findUserChats(userId ?? '')
+        })()
+    }, [ findUserChats, userId ])
 
     return (
         <AppLayout>
             <Box sx={{ width: '100%', height: '100%', display: 'flex' }} >
-                <ContactsArea />
+                {isLoading ? (
+                    <ContactsAreaSkeleton />
+                ) : (
+                    <ContactsArea 
+                        userId={userId ?? ''}
+                        chats={chats ?? ([] as Chat[])} 
+                    />
+                )}
                 <Divider orientation='vertical' role='presentation' flexItem sx={{ height: '100%' }} />
                 <ChatArea>
                     <Box sx={{ width: '100%', height: '9%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
