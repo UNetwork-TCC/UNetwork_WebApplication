@@ -143,6 +143,9 @@ export default function Home(): ReactElement {
                     p={3} 
                     m={!matches ? 5 : 2} 
                     sx={{
+                        [theme.breakpoints.only('lg')]: {
+                            mr:0, ml:'15%' 
+                        },
                         [theme.breakpoints.only('md')]: {
                             width:'60%', ml:'15%' 
                         }
@@ -206,7 +209,7 @@ export default function Home(): ReactElement {
                                                 [theme.breakpoints.only('md')]: {
                                                     width:'35px',
                                                     height:'35px'
-                                                },
+                                                }
                                             }}
                                         >
                                             <AttachFile />
@@ -261,7 +264,8 @@ export default function Home(): ReactElement {
                         sx={{
                             width: '20%',
                             [theme.breakpoints.only('lg')]: {
-                                width: '25%'
+                                width: '25%',
+                                mr:0
                             },
                             [theme.breakpoints.only('md')]:{
                                 width: '25%',
