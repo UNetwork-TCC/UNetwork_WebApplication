@@ -60,8 +60,9 @@ export default function NewsPage(): ReactElement {
             <Box display='flex' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'} sx={{ [theme.breakpoints.only('lg')]: { mt: 3 },
                 [theme.breakpoints.only('md')]: { mt: 1 }
             }}>
-                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%', [theme.breakpoints.only('md')]: { mb:'0' } }}>
-                    <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold' }}>Notícias</Typography>
+                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%', 
+                    [theme.breakpoints.only('md')]: { m: '0 4rem 0 0rem' } }}>
+                    <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold', [theme.breakpoints.only('lg')]: { ml:'5%' } }}>Notícias</Typography>
                     {user.admin && (
                         <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
                     )}
@@ -90,6 +91,7 @@ export default function NewsPage(): ReactElement {
                     </Box>
                     <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
                         <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem',
+                            [theme.breakpoints.only('lg')]: { ml:'10%', height:'97%', mt:'3%' },
                             [theme.breakpoints.only('md')]: { ml:'10%', height:'80%', mb:'15%' }
                         }}>
                             <Typography sx={{ m: '5% 0 5% 5%', fontWeight: 'bold' }}>Mais Lidas</Typography>

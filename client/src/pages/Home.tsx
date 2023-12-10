@@ -143,6 +143,9 @@ export default function Home(): ReactElement {
                     p={3} 
                     m={!matches ? 5 : 2} 
                     sx={{
+                        [theme.breakpoints.only('lg')]: {
+                            mr:0, ml:'15%' 
+                        },
                         [theme.breakpoints.only('md')]: {
                             width:'60%', ml:'15%' 
                         }
@@ -155,7 +158,7 @@ export default function Home(): ReactElement {
                                 <CustomInput
                                     onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
                                     sx={{ boxShadow: theme.shadows[4] }}
-                                    width='80%'
+                                    width='100%'
                                     bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                                     placeholder='No que estou pensando...'
                                     color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
@@ -206,7 +209,7 @@ export default function Home(): ReactElement {
                                                 [theme.breakpoints.only('md')]: {
                                                     width:'35px',
                                                     height:'35px'
-                                                },
+                                                }
                                             }}
                                         >
                                             <AttachFile />
@@ -261,7 +264,8 @@ export default function Home(): ReactElement {
                         sx={{
                             width: '20%',
                             [theme.breakpoints.only('lg')]: {
-                                width: '25%'
+                                width: '25%',
+                                mr:0
                             },
                             [theme.breakpoints.only('md')]:{
                                 width: '25%',
