@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider, IconButton, MenuItem, Typography } from '@mui/material'
+import { Avatar, Box, Divider, IconButton, MenuItem, Typography, useTheme } from '@mui/material'
 import { ChatBar, ChatArea, ContactsArea, MessageWrapper } from '$components'
 import { AppLayout, CustomMenu } from '$layout'
 import { Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Delete, Report } from '@mui/icons-material'
@@ -51,6 +51,8 @@ export default function ChatPage(): ReactElement {
         setAnchorEl(null)
     }
 
+    const theme = useTheme()
+
     return (
         <AppLayout>
             <Box sx={{ width: '100%', height: '100%', display: 'flex' }} >
@@ -71,6 +73,7 @@ export default function ChatPage(): ReactElement {
                             }
 
                         }} />
+                    </Box>
                     <Box sx={{ width: '100%', height: '9%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
                         <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
                             [theme.breakpoints.down('xl')]: {
@@ -213,6 +216,7 @@ export default function ChatPage(): ReactElement {
                     >
                         {menuContent}
                     </CustomMenu>
+                    </Box>
                 </ChatArea>
             </Box>
         </AppLayout>

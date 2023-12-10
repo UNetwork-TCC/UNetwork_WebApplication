@@ -142,7 +142,11 @@ export default function Home(): ReactElement {
                     flexDirection='column' 
                     p={3} 
                     m={!matches ? 5 : 2} 
-                    sx={{ [theme.breakpoints.down('lg')]: { width:'60%', ml:'15%' } }}
+                    sx={{
+                        [theme.breakpoints.only('md')]: {
+                            width:'60%', ml:'15%' 
+                        }
+                    }}
                 >
                     <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio">
                         {/* <ClipsWrapper /> */}
