@@ -67,21 +67,38 @@ export const updateChat = async (req, res) => {
 
 export const createChat = async (req, res) => {
     try {
-        const { users, messages } = req.body
+        const { users } = req.body
 
-        if (!users || !messages) {
-            return res.status(400).send({message: 'Nem todos os campos foram preenchidos!'})
+        const chat = await Chat.findOne({ users: { $all: [...users] } })
+
+        if (chat) return res.status(200).json(chat)
+
+        if (!users) {
+            return res.status(400).send({message: 'Preencha todos os campos!'})
         } 
         
-        const newChat = Chat({
-            users,
-            messages,
+        const newChat = await Chat({
+            users
         })
 
         await newChat.save()
         res.status(201).send({newChat, message: 'Chat criado com sucesso!'})
-
     } catch (error) {
         res.status(400).send({message: error.message})
+    }
+}
+
+export const findUserChats = async (req, res) => {
+    const { userId } = req.params
+
+    try {
+        const chats = await Chat.find({
+            users: { $in: [userId] }
+        })
+
+        res.status(200).json(chats)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error)
     }
 }
