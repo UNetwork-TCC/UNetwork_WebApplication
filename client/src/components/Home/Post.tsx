@@ -1,7 +1,7 @@
-import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp, School, Send } from '@mui/icons-material'
-import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useTheme } from '@mui/material'
-import React, { type ReactElement, useState, useEffect, type ChangeEvent, type FormEvent } from 'react'
-import { CreateShortcutsModal, CustomInput, CustomMenu, LoadingBackdrop, MiscMessage, WarningModal } from '$layout'
+import { FavoriteBorder, Favorite, ChatBubbleRounded, Reply, MoreVert, ArrowDropDown, CloseSharp, School } from '@mui/icons-material'
+import { Avatar, Box, Card, IconButton, MenuItem, Skeleton, Snackbar, Typography, useMediaQuery, useTheme } from '@mui/material'
+import React, { type ReactElement, useState, useEffect, type FormEvent } from 'react'
+import { CreateShortcutsModal, CustomMenu, LoadingBackdrop, WarningModal } from '$layout'
 import { useAppSelector } from '$store'
 import { useDeletePostMutation, useUpdatePostMutation } from '$features/post'
 import { red } from '@mui/material/colors'
@@ -174,6 +174,8 @@ export default function Post({
         })()
     }, [ getUser, postOwner, postedBy ])
 
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
+
     return (
         <>
             <Card variant="elevation" elevation={2} sx={{
@@ -197,7 +199,7 @@ export default function Post({
                     }}
                     p={4}
                 >
-                    <Box sx={{ minHeight: '7em', display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ minHeight: !matches ? '7em' : '4rem', display: 'flex', justifyContent: 'space-between' }}>
                         <Box sx={{ display: 'flex' }}>
                             <Box
                                 sx={{
@@ -229,14 +231,22 @@ export default function Post({
                                 )}
                             </Box>
                         </Box>
-                        <IconButton onClick={
-                            e => {
-                                handleClick(e,
-                                    [ 'Salvar como Atalho', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
-                                    [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ]
-                                )
+                        <IconButton 
+                            onClick={
+                                e => {
+                                    handleClick(e,
+                                        [ 'Salvar como Atalho', 'Favoritar', 'Seguir/Desseguir', 'Denunciar', 'Ir para publicação' ],
+                                        [ onClickEvents.saveAsShortcut, onClickEvents.favorite, onClickEvents.follow, onClickEvents.report, onClickEvents.goToPost ]
+                                    )
+                                }
                             }
-                        }>
+                            sx={{ 
+                                position: 'relative', 
+                                [theme.breakpoints.down('md')]: {
+                                    bottom: 8
+                                } 
+                            }} 
+                        >
                             <MoreVert sx={{ fontSize: '1.2em' }} />
                         </IconButton>
                         <CustomMenu
@@ -319,7 +329,17 @@ export default function Post({
                                 <Box display='flex' width='100%' justifyContent='space-between' sx={{ mt: '1.5em' }}>
                                     <Box display='flex' gap={2}>
                                         {!postOwner && (
-                                            <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                            <Avatar 
+                                                sx={{ 
+                                                    bgcolor: 'background.paper',
+                                                    [theme.breakpoints.down('md')]: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 2.5
+                                                    }
+                                                }} 
+                                                variant={variant}
+                                            >
                                                 <IconButton onClick={() => { setFavoriteCLicked(val => !val) }}>
                                                     {favoriteClicked ?
                                                         <Favorite sx={{ color: 'red' }} /> :
@@ -328,31 +348,97 @@ export default function Post({
                                                 </IconButton>
                                             </Avatar>
                                         )}
-                                        <Avatar onClick={() => { setDisplayMessageChat(prevState => !prevState) }} sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                        <Avatar 
+                                            onClick={() => { setDisplayMessageChat(prevState => !prevState) }} 
+                                            sx={{ 
+                                                bgcolor: 'background.paper',
+                                                [theme.breakpoints.down('md')]: {
+                                                    height: 30,
+                                                    width: 30,
+                                                    borderRadius: 2.5
+                                                } 
+                                            }} 
+                                            variant={variant}
+                                        >
                                             <IconButton>
                                                 <ChatBubbleRounded />
                                             </IconButton>
                                         </Avatar>
 
-                                        <Avatar sx={{ bgcolor: 'background.paper' }} variant={variant}>
+                                        <Avatar 
+                                            sx={{ 
+                                                bgcolor: 'background.paper',
+                                                [theme.breakpoints.down('md')]: {
+                                                    height: 30,
+                                                    width: 30,
+                                                    borderRadius: 2.5
+                                                }
+                                            }} 
+                                            variant={variant}
+                                        >
                                             <IconButton>
                                                 <Reply sx={{ transform: 'scaleX(-1)' }} />
                                             </IconButton>
                                         </Avatar>
                                     </Box>
                                     <Box>
-                                        <Box display='flex'>
-                                            <Avatar sx={{ borderRadius: 3.5, position: 'relative', left: '.75em', zIndex: 1 }} variant='rounded'>
-
-                                            </Avatar>
-                                            <Avatar sx={{ borderRadius: 3.5, position: 'relative', top: '.5em', zIndex: 1 }} variant='rounded'>
-
-                                            </Avatar>
-                                            <Avatar sx={{ borderRadius: 3.5, position: 'relative', right: '.75em', zIndex: 2 }} variant='rounded'>
-
-                                            </Avatar>
+                                        <Box position='relative' left={matches ? '1.75rem' : ''} display='flex'>
+                                            <Avatar 
+                                                sx={{ 
+                                                    borderRadius: 3.5, 
+                                                    position: 'relative', 
+                                                    left: '.75em', 
+                                                    zIndex: 1,
+                                                    [theme.breakpoints.down('xl')]: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 2.5
+                                                    }
+                                                }} 
+                                                variant='rounded' 
+                                            />
+                                            <Avatar 
+                                                sx={{ 
+                                                    borderRadius: 3.5, 
+                                                    position: 'relative', 
+                                                    top: '.5em', 
+                                                    zIndex: 1,
+                                                    [theme.breakpoints.down('xl')]: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 2.5
+                                                    }
+                                                }} 
+                                                variant='rounded' 
+                                            />
+                                            <Avatar 
+                                                sx={{ 
+                                                    borderRadius: 3.5, 
+                                                    position: 'relative', 
+                                                    right: '.75em', 
+                                                    zIndex: 1,
+                                                    [theme.breakpoints.down('xl')]: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 2.5
+                                                    } 
+                                                }} 
+                                                variant='rounded' 
+                                            />
                                             <Avatar
-                                                sx={{ fontSize: '1rem', position: 'relative', top: '.5em', right: '1.5em', zIndex: 1, bgcolor: 'background.paper' }}
+                                                sx={{ 
+                                                    fontSize: '1rem', 
+                                                    position: 'relative', 
+                                                    top: '.5em', 
+                                                    right: '1.5em', 
+                                                    zIndex: 1, 
+                                                    bgcolor: 'background.paper',
+                                                    [theme.breakpoints.down('xl')]: {
+                                                        height: 30,
+                                                        width: 30,
+                                                        borderRadius: 2.5
+                                                    }
+                                                }}
                                                 variant={variant}
                                             >
                                                 +11

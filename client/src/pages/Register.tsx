@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import { Box, Button, Checkbox, FormControl, Snackbar, TextField, Typography } from '@mui/material'
+import { Box, Button, Checkbox, FormControl, Snackbar, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type ReactElement, useState } from 'react'
 import { LoadingBackdrop, UNetworkModal } from '$layout'
 import { useNavigate } from 'react-router-dom'
@@ -90,6 +90,9 @@ function RegisterForm(): ReactElement {
         rm: ''
     }
 
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
+
     return (
         <>
             <Box width='85.3%' p={2.5}>
@@ -156,7 +159,7 @@ function RegisterForm(): ReactElement {
                                     </Box>
                                 </FormControl>
                                 <Box display='flex' justifyContent='space-between' ml={-1.5} mt={2} alignItems='center'>
-                                    <Box width='60%' display='flex' alignItems='center'>
+                                    <Box width={!matches ? '60%' : '100%'} mt={matches ? 2.5 : 0} display='flex' alignItems='center'>
                                         <Checkbox required />
                                         <Typography>Li e aceito os
                                             <Typography

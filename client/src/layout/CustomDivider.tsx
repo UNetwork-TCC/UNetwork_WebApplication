@@ -13,6 +13,16 @@ export default function CustomDivider({ sx } : { sx?: SxProps }): ReactElement {
     }
 
     return (
-        <Box height={10} sx={{ borderRadius: '20px', background: `linear-gradient(40deg, ${borderTheme()});`, ...sx }} m='10px 60px'></Box>
+        <Box 
+            height={10} 
+            m='10px 60px' 
+            sx={
+                { 
+                    borderRadius: '20px',
+                    background: `linear-gradient(40deg, ${borderTheme()});`,
+                    ...sx 
+                }
+            } 
+        />
     )
 }

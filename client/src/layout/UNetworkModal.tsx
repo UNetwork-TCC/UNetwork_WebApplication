@@ -1,5 +1,5 @@
 import { Box, Modal, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { type ReactNode, type ReactElement, useEffect } from 'react'
+import { type ReactNode, useEffect } from 'react'
 import logo from '$assets/img/Logo.png'
 import lightLogo from '$assets/img/LightLogo.png'
 
@@ -16,6 +16,8 @@ export default function UNetworkModal({
 }) : ReactNode {
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('xl'))
+
+    const mobileMatches = useMediaQuery(theme.breakpoints.down('md'))
 
     useEffect(() => {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
@@ -35,7 +37,7 @@ export default function UNetworkModal({
             sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
             disableAutoFocus
         >
-            <Box height='80vh' width='30vw' borderRadius={3} bgcolor='background.paper'>
+            <Box height='80vh' width={!matches ? '30vw' : '80vw'} borderRadius={3} bgcolor='background.paper'>
                 <Box m={3} display='flex' justifyContent='center' alignItems='center'>
                     {theme.palette.mode === 'light' ?
                         <img width={75} height={75} src={logo} alt="Logo" />

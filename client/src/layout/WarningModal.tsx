@@ -30,6 +30,12 @@ export default function WarningModal({
                 display='flex'
                 flexDirection='column'
                 justifyContent='space-between'
+                sx={{
+                    [theme.breakpoints.down('md')]: {
+                        width: '60vw',
+                        height: '20vh'
+                    }
+                }}
             >
                 <Box display='flex' flexDirection='column' gap={1}>
                     <Typography variant='h6'>Tem certeza?</Typography>

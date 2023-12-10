@@ -4,7 +4,7 @@ import { ComunitySection, DiscoverSection, AboutSection, AnimateOnScroll } from 
 import liquidBg from '$assets/svg/Home/LiquidBg.svg'
 import peopleVector from '$assets/svg/Home/PeopleVector.svg'
 import Image from 'mui-image'
-import { Box, Button, Typography, useTheme } from '@mui/material'
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { Animation } from 'react-animate-style'
 import { Link } from 'react-router-dom'
 import { Book, Token, WorkHistory } from '@mui/icons-material'
@@ -15,6 +15,8 @@ function LandingPage(): ReactElement {
     const theme = useTheme()
 
     const { t } = useTranslation()
+
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
 
     function Heading({ title, content, icon } : { title: string, content: string, icon: ReactElement }): ReactElement {
         return (
@@ -44,53 +46,66 @@ function LandingPage(): ReactElement {
     return (
         <Box id='inicio' sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.paper', width: '100%' }}>
             <LandingPageHeader />
-            <Box>
-                <Box 
-                    sx={{ 
-                        pointerEvents: 'none',
-                        width: '100%',
-                        height: '100%',
-                        left: '63%',
-                        bottom: 90,
-                        position: 'absolute' 
-                    }} 
-                >
-                    <Image src={liquidBg} duration={1000} />
+            {!matches && (
+                <Box>
+                    <Box 
+                        sx={{ 
+                            pointerEvents: 'none',
+                            width: '100%',
+                            height: '100%',
+                            left: '63%',
+                            bottom: 90,
+                            position: 'absolute' 
+                        }} 
+                    >
+                        <Image src={liquidBg} duration={1000} />
+                    </Box>
+                    <Box 
+                        sx={{ 
+                            pointerEvents: 'none',
+                            width: '100%',
+                            height: '100%',
+                            left: '56%',
+                            bottom: 5,
+                            position: 'absolute'
+                        }} 
+                    >
+                        <Image src={peopleVector} duration={1000} />
+                    </Box>
                 </Box>
-                <Box 
-                    sx={{ 
-                        pointerEvents: 'none',
-                        width: '100%',
-                        height: '100%',
-                        left: '56%',
-                        bottom: 5,
-                        position: 'absolute'
-                    }} 
-                >
-                    <Image src={peopleVector} duration={1000} />
-                </Box>
-            </Box>
+            )}
             <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
-                <Box p='25px' m='25px' width='45%'>
+                <Box p='25px' m='25px' width={!matches ? '45%' : '100%'}>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true}>
                         <Typography mb={4} variant='h1' fontWeight={900}>{t('header.title')}</Typography>
                     </Animation>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true} animationInDelay={250}>
                         <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t('header.subtitle')}</Typography>
-                        <Box mt={5} display='flex'>
+                        <Box mt={!matches ? 5 : 3} display='flex'>
                             <Button variant='contained'>
                                 <Link style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} to='/auth/register'>{t('header.btn')}</Link>
                             </Button>
-                            <Typography color='primary.main' ml={5} width='30%'>{t('header.caption')}</Typography>
+                            <Typography color='primary.main' ml={5} width={!matches ? '30%' : '50%'}>{t('header.caption')}</Typography>
                         </Box>
                     </Animation>
                 </Box>
-                <Box sx={{ pointerEvents: 'none' }} width='40%'>
-                </Box>
+                {!matches && (
+                    <Box sx={{ pointerEvents: 'none' }} width='40%'>
+                    </Box>
+                )}
             </Box>
-            <Box mt={10} mb={20} display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
-                <Box gap={20} p={1} m={5} display='flex' justifyContent='space-evenly' alignItems='center' width='80%'>
-                    <Box width='50%' overflow='hidden'>
+            <Box mt={!matches ? 10 : 30} mb={!matches ? 20 : 35} display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
+                <Box 
+                    display='flex' 
+                    gap={!matches ? 20 : 5} 
+                    p={1} 
+                    m={5} 
+                    flexDirection={!matches ? 'row' : 'column'} 
+                    justifyContent='space-evenly' 
+                    alignItems='center' 
+                    width='100%'
+                >
+                    <Box width={!matches ? '50%' : '100%'} overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={350}>
                             <Box>
                                 <Heading

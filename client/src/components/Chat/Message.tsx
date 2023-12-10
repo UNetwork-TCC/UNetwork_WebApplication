@@ -1,7 +1,8 @@
+import { themeContext } from '$contexts'
 import { Avatar, useTheme } from '@mui/material'
 import { Box, type SxProps, Typography } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import { type ReactElement } from 'react'
+import { useContext, type ReactElement } from 'react'
 
 export default function Message({ 
     text,
@@ -12,34 +13,36 @@ export default function Message({
     messageFrom?: 'me' | 'him',
     sendedAt?: string | 'Agora há pouco'
 }) : ReactElement {
-    const theme = useTheme()
+    const themeS = useTheme()
 
     let messageStyle: SxProps = {
-        boxShadow: theme.shadows[2],
+        boxShadow: themeS.shadows[2],
         borderRadius: 4,
-        p: 1.5
+        p: 1.5        
     }
 
     if (messageFrom === 'me')
         messageStyle = {
             ...messageStyle,
-            bgcolor: theme.palette.primary.dark,
+            bgcolor: themeS.palette.primary.dark,
             color: 'white'
         }
     else
         messageStyle = {
             ...messageStyle,
-            bgcolor: theme.palette.mode === 'dark' ?
+            bgcolor: themeS.palette.mode === 'dark' ?
                 '#444047' 
                 :
-                theme.palette.background.paper
+                themeS.palette.background.paper
         }
+
+    const { theme, setTheme } = useContext(themeContext)
 
     return (
         <Box width='100%'>
             <Box display='flex' justifyContent={messageFrom === 'him' ? 'start' : 'end'} width='100%'>
                 <Box maxWidth='60%' sx={messageStyle}>
-                    <Typography>
+                    <Typography fontSize={'1em'}>
                         {text}
                     </Typography>
                 </Box>
@@ -56,7 +59,15 @@ export default function Message({
                         height: 25,
                         width: 25,
                         bottom: 15,
-                        right: 5
+                        right: 5,
+                        [theme.breakpoints.down('xl')]: {
+                            height:20,
+                            width:20
+                        },
+                        [theme.breakpoints.down('lg')]: {
+                            height:17.5,
+                            width:17.5
+                        }
                     }}
                 />
                 <Typography
