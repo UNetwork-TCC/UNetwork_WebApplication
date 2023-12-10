@@ -69,14 +69,17 @@ export default function FavoritesPage(): ReactElement {
                                 p: 8,
                                 justifyContent: 'start',
                                 flexDirection: 'column',
+                                [theme.breakpoints.down('lg')]:{ width:'50rem', pt: 4 },
                                 overflow: 'scroll'
                                 // '::-webkit-scrollbar': { display: 'none' }
+                                
                             }}>
-                                <Box display='flex' mb={2} sx={{ cursor: 'pointer' }} width={'18%'} onClick={handleOpen}>
+                                <Box display='flex' mb={2} sx={{ cursor: 'pointer', [theme.breakpoints.down('lg')]: { width:'30%' } }} width={'22%'} onClick={handleOpen}>
                                     <Avatar sx={{ padding: '10px', margin: '10px', width: 20, height: 20, bgcolor: 'primary.main' }}>
                                         <Add sx={{ fontSize: '1em' }} />
                                     </Avatar>
-                                    <Typography position={'relative'} top={8}>Adicionar Pasta</Typography>
+                                    <Typography position={'relative'} top={8} sx={{ [ theme.breakpoints.down('xl')]: { top:10 , fontSize:'1.2rem' }, 
+                                        [ theme.breakpoints.down('lg')]: { top:11, fontSize:'1.1rem' } }}>Adicionar Pasta</Typography>
                                 </Box>
                                 <Typography variant='h4' mb={2}>Pastas</Typography>
                                 <Grid container gap={3} columns={4} width={'auto'}>

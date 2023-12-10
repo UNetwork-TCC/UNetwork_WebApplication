@@ -124,10 +124,11 @@ export default function Home(): ReactElement {
                     flexDirection='column' 
                     p={3} 
                     m={5} 
+                    sx={{ [theme.breakpoints.down('lg')]: { width:'60%', ml:'15%' } }}
                 >
-                    <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio">
+                    <Box display='flex' flexDirection='column' gap={5} width='100%' id="inicio" sx={{ [theme.breakpoints.down('lg')]: { gap:0 } }}>
                         <ClipsWrapper />
-                        <Box>
+                        <Box sx={{ [theme.breakpoints.down('lg')]: { height:'4rem' } }}>
                             <form onSubmit={(e) => { handleSubmit(e) }}>
                                 <CustomInput
                                     onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
@@ -153,7 +154,12 @@ export default function Home(): ReactElement {
                                         [theme.breakpoints.down('xl')]: {
                                             bottom: 44,
                                             right: '5.25rem'
+                                        },
+                                        [theme.breakpoints.down('lg')]: {
+                                            right:'4rem',
+                                            bottom:41
                                         }
+
                                     }}>
                                     <input
                                         onChange={(e: ChangeEvent<HTMLInputElement>): void => {
@@ -177,6 +183,10 @@ export default function Home(): ReactElement {
                                                 bgcolor: 'primary.main',
                                                 ':hover': {
                                                     bgcolor: 'primary.light'
+                                                },
+                                                [theme.breakpoints.down('lg')]: {
+                                                    width:'35px',
+                                                    height:'35px'
                                                 }
                                             }}
                                         >
@@ -225,6 +235,9 @@ export default function Home(): ReactElement {
                         width: '20%',
                         [theme.breakpoints.down('xl')]: {
                             width: '25%'
+                        },
+                        [theme.breakpoints.down('lg')]:{
+                            ml:'-3%'
                         }
                     }}
                     display='flex'
@@ -240,6 +253,7 @@ export default function Home(): ReactElement {
                         width='100%'
                         boxShadow={theme.shadows[15]}
                         p={3}
+                        sx={{ [theme.breakpoints.down('lg')]: { height:'16rem' } }}
                     >
                         <SideComponent user={user} />
                     </Box>

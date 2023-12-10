@@ -27,7 +27,12 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     backgroundClip: 'padding-box',
                     borderRadius: '100%',
                     cursor: 'pointer',
-                    transition: 'ease-in-out .3s'
+                    transition: 'ease-in-out .3s',
+                    [theme.breakpoints.down('lg')]:{
+                        p: '2rem 1.7rem ',
+                        pb:'1.4rem'
+                        
+                    }
                 },
 
                 '&:hover': {
@@ -55,6 +60,10 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     bottom: 33,
                     [theme.breakpoints.down('xl')]: {
                         bottom: 25.5
+                    },
+                    [theme.breakpoints.down('lg')]: {
+                        height:'3.5rem',
+                        width:'3.5rem'
                     }
                 }}>
                     {!avatar ?
@@ -64,7 +73,7 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     }
                 </Avatar>
                 <Box mt={-3}>
-                    <Typography>{postedBy}</Typography>
+                    <Typography sx={{ [theme.breakpoints.down('lg')]: { mt:'15%' } }}>{postedBy}</Typography>
                 </Box>
             </Box>
             <Modal
