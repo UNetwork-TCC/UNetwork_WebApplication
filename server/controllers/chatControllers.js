@@ -35,7 +35,7 @@ export const deleteChat = async (req, res) => {
             return res.status(404).send({message: 'Chat não econtrado!'})
         }
 
-        const deletedChat = await Chat.findOneAndDelete(id)
+        const deletedChat = await Chat.findon(id)
         res.status(200).send({deletedChat, message: 'Chat deletado!'})
     } catch (error) {
         res.status(404).send({message: error.message})
@@ -52,14 +52,14 @@ export const updateChat = async (req, res) => {
             return res.status(404).send({message: 'Chat não econtrado!'})
         }
 
-        if (!messages || !users) {
-            return res.status(400).send({message: 'Todos os campos precisam ser preenchidos!'})
+        if (messages || users) {
+            const chatUpdates = { messages: [...chat.messages, ...messages || ''], users: [...chat.users, ...users || ''] }
+            const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
+    
+            res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})
+        } else {
+            return res.status(400).send({message: 'Preenha os campos obrigatórios!'})
         }
-        
-        const chatUpdates = {messages: [...messages], users: [...users]}
-        const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
-
-        res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }
