@@ -1,11 +1,21 @@
-import { Box } from '@mui/material'
-import { useContext, type ReactElement } from 'react'
+import { Box, useTheme } from '@mui/material'
+import { type ReactElement, useEffect } from 'react'
 import Message from './Message'
-import { themeContext } from '$contexts'
+import { useGetChatMutation } from '$features/chat'
+import { useAppSelector } from '$store'
 
-export default function MessageWrapper(): ReactElement {
+export default function MessageWrapper({ id }: { id: string }): ReactElement {
+    const theme = useTheme()
 
-    const { theme, setTheme } = useContext(themeContext)
+    const [ getChat, { data, isLoading } ] = useGetChatMutation()
+
+    const userId = useAppSelector(state => state.auth.user._id)
+
+    useEffect(() => {
+        (async () => {
+            await getChat(id)
+        })()
+    }, [ getChat, id ])
 
     return (
         <Box
@@ -33,18 +43,25 @@ export default function MessageWrapper(): ReactElement {
                                 
             }}
         >
-            <Message 
-                text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
-                messageFrom='him'
-            />
-            <Message 
-                text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
-                messageFrom='me'
-            />
-            <Message 
-                text='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac feugiat dolor, vitae eleifend metus. Curabitur at orci ante. Maecenas.'
-                messageFrom='him'
-            />
+            {!id ? (
+                <Box>
+
+                </Box>
+            ) : (
+                !isLoading ? (
+                    data?.messages.map(message => (
+                        <Message 
+                            key={message._id}
+                            text={message.content}
+                            messageFrom={message.sendedBy !== userId ? 'him' : 'me'}
+                        />
+                    ))
+                ) : (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                        Carregando...
+                    </Box>
+                )
+            )}
         </Box>
     )
 }

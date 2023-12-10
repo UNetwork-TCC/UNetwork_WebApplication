@@ -155,7 +155,7 @@ export default function Home(): ReactElement {
                                 <CustomInput
                                     onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
                                     sx={{ boxShadow: theme.shadows[4] }}
-                                    width='80%'
+                                    width={matches ? '80%' : '100%'}
                                     bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                                     placeholder='No que estou pensando...'
                                     color={theme.palette.mode === 'light' ? 'primary.main' : undefined}

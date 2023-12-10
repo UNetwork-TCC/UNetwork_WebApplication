@@ -1,6 +1,6 @@
-import { UserAvatar } from '$components';
+import { UserAvatar } from '$components'
 import { type User } from '$types'
-import { Avatar, Box, Typography } from '@mui/material'
+import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { type ReactElement } from 'react'
 export default function Contact({ 
     user,
@@ -12,12 +12,13 @@ export default function Contact({
     notification?: number
 }) : ReactElement {
     
+    const theme = useTheme()
+
     return (
         <Box 
             sx={{
                 ':hover': { 
-                    bgcolor: 'lightgray',
-                    borderRadius: '15px',
+                    bgcolor: `${theme.palette.action.focus}`,
                     cursor: 'pointer'
                 },
                 p: '3% 3%',
