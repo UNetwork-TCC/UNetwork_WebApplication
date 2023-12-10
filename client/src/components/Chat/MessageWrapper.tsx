@@ -19,12 +19,12 @@ export default function MessageWrapper(): ReactElement {
                 gap: 1,
                 alignItems: 'start',
                 flexDirection: 'column',
-                [theme.breakpoints.down('xl')]: {
+                [theme.breakpoints.only('lg')]: {
                     fontSize:'1rem',
                     height:'70%'
                 },
 
-                [theme.breakpoints.down('lg')]: {
+                [theme.breakpoints.only('md')]: {
                     fontSize:'0.8rem',
                     height:'66%'                    
                     

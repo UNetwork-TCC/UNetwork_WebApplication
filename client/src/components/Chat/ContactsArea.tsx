@@ -43,13 +43,13 @@ export default function ContactsArea(): ReactElement {
                 pt={4.5}
                 sx={{
                     boxSizing: 'border-box',
-                    [theme.breakpoints.down('lg')]: { pt:2.5 }
+                    [theme.breakpoints.only('md')]: { pt:2.5 }
                 }}>
                 <Box sx={{ width: '100%', height: '100%' }} >
                     <Box sx={{ width: '100%', height: '17%' }}>
                         <Stack gap={2} sx={{ position: 'sticky', top: '0' }}>
                             <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                                <Box sx={{ width: '70%', [theme.breakpoints.down('lg')]: { ml:'5%', width:'63%' } }}>
+                                <Box sx={{ width: '70%', [theme.breakpoints.only('md')]: { ml:'5%', width:'63%' } }}>
                                     <Typography variant='h4' sx={{}}>Conversas</Typography>
                                 </Box>
                                 <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
@@ -80,7 +80,7 @@ export default function ContactsArea(): ReactElement {
                         overflow: 'scroll',
                         '::-webkit-scrollbar': { display: 'none' }
                     }}>
-                        <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.down('lg')]: { mt:'6%' } }}>
+                        <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'6%' } }}>
                             <Contact notification={8} date={'19:45'} user={{ name: 'Alfa' }} />
                             <Contact notification={6} date={'3 Dias'} user={{ name: 'Leonardo' }} />
                             <Contact notification={3} date={'1 Ano'} user={{ name: 'Torugo' }} />

@@ -30,7 +30,10 @@ export default function ForumDiscussion({
             gap: 7.5,
             p: 4,
             bgcolor: 'background.secondary',
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.only('lg')]: {
+                width: '60%'
+            },
+            [theme.breakpoints.only('md')]:{
                 width: '60%'
             }
         }}>

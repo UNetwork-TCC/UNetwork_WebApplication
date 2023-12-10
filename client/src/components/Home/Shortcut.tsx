@@ -32,7 +32,7 @@ export default function Shortcut({
                     bgcolor: 'transparent',
                     transition: '.3s ease-in-out',
                     cursor: 'pointer',
-                    [theme.breakpoints.down('lg')]: { height:40, mb:2 }
+                    [theme.breakpoints.only('md')]: { height:40, mb:2 }
 
                 },
 
@@ -55,7 +55,7 @@ export default function Shortcut({
                 width={35}
                 borderRadius={3}
                 border={`1px solid ${color}10`}
-                sx={{ background: `${color}10`, [theme.breakpoints.down('lg')]: { height:30, width:30 } }}
+                sx={{ background: `${color}10`, [theme.breakpoints.only('md')]: { height:30, width:30 } }}
             >
                 <Circle sx={{ height: 12.5, color }} />
             </Box>

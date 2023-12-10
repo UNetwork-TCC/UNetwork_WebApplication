@@ -16,12 +16,12 @@ function Folder({
     }
     const theme = useTheme()
     return(
-        <Box maxWidth={215} sx={{ bgcolor: grey[300], [theme.breakpoints.down('xl')]: { borderRadius:4, height:'5rem' } ,
-            [theme.breakpoints.down('lg')]: { borderRadius:3 } }} 
+        <Box maxWidth={215} sx={{ bgcolor: grey[300], [theme.breakpoints.only('lg')]: { borderRadius:4, height:'5rem' } ,
+            [theme.breakpoints.only('md')]: { borderRadius:3 } }} 
         borderRadius={5} height={'4rem'} width={'15em'} display={'flex'} alignItems={'center'}>
             <List>
                 <ListItem>
-                    <ListItemAvatar sx={{ [theme.breakpoints.down('lg')]: { minWidth:'4rem' } }}>
+                    <ListItemAvatar sx={{ [theme.breakpoints.only('md')]: { minWidth:'4rem' } }}>
                         <Avatar sx={{ bgcolor: 'primary.main', width:'3rem', height:'3rem' }}>
                             <FolderIcon/>
                         </Avatar>

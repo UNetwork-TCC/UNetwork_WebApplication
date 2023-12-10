@@ -15,14 +15,20 @@ export default function ForumSkeleton() {
                 fontSize: '10px',
                 borderRadius: 2,
                 bgcolor: 'background.secondary',
-                [theme.breakpoints.down('xl')]: {
+                [theme.breakpoints.only('lg')]: {
+                    width: '60%'
+                },
+                [theme.breakpoints.only('md')]: {
                     width: '60%'
                 }
             }}>
                 <Box
                     sx={{
                         width: '100%',
-                        [theme.breakpoints.down('xl')]: {
+                        [theme.breakpoints.only('lg')]: {
+                            p: 3
+                        },
+                        [theme.breakpoints.only('md')]: {
                             p: 3
                         }
                     }}
@@ -33,7 +39,10 @@ export default function ForumSkeleton() {
                             <Box
                                 sx={{
                                     height: '5.6em',
-                                    [theme.breakpoints.down('xl')]: {
+                                    [theme.breakpoints.only('lg')]: {
+                                        height: '4em'
+                                    },
+                                    [theme.breakpoints.only('md')]: {
                                         height: '4em'
                                     }
                                 }}
@@ -71,7 +80,10 @@ export default function ForumSkeleton() {
                         <Box
                             sx={{
                                 minHeight: '70%',
-                                [theme.breakpoints.down('xl')]: {
+                                [theme.breakpoints.only('lg')]: {
+                                    minHeight: '60%'
+                                },
+                                [theme.breakpoints.only('md')]: {
                                     minHeight: '60%'
                                 }
                             }}
@@ -99,7 +111,10 @@ export default function ForumSkeleton() {
                 gap: 7.5,
                 p: 4,
                 bgcolor: 'background.secondary',
-                [theme.breakpoints.down('xl')]: {
+                [theme.breakpoints.only('lg')]: {
+                    width: '60%'
+                },
+                [theme.breakpoints.only('md')]: {
                     width: '60%'
                 }
             }}>

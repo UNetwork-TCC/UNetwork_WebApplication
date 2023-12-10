@@ -13,10 +13,10 @@ export default function Message({
     messageFrom?: 'me' | 'him',
     sendedAt?: string | 'Agora há pouco'
 }) : ReactElement {
-    const themeS = useTheme()
+    const theme = useTheme()
 
     let messageStyle: SxProps = {
-        boxShadow: themeS.shadows[2],
+        boxShadow: theme.shadows[2],
         borderRadius: 4,
         p: 1.5        
     }
@@ -24,20 +24,18 @@ export default function Message({
     if (messageFrom === 'me')
         messageStyle = {
             ...messageStyle,
-            bgcolor: themeS.palette.primary.dark,
+            bgcolor: theme.palette.primary.dark,
             color: 'white'
         }
     else
         messageStyle = {
             ...messageStyle,
-            bgcolor: themeS.palette.mode === 'dark' ?
+            bgcolor: theme.palette.mode === 'dark' ?
                 '#444047' 
                 :
-                themeS.palette.background.paper
+                theme.palette.background.paper
         }
-
-    const { theme, setTheme } = useContext(themeContext)
-
+    
     return (
         <Box width='100%'>
             <Box display='flex' justifyContent={messageFrom === 'him' ? 'start' : 'end'} width='100%'>
@@ -60,11 +58,11 @@ export default function Message({
                         width: 25,
                         bottom: 15,
                         right: 5,
-                        [theme.breakpoints.down('xl')]: {
+                        [theme.breakpoints.only('lg')]: {
                             height:20,
                             width:20
                         },
-                        [theme.breakpoints.down('lg')]: {
+                        [theme.breakpoints.only('md')]: {
                             height:17.5,
                             width:17.5
                         }

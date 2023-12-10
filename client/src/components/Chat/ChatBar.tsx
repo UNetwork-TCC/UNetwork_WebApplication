@@ -25,11 +25,11 @@ export default function ChatBar(): ReactElement {
 
     return (
         <Box m={2} height='3.5rem' width='97%' sx={{
-            [theme.breakpoints.down('xl')]: {
+            [theme.breakpoints.only('lg')]: {
                 height:'3rem'               
                     
             },
-            [theme.breakpoints.down('lg')]: {
+            [theme.breakpoints.only('md')]: {
                 height:'2.5rem',
                 width:'94%'
             }
@@ -46,23 +46,23 @@ export default function ChatBar(): ReactElement {
                     p: 0.5,
                     
                     height:'100%',
-                    [theme.breakpoints.down('xl')]: {
+                    [theme.breakpoints.only('lg')]: {
                         borderRadius:2.5,
                         p:0
                     },
-                    [theme.breakpoints.down('lg')]: {
-                        borderRadius:2.5
+                    [theme.breakpoints.only('md')]: {
+                        borderRadius:2.5,                       
                     }
                     
                 }}
             >
                 <InputBase
                     sx={{ flex: 1, fontSize: '1rem', ml: 2,
-                        [theme.breakpoints.down('xl')]: {
+                        [theme.breakpoints.only('lg')]: {
                             ml:1.7,
                             fontSize:'1.2rem'
                         },
-                        [theme.breakpoints.down('lg')]: {
+                        [theme.breakpoints.only('md')]: {
                             ml:1.5,
                             fontSize:'1rem'
                         }
@@ -76,10 +76,10 @@ export default function ChatBar(): ReactElement {
                     <input type='file' id='file' accept='image/*' style={{ display: 'none' }} />
                     <IconButton component='label' htmlFor='file'>
                         <ImageOutlined sx={{
-                            [theme.breakpoints.down('xl')]: {
+                            [theme.breakpoints.only('lg')]: {
                                 mr:0.5
                             },
-                            [theme.breakpoints.down('lg')]: {
+                            [theme.breakpoints.only('md')]: {
                                 fontSize:'1.3rem',
                                 mr:0
                             }
@@ -89,10 +89,10 @@ export default function ChatBar(): ReactElement {
                     
                     <IconButton type="button" aria-label="Emoji" onClick={() => { setShowEmojiPicker(val => !val) }} size='large'>
                         <EmojiEmotions sx={{
-                            [theme.breakpoints.down('xl')]: {
+                            [theme.breakpoints.only('lg')]: {
                                 mr:1
                             },
-                            [theme.breakpoints.down('lg')]: {
+                            [theme.breakpoints.only('md')]: {
                                 fontSize:'1.3rem',
                                 mr:0.5
                             }
@@ -103,11 +103,11 @@ export default function ChatBar(): ReactElement {
                         sx={{ bgcolor: 'primary.main', color: 'white', ':hover':{ bgcolor:'primary.main', opacity:'80%' } }} size='small'
                     >
                         <Send sx={{
-                            [theme.breakpoints.down('xl')]: {
+                            [theme.breakpoints.only('lg')]: {
                                 fontSize:'1.3rem', 
                                 m:'0.1rem'
                             },
-                            [theme.breakpoints.down('lg')]: {
+                            [theme.breakpoints.only('md')]: {
                                 fontSize:'1rem', 
                                 m:'0.1rem'
                             }
@@ -118,17 +118,17 @@ export default function ChatBar(): ReactElement {
             </Box>
 
             <Box sx={{ position: 'absolute', bottom: '11%',
-                [theme.breakpoints.down('xl')]:{
+                [theme.breakpoints.only('lg')]:{
                     bottom:'20%'
                 }
             }}  >
                 {showEmojiPicker && (
                     <Box>
                         <Box sx={{ ml: '15.5%', width: '69%', mt: '7%', height: '75%', position: 'fixed', top: 0, right: 0, left: 0, bottom: 0, zIndex: 2, 
-                            [theme.breakpoints.down('xl')]: {
+                            [theme.breakpoints.only('lg')]: {
                                 
                             },
-                            [theme.breakpoints.down('lg')]: {
+                            [theme.breakpoints.only('md')]: {
                         
                             }    
                         }} 

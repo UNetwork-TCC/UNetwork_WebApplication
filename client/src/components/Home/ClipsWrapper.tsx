@@ -60,7 +60,7 @@ export default function ClipsWrapper(): ReactElement {
     }
 
     return (
-        <Box display='flex' gap={2} m={2} mb={7.5} sx={{ [theme.breakpoints.down('lg')]: { m:0, mb:5 } }}>
+        <Box display='flex' gap={2} m={2} mb={7.5} sx={{ [theme.breakpoints.only('md')]: { m:0, mb:5 } }}>
             {clipsData.clips.map(clip => (
                 <Clip
                     key={clip.id}
