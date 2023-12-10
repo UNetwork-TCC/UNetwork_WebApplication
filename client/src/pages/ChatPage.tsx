@@ -51,14 +51,26 @@ export default function ChatPage(): ReactElement {
         setAnchorEl(null)
     }
 
-    const { theme } = useContext(themeContext)
-
     return (
         <AppLayout>
             <Box sx={{ width: '100%', height: '100%', display: 'flex' }} >
                 <ContactsArea />
                 <Divider orientation='vertical' role='presentation' flexItem sx={{ height: '100%' }} />
                 <ChatArea>
+                    <Box sx={{ width: '100%', height: '9%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
+                        <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
+                            [theme.breakpoints.down('xl')]: {
+                                height:'3rem',
+                                width:'3rem',
+                                borderRadius:3
+                            },
+                            [theme.breakpoints.down('lg')]: {
+                                height:'2.8rem',
+                                width:'2.8rem',
+                                borderRadius:2.5
+                            }
+
+                        }} />
                     <Box sx={{ width: '100%', height: '9%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
                         <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
                             [theme.breakpoints.down('xl')]: {
@@ -82,7 +94,24 @@ export default function ChatPage(): ReactElement {
                                     fontSize:'1.3rem'
                                 }
                             }}>Username</Typography>
+                            <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%',
+                                [theme.breakpoints.down('xl')]: {
+                                    fontSize:'1.4rem'                                    
+                                },
+                                [theme.breakpoints.down('lg')]: {
+                                    fontSize:'1.3rem'
+                                }
+                            }}>Username</Typography>
                         </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', width: '25%',
+                            [theme.breakpoints.down('xl')]: {
+                                gap:2
+                            },
+                            [theme.breakpoints.down('lg')]: {
+                                gap:1.8
+                            }
+                    
+                        }} gap={3}>
                         <Box sx={{ display: 'flex', alignItems: 'center', width: '25%',
                             [theme.breakpoints.down('xl')]: {
                                 gap:2
@@ -102,8 +131,26 @@ export default function ChatPage(): ReactElement {
                                     }
 
                                 }} />
+                                <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray',
+                                    [theme.breakpoints.down('xl')]: {
+                                        fontSize:'2rem'
+                                    },
+                                    [theme.breakpoints.down('lg')]: {
+                                        fontSize:'1.8rem'
+                                    }
+
+                                }} />
                             </IconButton>
                             <IconButton sx={{}}>
+                                <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
+                                    [theme.breakpoints.down('xl')]: {
+                                        fontSize:'1.5rem'
+                                    },
+                                    [theme.breakpoints.down('lg')]: {
+                                        fontSize:'1.3rem'
+                                    }
+                            
+                                }} />
                                 <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
                                     [theme.breakpoints.down('xl')]: {
                                         fontSize:'1.5rem'
@@ -132,6 +179,15 @@ export default function ChatPage(): ReactElement {
                                     }
                                 }
                             >
+                                <Settings sx={{ fontSize: '2rem', color: 'gray',
+                                    [theme.breakpoints.down('xl')]: {
+                                        fontSize:'1.8rem'
+                                    },
+                                    [theme.breakpoints.down('lg')]: {
+                                        fontSize:'1.6rem'
+                                    }
+
+                                }} />
                                 <Settings sx={{ fontSize: '2rem', color: 'gray',
                                     [theme.breakpoints.down('xl')]: {
                                         fontSize:'1.8rem'

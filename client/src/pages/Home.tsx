@@ -202,6 +202,10 @@ export default function Home(): ReactElement {
                                                 [theme.breakpoints.down('lg')]: {
                                                     width:'35px',
                                                     height:'35px'
+                                                },
+                                                [theme.breakpoints.down('lg')]: {
+                                                    width:'35px',
+                                                    height:'35px'
                                                 }
                                             }}
                                         >
