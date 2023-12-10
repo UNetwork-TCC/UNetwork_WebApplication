@@ -35,7 +35,7 @@ export const deleteChat = async (req, res) => {
             return res.status(404).send({message: 'Chat não econtrado!'})
         }
 
-        const deletedChat = await Chat.findOneAndDelete(id)
+        const deletedChat = await Chat.findon(id)
         res.status(200).send({deletedChat, message: 'Chat deletado!'})
     } catch (error) {
         res.status(404).send({message: error.message})
@@ -52,14 +52,14 @@ export const updateChat = async (req, res) => {
             return res.status(404).send({message: 'Chat não econtrado!'})
         }
 
-        if (!messages || !users) {
-            return res.status(400).send({message: 'Todos os campos precisam ser preenchidos!'})
+        if (messages || users) {
+            const chatUpdates = { messages: [...chat.messages, ...messages || ''], users: [...chat.users, ...users || ''] }
+            const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
+    
+            res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})
+        } else {
+            return res.status(400).send({message: 'Preenha os campos obrigatórios!'})
         }
-        
-        const chatUpdates = {messages: [...messages], users: [...users]}
-        const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
-
-        res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }
@@ -67,21 +67,38 @@ export const updateChat = async (req, res) => {
 
 export const createChat = async (req, res) => {
     try {
-        const { users, messages } = req.body
+        const { users } = req.body
 
-        if (!users || !messages) {
-            return res.status(400).send({message: 'Nem todos os campos foram preenchidos!'})
+        const chat = await Chat.findOne({ users: { $all: [...users] } })
+
+        if (chat) return res.status(200).json(chat)
+
+        if (!users) {
+            return res.status(400).send({message: 'Preencha todos os campos!'})
         } 
         
-        const newChat = Chat({
-            users,
-            messages,
+        const newChat = await Chat({
+            users
         })
 
         await newChat.save()
         res.status(201).send({newChat, message: 'Chat criado com sucesso!'})
-
     } catch (error) {
         res.status(400).send({message: error.message})
+    }
+}
+
+export const findUserChats = async (req, res) => {
+    const { userId } = req.params
+
+    try {
+        const chats = await Chat.find({
+            users: { $in: [userId] }
+        })
+
+        res.status(200).json(chats)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error)
     }
 }

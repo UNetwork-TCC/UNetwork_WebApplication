@@ -1,4 +1,4 @@
-import { Picture } from '../models/index.js'
+import { File } from '../models/index.js'
 import azure from 'azure-storage'
 import { v4 as uuid } from 'uuid'
 
@@ -8,7 +8,7 @@ const storage = 'unetworkblobapi'
 const CONNECTION_URL = process.env.AZURE_STORAGE_CONNECTION_URL
 const blobSvc = azure.createBlobService(CONNECTION_URL)
 
-export const postPictures = async (req, res) => {
+export const postFiles = async (req, res) => {
     try {
         const { userId, at, file64Based } = req.body
         let filename = req.body?.filename
@@ -28,7 +28,7 @@ export const postPictures = async (req, res) => {
                 filename = 'default.jpg'
             }
 
-            const newPicture = Picture({
+            const newFile = File({
                 userId,
                 at,
                 filename
@@ -36,34 +36,34 @@ export const postPictures = async (req, res) => {
 
             const fileUrl = `https://${storage}.blob.core.windows.net/${container}/${filename}`
 
-            await newPicture.save()
-            res.status(200).send({ newPicture, src: fileUrl, message: 'Imagem salva com sucesso!'})
+            await newFile.save()
+            res.status(200).send({ newFile, src: fileUrl, message: 'Imagem salva com sucesso!'})
         })        
     } catch (error) {
         res.status(404).send({message: error.message})
     }
 }
 
-export const deletePictures = async(req, res) => {
+export const deleteFiles = async(req, res) => {
     const blobSvc = azure.createBlobService(CONNECTION_URL)
 
     try {
         const {id} = req.params
-        const deletedPicture = await Picture.findByIdAndDelete(id)
-        if (!deletedPicture) return res.status(400).send({message: 'Imagem não encontrada!'})
+        const deletedFile = await File.findByIdAndDelete(id)
+        if (!deletedFile) return res.status(400).send({message: 'Imagem não encontrada!'})
 
-        blobSvc.deleteBlobIfExists(container, deletedPicture.filename)
+        blobSvc.deleteBlobIfExists(container, deletedFile.filename)
 
-        res.status(200).send({deletedPicture, message: 'Imagem deletada com sucesso!'})
+        res.status(200).send({deletedFile, message: 'Imagem deletada com sucesso!'})
     } catch (error) {
         res.status(404).send({message: error.message})
     }
 }
 
-export const getPicturesById = async (req, res) => {
+export const getFilesById = async (req, res) => {
     try {
         const { id } = req.params
-        const gotten = await Picture.find({ src: 'uploads/' + id })
+        const gotten = await File.find({ src: 'uploads/' + id })
         if (!gotten) return res.status(400).send({message: 'Imagem não encontrada!'})
         res.status(200).json(gotten)
     } catch (error) {
@@ -71,7 +71,7 @@ export const getPicturesById = async (req, res) => {
     }
 }
 
-export const updatePictures = async(req, res) => {
+export const updateFiles = async(req, res) => {
     try {
         const {id} = req.params
         const { name, userId, at } = req.body
@@ -80,7 +80,7 @@ export const updatePictures = async(req, res) => {
         if(!(id, name, file)) return res.status(400).send({message: 'Por favor, preencha todos os campos!'})
         
         const updates = {name, file}
-        const updated = await Picture.findByIdAndUpdate(id, updates)
+        const updated = await File.findByIdAndUpdate(id, updates)
         
         if (!updated) return res.status(400).send({message: 'Alterações não feitas!'})
         res.status(200).send({updated, message:'Os dados foram atualizados!'})

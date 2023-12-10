@@ -3,10 +3,11 @@ import { createMessage, deleteMessage, fetchMessages, getById, updateMessage } f
 
 const router = Router()
 
-router.get('/fetch', fetchMessages)
-router.get('/:id/', getById)
+router.get('/', fetchMessages)
+router.get('/:id', getById)
+router.get('/getmessagesinchat/:chatId', getById)
 router.post('/', createMessage)
-router.patch('/:id/', updateMessage)
-router.delete('/:id/', deleteMessage)
+router.patch('/:id', updateMessage)
+router.delete('/:id', deleteMessage)
 
 export default router
