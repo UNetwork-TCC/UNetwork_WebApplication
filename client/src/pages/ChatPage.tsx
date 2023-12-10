@@ -73,30 +73,7 @@ export default function ChatPage(): ReactElement {
                             }
 
                         }} />
-                    </Box>
-                    <Box sx={{ width: '100%', height: '9%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
-                        <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
-                            [theme.breakpoints.only('lg')]: {
-                                height:'3rem',
-                                width:'3rem',
-                                borderRadius:3
-                            },
-                            [theme.breakpoints.only('md')]: {
-                                height:'2.8rem',
-                                width:'2.8rem',
-                                borderRadius:2.5
-                            }
-
-                        }} />
                         <Box sx={{ width: '75%', maxWidth: '75%' }}>
-                            <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%',
-                                [theme.breakpoints.only('lg')]: {
-                                    fontSize:'1.4rem'                                    
-                                },
-                                [theme.breakpoints.only('md')]: {
-                                    fontSize:'1.3rem'
-                                }
-                            }}>Username</Typography>
                             <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%',
                                 [theme.breakpoints.only('lg')]: {
                                     fontSize:'1.4rem'                                    
@@ -115,108 +92,71 @@ export default function ChatPage(): ReactElement {
                             }
                     
                         }} gap={3}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', width: '25%',
-                                [theme.breakpoints.only('lg')]: {
-                                    gap:2
-                                },
-                                [theme.breakpoints.only('md')]: {
-                                    gap:1.8
-                                }
-                    
-                            }} gap={3}>
-                                <IconButton sx={{}}>
-                                    <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'2rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.8rem'
-                                        }
-
-                                    }} />
-                                    <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'2rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.8rem'
-                                        }
-
-                                    }} />
-                                </IconButton>
-                                <IconButton sx={{}}>
-                                    <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'1.5rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.3rem'
-                                        }
-                            
-                                    }} />
-                                    <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'1.5rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.3rem'
-                                        }
-                            
-                                    }} />
-                                </IconButton>
-                                <IconButton sx={{}}
-                                    onClick={
-                                        e => {
-                                            handleClick(e,
-                                                [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear' ],
-                                                [ onClickEvents.item1, onClickEvents.item2, () => { }, onClickEvents.item4 ],
-                                                [ 
-                                                    <AccountBox key={null} />,
-                                                    <Search key={null} />,
-                                                    <FmdGood key={null} />,
-                                                    <Delete key={null} />,
-                                                    <Report key={null} />,
-                                                    <Block key={null} />
-                                                ]
-                                            )
-                                        }
+                            <IconButton sx={{}}>
+                                <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray',
+                                    [theme.breakpoints.only('lg')]: {
+                                        fontSize:'2rem'
+                                    },
+                                    [theme.breakpoints.only('md')]: {
+                                        fontSize:'1.8rem'
                                     }
-                                >
-                                    <Settings sx={{ fontSize: '2rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'1.8rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.6rem'
-                                        }
 
-                                    }} />
-                                    <Settings sx={{ fontSize: '2rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'1.8rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.6rem'
-                                        }
+                                }} />
+                            </IconButton>
+                            <IconButton sx={{}}>
+                                <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
+                                    [theme.breakpoints.only('lg')]: {
+                                        fontSize:'1.5rem'
+                                    },
+                                    [theme.breakpoints.only('md')]: {
+                                        fontSize:'1.3rem'
+                                    }
+                            
+                                }} />
+                            </IconButton>
+                            <IconButton sx={{}}
+                                onClick={
+                                    e => {
+                                        handleClick(e,
+                                            [ 'Ver Contato', 'Pesquisar', 'Fixar', 'Limpar conversa', 'Denunciar', 'Bloquear' ],
+                                            [ onClickEvents.item1, onClickEvents.item2, () => { }, onClickEvents.item4 ],
+                                            [ 
+                                                <AccountBox key={null} />,
+                                                <Search key={null} />,
+                                                <FmdGood key={null} />,
+                                                <Delete key={null} />,
+                                                <Report key={null} />,
+                                                <Block key={null} />
+                                            ]
+                                        )
+                                    }
+                                }
+                            >
+                                <Settings sx={{ fontSize: '2rem', color: 'gray',
+                                    [theme.breakpoints.only('lg')]: {
+                                        fontSize:'1.8rem'
+                                    },
+                                    [theme.breakpoints.only('md')]: {
+                                        fontSize:'1.6rem'
+                                    }
 
-                                    }} />
-                                </IconButton>
-                            </Box>
+                                }} />
+                            </IconButton>
                         </Box>
-                        <Divider flexItem />
-                        {/* MessageWrapper */}
-                        <MessageWrapper />
-                        {/* end */}
-                        <Divider flexItem sx={{}} />
-                        <ChatBar />
-                        <CustomMenu
-                            anchorEl={anchorEl}
-                            open={openCustonMenu}
-                            onClose={handleCloseCustonMenu}
-                        >
-                            {menuContent}
-                        </CustomMenu>
                     </Box>
+                    <Divider flexItem />
+                    {/* MessageWrapper */}
+                    <MessageWrapper />
+                    {/* end */}
+                    <Divider flexItem sx={{}} />
+                    <ChatBar />
+                    <CustomMenu
+                        anchorEl={anchorEl}
+                        open={openCustonMenu}
+                        onClose={handleCloseCustonMenu}
+                    >
+                        {menuContent}
+                    </CustomMenu>
                 </ChatArea>
             </Box>
         </AppLayout>
