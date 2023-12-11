@@ -5,9 +5,11 @@ import { createSlice } from '@reduxjs/toolkit'
 // Chat Slice
 
 const initialState: {
-    id: string
+    id: string,
+    messages: Chat['messages']
 } = {
-    id: ''
+    id: '',
+    messages: []
 }
 
 export const chatSlice = createSlice({
@@ -16,6 +18,10 @@ export const chatSlice = createSlice({
     reducers: {
         setChatId: (state, action) => {
             state.id = action.payload
+        },
+
+        setMessages: (state, action) => {
+            state.messages = action.payload
         }
     }
 })
@@ -42,7 +48,7 @@ const chatApiSlice = apiSlice.injectEndpoints({
 
         updateChat: builder.mutation<Chat, Partial<Chat>>({
             query: ({ _id, ...data }) => ({
-                url: '/chat',
+                url: '/chat/' + _id,
                 method: 'PATCH',
                 body: data
             })
@@ -67,7 +73,7 @@ const chatApiSlice = apiSlice.injectEndpoints({
 // Exports
 
 export const chatReducer = chatSlice.reducer
-export const { setChatId } = chatSlice.actions
+export const { setChatId, setMessages } = chatSlice.actions
 
 export const {
     useFetchChatsMutation,

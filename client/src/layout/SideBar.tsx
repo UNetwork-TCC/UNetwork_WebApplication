@@ -22,6 +22,7 @@ import { darkTheme, lightTheme } from '$themes'
 import { useAppDispatch, useAppSelector } from '$store'
 import { logOut } from '$features/auth'
 import { BottomNavigationAction } from '@mui/material'
+import { setMessages } from '$features/chat'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
@@ -80,6 +81,7 @@ export default function SideBar(): ReactElement {
 
     const logout = async (): Promise<void> => {
         dispatch(logOut())
+        dispatch(setMessages([]))
 
         setTimeout(() => {
             navigate('/auth/login')

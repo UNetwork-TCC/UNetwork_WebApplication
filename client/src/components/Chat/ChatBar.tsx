@@ -2,19 +2,30 @@ import { IconButton, useMediaQuery, InputBase, Box, useTheme } from '@mui/materi
 import { Send, ImageOutlined, EmojiEmotions } from '@mui/icons-material'
 import EmojiPicker from 'emoji-picker-react'
 import { type ReactElement, useState, type FormEvent, type MouseEvent } from 'react'
+import { useCreateMessageMutation } from '$features/message'
+import { useAppDispatch, useAppSelector } from '$store'
+import { setMessages, useUpdateChatMutation } from '$features/chat'
 
-export default function ChatBar(): ReactElement {
+export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
 
     const theme = useTheme()
     const matches = useMediaQuery('(min-width: 600px)')
 
+    const dispatch = useAppDispatch()
+
     const [ text, setText ] = useState('')
 
+    const [ createMessage ] = useCreateMessageMutation()
+    const [ updateChat ] = useUpdateChatMutation()
+
     const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
+
+    const user = useAppSelector(state => state.auth.user)
+    const messages = useAppSelector(state => state.chat.messages)
     
     // const [ sendMessage ]
 
-    const onEmojiClick = ( emojiObject:any ):void => {
+    const onEmojiClick = ( emojiObject: any ):void => {
         setText(prevInput => prevInput + emojiObject.emoji)
     }
 
@@ -24,7 +35,36 @@ export default function ChatBar(): ReactElement {
     
             if (!text) return
 
+            dispatch(setMessages([
+                ...messages,
+                {
+                    content: text,
+                    sendedBy: user._id,
+                    sendedIn: chatId,
+                    sendedAt: new Date().getHours() + ':' + new Date().getMinutes(),
+                    type: 'text'
+                }
+            ]))
+
             setText('')
+
+            const { data }: any = await createMessage({
+                content: text,
+                sendedBy: user._id,
+                sendedIn: chatId,
+                sendedAt: new Date().getHours() + ':' + new Date().getMinutes(),
+                type: 'text'
+            })
+
+            const a = await updateChat({
+                _id: chatId,
+                messages: [
+                    data.newMessage
+                ]
+            })
+
+            console.log(a)
+
         })()
     }
 
@@ -67,7 +107,7 @@ export default function ChatBar(): ReactElement {
                         fontSize: '1rem',
                         ml: 2,
                         [theme.breakpoints.only('lg')]: {
-                            ml:1.7,
+                            ml: 1.7,
                             fontSize:'1.2rem'
                         },
                         [theme.breakpoints.only('md')]: {

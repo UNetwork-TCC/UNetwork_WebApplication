@@ -207,7 +207,7 @@ export default function ChatPage(): ReactElement {
                         />
                         {/* end */}
                         <Divider flexItem sx={{}} />
-                        <ChatBar />
+                        <ChatBar chatId={id} />
                         <CustomMenu
                             anchorEl={anchorEl}
                             open={openCustonMenu}
