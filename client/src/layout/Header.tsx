@@ -160,11 +160,11 @@ export default function Header({
                             <CustomLink to='/app/news' name='Notícias' />
                         </Box>
                         <Box gap={3} display='flex'>
-                            <Box sx={{ [theme.breakpoints.down('lg')]: { mt:'8%' } }}> {
+                            <Box sx={{ [theme.breakpoints.only('md')]: { mt:'8%' } }}> {
                                 notification ?
                                     <Badge badgeContent='+99' color='primary'>
-                                        <IconButton sx={{ [theme.breakpoints.down('lg')]: { width:'3rem', mt:'20%', height:'2rem' } }} onClick={e => { handleClick(e, [ 'Message1', 'Message2' ]) }}>
-                                            <Avatar sx={{ [theme.breakpoints.down('lg')]: { width:'2.5rem', height:'2.5rem' } }}>
+                                        <IconButton sx={{ [theme.breakpoints.only('md')]: { width:'3rem', mt:'20%', height:'2rem' } }} onClick={e => { handleClick(e, [ 'Message1', 'Message2' ]) }}>
+                                            <Avatar sx={{ [theme.breakpoints.only('md')]: { width:'2.5rem', height:'2.5rem' } }}>
                                                 <Notifications />
                                             </Avatar>
                                         </IconButton>
@@ -178,8 +178,8 @@ export default function Header({
                             }
                                 
                             </Box>
-                            <Box sx={{ [theme.breakpoints.down('lg')]: { pt:'5%' } }}>
-                                <IconButton sx={{ [theme.breakpoints.down('lg')]: { } }} onClick={e => { handleClick(e, 
+                            <Box sx={{ [theme.breakpoints.only('md')]: { pt:'5%' } }}>
+                                <IconButton sx={{ [theme.breakpoints.only('md')]: { } }} onClick={e => { handleClick(e, 
                                     [ 'Configurações', 'Ajuda e suporte', 'Dar feedback' ],
                                     [ 
                                         <Settings key={0} />,
@@ -192,7 +192,7 @@ export default function Header({
                                     ],
                                     true
                                 ) }}>
-                                    <Avatar sx={{ background: 'white', color: 'grey.400', [theme.breakpoints.down('lg')]: { height:'2.5rem', width:'2.5rem' } }}>
+                                    <Avatar sx={{ background: 'white', color: 'grey.400', [theme.breakpoints.only('md')]: { height:'2.5rem', width:'2.5rem' } }}>
                                         <UserAvatar 
                                             user={user}
                                             onClick={() => {}}

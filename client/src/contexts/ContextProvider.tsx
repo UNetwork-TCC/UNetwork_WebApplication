@@ -1,5 +1,5 @@
 import { type ReactElement, useState, type CSSProperties } from 'react'
-import { appLayoutContext, themeContext } from '$contexts'
+import { appLayoutContext, themeContext, chatContext } from '$contexts'
 import { ThemeStore } from '$layout'
 import { CssBaseline, type CustomTheme } from '@mui/material'
 import { darkTheme, lightTheme } from '$themes'
@@ -10,6 +10,10 @@ import { setAppLayout, setTheme as setThemeAction } from '$features/user'
 import { useAppDispatch, useAppSelector } from '$store'
 export default function ContextProvider({ children } : { children: ReactElement }): ReactElement {
     const dispatch = useAppDispatch()
+
+    // Chat Context
+
+    const [ userChats, setUserChats ] = useState<any[]>([])
 
     //  Theme Context
 
@@ -85,10 +89,12 @@ export default function ContextProvider({ children } : { children: ReactElement 
         <themeContext.Provider value={themeContextValue}>
             <ThemeStore>
                 <appLayoutContext.Provider value={appLayoutContextValue}>
-                    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                        <CssBaseline />
-                        {children}
-                    </GoogleOAuthProvider>
+                    <chatContext.Provider value={{ userChats, setUserChats }}>
+                        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+                            <CssBaseline />
+                            {children}
+                        </GoogleOAuthProvider>
+                    </chatContext.Provider>
                 </appLayoutContext.Provider>
             </ThemeStore>
         </themeContext.Provider>

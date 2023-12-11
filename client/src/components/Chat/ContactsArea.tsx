@@ -1,12 +1,22 @@
 import { CustomInput } from '$layout'
 import { Add, Search, Settings } from '@mui/icons-material'
-import { Box, Button, IconButton, Modal, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { useState, type ReactElement } from 'react'
+import { Box, Button, IconButton, Modal, Stack, SxProps, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { useState, type ReactElement, useEffect } from 'react'
 import { Contact } from '$components'
-import { type contact } from '$types'
+import { type Chat, type contact } from '$types'
+import { useFetchUsersMutation } from '$features/user'
+import { ContactSkeleton } from '$skeletons'
 
-export default function ContactsArea(): ReactElement {
+export default function ContactsArea({ chats, userId, sx }: { chats: Chat[], userId: string, sx?: SxProps }): ReactElement {
     const theme = useTheme()
+
+    const [ fetchUsers, { isLoading, data: users } ] = useFetchUsersMutation()
+
+    const usersChat = chats
+        .map(chat => chat.users)
+        .map(arr => arr.filter(id => id !== userId))
+        .join()
+        .split(',')
 
     const [ Contacts, setContacts ] = useState<contact[]>([])
     const [ ContactsAttributes, setContactsAttributes ] = useState<contact>({ name: '', code: '', date: '', notification: '' })
@@ -31,35 +41,36 @@ export default function ContactsArea(): ReactElement {
         else alert('preencha todos os campos!')
     }
 
+    useEffect(() => {
+        (async () => {    
+            await fetchUsers(null)
+        })()
+    }, [ fetchUsers ])
+
     return (
         <>
             <Box
                 display='flex'
-                height='96%'
                 position='sticky'
                 alignItems='start'
                 maxHeight='99%'
-                width='30%'
-                pt={4.5}
+                width='35%'
+                pt={2}
                 sx={{
                     boxSizing: 'border-box',
-                    [theme.breakpoints.down('lg')]: { pt:2.5 }
+                    [theme.breakpoints.only('md')]: { pt:2.5 },
+                    ...sx
                 }}>
                 <Box sx={{ width: '100%', height: '100%' }} >
-                    <Box sx={{ width: '100%', height: '17%' }}>
+                    <Box sx={{ width: '100%', height: '12.5%' }}>
                         <Stack gap={2} sx={{ position: 'sticky', top: '0' }}>
-                            <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                                <Box sx={{ width: '70%', [theme.breakpoints.down('lg')]: { ml:'5%', width:'63%' } }}>
-                                    <Typography variant='h4' sx={{}}>Conversas</Typography>
-                                </Box>
-                                <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
-                                    <IconButton onClick={handleOpen}>
-                                        <Add />
-                                    </IconButton>
-                                    <IconButton>
-                                        <Settings />
-                                    </IconButton>
-                                </Box>
+                            <Box sx={{ width: '100%', display: 'flex', gap: 1, pr: 2, justifyContent: 'flex-end' }}>
+                                <IconButton onClick={handleOpen}>
+                                    <Add />
+                                </IconButton>
+                                <IconButton>
+                                    <Settings />
+                                </IconButton>
                             </Box>
                             <Box sx={{}}>
                                 <CustomInput
@@ -78,27 +89,38 @@ export default function ContactsArea(): ReactElement {
                     <Box sx={{
                         width: '100%', height: '87%',
                         overflow: 'scroll',
-                        '::-webkit-scrollbar': { display: 'none' }
+                        '::-webkit-scrollbar': { display: 'none' },
+                        mt: !matches ? 2 : 0
                     }}>
-                        <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.down('lg')]: { mt:'6%' } }}>
-                            <Contact notification={8} date={'19:45'} user={{ name: 'Alfa' }} />
-                            <Contact notification={6} date={'3 Dias'} user={{ name: 'Leonardo' }} />
-                            <Contact notification={3} date={'1 Ano'} user={{ name: 'Torugo' }} />
-                            <Contact date={'3 Dias'} user={{ name: 'Guilherme Lima' }} />
-                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Elizabeth' }} />
-                            <Contact notification={14} date={'3 Dias'} user={{ name: 'Jhow' }} />
-                            <Contact notification={56} date={'3 Dias'} user={{ name: 'Luizinho' }} />
-                            <Contact notification={99} date={'3 Dias'} user={{ name: 'Paulo Rogério de Neves Oliveira' }} /> {/* "+99" medo */}
-                            <Contact notification={7} date={'3 Dias'} user={{ name: 'Rian' }} />
-                            <Contact notification={1} date={'3 Dias'} user={{ name: 'Vitor Santos' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={2} date={'2h'} user={{ name: 'Paulin' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            <Contact notification={3} date={'3 Dias'} user={{ name: 'Pacheco' }} />
-                            {Contacts.map(e => (
-                                <Contact user={{ name: e.name }} key={e.name} />
-                            ))}
+                        <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'6%' } }}>
+                            {!isLoading ? (() => {
+
+                                const usersToChat = usersChat
+                                    .map(
+                                        id => users?.filter(
+                                            (user: any) => user._id === id
+                                        )[0]
+                                    )
+
+                                console.log(usersToChat)
+
+                                return (
+                                    usersToChat.map((user, index) => (
+                                        <Contact 
+                                            key={user?._id}
+                                            chat={chats[index]}
+                                            user={{
+                                                username: user?.username,
+                                                otherInfo: { avatar: user?.otherInfo?.avatar } 
+                                            }} 
+                                        />
+                                    ))
+                                )
+                            })() : (
+                                [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map(e => (
+                                    <ContactSkeleton key={e} />
+                                ))
+                            )}
                         </Stack>
                     </Box>
                 </Box>
@@ -111,7 +133,17 @@ export default function ContactsArea(): ReactElement {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{ height: matches ? '24vh' : '20vh', width: '35vw', bgcolor: 'background.paper', display:'flex', flexDirection:'column' }} borderRadius={2} >
+                <Box 
+                    borderRadius={2} 
+                    p={1} 
+                    sx={{ 
+                        height: matches ? '24vh' : '20vh',
+                        width: matches ? '35vw' : '75vw',
+                        bgcolor: 'background.paper',
+                        display:'flex',
+                        flexDirection:'column' 
+                    }} 
+                >
                     <Box p={0}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
                             Adicionar contato

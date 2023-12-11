@@ -22,6 +22,7 @@ import { darkTheme, lightTheme } from '$themes'
 import { useAppDispatch, useAppSelector } from '$store'
 import { logOut } from '$features/auth'
 import { BottomNavigationAction } from '@mui/material'
+import { setChatId, setMessages } from '$features/chat'
 
 export default function SideBar(): ReactElement {
     const { theme, setTheme } = useContext(themeContext)
@@ -69,7 +70,7 @@ export default function SideBar(): ReactElement {
             color: 'primary.contrastText',
             transition: '.3s ease-in-out',
             pl: !dropdownButtonClicked ? 1 : 0.75,
-            [theme.breakpoints.down('lg')]:{ left: !dropdownButtonClicked ? '111%' : '145%', top: 3, height:20, width:20, p: !dropdownButtonClicked ? 0.3 : 0.55,
+            [theme.breakpoints.only('md')]:{ left: !dropdownButtonClicked ? '111%' : '145%', top: 3, height:20, width:20, p: !dropdownButtonClicked ? 0.3 : 0.55,
                 pl: !dropdownButtonClicked ? 0.8 : 0.60 }
         },
 
@@ -80,6 +81,8 @@ export default function SideBar(): ReactElement {
 
     const logout = async (): Promise<void> => {
         dispatch(logOut())
+        dispatch(setMessages([]))
+        dispatch(setChatId([]))
 
         setTimeout(() => {
             navigate('/auth/login')
@@ -116,10 +119,10 @@ export default function SideBar(): ReactElement {
                         bgcolor: 'transparent',
                         transition: '.3s ease-in-out',
                         cursor: 'pointer',
-                        [theme.breakpoints.down('xl')]: {
+                        [theme.breakpoints.only('lg')]: {
                             p: 2
                         },
-                        [theme.breakpoints.down('lg')]: {
+                        [theme.breakpoints.only('md')]: {
                             height:'2.5rem',
                             p:'5%'                          ,
                             gap:1.5
@@ -136,7 +139,7 @@ export default function SideBar(): ReactElement {
             >
                 {icon}
                 {!dropdownButtonClicked && (
-                    <Typography fontSize={'1rem'} sx={{ [theme.breakpoints.down('lg')]: { fontSize:'0.9rem' } }}>{text}</Typography>
+                    <Typography fontSize={'1rem'} sx={{ [theme.breakpoints.only('md')]: { fontSize:'0.9rem' } }}>{text}</Typography>
                 )}
             </Box>
         )
@@ -169,7 +172,7 @@ export default function SideBar(): ReactElement {
                             width: !dropdownButtonClicked ? '20rem' : '7rem',
                             bgcolor: theme.palette.mode === 'light' ? 'rgba(255, 255, 255, .3)' : 'rgba(255, 255, 255, .1)',
                             transition: '.3s ease-in-out',
-                            [theme.breakpoints.down('lg')]: { width: !dropdownButtonClicked ? '17rem' : '7rem' }
+                            [theme.breakpoints.only('md')]: { width: !dropdownButtonClicked ? '17rem' : '7rem' }
                         }}
                     >
                         <Box position='relative'>
@@ -192,7 +195,7 @@ export default function SideBar(): ReactElement {
                             height='100%'
                         >
                             <Box display='flex' gap={2} flexDirection='column'>
-                                <Box display='flex' flexDirection='column' gap={2} sx={{ [theme.breakpoints.down('lg')]:{ gap:1 } }}>
+                                <Box display='flex' flexDirection='column' gap={2} sx={{ [theme.breakpoints.only('md')]:{ gap:1 } }}>
                                     <Stack gap={1}>
                                         <NavLink
                                             icon={<Home />}
@@ -212,16 +215,18 @@ export default function SideBar(): ReactElement {
                                     </Stack>
                                     <Box 
                                         sx={{
-                                            [theme.breakpoints.down('xl')]: {
+                                            [theme.breakpoints.only('lg')]: {
                                                 ml: 1,
                                                 maxHeight: '27rem',
-                                                minHeight: '20rem'
+                                                minHeight: '27rem'
                                             },
-                                            [theme.breakpoints.down('lg')]:{
-                                                maxHeight:'22rem'
+                                            [theme.breakpoints.only('md')]:{
+                                                maxHeight:'22rem',
+                                                minHeight:'22rem',
+                                                ml: !dropdownButtonClicked ? 1 : 0.8        
                                             }
                                         }} 
-                                        // height={'26rem'}
+                                        height={'26rem'}
                                         minHeight='14rem' 
                                         ml={!dropdownButtonClicked ? 3 : 2.4}
                                     >
@@ -230,15 +235,14 @@ export default function SideBar(): ReactElement {
                                             color='text.secondary'
                                             display='flex'
                                             mb={3}
-                                            gap={2}
-        
-                                            sx={{ [theme.breakpoints.down('lg')]:{ mb:1 } }}
+                                            gap={3}
+                                            sx={{ [theme.breakpoints.only('md')]:{ mb:1, gap: 1 } }}
                                         >
                                             {!dropdownButtonClicked ?
                                                 <>
                                                     <Typography sx={{ 
                                                         userSelect: 'none', cursor: 'pointer', 
-                                                        [theme.breakpoints.down('lg')]: { fontSize:'0.9rem' }
+                                                        [theme.breakpoints.only('md')]: { fontSize:'0.9rem', width:'7rem' }
                                                     }}>Seus atalhos ({shortcutsLength})</Typography>
                                                     {shortcutsExpanded
                                                         ? <ExpandLess sx={{ cursor: 'pointer' }} />
@@ -263,10 +267,10 @@ export default function SideBar(): ReactElement {
                                                     overflow: 'scroll',
                                                     overflowX: 'hidden',
                                                     '::-webkit-slider-thumb': { display: 'none' },
-                                                    [theme.breakpoints.down('xl')]: {
+                                                    [theme.breakpoints.only('lg')]: {
                                                         maxHeight: '23rem'
                                                     },
-                                                    [theme.breakpoints.down('lg')]: {
+                                                    [theme.breakpoints.only('md')]: {
                                                         maxHeight:'20rem',
                                                         '::-webkit-scrollbar': { width:'5px' }
                                                     }

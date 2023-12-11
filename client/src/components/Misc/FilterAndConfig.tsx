@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import { FilterList } from '@mui/icons-material'
-import { Box, IconButton, MenuItem, Stack } from '@mui/material'
+import { Box, IconButton, MenuItem, Stack, useTheme } from '@mui/material'
 import { CustomMenu } from '$layout'
 import { type ReactElement, useState } from 'react'
 export default function FilterAndConfig({ text, handleOpen }: { text: string, handleOpen: () => void }): ReactElement {
@@ -33,8 +33,10 @@ export default function FilterAndConfig({ text, handleOpen }: { text: string, ha
 
     const handleClose = (): void => { setAnchorEl(null) }
 
+    const theme = useTheme()
+
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', [theme.breakpoints.only('lg')]: { mr:'5rem' } }}>
             <Stack sx={{ display:'flex', flexDirection:'row' }} gap={3}>
                 <IconButton
                     onClick={
@@ -61,7 +63,7 @@ export default function FilterAndConfig({ text, handleOpen }: { text: string, ha
                     cursor: 'pointer',
                     bgcolor: '#673AB7',
                     opacity: '0.85' 
-                } 
+                }
             }} onClick={handleOpen}>{text}</Box>
             <CustomMenu
                 anchorEl={anchorEl}

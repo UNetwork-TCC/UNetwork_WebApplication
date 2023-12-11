@@ -6,17 +6,28 @@ import peopleVector from '$assets/svg/Home/PeopleVector.svg'
 import Image from 'mui-image'
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { Animation } from 'react-animate-style'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Book, Token, WorkHistory } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next'
-import { type ReactElement } from 'react'
+import { useEffect, type ReactElement } from 'react'
+import { useAppSelector } from '$store'
 
 function LandingPage(): ReactElement {
     const theme = useTheme()
 
     const { t } = useTranslation()
 
+    const user = useAppSelector(state => state.auth.user)
+
+    const navigate = useNavigate()
+
     const matches = useMediaQuery(theme.breakpoints.down('md'))
+
+    useEffect(() => {
+        if (user) {
+            navigate('/app')
+        }
+    }, [ user, navigate ])
 
     function Heading({ title, content, icon } : { title: string, content: string, icon: ReactElement }): ReactElement {
         return (

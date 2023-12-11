@@ -21,11 +21,11 @@ export default function News({
     return (
         <Link sx={{ color: 'black', ':hover': { cursor: 'pointer' } }} >
             <Paper elevation={8} sx={{ width: '50rem', borderRadius: 4, 
-                [theme.breakpoints.down('lg')]: { width:'40rem' }
+                [theme.breakpoints.only('md')]: { width:'40rem' }
             }}>
                 <Box sx={{ display: 'flex', gap: 2, width: '100%', fontSize: '16px', p: 2, borderRadius: 20,
-                    [theme.breakpoints.down('xl')]: { fontSize:'13px' },
-                    [theme.breakpoints.down('lg')]: { fontSize:'10px' }
+                    [theme.breakpoints.only('lg')]: { fontSize:'13px' },
+                    [theme.breakpoints.only('md')]: { fontSize:'10px' }
                 }}>
                     <img style={{ background: 'gray', width: '45em', height: '15em', borderRadius: 4 }} src={img} /> 
                     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>

@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type User } from '$types'
 import { type ReactElement } from 'react'
 import UserAvatar from './UserAvatar'
@@ -6,9 +6,6 @@ import { grey } from '@mui/material/colors'
 import { useNavigate } from 'react-router-dom'
 
 export default function ProfilePosts({ user }: { user: User }): ReactElement {
-    
-    console.log(user.posts)
-
     return (
         <Box display='flex' gap={3} flexDirection='column'>
             <Grid gap={2} container>
@@ -23,7 +20,6 @@ export default function ProfilePosts({ user }: { user: User }): ReactElement {
                     </Grid>
                 ))}
             </Grid>
-            <Box />
         </Box>
     )
 }
@@ -41,12 +37,16 @@ function ProfilePost({
 }): ReactElement {
     const navigate = useNavigate()
 
+    const theme = useTheme()
+
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
+
     return (
         <Box 
             sx={{ cursor: 'pointer' }} 
             onClick={() => { navigate(`/app/post/${postId}`) }} 
-            height='23rem' 
-            width='23rem'
+            height={!matches ? '23rem' : '13rem'} 
+            width={!matches ? '23rem' : '13rem'}
         >
             {image ? (
                 <img

@@ -1,7 +1,7 @@
 import { Highlights, ProfileHeader, ProfilePosts } from '$components'
 import { useGetUserMutation } from '$features/user'
 import { AppLayout, ProfileHeaderSkeleton, ProfilePostsSkeleton } from '$layout'
-import { Box, Container, Divider, Typography } from '@mui/material'
+import { Box, Container, Divider, Typography, useTheme } from '@mui/material'
 import { useEffect, type ReactElement, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { type User } from '$types'
@@ -9,6 +9,8 @@ import { type User } from '$types'
 export default function ProfilePage(): ReactElement {
     const { id } = useParams()
     const [ getUser, { isLoading } ] = useGetUserMutation()
+
+    const theme = useTheme()
 
     const [ user, setUser ] = useState<User | null>(null)
 
@@ -59,7 +61,7 @@ export default function ProfilePage(): ReactElement {
                         ) : (
                             <>
                                 <ProfileHeader user={user ?? (obj as User)} />
-                                <Highlights />
+                                {/* <Highlights /> */}
                                 <Box width='100%' display='flex' gap={2}>
                                     <Divider sx={{ width: '46.1%' }} />
                                     <Typography position='relative' top='10px'>Posts</Typography>

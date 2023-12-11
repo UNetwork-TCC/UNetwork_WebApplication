@@ -1,22 +1,33 @@
-import { type User } from '$types'
-import { Avatar, Box, Typography } from '@mui/material'
+import { UserAvatar } from '$components'
+import { setChatId } from '$features/chat'
+import { useAppDispatch, useAppSelector } from '$store'
+import { type Chat, type User } from '$types'
+import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { type ReactElement } from 'react'
+import { useNavigate } from 'react-router-dom'
 export default function Contact({ 
     user,
     date,
+    chat,
     notification 
 } : {
-    user: User,
+    user: Partial<User>,
     date?: Date | string,
-    notification?: number
+    notification?: number,
+    chat: Chat
 }) : ReactElement {
     
+    const theme = useTheme()
+
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+    const loggedUser = useAppSelector(state => state.auth.user)
+
     return (
         <Box 
             sx={{
                 ':hover': { 
-                    bgcolor: 'lightgray',
-                    borderRadius: '15px',
+                    bgcolor: `${theme.palette.action.focus}`,
                     cursor: 'pointer'
                 },
                 p: '3% 3%',
@@ -27,18 +38,26 @@ export default function Contact({
                 width: '90%',
                 transition: 'ease .3s',
                 fontSize: '10px'
-            }}>
+            }}
+            onClick={() => { 
+                dispatch(setChatId(chat._id))
+                navigate(`/app/chat/${chat._id}`) 
+            }}
+        >
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>
                 {user?.otherInfo?.avatar?.src ?
-                    <img src={user?.otherInfo.avatar?.src} alt="Avatar" />
+                    <UserAvatar 
+                        user={user}
+                        onClick={() => {}}
+                    />
                     :
-                    user.name.charAt(0).toUpperCase()
+                    user?.username?.charAt(0).toUpperCase()
                 }
             </Avatar>
             <Box sx={{ display: 'flex', flexDirection: 'column', ml: '1.2em', width: '100%', maxWidth: '90%' }}>
                 <Box display={'flex'}>
                     <Box sx={{ width: '85%' }}>
-                        <Typography noWrap >{user.name}</Typography>
+                        <Typography noWrap >{user.username}</Typography>
 
                     </Box>
                     <Box sx={{ width: '15%', textAlign: 'end' }}>
@@ -47,7 +66,15 @@ export default function Contact({
                 </Box>
                 <Box display={'flex'} >
                     <Box sx={{ width: '90%', maxWidth: '90%' }}>
-                        <Typography noWrap>last mensage</Typography>
+                        <Typography variant='caption' noWrap>
+                            {
+                                chat?.messages?.length > 0 ?
+                                    chat?.messages?.[chat.messages.length - 1]?.sendedBy === loggedUser._id ?
+                                        'Você: ' + chat?.messages?.[chat.messages.length - 1].content
+                                        : user.username + ': ' + chat?.messages?.[chat.messages.length - 1]?.content
+                                    : 'Nenhuma mensagem enviada'
+                            }
+                        </Typography>
                     </Box>
                     <Box sx={{ width: '10%', display: 'flex', justifyContent: 'center' }}>
                         {notification &&

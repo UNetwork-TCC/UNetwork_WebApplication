@@ -56,7 +56,7 @@ export interface Message {
   content: string
   sendedBy: string
   sendedAt: string
-  sendedIn: 'group' | 'chat' | 'forum' | 'post'
+  sendedIn: string
   type: 'text' | 'audio' | 'video' | 'sticker'
 }
 

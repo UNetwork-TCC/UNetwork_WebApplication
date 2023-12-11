@@ -143,6 +143,9 @@ export default function Home(): ReactElement {
                     p={3} 
                     m={!matches ? 5 : 2} 
                     sx={{
+                        [theme.breakpoints.only('lg')]: {
+                            mr:0, ml:'15%' 
+                        },
                         [theme.breakpoints.only('md')]: {
                             width:'60%', ml:'15%' 
                         }
@@ -155,7 +158,7 @@ export default function Home(): ReactElement {
                                 <CustomInput
                                     onChange={(e: ChangeEvent<HTMLInputElement>): void => { setPostContent({ ...postContent, text: e.target.value }) }}
                                     sx={{ boxShadow: theme.shadows[4] }}
-                                    width='80%'
+                                    width={matches ? '80%' : '100%'}
                                     bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                                     placeholder='No que estou pensando...'
                                     color={theme.palette.mode === 'light' ? 'primary.main' : undefined}
@@ -167,11 +170,11 @@ export default function Home(): ReactElement {
                                     sx={!matches ? {
                                         ...fileInputStyle,
                                         right: '4rem',
-                                        [theme.breakpoints.down('xl')]: {
+                                        [theme.breakpoints.only('lg')]: {
                                             bottom: 44,
                                             right: '5.25rem'
                                         },
-                                        [theme.breakpoints.down('lg')]: {
+                                        [theme.breakpoints.only('md')]: {
                                             right:'4rem',
                                             bottom: 41
                                         }
@@ -203,11 +206,7 @@ export default function Home(): ReactElement {
                                                 ':hover': {
                                                     bgcolor: 'primary.light'
                                                 },
-                                                [theme.breakpoints.down('lg')]: {
-                                                    width:'35px',
-                                                    height:'35px'
-                                                },
-                                                [theme.breakpoints.down('lg')]: {
+                                                [theme.breakpoints.only('md')]: {
                                                     width:'35px',
                                                     height:'35px'
                                                 }
@@ -264,10 +263,12 @@ export default function Home(): ReactElement {
                     <Box
                         sx={{
                             width: '20%',
-                            [theme.breakpoints.down('xl')]: {
-                                width: '25%'
+                            [theme.breakpoints.only('lg')]: {
+                                width: '25%',
+                                mr:0
                             },
-                            [theme.breakpoints.down('lg')]:{
+                            [theme.breakpoints.only('md')]:{
+                                width: '25%',
                                 ml:'-3%'
                             }
                         }}
@@ -284,7 +285,7 @@ export default function Home(): ReactElement {
                             width='100%'
                             boxShadow={theme.shadows[15]}
                             p={3}
-                            sx={{ [theme.breakpoints.down('lg')]: { height:'16rem' } }}
+                            sx={{ [theme.breakpoints.only('md')]: { height:'16rem' } }}
                         >
                             <SideComponent user={user} />
                         </Box>

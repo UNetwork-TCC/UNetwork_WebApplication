@@ -28,7 +28,7 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     borderRadius: '100%',
                     cursor: 'pointer',
                     transition: 'ease-in-out .3s',
-                    [theme.breakpoints.down('lg')]:{
+                    [theme.breakpoints.only('md')]:{
                         p: '2rem 1.7rem ',
                         pb:'1.4rem'
                         
@@ -58,10 +58,10 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     width: '4.2rem',
                     position: 'relative',
                     bottom: 33,
-                    [theme.breakpoints.down('xl')]: {
+                    [theme.breakpoints.only('lg')]: {
                         bottom: 25.5
                     },
-                    [theme.breakpoints.down('lg')]: {
+                    [theme.breakpoints.only('md')]: {
                         height:'3.5rem',
                         width:'3.5rem'
                     }
@@ -73,7 +73,7 @@ export default function Clip({ postedBy, postedAt, avatar, id }: { postedBy: str
                     }
                 </Avatar>
                 <Box mt={-3}>
-                    <Typography sx={{ [theme.breakpoints.down('lg')]: { mt:'15%' } }}>{postedBy}</Typography>
+                    <Typography sx={{ [theme.breakpoints.only('md')]: { mt:'15%' } }}>{postedBy}</Typography>
                 </Box>
             </Box>
             <Modal

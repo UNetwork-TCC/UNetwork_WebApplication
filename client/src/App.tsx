@@ -39,12 +39,13 @@ function App(): ReactElement {
                     <Route path='/app/favorites' element={<FavoritesPage />} />
                     <Route path='/app/materials' element={<MaterialsPage />} />
                     <Route path='/app/admin/dashboard' element={<AdminDashboardPage />} />
-                    <Route path='/app/chat' element={<ChatPage />} />
                     <Route path='/app/news' element={<NewsPage />} />
+                    <Route path='/app/chat' element={<ChatPage />} />
                     <Route path='/app/forum' element={<ForumHome />} />
                     <Route path='/app/classes' element={<ClassesPage />} />
                     <Route path='/app/post/:id' element={<PostPage />} />
                     <Route path='/app/forum/:id' element={<ForumPage />} />
+                    <Route path='/app/chat/:id' element={<ChatPage />} />
                     <Route path='/app/*' element={<Navigate to='/error' />} />
                 </Routes>
             </Router>
