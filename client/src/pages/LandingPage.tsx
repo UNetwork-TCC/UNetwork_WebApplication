@@ -23,12 +23,6 @@ function LandingPage(): ReactElement {
 
     const matches = useMediaQuery(theme.breakpoints.down('md'))
 
-    useEffect(() => {
-        if (user) {
-            navigate('/app')
-        }
-    }, [ user, navigate ])
-
     function Heading({ title, content, icon } : { title: string, content: string, icon: ReactElement }): ReactElement {
         return (
             <>

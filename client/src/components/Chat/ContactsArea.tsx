@@ -92,7 +92,7 @@ export default function ContactsArea({ chats, userId, sx }: { chats: Chat[], use
                         '::-webkit-scrollbar': { display: 'none' },
                         mt: !matches ? 2 : 0
                     }}>
-                        <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'6%' } }}>
+                        <Stack gap={1} sx={{ mt: '10%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'20%' } }}>
                             {!isLoading ? (() => {
 
                                 const usersToChat = usersChat
