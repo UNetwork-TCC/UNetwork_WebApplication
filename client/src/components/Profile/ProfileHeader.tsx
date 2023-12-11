@@ -1,7 +1,7 @@
 import { useUpdateUserMutation } from '$features/user'
 import { useAppDispatch, useAppSelector } from '$store'
 import { type User } from '$types'
-import { Avatar, Box, Button, Card, Modal, Switch, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, Modal, Switch, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useState, type ReactElement, type ChangeEvent, type CSSProperties, type FormEvent } from 'react'
 import { useParams } from 'react-router-dom'
 import UserAvatar from './UserAvatar'
@@ -12,6 +12,8 @@ import { useUploadFileMutation } from '$features/file'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
     const { id } = useParams()
+
+    const theme = useTheme()
 
     const [ updateUser ] = useUpdateUserMutation()
     const [ uploadPicture ] = useUploadFileMutation()
@@ -34,6 +36,8 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
         bio: userState.otherInfo?.bio ?? '',
         account: 'public'
     })
+
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
 
     const follow = (): void => {
         (async () => {
@@ -115,7 +119,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
 
     return (
         <>
-            <Box p={3} width='100%' display='flex' gap={8}>
+            <Box p={3} width='100%' display='flex' flexDirection={!matches ? 'row' : 'column'} gap={!matches ? 8 : 5}>
                 <UserAvatar
                     user={user}
                     sx={{
