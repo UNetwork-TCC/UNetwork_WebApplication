@@ -24,6 +24,7 @@ export default function ChatPage(): ReactElement {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const loggedUser = useAppSelector(state => state.auth.user)
 
     const [ findUserChats, { data: chats, isLoading } ] = useFindUserChatsMutation()
     const [ getChat ] = useGetChatMutation()
@@ -87,8 +88,8 @@ export default function ChatPage(): ReactElement {
     useEffect(() => {
         (async () => {
             const { data }: any = await getChat(id ?? '')
-            
-            const chatUserId = data.users.filter((user: any) => user._id !== userId)[0]
+
+            const chatUserId = data.users?.filter((idUser: any) => idUser !== userId)[0]
 
             const { data: user }: any = await getUser(chatUserId)
             setChatUser(user)
@@ -135,7 +136,7 @@ export default function ChatPage(): ReactElement {
                                     }}
                                 >
                                     <UserAvatar 
-                                        user={chatUser ?? {}}
+                                        user={chatUser === loggedUser ? loggedUser : chatUser ?? {}}
                                         isLoading={isLoadingUser}
                                         variant='rounded' 
                                         sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
@@ -147,7 +148,7 @@ export default function ChatPage(): ReactElement {
                                             [theme.breakpoints.only('md')]: {
                                                 height:'2.8rem',
                                                 width:'2.8rem',
-                                                borderRadius:2.5
+                                                borderRadius: 2.5
                                             }
                                         }} 
                                     />

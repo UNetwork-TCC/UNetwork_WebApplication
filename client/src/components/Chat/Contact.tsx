@@ -1,6 +1,6 @@
 import { UserAvatar } from '$components'
 import { setChatId } from '$features/chat'
-import { useAppDispatch } from '$store'
+import { useAppDispatch, useAppSelector } from '$store'
 import { type Chat, type User } from '$types'
 import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { type ReactElement } from 'react'
@@ -20,8 +20,8 @@ export default function Contact({
     const theme = useTheme()
 
     const navigate = useNavigate()
-
     const dispatch = useAppDispatch()
+    const loggedUser = useAppSelector(state => state.auth.user)
 
     return (
         <Box 
@@ -66,7 +66,15 @@ export default function Contact({
                 </Box>
                 <Box display={'flex'} >
                     <Box sx={{ width: '90%', maxWidth: '90%' }}>
-                        <Typography noWrap>last mensage</Typography>
+                        <Typography variant='caption' noWrap>
+                            {
+                                chat?.messages?.length > 0 ?
+                                    chat?.messages?.[chat.messages.length - 1]?.sendedBy === loggedUser._id ?
+                                        'Você: ' + chat?.messages?.[chat.messages.length - 1].content
+                                        : user.username + ': ' + chat?.messages?.[chat.messages.length - 1]?.content
+                                    : 'Nenhuma mensagem enviada'
+                            }
+                        </Typography>
                     </Box>
                     <Box sx={{ width: '10%', display: 'flex', justifyContent: 'center' }}>
                         {notification &&

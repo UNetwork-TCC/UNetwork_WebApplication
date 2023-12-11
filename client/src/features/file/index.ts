@@ -23,19 +23,19 @@ const pictureApiSlice = apiSlice.injectEndpoints({
             }
         }>({
             query: formData => ({
-                url: '/pictures',
+                url: '/files',
                 method: 'POST',
                 body: formData
             })
         }),
 
         getFileData: builder.mutation<Picture, string>({
-            query: pictureId => `/pictures/${pictureId}`
+            query: pictureId => `/files/${pictureId}`
         }),
 
         deleteFile: builder.mutation<any, string>({
             query: pictureId => ({
-                url: `/pictures/${pictureId}`,
+                url: `/files/${pictureId}`,
                 method: 'DELETE'
             })
         })

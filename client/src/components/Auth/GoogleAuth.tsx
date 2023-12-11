@@ -34,20 +34,23 @@ export default function GoogleAuth(): ReactElement {
         (async () => {
             setModalOpen(false)
     
-            await signup({
+            const b = await signup({
                 username: result?.profileObj.name as string,
                 name: result?.profileObj.familyName as string,
                 email: result?.profileObj.email.toLowerCase() as string,
-                password: result?.profileObj.googleId as string
+                password: result?.profileObj?.googleId as string
             })
     
-            await login({
+            const a = await login({
                 email: result?.profileObj.email.toLowerCase() as string,
                 password: result?.profileObj.googleId as string
             })
+
+            console.log(a)
+            console.log(b)
     
             dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
-    
+
             navigate('/app')
         })()
     }

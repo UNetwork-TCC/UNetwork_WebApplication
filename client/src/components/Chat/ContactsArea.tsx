@@ -135,6 +135,7 @@ export default function ContactsArea({ chats, userId, sx }: { chats: Chat[], use
             >
                 <Box 
                     borderRadius={2} 
+                    p={1} 
                     sx={{ 
                         height: matches ? '24vh' : '20vh',
                         width: matches ? '35vw' : '75vw',
@@ -143,7 +144,6 @@ export default function ContactsArea({ chats, userId, sx }: { chats: Chat[], use
                         flexDirection:'column' 
                     }} 
                 >
-                    p={1} 
                     <Box p={0}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
                             Adicionar contato

@@ -3,12 +3,13 @@ import { useAppDispatch, useAppSelector } from '$store'
 import { type User } from '$types'
 import { Avatar, Box, Button, Card, Modal, Switch, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useState, type ReactElement, type ChangeEvent, type CSSProperties, type FormEvent } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import UserAvatar from './UserAvatar'
 import { AddPhotoAlternate } from '@mui/icons-material'
 import { LoadingBackdrop } from '$layout'
 import { setCredentials } from '$features/auth'
 import { useUploadFileMutation } from '$features/file'
+import { setChatId, useCreateChatMutation } from '$features/chat'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
     const { id } = useParams()
@@ -17,9 +18,12 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
 
     const [ updateUser ] = useUpdateUserMutation()
     const [ uploadPicture ] = useUploadFileMutation()
+    const [ createChat ] = useCreateChatMutation()
 
     const dispatch = useAppDispatch()
     const userState = useAppSelector(state => state.auth.user)
+    const navigate = useNavigate()
+
     const ownId = userState._id
     const onwedAccount = id === ownId
 
@@ -68,6 +72,22 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
         })()
     }
 
+    const sendMessage = (): void => {
+        (async () => {
+            setOpenLoading(true)
+
+            const { data }: any = await createChat({
+                users: [ id, ownId ] as string[]
+            })
+
+            setTimeout(() => {
+                dispatch(setChatId(data?.newChat?._id))
+
+                navigate('/app/chat/' + data?.newChat?._id)
+            }, 200)
+        })()
+    }
+
     const updateProfile = (e: FormEvent): void => {
         (async () => {
             e.preventDefault()
@@ -80,7 +100,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                 file64Based: String(userAvatar ?? userState.otherInfo.avatar),
                 filename: user.otherInfo.avatar?.name
             })
-
+            
             const { data }: any = await updateUser({
                 _id: id,
                 username: userUpdateInfo.username ?? userState.username,
@@ -141,7 +161,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                                     ) : (
                                         <Button onClick={follow} variant='contained'>Seguir</Button>
                                     )}
-                                    <Button variant='contained'>Enviar Mensagem</Button>
+                                    <Button onClick={sendMessage} variant='contained'>Enviar Mensagem</Button>
                                 </>
                             )
                         }
