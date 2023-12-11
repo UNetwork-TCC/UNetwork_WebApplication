@@ -44,7 +44,7 @@ export const deleteChat = async (req, res) => {
 
 export const updateChat = async (req, res) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
         const { messages, users } = req.body
         const chat = await Chat.findById(id)
 
@@ -53,7 +53,7 @@ export const updateChat = async (req, res) => {
         }
 
         if (messages || users) {
-            const chatUpdates = { messages: [...chat.messages, ...messages || ''], users: [...chat.users, ...users || ''] }
+            const chatUpdates = { messages: [...chat.messages, ...messages || ''], users: [...chat.users, ...users || ''],  }
             const chatUptaded = await Chat.findByIdAndUpdate(id, chatUpdates)
     
             res.status(200).send({chatUptaded, message: 'Chat atualizado com sucesso!'})
