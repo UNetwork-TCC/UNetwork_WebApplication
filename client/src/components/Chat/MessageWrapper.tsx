@@ -41,7 +41,7 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
                 flexDirection: 'column',
                 
                 [theme.breakpoints.down('lg')]: {
-                    height: '88%'
+                    height: '80%'
                 },
 
                 [theme.breakpoints.down('md')]: {
