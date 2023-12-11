@@ -4,6 +4,7 @@ import NewsSkeleton from './NewsSkeleton'
 import ForumSkeleton from './ForumSkeleton'
 import ContactSkeleton from './ContactSkeleton'
 import ContactsAreaSkeleton from './ContactsAreaSkeleton'
+import MessageSkeleton from './MessageSkeleton'
 
 export { 
     ForumIconSkeleton,
@@ -11,5 +12,6 @@ export {
     ForumSkeleton,
     ContactSkeleton,
     ContactsAreaSkeleton,
+    MessageSkeleton,
     NewsSkeleton
 }

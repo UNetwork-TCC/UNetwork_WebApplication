@@ -10,7 +10,7 @@ export default function ChatArea({ children } : { children: ReactNode }): ReactE
             alignItems='start' 
             height='100%' 
             maxHeight='100%' 
-            width='70%' 
+            width='100%' 
         >
             <Box width='100%' height={'100%'}>
                 {children}

@@ -1,13 +1,15 @@
-import { Avatar, Box, Divider, IconButton, MenuItem, Typography, useTheme } from '@mui/material'
-import { ChatBar, ChatArea, ContactsArea, MessageWrapper } from '$components'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Box, Divider, IconButton, MenuItem, Skeleton, Typography, useTheme } from '@mui/material'
+import { ChatBar, ChatArea, ContactsArea, MessageWrapper, UserAvatar } from '$components'
 import { AppLayout, CustomMenu } from '$layout'
-import { Search, VideocamOutlined, LocalPhone, Settings, AccountBox, FmdGood, Block, Delete, Report, Chat as ChatIcon } from '@mui/icons-material'
+import { Search, Settings, AccountBox, FmdGood, Block, Delete, Report, Chat as ChatIcon } from '@mui/icons-material'
 import { type ReactElement, useState, useEffect } from 'react'
-import { useFindUserChatsMutation } from '$features/chat'
+import { useFindUserChatsMutation, useGetChatMutation } from '$features/chat'
 import { useAppSelector } from '$store'
-import { type Chat } from '$types'
+import { User, type Chat } from '$types'
 import { ContactsAreaSkeleton } from '$skeletons'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useGetUserMutation } from '$features/user'
 
 import chatbg from '$assets/svg/Chat/chatbg.svg'
 
@@ -16,7 +18,16 @@ export default function ChatPage(): ReactElement {
 
     const { id } = useParams()
 
+    const chatId = useAppSelector(state => state.chat.id)
+
+    const navigate = useNavigate()
+
     const [ findUserChats, { data: chats, isLoading } ] = useFindUserChatsMutation()
+    const [ getChat ] = useGetChatMutation()
+    const [ getUser, { isLoading: isLoadingUser } ] = useGetUserMutation()
+
+    const [ chatUser, setChatUser ] = useState<User | null>()
+
     const userId = useAppSelector(state => state.auth.user._id)
 
     const onClickEvents = {
@@ -70,6 +81,23 @@ export default function ChatPage(): ReactElement {
         })()
     }, [ findUserChats, userId ])
 
+    useEffect(() => {
+        (async () => {
+            const { data }: any = await getChat(id ?? '')
+            
+            const chatUserId = data.users.filter((user: any) => user._id !== userId)[0]
+
+            const { data: user }: any = await getUser(chatUserId)
+            setChatUser(user)
+        })()
+    }, [ id ]) 
+
+    useEffect(() => {
+        if (chatId) {
+            navigate('/app/chat/' + chatId)
+        }
+    }, [ chatId, navigate ])
+
     return (
         <AppLayout>
             <Box sx={{ width: '100%', height: '100%', display: 'flex' }} >
@@ -84,21 +112,25 @@ export default function ChatPage(): ReactElement {
                 <Divider orientation='vertical' role='presentation' flexItem sx={{ height: '100%' }} />
                 {id ? (
                     <ChatArea>
-                        <Box sx={{ width: '100%', height: '9%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
-                            <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
-                                [theme.breakpoints.only('lg')]: {
-                                    height:'3rem',
-                                    width:'3rem',
-                                    borderRadius:3
-                                },
-                                [theme.breakpoints.only('md')]: {
-                                    height:'2.8rem',
-                                    width:'2.8rem',
-                                    borderRadius:2.5
-                                }
-
-                            }} />
-                            <Box sx={{ width: '75%', maxWidth: '75%' }}>
+                        <Box sx={{ width: '100%', height: '5%', display: 'flex', alignItems: 'center', p: '0 3%', pb: '4%' }}>
+                            <UserAvatar 
+                                user={chatUser ?? {}}
+                                isLoading={isLoadingUser}
+                                variant='rounded' 
+                                sx={{ borderRadius: 5, height: '3.5rem', width: '3.5rem', 
+                                    [theme.breakpoints.only('lg')]: {
+                                        height: '3rem',
+                                        width: '3rem',
+                                        borderRadius:3
+                                    },
+                                    [theme.breakpoints.only('md')]: {
+                                        height:'2.8rem',
+                                        width:'2.8rem',
+                                        borderRadius:2.5
+                                    }
+                                }} 
+                            />
+                            <Box sx={{ width: '100%' }}>
                                 <Typography noWrap sx={{ fontSize: '1.5rem', ml: '2%',
                                     [theme.breakpoints.only('lg')]: {
                                         fontSize:'1.4rem'                                    
@@ -106,29 +138,28 @@ export default function ChatPage(): ReactElement {
                                     [theme.breakpoints.only('md')]: {
                                         fontSize:'1.3rem'
                                     }
-                                }}>Username</Typography>
+                                }}>{
+                                        isLoadingUser ? (
+                                            <Skeleton variant='text' width='50%' />
+                                        ) : (
+                                            chatUser?.name
+                                        )
+                                    }
+                                </Typography>
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', width: '25%',
-                                [theme.breakpoints.only('lg')]: {
-                                    gap:2
-                                },
-                                [theme.breakpoints.only('md')]: {
-                                    gap:1.8
-                                }
-                        
-                            }} gap={3}>
-                                <IconButton sx={{}}>
-                                    <VideocamOutlined sx={{ fontSize: '2.25rem', color: 'gray',
-                                        [theme.breakpoints.only('lg')]: {
-                                            fontSize:'2rem'
-                                        },
-                                        [theme.breakpoints.only('md')]: {
-                                            fontSize:'1.8rem'
-                                        }
-
-                                    }} />
-                                </IconButton>
-                                <IconButton sx={{}}>
+                            <Box 
+                                sx={{ display: 'flex', alignItems: 'center', width: '5%',
+                                    [theme.breakpoints.only('lg')]: {
+                                        gap:2
+                                    },
+                                    [theme.breakpoints.only('md')]: {
+                                        gap:1.8
+                                    }
+                            
+                                }} 
+                                gap={3}
+                            >
+                                {/* <IconButton sx={{}}>
                                     <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
                                         [theme.breakpoints.only('lg')]: {
                                             fontSize:'1.5rem'
@@ -138,7 +169,7 @@ export default function ChatPage(): ReactElement {
                                         }
                                 
                                     }} />
-                                </IconButton>
+                                </IconButton> */}
                                 <IconButton sx={{}}
                                     onClick={
                                         e => {
@@ -171,7 +202,9 @@ export default function ChatPage(): ReactElement {
                         </Box>
                         <Divider flexItem />
                         {/* MessageWrapper */}
-                        <MessageWrapper />
+                        <MessageWrapper 
+                            id={id}
+                        />
                         {/* end */}
                         <Divider flexItem sx={{}} />
                         <ChatBar />

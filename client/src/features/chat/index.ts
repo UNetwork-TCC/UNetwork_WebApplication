@@ -1,5 +1,26 @@
 import { apiSlice } from '$api'
 import { type Chat } from '$types'
+import { createSlice } from '@reduxjs/toolkit'
+
+// Chat Slice
+
+const initialState: {
+    id: string
+} = {
+    id: ''
+}
+
+export const chatSlice = createSlice({
+    name: 'chat',
+    initialState,
+    reducers: {
+        setChatId: (state, action) => {
+            state.id = action.payload
+        }
+    }
+})
+
+// Chat API Slice
 
 const chatApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -44,6 +65,9 @@ const chatApiSlice = apiSlice.injectEndpoints({
 })
 
 // Exports
+
+export const chatReducer = chatSlice.reducer
+export const { setChatId } = chatSlice.actions
 
 export const {
     useFetchChatsMutation,

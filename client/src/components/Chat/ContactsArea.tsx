@@ -51,12 +51,11 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
         <>
             <Box
                 display='flex'
-                height='96%'
                 position='sticky'
                 alignItems='start'
                 maxHeight='99%'
-                width='25%'
-                pt={4.5}
+                width='35%'
+                pt={2}
                 sx={{
                     boxSizing: 'border-box',
                     [theme.breakpoints.only('md')]: { pt:2.5 }
@@ -64,18 +63,13 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                 <Box sx={{ width: '100%', height: '100%' }} >
                     <Box sx={{ width: '100%', height: '12.5%' }}>
                         <Stack gap={2} sx={{ position: 'sticky', top: '0' }}>
-                            <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                                <Box sx={{ width: '70%', [theme.breakpoints.only('md')]: { ml:'5%', width:'63%' } }}>
-                                    <Typography variant='h4' sx={{}}>Conversas</Typography>
-                                </Box>
-                                <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
-                                    <IconButton onClick={handleOpen}>
-                                        <Add />
-                                    </IconButton>
-                                    <IconButton>
-                                        <Settings />
-                                    </IconButton>
-                                </Box>
+                            <Box sx={{ width: '100%', display: 'flex', gap: 1, pr: 2, justifyContent: 'flex-end' }}>
+                                <IconButton onClick={handleOpen}>
+                                    <Add />
+                                </IconButton>
+                                <IconButton>
+                                    <Settings />
+                                </IconButton>
                             </Box>
                             <Box sx={{}}>
                                 <CustomInput
@@ -109,9 +103,10 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                                 console.log(usersToChat)
 
                                 return (
-                                    usersToChat.map(user => (
+                                    usersToChat.map((user, index) => (
                                         <Contact 
-                                            key={user?._id} 
+                                            key={user?._id}
+                                            chat={chats[index]}
                                             user={{
                                                 username: user?.username,
                                                 otherInfo: { avatar: user?.otherInfo?.avatar } 

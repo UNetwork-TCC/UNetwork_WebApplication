@@ -1,18 +1,27 @@
 import { UserAvatar } from '$components'
-import { type User } from '$types'
+import { setChatId } from '$features/chat'
+import { useAppDispatch } from '$store'
+import { type Chat, type User } from '$types'
 import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { type ReactElement } from 'react'
+import { useNavigate } from 'react-router-dom'
 export default function Contact({ 
     user,
     date,
+    chat,
     notification 
 } : {
     user: Partial<User>,
     date?: Date | string,
-    notification?: number
+    notification?: number,
+    chat: Chat
 }) : ReactElement {
     
     const theme = useTheme()
+
+    const navigate = useNavigate()
+
+    const dispatch = useAppDispatch()
 
     return (
         <Box 
@@ -29,7 +38,12 @@ export default function Contact({
                 width: '90%',
                 transition: 'ease .3s',
                 fontSize: '10px'
-            }}>
+            }}
+            onClick={() => { 
+                dispatch(setChatId(chat._id))
+                navigate(`/app/chat/${chat._id}`) 
+            }}
+        >
             <Avatar variant='rounded' sx={{ borderRadius: 5, height: '3rem', width: '3rem' }}>
                 {user?.otherInfo?.avatar?.src ?
                     <UserAvatar 

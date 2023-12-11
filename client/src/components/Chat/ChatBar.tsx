@@ -1,8 +1,7 @@
 import { IconButton, useMediaQuery, InputBase, Box, useTheme } from '@mui/material'
 import { Send, ImageOutlined, EmojiEmotions } from '@mui/icons-material'
 import EmojiPicker from 'emoji-picker-react'
-import { type ReactElement, useState, type FormEvent, type MouseEvent, useContext } from 'react'
-import { themeContext } from '$contexts'
+import { type ReactElement, useState, type FormEvent, type MouseEvent } from 'react'
 
 export default function ChatBar(): ReactElement {
 
@@ -12,15 +11,21 @@ export default function ChatBar(): ReactElement {
     const [ text, setText ] = useState('')
 
     const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
+    
+    // const [ sendMessage ]
 
     const onEmojiClick = ( emojiObject:any ):void => {
         setText(prevInput => prevInput + emojiObject.emoji)
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement> & MouseEvent<HTMLButtonElement>): void => {
-        e.preventDefault()
-        console.log(text)
-        setText('')
+        (async () => {
+            e.preventDefault()
+    
+            if (!text) return
+
+            setText('')
+        })()
     }
 
     return (
@@ -47,17 +52,20 @@ export default function ChatBar(): ReactElement {
                     
                     height:'100%',
                     [theme.breakpoints.only('lg')]: {
-                        borderRadius:2.5,
-                        p:0
+                        borderRadius: 2.5,
+                        p: 0
                     },
                     [theme.breakpoints.only('md')]: {
-                        borderRadius:2.5,                       
+                        borderRadius: 2.5                   
                     }
                     
                 }}
             >
                 <InputBase
-                    sx={{ flex: 1, fontSize: '1rem', ml: 2,
+                    sx={{
+                        flex: 1,
+                        fontSize: '1rem',
+                        ml: 2,
                         [theme.breakpoints.only('lg')]: {
                             ml:1.7,
                             fontSize:'1.2rem'
@@ -66,7 +74,6 @@ export default function ChatBar(): ReactElement {
                             ml:1.5,
                             fontSize:'1rem'
                         }
-
                     }}
                     placeholder={matches ? 'Digite sua mensagem...' : 'Digite'}
                     value={text}
@@ -87,14 +94,14 @@ export default function ChatBar(): ReactElement {
                         }} />
                     </IconButton>
                     
-                    <IconButton type="button" aria-label="Emoji" onClick={() => { setShowEmojiPicker(val => !val) }} size='large'>
+                    <IconButton sx={{ mr: 1 }} type="button" aria-label="Emoji" onClick={() => { setShowEmojiPicker(val => !val) }} size='large'>
                         <EmojiEmotions sx={{
                             [theme.breakpoints.only('lg')]: {
-                                mr:1
+                                mr: 0
                             },
                             [theme.breakpoints.only('md')]: {
                                 fontSize:'1.3rem',
-                                mr:0.5
+                                mr:0
                             }
                         }}/>
                     </IconButton>

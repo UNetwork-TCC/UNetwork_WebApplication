@@ -16,7 +16,7 @@ export default function ContactsAreaSkeleton(): ReactElement {
                 position='sticky'
                 alignItems='start'
                 maxHeight='99%'
-                width='25%'
+                width='35%'
                 pt={4.5}
                 sx={{
                     boxSizing: 'border-box',

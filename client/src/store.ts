@@ -5,6 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import { apiSlice } from '$api'
 import { REDUX_PERSIST_STORE_KEY } from '$constants'
 import storage from 'redux-persist/lib/storage'
+import { chatReducer, chatSlice } from '$features/chat'
 
 import {
     type TypedUseSelectorHook,
@@ -18,12 +19,14 @@ const persistConfig = {
 }
 
 const persistAuthReducer = persistReducer(persistConfig, authReducer)
+const persistChatReducer = persistReducer(persistConfig, chatReducer)
 const persistConfigReducer = persistReducer(persistConfig, configReducer)
 
 const store = configureStore({
     reducer: {
         [authSlice.name]: persistAuthReducer,
         [configSlice.name]: persistConfigReducer,
+        [chatSlice.name]: persistChatReducer,
         [apiSlice.reducerPath]: apiSlice.reducer
     },
     
