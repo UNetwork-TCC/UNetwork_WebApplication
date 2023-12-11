@@ -89,14 +89,19 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
                     bgcolor: 'background.card',
                     borderRadius: 3.5,
                     p: 0.5,
-                    
                     height:'100%',
+
                     [theme.breakpoints.only('lg')]: {
                         borderRadius: 2.5,
                         p: 0
                     },
+
                     [theme.breakpoints.only('md')]: {
                         borderRadius: 2.5                   
+                    },
+
+                    [theme.breakpoints.down('md')]: {
+                        mr: 2
                     }
                     
                 }}
@@ -108,14 +113,14 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
                         ml: 2,
                         [theme.breakpoints.only('lg')]: {
                             ml: 1.7,
-                            fontSize:'1.2rem'
+                            fontSize: '1.2rem'
                         },
                         [theme.breakpoints.only('md')]: {
-                            ml:1.5,
-                            fontSize:'1rem'
+                            ml: 1.5,
+                            fontSize: '1rem'
                         }
                     }}
-                    placeholder={matches ? 'Digite sua mensagem...' : 'Digite'}
+                    placeholder={'Digite sua mensagem...'}
                     value={text}
                     onChange={e => { setText(e.target.value) }}
                 />
@@ -171,15 +176,23 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
             }}  >
                 {showEmojiPicker && (
                     <Box>
-                        <Box sx={{ ml: '15.5%', width: '69%', mt: '7%', height: '75%', position: 'fixed', top: 0, right: 0, left: 0, bottom: 0, zIndex: 2, 
-                            [theme.breakpoints.only('lg')]: {
-                                
-                            },
-                            [theme.breakpoints.only('md')]: {
-                        
-                            }    
-                        }} 
-                        onClick={() => { setShowEmojiPicker(false) }}></Box>
+                        <Box 
+                            onClick={() => { setShowEmojiPicker(false) }}
+                            sx={
+                                { 
+                                    ml: '15.5%',
+                                    width: '69%',
+                                    mt: '7%',
+                                    height: '75%',
+                                    position: 'fixed',
+                                    top: 0,
+                                    right: 0,
+                                    left: 0,
+                                    bottom: 0,
+                                    zIndex: 2
+                                }
+                            } 
+                        />
                         <Box sx={{ position: 'relative', zIndex: 3 }}>
                             <EmojiPicker onEmojiClick={onEmojiClick} autoFocusSearch={false} />
                         </Box>

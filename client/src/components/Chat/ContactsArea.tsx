@@ -1,13 +1,13 @@
 import { CustomInput } from '$layout'
 import { Add, Search, Settings } from '@mui/icons-material'
-import { Box, Button, IconButton, Modal, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, IconButton, Modal, Stack, SxProps, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useState, type ReactElement, useEffect } from 'react'
 import { Contact } from '$components'
-import { type User, type Chat, type contact } from '$types'
+import { type Chat, type contact } from '$types'
 import { useFetchUsersMutation } from '$features/user'
 import { ContactSkeleton } from '$skeletons'
 
-export default function ContactsArea({ chats, userId }: { chats: Chat[], userId: string }): ReactElement {
+export default function ContactsArea({ chats, userId, sx }: { chats: Chat[], userId: string, sx?: SxProps }): ReactElement {
     const theme = useTheme()
 
     const [ fetchUsers, { isLoading, data: users } ] = useFetchUsersMutation()
@@ -58,7 +58,8 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                 pt={2}
                 sx={{
                     boxSizing: 'border-box',
-                    [theme.breakpoints.only('md')]: { pt:2.5 }
+                    [theme.breakpoints.only('md')]: { pt:2.5 },
+                    ...sx
                 }}>
                 <Box sx={{ width: '100%', height: '100%' }} >
                     <Box sx={{ width: '100%', height: '12.5%' }}>
@@ -88,7 +89,8 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                     <Box sx={{
                         width: '100%', height: '87%',
                         overflow: 'scroll',
-                        '::-webkit-scrollbar': { display: 'none' }
+                        '::-webkit-scrollbar': { display: 'none' },
+                        mt: !matches ? 2 : 0
                     }}>
                         <Stack gap={1} sx={{ mt: '2%', width: '100%', height: '100%', [theme.breakpoints.only('md')]: { mt:'6%' } }}>
                             {!isLoading ? (() => {
@@ -131,7 +133,17 @@ export default function ContactsArea({ chats, userId }: { chats: Chat[], userId:
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{ height: matches ? '24vh' : '20vh', width: '35vw', bgcolor: 'background.paper', display:'flex', flexDirection:'column' }} borderRadius={2} >
+                <Box 
+                    borderRadius={2} 
+                    sx={{ 
+                        height: matches ? '24vh' : '20vh',
+                        width: matches ? '35vw' : '75vw',
+                        bgcolor: 'background.paper',
+                        display:'flex',
+                        flexDirection:'column' 
+                    }} 
+                >
+                    p={1} 
                     <Box p={0}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
                             Adicionar contato

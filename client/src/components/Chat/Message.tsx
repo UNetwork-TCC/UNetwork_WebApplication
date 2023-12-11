@@ -1,11 +1,9 @@
 import { UserAvatar } from '$components'
-import { themeContext } from '$contexts'
 import { useGetUserMutation } from '$features/user'
 import { type Message as MessageInterface, type User } from '$types'
-import { Avatar, useTheme } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { Box, type SxProps, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import { useContext, type ReactElement, useEffect } from 'react'
+import { type ReactElement, useEffect } from 'react'
 
 export default function Message({ 
     text,
@@ -18,7 +16,7 @@ export default function Message({
     sendedAt?: string | 'Agora há pouco',
     messageInfo: MessageInterface
 }) : ReactElement {
-    const [ getUser, { data: user, isLoading } ] = useGetUserMutation()
+    const [ getUser, { data: user } ] = useGetUserMutation()
 
     const obj = {}
 
@@ -71,6 +69,11 @@ export default function Message({
                 width='100%'
                 position='relative'
                 left={messageFrom === 'me' ? '99%' : ''}
+                sx={{
+                    [theme.breakpoints.down('md')]: {
+                        left: messageFrom === 'me' ? '96%' : ''
+                    }
+                }}
             >
                 <UserAvatar
                     user={user ?? (obj as User)}

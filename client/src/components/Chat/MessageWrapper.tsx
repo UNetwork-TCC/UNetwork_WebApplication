@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, useTheme } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import { type ReactElement, useEffect } from 'react'
 import Message from './Message'
 import { setMessages, useGetChatMutation } from '$features/chat'
@@ -12,6 +12,8 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
     const [ getChat, { isLoading } ] = useGetChatMutation()
     
     const dispatch = useAppDispatch()
+
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
 
     const userId = useAppSelector(state => state.auth.user._id)
     const messages = useAppSelector(state => state.chat.messages)
@@ -37,12 +39,13 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
                 overflowX: 'hidden',
                 alignItems: 'start',
                 flexDirection: 'column',
-                [theme.breakpoints.only('lg')]: {
-                    height:'88%'
+                
+                [theme.breakpoints.down('lg')]: {
+                    height: '88%'
                 },
 
-                [theme.breakpoints.only('md')]: {
-                    height:'88%'                    
+                [theme.breakpoints.down('md')]: {
+                    height: '80%'
                 }
             }}
         >

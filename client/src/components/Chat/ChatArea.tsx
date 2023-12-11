@@ -4,8 +4,8 @@ import { type ReactElement, type ReactNode } from 'react'
 export default function ChatArea({ children } : { children: ReactNode }): ReactElement {
     return (
         <Box 
-            sx={{ pt:'3%', overflow:'scroll', overflowX: 'hidden', '::-webkit-scrollbar': { display: 'none' } }}
-            position='sticky' 
+            sx={{ pt:'3%', overflow: 'hidden', '::-webkit-scrollbar': { display: 'none' } }}
+            // position='sticky' 
             display='flex' 
             alignItems='start' 
             height='100%' 
