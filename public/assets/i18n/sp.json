@@ -1,0 +1,95 @@
+{
+    "translation": {
+        "LANDING_PAGE": {
+            "NAV": {
+                "BTN1": "inicio",
+                "BTN2": "descubrir",
+                "BTN3": "comunidad",
+                "BTN4": "sobre",
+                "BTN5": "Entrar",
+                "BTN6": "Registrarse"
+            },
+            "HEADER": {
+                "TITLE": "Despierta tu potencial en UNetwork",
+                "SUBTITLE": "Conéctate con mentores, colegas y amigos en una comunidad que impulsa tu crecimiento.",
+                "START_BTN": "¡Empieza Ya!",
+                "CAPTION": "¡+5000 personas como tú están usando UNetwork!",
+                "FEATURE1": {
+                    "TITLE": "¡Impulsa tu aprendizaje!",
+                    "CONTENT": "¡Con UNetwork, puedes aprender hasta un 50% más rápido que en un entorno de aprendizaje común! ¡Crece con el conocimiento!"
+                },
+                "FEATURE2": {
+                    "TITLE": "¡Conoce y disfruta de la comunidad!",
+                    "CONTENT": "¡Intercambia conocimientos con otros estudiantes! ¡Conócelos y haz nuevos amigos!"
+                },
+                "FEATURE3": {
+                    "TITLE": "¡Diseño de interfaz de usuario innovador!",
+                    "CONTENT": "¡Siéntete cómodo usando una interfaz de usuario más intuitiva y agradable!"
+                }
+            },
+            "SECTIONS": {
+                "DISCOVER": {
+                    "TITLE": "Descubrir",
+                    "FEATURE1": {
+                        "TITLE": "Conexiones y Conocimientos",
+                        "CONTENT": "¡Conéctate instantáneamente con personas afines en UNetwork! ¡Encuentra nuevos amigos, comparte conocimientos y crea vínculos!"
+                    },
+                    "FEATURE2": {
+                        "TITLE": "Comparte Momentos",
+                        "CONTENT": "Comparte, inspira y conéctate con otros apasionados por momentos inolvidables"
+                    },
+                    "FEATURE3": {
+                        "TITLE": "¡Mantente actualizado diariamente!",
+                        "CONTENT": "Tu línea de tiempo siempre estará actualizada de acuerdo con tus intereses."
+                    },
+                    "CONTENT1": "Miembros",
+                    "CONTENT2": "Clases"
+                },
+                "COMMUNITY": {
+                    "TITLE": "Comunidad",
+                    "FEATURE1": {
+                        "TITLE": "¡Estrenando el sistema de Clips!",
+                        "CONTENT": "¡Con los Clips, puedes compartir cualquier momento instantáneamente con solo un clic!"
+                    },
+                    "CONTENT": "\"Desde que me uní a UNetwork, me sumergí en una comunidad académica vibrante y apasionada. Encontré estudiantes de diferentes áreas de estudio, todos listos para compartir sus experiencias, dudas y logros. Las discusiones en los foros de UNetwork son enriquecedoras, desafiando mi pensamiento y expandiendo mis horizontes.\""
+                },
+                "ABOUT": {
+                    "TITLE": "Sobre",
+                    "FEATURE1": {
+                        "TITLE": "¿Qué hay de nuevo?",
+                        "CONTENT": "UNetwork viene a cambiar el concepto de red social, trayendo nuevos aspectos y mejorando los antiguos."
+                    },
+                    "FEATURE2": {
+                        "TITLE": "Clases",
+                        "CONTENT": "¡Las clases son como grupos, pero son públicas y están enfocadas en un tema académico específico!"
+                    },
+                    "FEATURE3": {
+                        "TITLE": "Foros",
+                        "CONTENT": "¡En los foros puedes resolver todas tus dudas relacionadas con cualquier materia!"
+                    },
+                    "FEATURE4": {
+                        "TITLE": "Noticias",
+                        "CONTENT": "¿Quieres estar al tanto de lo que está sucediendo en la escuela? ¡Mantente atento a las noticias!"
+                    }
+                },
+                "FOOTER": {
+                    "COPYRIGHT": "2023 UNetwork - El mejor contenido. Todos los derechos reservados. Seguridad y privacidad",
+                    "COPYRIGHT2": "©️ Grupo UN 2023",
+                    "SECTION1": {
+                        "TITLE": "Contacto",
+                        "OPTION1": "Contáctanos",
+                        "OPTION2": "Soporte al usuario",
+                        "OPTION3": "Atención en línea"
+                    },
+                    "SECTION2": {
+                        "TITLE": "Recursos",
+                        "OPTION1": "Noticias",
+                        "OPTION2": "Foros y comunidades",
+                        "OPTION3": "Estudios y crecimiento"
+                    }
+                },
+                "GENERIC_LABELS": {}
+            }
+        }
+    }
+}
