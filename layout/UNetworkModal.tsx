@@ -1,7 +1,5 @@
 import { Box, Modal, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type ReactNode, useEffect } from 'react'
-import logo from '@/public/assets/img/Logo.png'
-import lightLogo from '@/public/assets/img/LightLogo.png'
 
 export default function UNetworkModal({
     children,
@@ -40,9 +38,9 @@ export default function UNetworkModal({
             <Box height='80vh' width={!matches ? '30vw' : '80vw'} borderRadius={3} bgcolor='background.paper'>
                 <Box m={3} display='flex' justifyContent='center' alignItems='center'>
                     {theme.palette.mode === 'light' ?
-                        <img width={75} height={75} src={logo} alt="Logo" />
+                        <img width={75} height={75} src='/assets/img/Logo.png' alt="Logo" />
                         :
-                        <img width={75} height={75} src={lightLogo} alt="Logo" />
+                        <img width={75} height={75} src='/assets/img/LightLogo.png' alt="Logo" />
                     }
                 </Box>
                 <Box display='flex' justifyContent='center' alignItems='center'>

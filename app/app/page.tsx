@@ -9,8 +9,8 @@ import { PostSkeleton } from '@/layout/skeletons'
 import { useCreatePostMutation, useFetchPostsMutation } from '@/features/post'
 import { useAppSelector } from '@/store'
 import { useUploadFileMutation } from '@/features/file'
-import { type MulterFile, type IPicture } from '@/types'
 import { useUpdateUserMutation } from '@/features/user'
+import type { MulterFile, IPicture } from '@/types'
 
 export default function Home(): ReactElement {
     const theme = useTheme()
@@ -20,7 +20,7 @@ export default function Home(): ReactElement {
     const [ createPost ] = useCreatePostMutation()
     const [ updateUser ] = useUpdateUserMutation()
 
-    const [ postContent, setPostContent ] = useState<{ text?: string, picture?: Partial<MulterFile> & Partial<Picture> & File }>()
+    const [ postContent, setPostContent ] = useState<{ text?: string, picture?: Partial<MulterFile> & Partial<IPicture> & File }>()
     const [ snackbarOpen, setSnackbarOpen ] = useState<boolean>(false)
 
     const user = useAppSelector(state => state.auth.user)
@@ -44,7 +44,7 @@ export default function Home(): ReactElement {
 
         let data: any
 
-        if ((postContent?.picture?.size ?? 0) >= 32000000) {
+        if ((postContent?.picture?.size ?? 0) >= 5000000) {
             handleSnackbarOpen()
         } else {
             let picture: any

@@ -6,7 +6,7 @@ import { type ReactElement, useState } from 'react'
 import { CustomMenu } from '@/layout'
 import { Groups } from '@mui/icons-material'
 
-export default function Classes({ _class } : { _class: { name: string, picture?: string } }): ReactElement {
+export default function Classes({ _class } : { _class: { name: string, picture?: string, visibility?: 'public' | 'private' } }): ReactElement {
 
     const initials = _class.name.split(' ')
     let lettersInitials: string = ''

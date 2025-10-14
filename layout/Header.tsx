@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable react/no-unescaped-entities */
 
-import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography } from '@mui/material'
-import logo from '@/public/assets/img/Logo.png'
-import lightLogo from '@/public/assets/img/LightLogo.png'
+import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography, useTheme } from '@mui/material'
 import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp, Dashboard } from '@mui/icons-material'
 import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '@/layout'
 import { useNavigate } from 'react-router-dom'
-import { type ReactElement, useState, type FormEvent, useTheme } from 'react'
+import { type ReactElement, useState, type FormEvent } from 'react'
 import { FeedbackForm, UserAvatar } from '@/components'
 import { useAppSelector } from '@/store'
 
@@ -63,7 +61,7 @@ export default function Header({
                 key={-2} 
                 disableRipple
                 sx={{ display: 'flex', gap: 1.5 }} 
-                onClick={() => { navigate('/app/profile/' + String(user._id)) }} 
+                onClick={() => { navigate('/app/profile/' + user._id) }} 
             >
                 <Avatar sx={{ background: 'transparent' }}>
                     {user?.otherInfo?.avatar?.src && (
@@ -146,7 +144,7 @@ export default function Header({
                     </Box>
                     <Box p='1.5rem' display='flex' justifyContent='space-around' alignItems='center' >
                         <Box onClick={() => { navigate('/app') }} sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
-                            <img height={50} width={50} src={ theme.palette.mode === 'light' ? logo : lightLogo}></img>
+                            <img height={50} width={50} src={ theme.palette.mode === 'light' ? '/assets/img/Logo.png' : '/assets/img/LightLogo.png'}></img>
                             <Typography ml={1}>UNetwork</Typography>
                         </Box>
                         <Box display='flex' width='33%'>

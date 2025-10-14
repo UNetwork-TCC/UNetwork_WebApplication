@@ -10,13 +10,13 @@ export default function ClipsWrapper(): ReactElement {
         postedBy: {
             id: 'asd2312',
             name: 'Vitor',
-            avatar: '@/public/assets/img/bg.jpg'
+            avatar: '/assets/img/bg.jpg'
         },
 
         clips: [
             {
                 id: 0,
-                content: '@/public/assets/video/ComunityFeature.mp4',
+                content: '/assets/video/ComunityFeature.mp4',
                 postedAt: new Date()
             },
 

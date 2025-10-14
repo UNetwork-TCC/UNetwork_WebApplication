@@ -1,6 +1,5 @@
 import { Box, IconButton, Typography, useMediaQuery } from '@mui/material'
 import { Footer, LandingPageHeader } from '@/layout'
-import facebookLogo from '@/public/assets/svg/Auth/FacebookLogo.svg'
 import React, { type ReactElement } from 'react'
 import { useTheme } from '@mui/material'
 import { GoogleAuth } from '@/components'
@@ -38,7 +37,7 @@ export default function Auth({
                         <Box display='flex' gap={5}>
                             <GoogleAuth />
                             <IconButton>
-                                <img src={facebookLogo} style={{ height: '3rem', width: '3rem' }} />
+                                <img src='/assets/svg/Auth/FacebookLogo.svg' style={{ height: '3rem', width: '3rem' }} />
                             </IconButton>
                         </Box>
                         <Box display='flex' alignItems='center'>

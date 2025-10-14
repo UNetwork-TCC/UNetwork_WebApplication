@@ -1,7 +1,6 @@
 "use client";
 
 import { GoogleLogin, type GoogleLoginResponse } from 'react-google-login'
-import googleLogo from '@/public/assets/svg/Auth/GoogleLogo.svg'
 import { Box, Button, IconButton, TextField } from '@mui/material'
 import { type ReactElement, useEffect, useState } from 'react'
 import { FormModal, LoadingBackdrop } from '@/layout'
@@ -63,7 +62,7 @@ export default function GoogleAuth(): ReactElement {
                                 setLoadingOpen(true)
                                 renderProps.onClick()
                             }}>
-                                <img src={googleLogo} style={{ height: '3rem', width: '3rem' }} />
+                                <img src='/assets/svg/Auth/GoogleLogo.svg' style={{ height: '3rem', width: '3rem' }} />
                             </IconButton>
                             <LoadingBackdrop
                                 open={loadingOpen}

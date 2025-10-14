@@ -1,21 +1,15 @@
 'use client';
 
-import { type ReactElement, useContext } from 'react'
-import { Box, type SxProps, useTheme, useMediaQuery, IconButton } from '@mui/material'
-import { useStyles } from '@/styles'
-import { Header, SearchBar } from '@/layout'
-import { SideBar } from '@/layout'
-import { appLayoutContext } from '@/contexts'
-import { RequireAuth, UserAvatar } from '@/components'
-import { Badge } from '@mui/material'
-import { Avatar } from '@mui/material'
-import { useAppSelector } from '@/store'
-import { useRouter } from 'next/navigation'
+import { RequireAuth, UserAvatar } from '@/components';
+import { appLayoutContext } from '@/contexts';
+import { Header, SearchBar, SideBar } from '@/layout';
+import { useAppSelector } from '@/store';
+import { useStyles } from '@/styles';
+import { Avatar, Badge, Box, IconButton, type SxProps, useMediaQuery, useTheme } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import { type ReactElement, useContext } from 'react';
 
-import logo from '@/public/assets/img/Logo.png'
-import lightLogo from '@/public/assets/img/LightLogo.png'
-import Image from 'next/image'
-import bg from '@/public/assets/img/bg.jpg'
+import Image from 'next/image';
 
 export default function AppLayout({
     children,
@@ -77,8 +71,10 @@ export default function AppLayout({
                 <Box display='flex' flexDirection='column' className={classes.body}>
                     {theme.palette.mode === 'light' &&
                         <Image 
+                            width={500}
+                            height={500}
                             alt=''
-                            src={bg} 
+                            src='/assets/img/bg.jpg' 
                             style={{
                                 zIndex: -2,
                                 opacity: 'light',
@@ -117,7 +113,7 @@ export default function AppLayout({
                                     <IconButton 
                                         onClick={() => { router.push('/app') }} 
                                     >
-                                        <Image alt='' height={30} width={30} src={ theme.palette.mode === 'light' ? logo : lightLogo} />
+                                        <Image alt='' height={30} width={30} src={theme.palette.mode === 'light' ? '/assets/img/Logo.png' : '/assets/img/LightLogo.png'} />
                                     </IconButton>
                                     <Box ml={2} display='flex' width='66%'>
                                         <SearchBar />

@@ -4,10 +4,6 @@ import { Box, Button, Typography } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-// Svg imports
-import topDecoration from '@/public/assets/svg/Error/TopDecoration.svg'
-import bottomDecoration from '@/public/assets/svg/Error/BottomDecoration.svg'
-import errorSvg from '@/public/assets/svg/Error/ErrorSvg.svg'
 import { type ReactElement } from 'react'
 
 function ErrorPage(): ReactElement {
@@ -24,14 +20,14 @@ function ErrorPage(): ReactElement {
             </style>
             <Box height='100vh' display='flex' justifyContent='center' alignItems={'center'} flexDirection='column'>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' position='absolute'>
-                    <Image alt='' src={topDecoration} />
+                    <Image alt='' src='/assets/svg/Error/TopDecoration.svg' />
                 </Box>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' position='absolute' top={'62%'}>
-                    <Image alt='' src={bottomDecoration} />
+                    <Image alt='' src='/assets/svg/Error/BottomDecoration.svg' />
                 </Box>
                 <Box p={1} m={1} display='flex' alignItems='center' width='70%' height='50%'>
                     <Box>
-                        <Image alt='' style={{ position: 'relative' }} src={errorSvg} />
+                        <Image alt='' style={{ position: 'relative' }} src='/assets/svg/Error/ErrorSvg.svg' />
                     </Box>
                     <Box m={5} height='50%' width='5px' bgcolor='divider'></Box>
                     <Box m={3} display='flex' flexDirection='column' height='80%'>

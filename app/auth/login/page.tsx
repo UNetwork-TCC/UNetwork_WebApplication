@@ -7,7 +7,6 @@ import { Auth } from '@/components'
 import { Field, Form, Formik } from 'formik'
 import { useAppDispatch } from '@/store'
 import { setCredentials, useLoginMutation } from '@/features/auth'
-import loginDecoration from '@/public/assets/svg/Auth/LoginDecoration.svg'
 import * as Yup from 'yup'
 import { useRouter } from 'next/navigation'
 
@@ -120,7 +119,7 @@ function LoginSide(): ReactElement {
             <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
                 <Typography textAlign='center' variant='h3' color='primary.main' fontWeight={900}>Já tem uma conta?</Typography>
                 <Typography mb={5} textAlign='center' variant='h6'>Entre e continue se conectando de ponta-a-ponta.</Typography>
-                <img style={{ height: '20rem', width: '30rem' }} src={loginDecoration} />
+                <img style={{ height: '20rem', width: '30rem' }} src='/assets/svg/Auth/LoginDecoration.svg' />
             </Box>
         </Box>
     )

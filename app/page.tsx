@@ -3,8 +3,6 @@
 import { Footer, LandingPageHeader } from '@/layout'
 import { ComunitySection, DiscoverSection, AboutSection, AnimateOnScroll } from '@/components'
 
-import liquidBg from '@/public/assets/svg/Home/LiquidBg.svg'
-import peopleVector from '@/public/assets/svg/Home/PeopleVector.svg'
 import Image from 'next/image'
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { Animation } from 'react-animate-style'
@@ -60,7 +58,7 @@ export default function LandingPage(): ReactElement {
                             position: 'absolute' 
                         }} 
                     >
-                        <Image alt='liquidBg' src={liquidBg} />
+                        <Image width={500} height={500} alt='liquidBg' src='/assets/svg/Home/LiquidBg.svg' />
                     </Box>
                     <Box 
                         sx={{ 
@@ -72,7 +70,7 @@ export default function LandingPage(): ReactElement {
                             position: 'absolute'
                         }} 
                     >
-                        <Image alt='peopleVector' src={peopleVector} />
+                        <Image width={500} height={500} alt='peopleVector' src='/assets/svg/Home/PeopleVector.svg' />
                     </Box>
                 </Box>
             )}

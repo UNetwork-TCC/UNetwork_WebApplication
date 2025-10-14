@@ -7,11 +7,10 @@ import { Search, Settings, AccountBox, FmdGood, Block, Delete, Report, ArrowBack
 import { type ReactElement, useState, useEffect } from 'react'
 import { setChatId, setMessages, useFindUserChatsMutation, useGetChatMutation } from '@/features/chat'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { User, type Chat } from '@/types'
+import { IUser, type IChat } from '@/types'
 import { ContactsAreaSkeleton } from '@/layout/skeletons'
 import { useGetUserMutation } from '@/features/user'
 
-import chatbg from '@/public/assets/svg/Chat/chatbg.svg'
 import { useRouter } from 'next/navigation'
 
 export default function ChatPage({ params: { id } }: { params: { id: string } }): ReactElement {
@@ -26,7 +25,7 @@ export default function ChatPage({ params: { id } }: { params: { id: string } })
     const [ getChat ] = useGetChatMutation()
     const [ getUser, { isLoading: isLoadingUser } ] = useGetUserMutation()
 
-    const [ chatUser, setChatUser ] = useState<User | null>()
+    const [ chatUser, setChatUser ] = useState<IUser | null>()
 
     const userId = useAppSelector(state => state.auth.user._id)
 
@@ -107,7 +106,7 @@ export default function ChatPage({ params: { id } }: { params: { id: string } })
                     ) : (
                         <ContactsArea
                             userId={userId ?? ''}
-                            chats={chats ?? ([] as Chat[])} 
+                            chats={chats ?? ([] as IChat[])} 
                             sx={matches ? {
                                 width: '100%',
                                 height: '100%',
@@ -261,7 +260,7 @@ export default function ChatPage({ params: { id } }: { params: { id: string } })
                                 }}
                             >
                                 <img 
-                                    src={chatbg}
+                                    src='/assets/svg/Chat/chatbg.svg'
                                     style={{ 
                                         height: '70%', 
                                         width: '70%'
@@ -281,7 +280,7 @@ export default function ChatPage({ params: { id } }: { params: { id: string } })
                             {!id ? (
                                 <ContactsArea
                                     userId={userId ?? ''}
-                                    chats={chats ?? ([] as Chat[])} 
+                                    chats={chats ?? ([] as IChat[])} 
                                     sx={matches ? {
                                         width: '100%',
                                         height: '100%',

@@ -8,9 +8,8 @@ import { Field, Form, Formik } from 'formik'
 import { Alert } from '@mui/material'
 import { setCredentials, useLoginMutation, useSignupMutation } from '@/features/auth'
 import { useAppDispatch } from '@/store'
-import { type User } from '@/types'
+import type { IUser } from '@/types'
 import * as Yup from 'yup'
-import authDecoration from '@/public/assets/svg/Auth/AuthDecoration.svg'
 import { useRouter } from 'next/navigation'
 
 function RegisterForm(): ReactElement {
@@ -65,7 +64,7 @@ function RegisterForm(): ReactElement {
                 })
 
                 dispatch(setCredentials({
-                    user: data.data?.user as User,
+                    user: data.data?.user as IUser,
                     accessToken: data.data?.token as string
                 }))
 
@@ -223,7 +222,7 @@ function RegisterSide(): ReactElement {
             <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
                 <Typography textAlign='center' variant='h3' color='primary.main' fontWeight={900}>Pronto para se conectar?</Typography>
                 <Typography mb={5} textAlign='center' variant='h6'>Faça seu cadastro e impulsione seu crescimento conosco!</Typography>
-                <img style={{ height: '20rem', width: '30rem' }} src={authDecoration} />
+                <img style={{ height: '20rem', width: '30rem' }} src='/assets/svg/Auth/AuthDecoration.svg' />
             </Box>
         </Box>
     )

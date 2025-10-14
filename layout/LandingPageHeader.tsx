@@ -2,8 +2,6 @@ import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material
 import { DarkMode, LightMode } from '@mui/icons-material'
 import { type ReactElement } from 'react'
 import { useStyles } from '@/styles'
-import logo from '@/public/assets/img/Logo.png'
-import lightLogo from '@/public/assets/img/LightLogo.png'
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery, useTheme } from '@mui/material'
 import { useRouter } from 'next/navigation'
@@ -46,9 +44,9 @@ export default function LandingPageHeader(): ReactElement {
         >
             <Box onClick={() => { router.push('/') }} sx={{ cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                 { theme?.palette.mode === 'light' ?
-                    <Image width={!matches ? 75 : 30} height={!matches ? 75 : 30} src={logo} alt="Logo" />
+                    <Image width={!matches ? 75 : 30} height={!matches ? 75 : 30} src='/assets/img/Logo.png' alt="Logo" />
                     :                    
-                    <Image width={!matches ? 75 : 30} height={!matches ? 75 : 30} src={lightLogo} alt="Logo" />
+                    <Image width={!matches ? 75 : 30} height={!matches ? 75 : 30} src='/assets/img/LightLogo.png' alt="Logo" />
                 }
                 {!matches && (
                     <Typography variant='inherit' sx={{ letterSpacing: '2px', mt: 1 }}>UNetwork</Typography>

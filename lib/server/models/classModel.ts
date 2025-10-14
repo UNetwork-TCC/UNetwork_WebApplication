@@ -7,6 +7,8 @@ const classSchema = new mongoose.Schema({
     theme: { type: String, required: true },
     usersOnClass: { type: Array, required: true, default: [] },
     createdAt: { type: String, required: true, default: new Date().getDate() },
+    visibility: { type: String, required: true, default: 'public' },
+    code: { type: String, required: true, default: () => Math.random().toString(36).substring(2, 8).toUpperCase() },
     messages: { type: Array, default: [] },
     voiceChannels: { type: Array, default: [] },
     chatChannels: { type: Array, default: [] },

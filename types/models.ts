@@ -42,7 +42,9 @@ export interface IClass {
   title: string
   description: string
   theme: string
+  code: string
   usersOnClass: string[]
+  visibility: 'public' | 'private'
   messages: IMessage[]
   voiceChannels: any[]
   chatChannels: any[]
