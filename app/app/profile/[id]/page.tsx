@@ -41,17 +41,28 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
                             width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            p: 4,
-                            gap: 4
+                            p: { xs: 2, sm: 3, md: 4 },
+                            gap: { xs: 2, sm: 3, md: 4 }
                         }}
                     >
                         {isLoading ? (
                             <>
                                 <ProfileHeaderSkeleton />
-                                <Box width='100%' display='flex' gap={2}>
-                                    <Divider sx={{ width: '46.1%' }} />
-                                    <Typography position='relative' top='10px'>Posts</Typography>
-                                    <Divider sx={{ width: '46.1%' }} />
+                                <Box
+                                    width='100%'
+                                    display='flex'
+                                    gap={{ xs: 1, sm: 2 }}
+                                    alignItems='center'
+                                >
+                                    <Divider sx={{ flex: 1 }} />
+                                    <Typography
+                                        position='relative'
+                                        top='10px'
+                                        sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                                    >
+                                        Posts
+                                    </Typography>
+                                    <Divider sx={{ flex: 1 }} />
                                 </Box>
                                 <ProfilePostsSkeleton />
                             </>
@@ -59,10 +70,21 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
                             <>
                                 <ProfileHeader user={user ?? (obj as User)} />
                                 {/* <Highlights /> */}
-                                <Box width='100%' display='flex' gap={2}>
-                                    <Divider sx={{ width: '46.1%' }} />
-                                    <Typography position='relative' top='10px'>Posts</Typography>
-                                    <Divider sx={{ width: '46.1%' }} />
+                                <Box
+                                    width='100%'
+                                    display='flex'
+                                    gap={{ xs: 1, sm: 2 }}
+                                    alignItems='center'
+                                >
+                                    <Divider sx={{ flex: 1 }} />
+                                    <Typography
+                                        position='relative'
+                                        top='10px'
+                                        sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                                    >
+                                        Posts
+                                    </Typography>
+                                    <Divider sx={{ flex: 1 }} />
                                 </Box>
                                 <ProfilePosts user={user ?? (obj as User)} />
                             </>

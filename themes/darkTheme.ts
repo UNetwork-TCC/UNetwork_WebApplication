@@ -3,6 +3,17 @@ import defaultThemeProperties from './defaultThemeProps'
 import { grey } from '@mui/material/colors'
 
 let darkTheme: CustomTheme = createTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 640,
+            md: 1024,
+            lg: 1440,
+            xl: 1920,
+            '2xl': 2560
+        }
+    },
+
     palette: {
         mode: 'dark',
 

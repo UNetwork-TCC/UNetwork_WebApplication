@@ -15,20 +15,20 @@ import { I18N } from '@/utils/i18n/enums';
 function Heading({ title, content, icon } : { title: string, content: string, icon: ReactElement }): ReactElement {
   return (
       <>
-          <Typography 
-              sx={{ fontSize: '1.7rem' }} 
-              mb={2} variant='h5' 
-              fontWeight={900} 
+          <Typography
+              sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.7rem' } }}
+              mb={2} variant='h5'
+              fontWeight={900}
               color='secondary.main'
           >
-              <Box mb='-3px' mr='5px'>
+              <Box mb='-3px' mr='5px' component='span' display='inline-flex' alignItems='center'>
                   {icon}
               </Box>
               {title}
           </Typography>
-          <Typography 
-              sx={{ fontSize: '1.3rem' }} 
-              variant='h6' 
+          <Typography
+              sx={{ fontSize: { xs: '1rem', sm: '1.15rem', md: '1.3rem' } }}
+              variant='h6'
               color='secondary.main'
           >
               {content}
@@ -74,18 +74,67 @@ export default function LandingPage(): ReactElement {
                     </Box>
                 </Box>
             )}
-            <Box id="início" display='flex' justifyContent='space-evenly' alignItems='center' width='100%'>
-                <Box p='25px' m='25px' width={!matches ? '45%' : '100%'}>
+            <Box
+                id="início"
+                display='flex'
+                justifyContent='space-evenly'
+                alignItems='center'
+                width='100%'
+                px={{ xs: 2, sm: 3 }}
+            >
+                <Box
+                    p={{ xs: '15px', sm: '20px', md: '25px' }}
+                    m={{ xs: '15px', sm: '20px', md: '25px' }}
+                    width={{ xs: '100%', md: '45%' }}
+                >
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true}>
-                        <Typography mb={4} variant='h1' fontWeight={900}>{t(I18N.LANDING_PAGE.HEADER.TITLE)}</Typography>
+                        <Typography
+                            mb={{ xs: 2, sm: 3, md: 4 }}
+                            variant='h1'
+                            fontWeight={900}
+                            sx={{
+                                fontSize: { xs: '2rem', sm: '3rem', md: '4rem', lg: '6rem' }
+                            }}
+                        >
+                            {t(I18N.LANDING_PAGE.HEADER.TITLE)}
+                        </Typography>
                     </Animation>
                     <Animation animationIn="fadeInLeft" animationOut="fadeOut" isVisible={true} animationInDelay={250}>
-                        <Typography mt={4} variant='h3' color='text.secondary' fontWeight={900}>{t(I18N.LANDING_PAGE.HEADER.SUBTITLE)}</Typography>
-                        <Box mt={!matches ? 5 : 3} display='flex'>
-                            <Button variant='contained'>
-                                <p style={{ textDecoration: 'none', color: theme.palette.primary.contrastText }} onClick={() => router.push('/auth/register')}>{t(I18N.LANDING_PAGE.HEADER.START_BTN)}</p>
+                        <Typography
+                            mt={{ xs: 2, sm: 3, md: 4 }}
+                            variant='h3'
+                            color='text.secondary'
+                            fontWeight={900}
+                            sx={{
+                                fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.5rem', lg: '3rem' }
+                            }}
+                        >
+                            {t(I18N.LANDING_PAGE.HEADER.SUBTITLE)}
+                        </Typography>
+                        <Box
+                            mt={{ xs: 2, sm: 3, md: 5 }}
+                            display='flex'
+                            flexDirection={{ xs: 'column', sm: 'row' }}
+                            gap={{ xs: 2, sm: 0 }}
+                            alignItems={{ xs: 'flex-start', sm: 'center' }}
+                        >
+                            <Button variant='contained' sx={{ minWidth: { xs: '100%', sm: 'auto' } }}>
+                                <Typography
+                                    component='span'
+                                    sx={{ textDecoration: 'none', color: theme.palette.primary.contrastText }}
+                                    onClick={() => router.push('/auth/register')}
+                                >
+                                    {t(I18N.LANDING_PAGE.HEADER.START_BTN)}
+                                </Typography>
                             </Button>
-                            <Typography color='primary.main' ml={5} width={!matches ? '30%' : '50%'}>{t(I18N.LANDING_PAGE.HEADER.CAPTION)}</Typography>
+                            <Typography
+                                color='primary.main'
+                                ml={{ xs: 0, sm: 5 }}
+                                width={{ xs: '100%', sm: '50%', md: '30%' }}
+                                sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
+                            >
+                                {t(I18N.LANDING_PAGE.HEADER.CAPTION)}
+                            </Typography>
                         </Box>
                     </Animation>
                 </Box>
@@ -94,18 +143,27 @@ export default function LandingPage(): ReactElement {
                     </Box>
                 )}
             </Box>
-            <Box mt={!matches ? 10 : 30} mb={!matches ? 20 : 35} display='flex' justifyContent='center' alignItems='center' height='20vh' width='100%'>
-                <Box 
-                    display='flex' 
-                    gap={!matches ? 20 : 5} 
-                    p={1} 
-                    m={5} 
-                    flexDirection={!matches ? 'row' : 'column'} 
-                    justifyContent='space-evenly' 
-                    alignItems='center' 
+            <Box
+                mt={{ xs: 20, sm: 25, md: 30, lg: 10 }}
+                mb={{ xs: 25, sm: 30, md: 35, lg: 20 }}
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                minHeight='20vh'
+                width='100%'
+                px={{ xs: 2, sm: 3 }}
+            >
+                <Box
+                    display='flex'
+                    gap={{ xs: 5, md: 10, lg: 20 }}
+                    p={{ xs: 1, sm: 2 }}
+                    m={{ xs: 2, sm: 3, md: 5 }}
+                    flexDirection={{ xs: 'column', md: 'row' }}
+                    justifyContent='space-evenly'
+                    alignItems='center'
                     width='100%'
                 >
-                    <Box width={!matches ? '50%' : '100%'} overflow='hidden'>
+                    <Box width={{ xs: '100%', md: '50%' }} overflow='hidden'>
                         <AnimateOnScroll animation="fadeInUp" animateOnce delay={350}>
                             <Box>
                                 <Heading
@@ -140,7 +198,11 @@ export default function LandingPage(): ReactElement {
                     </Box>
                 </Box>
             </Box>
-            <Box mb={50} id="descubra">
+            <Box
+                mb={{ xs: 20, sm: 30, md: 40, lg: 50 }}
+                id="descubra"
+                px={{ xs: 2, sm: 3 }}
+            >
                 <DiscoverSection />
                 <ComunitySection />
                 <AboutSection />

@@ -42,15 +42,38 @@ const defaultThemeProperties = {
                 scrollBehavior: 'smooth',
 
                 html: {
-                    '@media (max-width:1535.95px)': {
+                    // Ajustando para os novos breakpoints e considerando zoom
+                    fontSize: '16px',
+                    '@media (max-width: 1919.95px)': {
+                        fontSize: '15px'
+                    },
+                    '@media (max-width: 1439.95px)': {
+                        fontSize: '14px'
+                    },
+                    '@media (max-width: 1023.95px)': {
+                        fontSize: '13px'
+                    },
+                    '@media (max-width: 639.95px)': {
                         fontSize: '12px'
-                    }
+                    },
+                    // Garantir que o layout funcione bem com zoom
+                    WebkitTextSizeAdjust: '100%',
+                    MozTextSizeAdjust: '100%',
+                    msTextSizeAdjust: '100%'
                 },
 
                 // Custom Scrollbar
 
                 body: {
-                    backgroundColor: '#fafafa'
+                    backgroundColor: '#fafafa',
+                    // Melhorar renderização em diferentes zooms
+                    WebkitFontSmoothing: 'antialiased',
+                    MozOsxFontSmoothing: 'grayscale'
+                },
+
+                // Prevenir flash de conteúdo não estilizado
+                '*': {
+                    boxSizing: 'border-box'
                 },
 
                 '::-webkit-scrollbar': {

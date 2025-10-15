@@ -11,10 +11,10 @@ import { type ReactElement, useState, type FormEvent } from 'react'
 import { FeedbackForm, UserAvatar } from '@/components'
 import { useAppSelector } from '@/store'
 
-export default function Header({ 
+export default function Header({
     minimize,
     maximize,
-    close 
+    close
 } : {
     minimize: () => void,
     maximize: () => void,
@@ -57,17 +57,17 @@ export default function Header({
         const mapedElements = elements.map((el, i) =>
             <MenuItem onClick={onClickEvents[i]} key={i} disableRipple>{icons && icons[i]}{el}</MenuItem>
         )
-                
+
         if (userMenu) setMenuContent([
-            <MenuItem 
-                key={-2} 
+            <MenuItem
+                key={-2}
                 disableRipple
-                sx={{ display: 'flex', gap: 1.5 }} 
-                onClick={() => { navigate('/app/profile/' + user._id) }} 
+                sx={{ display: 'flex', gap: 1.5 }}
+                onClick={() => { navigate('/app/profile/' + user._id) }}
             >
                 <Avatar sx={{ background: 'transparent' }}>
                     {user?.otherInfo?.avatar?.src && (
-                        <img 
+                        <img
                             src={user?.otherInfo?.avatar.src}
                             alt={'Avatar de' + user?.username}
                             style={{
@@ -84,7 +84,7 @@ export default function Header({
             </MenuItem>,
             <Divider key={-1} />,
             ...mapedElements
-        ]) 
+        ])
         else setMenuContent(mapedElements)
 
         if (user?.admin) setMenuContent([
@@ -99,7 +99,7 @@ export default function Header({
 
     }
     const handleMenuClose = (): void => { setAnchorEl(null) }
-    
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
         handleModalClose()
@@ -128,7 +128,7 @@ export default function Header({
         <>
             <Box>
                 <Box bgcolor={theme.palette.mode === 'light' ? 'white' : '#221f24'} >
-                    <Box 
+                    <Box
                         width='100%'
                         gap={2}
                         p={1}
@@ -144,21 +144,36 @@ export default function Header({
                         <FilterNone onClick={maximize} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                         <Close onClick={close} sx={{ height: '15px', width: '15px', cursor: 'pointer', ':hover': { color: 'text.secondary' } }} />
                     </Box>
-                    <Box p='1.5rem' display='flex' justifyContent='space-around' alignItems='center' >
-                        <Box onClick={() => { navigate('/app') }} sx={{ cursor: 'pointer' }} display='flex' justifyContent='center' alignItems='center'>
+                    <Box p='1.5rem' display='flex' justifyContent='space-between' alignItems='center' gap={{ md: 2, lg: 3, xl: 4 }} width={'95%'}>
+                        <Box
+                            onClick={() => { navigate('/app') }}
+                            sx={{ cursor: 'pointer' }}
+                            display='flex'
+                            justifyContent='center'
+                            alignItems='center'
+                            gap={1.5}
+                        >
                             <img height={50} width={50} src={ theme.palette.mode === 'light' ? '/assets/img/Logo.png' : '/assets/img/LightLogo.png'}></img>
-                            <Typography ml={1}>UNetwork</Typography>
+                            <Typography
+                                sx={{
+                                    fontSize: { md: '1.125rem', lg: '1.25rem', xl: '1.375rem' },
+                                    fontWeight: 600,
+                                    lineHeight: 1
+                                }}
+                            >
+                                UNetwork
+                            </Typography>
                         </Box>
-                        <Box display='flex' width='33%'>
+                        <Box display='flex' flex='1' maxWidth='40%' mx={{ md: 2, lg: 3, xl: 4 }}>
                             <SearchBar />
                         </Box>
-                        <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={5}>
+                        <Box display='flex' justifyContent='center' alignItems='center' height='100%' gap={{ md: 3, lg: 4, xl: 5 }}>
                             <CustomLink to='/app/forum' name='Fóruns' />
                             {/* <CustomLink to='/app/classes' name='Classes' /> */}
                             {/* <CustomLink to='/app/materials' name='Materiais' /> */}
                             <CustomLink to='/app/news' name='Notícias' />
                         </Box>
-                        <Box gap={3} display='flex'>
+                        <Box gap={{ md: 2, lg: 3, xl: 3 }} display='flex' alignItems='center'>
                             <Box sx={{ [theme.breakpoints.only('md')]: { mt:'8%' } }}> {
                                 notification ?
                                     <Badge badgeContent='+99' color='primary'>
@@ -167,7 +182,7 @@ export default function Header({
                                                 <Notifications />
                                             </Avatar>
                                         </IconButton>
-                                    </Badge>    
+                                    </Badge>
                                     :
                                     <IconButton onClick={e => { handleClick(e, [ 'Message1', 'Message2' ]) }}>
                                         <Avatar>
@@ -175,12 +190,12 @@ export default function Header({
                                         </Avatar>
                                     </IconButton>
                             }
-                                
+
                             </Box>
                             <Box sx={{ [theme.breakpoints.only('md')]: { pt:'5%' } }}>
-                                <IconButton sx={{ [theme.breakpoints.only('md')]: { } }} onClick={e => { handleClick(e, 
+                                <IconButton sx={{ [theme.breakpoints.only('md')]: { } }} onClick={e => { handleClick(e,
                                     [ 'Configurações', 'Ajuda e suporte', 'Dar feedback' ],
-                                    [ 
+                                    [
                                         <Settings key={0} />,
                                         <Help key={1} />,
                                         <Feedback key={2} />
@@ -192,13 +207,13 @@ export default function Header({
                                     true
                                 ) }}>
                                     <Avatar sx={{ background: 'white', color: 'grey.400', [theme.breakpoints.only('md')]: { height:'2.5rem', width:'2.5rem' } }}>
-                                        <UserAvatar 
+                                        <UserAvatar
                                             user={user}
                                             onClick={() => {}}
                                             sx={{
                                                 borderRadius: '50%',
                                                 height: '100%',
-                                                width: '100%' 
+                                                width: '100%'
                                             }}
                                         />
                                     </Avatar>
@@ -244,7 +259,7 @@ export default function Header({
                 <Box component='span' fontWeight={600}>Como posso obter notificaçãoes sobre novos posts ou atualizações?</Box><br />R: Basta seguir o usuário ou a classe que compartilha aquele tipo de conteúdo e então novas notificações chegarão para você toda vez que algo de novo for postado.<br /><br />
                 <Box component='span' fontWeight={600}>Como posso bloquear ou desbloquear outros usuários?</Box><br />R: Vá na página "Chat". Clique na foto de perfil do usuário no qual você queira bloquear/desbloquear e clique na opção "Bloquear" ou "Desbloquear".<br /><br />
             </UNetworkModal>
-            <Snackbar 
+            <Snackbar
                 open={snackbarOpen}
                 onClose={handleSnackbarClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

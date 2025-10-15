@@ -138,21 +138,38 @@ export default function ForumHome(): ReactElement {
 
     return (
         <>
-            <Box sx={{ overflowX: 'hidden' }} overflow='auto' display='flex' width='100%' flexDirection='column' p={2.5}>
-                <Box mb={3} display='flex' flexDirection='column' gap={3}>
-                    <Box display='flex' justifyContent={'center'}>
+            <Box
+                sx={{ overflowX: 'hidden' }}
+                overflow='auto'
+                display='flex'
+                width='100%'
+                flexDirection='column'
+                p={{ xs: 1.5, sm: 2, md: 2.5 }}
+            >
+                <Box
+                    mb={{ xs: 2, sm: 3 }}
+                    display='flex'
+                    flexDirection='column'
+                    gap={{ xs: 2, sm: 3 }}
+                >
+                    <Box display='flex' justifyContent={'center'} px={{ xs: 2, sm: 3 }}>
                         <CustomInput
                             sx={{ boxShadow: theme.shadows[4] }}
                             fullWidth
-                            width='90%'
                             placeholder='Pesquisar fóruns...'
                             color='primary.main'
                             iconColor={theme.palette.mode === 'light' ? '#dbdbdb' : undefined}
                             icon={<Search />}
                         />
                     </Box>
-                    <Box ml={'4%'}>
-                        <Button variant='contained' onClick={handleOpen}>Criar Fórum</Button>
+                    <Box ml={{ xs: '2%', sm: '4%', lg: '2%', xl: '2%' }}>
+                        <Button
+                            variant='contained'
+                            onClick={handleOpen}
+                            sx={{ fontSize: { xs: '0.875rem', sm: '1rem', lg: '1rem', xl: '1rem' }, borderRadius: '10px' }}
+                        >
+                            Criar Fórum
+                        </Button>
                     </Box>
                 </Box>
                 <ForumWrapper>
@@ -188,18 +205,19 @@ export default function ForumHome(): ReactElement {
             >
                 <Card
                     sx={{
-                        minHeight: '45vh',
-                        width: '35vw',
+                        minHeight: { xs: 'auto', md: '45vh' },
+                        width: { xs: '95vw', sm: '80vw', md: '60vw', lg: '35vw' },
                         maxWidth: '90vw',
+                        maxHeight: '90vh',
+                        overflow: 'auto',
                         bgcolor: 'background.paper',
-                        p: 1,
+                        p: { xs: 0.5, sm: 1 },
                         borderRadius: 2,
-                        boxShadow: theme.shadows[10],
-                        minHeight: 0
+                        boxShadow: theme.shadows[10]
                     }}
                 >
                     <Box p={0}>
-                        <Typography variant="h6" component="h2" m={'1rem'}>
+                        <Typography variant="h6" component="h2" m={'1rem'} sx={{ fontSize: {lg: '1.5rem', xl: '1.5rem'} }}>
                             Criar Fórum
                         </Typography>
                     </Box>
@@ -277,21 +295,43 @@ export default function ForumHome(): ReactElement {
                             <Alert severity='error'>Preencha todos os campos obrigatórios!</Alert>
                         )}
 
-                        <Box display='flex' gap={1} justifyContent='space-between' alignItems='center'>
-                            <IconButton component='label' htmlFor='image'>
-                                <Avatar
-                                    sx={{ cursor: 'pointer', bgcolor: image ? 'primary.main' : grey[400] }}
+                        <Box
+                            display='flex'
+                            flexDirection={{ xs: 'column', sm: 'row' }}
+                            gap={{ xs: 2, sm: 1 }}
+                            justifyContent='space-between'
+                            alignItems={{ xs: 'stretch', sm: 'center' }}
+                        >
+                            <Box display='flex' gap={1} alignItems='center' flex={1}>
+                                <IconButton component='label' htmlFor='image'>
+                                    <Avatar
+                                        sx={{ cursor: 'pointer', bgcolor: image ? 'primary.main' : grey[400] }}
+                                    >
+                                        <AddPhotoAlternate />
+                                    </Avatar>
+                                </IconButton>
+                                <Typography noWrap flex={1}>{image?.name}</Typography>
+                                { image && (
+                                    <Close sx={{ cursor: 'pointer' }} onClick={() => { setImage(undefined) }} />
+                                )}
+                            </Box>
+                            <Box sx={{ display: 'flex', gap: 2, width: { xs: '100%', sm: 'auto' } }}>
+                                <Button
+                                    onClick={handleSubmit}
+                                    variant='contained'
+                                    fullWidth
+                                    sx={{ minWidth: { sm: 'auto' } }}
                                 >
-                                    <AddPhotoAlternate />
-                                </Avatar>
-                            </IconButton>
-                            <Typography noWrap flex={1}>{image?.name}</Typography>
-                            { image && (
-                                <Close sx={{ cursor: 'pointer' }} onClick={() => { setImage(undefined) }} />
-                            )}
-                            <Box sx={{ display: 'flex', gap: 2 }}>
-                                <Button onClick={handleSubmit} variant='contained'>Confirmar</Button>
-                                <Button onClick={handleClose} variant='outlined'>Cancelar</Button>
+                                    Confirmar
+                                </Button>
+                                <Button
+                                    onClick={handleClose}
+                                    variant='outlined'
+                                    fullWidth
+                                    sx={{ minWidth: { sm: 'auto' } }}
+                                >
+                                    Cancelar
+                                </Button>
                             </Box>
                         </Box>
                     </Box>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type ReactElement, useState, useEffect } from 'react'
 import { LoadingBackdrop } from '@/layout'
 import { Auth } from '@/components'
@@ -63,9 +63,15 @@ function LoginForm(): ReactElement {
         }
     }
 
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
     return (
         <>
-            <Box width='85.3%' p={2.5}>
+            <Box
+                width={{ xs: '95%', sm: '90%', md: '85.3%' }}
+                p={{ xs: 1.5, sm: 2, md: 2.5 }}
+            >
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validationSchema={validationSchema}
@@ -114,12 +120,43 @@ function LoginForm(): ReactElement {
 }
 
 function LoginSide(): ReactElement {
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('lg'))
+
     return (
         <Box width='100%'>
             <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
-                <Typography textAlign='center' variant='h3' color='primary.main' fontWeight={900}>Já tem uma conta?</Typography>
-                <Typography mb={5} textAlign='center' variant='h6'>Entre e continue se conectando de ponta-a-ponta.</Typography>
-                <img style={{ height: '20rem', width: '30rem' }} src='/assets/svg/Auth/LoginDecoration.svg' />
+                <Typography
+                    textAlign='center'
+                    variant='h3'
+                    color='primary.main'
+                    fontWeight={900}
+                    sx={{
+                        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' }
+                    }}
+                >
+                    Já tem uma conta?
+                </Typography>
+                <Typography
+                    mb={5}
+                    textAlign='center'
+                    variant='h6'
+                    sx={{
+                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.25rem' }
+                    }}
+                >
+                    Entre e continue se conectando de ponta-a-ponta.
+                </Typography>
+                <img
+                    style={{
+                        height: matches ? '15rem' : '20rem',
+                        width: matches ? '20rem' : '30rem',
+                        maxWidth: '100%',
+                        objectFit: 'contain'
+                    }}
+                    src='/assets/svg/Auth/LoginDecoration.svg'
+                    alt='Login decoration'
+                />
             </Box>
         </Box>
     )
