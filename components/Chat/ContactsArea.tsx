@@ -107,16 +107,16 @@ export default function ContactsArea({ chats, userId, sx }: { chats: Chat[], use
                                 console.log(usersToChat)
 
                                 return (
-                                    usersToChat.map((user, index) => (
-                                        <Contact 
+                                    Array.isArray(usersToChat) ? usersToChat.map((user, index) => (
+                                        <Contact
                                             key={user?._id}
                                             chat={chats[index]}
                                             user={{
                                                 username: user?.username,
-                                                otherInfo: { avatar: user?.otherInfo?.avatar } 
-                                            }} 
+                                                otherInfo: { avatar: user?.otherInfo?.avatar }
+                                            }}
                                         />
-                                    ))
+                                    )) : null
                                 )
                             })() : (
                                 [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ].map(e => (

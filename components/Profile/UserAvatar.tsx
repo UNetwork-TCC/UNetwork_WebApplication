@@ -1,7 +1,9 @@
+'use client';
+
 import { type User } from '@/types'
 import { type ReactElement } from 'react'
 import { Avatar, Skeleton, type AvatarOwnProps, type SxProps } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 
 export default function UserAvatar({ 
     sx,

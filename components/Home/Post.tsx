@@ -10,7 +10,7 @@ import { red } from '@mui/material/colors'
 import { UserAvatar } from '@/components'
 import { useGetUserMutation } from '@/features/user'
 import { type User } from '@/types'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 
 export default function Post({
     date,

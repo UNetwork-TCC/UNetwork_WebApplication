@@ -20,14 +20,14 @@ function ErrorPage(): ReactElement {
             </style>
             <Box height='100vh' display='flex' justifyContent='center' alignItems={'center'} flexDirection='column'>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' position='absolute'>
-                    <Image alt='' src='/assets/svg/Error/TopDecoration.svg' />
+                    <Image alt='' src='/assets/svg/Error/TopDecoration.svg' width={1440} height={227} />
                 </Box>
                 <Box sx={{ pointerEvents: 'none' }} width='100%' height='100%' position='absolute' top={'62%'}>
-                    <Image alt='' src='/assets/svg/Error/BottomDecoration.svg' />
+                    <Image alt='' src='/assets/svg/Error/BottomDecoration.svg' width={1440} height={672} />
                 </Box>
                 <Box p={1} m={1} display='flex' alignItems='center' width='70%' height='50%'>
                     <Box>
-                        <Image alt='' style={{ position: 'relative' }} src='/assets/svg/Error/ErrorSvg.svg' />
+                        <Image alt='' style={{ position: 'relative' }} src='/assets/svg/Error/ErrorSvg.svg' width={570} height={394} />
                     </Box>
                     <Box m={5} height='50%' width='5px' bgcolor='divider'></Box>
                     <Box m={3} display='flex' flexDirection='column' height='80%'>

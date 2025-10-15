@@ -1,9 +1,11 @@
+'use client';
+
 import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { type User } from '@/types'
 import { type ReactElement } from 'react'
 import UserAvatar from './UserAvatar'
 import { grey } from '@mui/material/colors'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 
 export default function ProfilePosts({ user }: { user: User }): ReactElement {
     return (

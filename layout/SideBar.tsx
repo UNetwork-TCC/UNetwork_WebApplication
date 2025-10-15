@@ -1,3 +1,4 @@
+'use client';
 import { ArrowBackIos,
     ArrowForwardIos,
     Bookmark,
@@ -15,7 +16,7 @@ import { ArrowBackIos,
 import { Box, Stack, type SxProps, Typography, Popover, Divider, useMediaQuery, BottomNavigation, BottomNavigationAction, useTheme, theme } from '@mui/material'
 import { type ReactElement, useState, useContext, type SyntheticEvent } from 'react'
 import { Shortcut } from '@/components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 import { type MouseEvent } from 'react'
 import { appLayoutContext } from '@/contexts'
 import { darkTheme, lightTheme } from '@/themes'

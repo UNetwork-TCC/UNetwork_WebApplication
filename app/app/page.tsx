@@ -246,17 +246,19 @@ export default function Home(): ReactElement {
                                     <PostSkeleton />
                                     <PostSkeleton />
                                     <PostSkeleton />
-                                </>   
+                                </>
                             )
-                            : posts?.slice(0).reverse().map((post) => (
-                                <Post
-                                    key={post._id}
-                                    id={post._id ?? ''}
-                                    content={post.content}
-                                    date={post.postedAt}
-                                    postedBy={post.postedBy}
-                                />
-                            ))
+                            : Array.isArray(posts)
+                                ? posts.slice(0).reverse().map((post) => (
+                                    <Post
+                                        key={post._id}
+                                        id={post._id ?? ''}
+                                        content={post.content}
+                                        date={post.postedAt}
+                                        postedBy={post.postedBy}
+                                    />
+                                ))
+                                : null
                         }
                     </Box>
                 </Box>

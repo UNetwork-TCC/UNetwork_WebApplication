@@ -1,10 +1,12 @@
+'use client';
+
 import { UserAvatar } from '@/components'
 import { setChatId } from '@/features/chat'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { type Chat, type User } from '@/types'
 import { Avatar, Box, Typography, useTheme } from '@mui/material'
 import { type ReactElement } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 export default function Contact({ 
     user,
     date,

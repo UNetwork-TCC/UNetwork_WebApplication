@@ -1,10 +1,12 @@
+'use client';
 /* eslint-disable max-len */
 /* eslint-disable react/no-unescaped-entities */
+'use client';
 
 import { Avatar, Badge, Box, Divider, IconButton, MenuItem, Modal, Snackbar, Typography, useTheme } from '@mui/material'
 import { FilterNone, Close, Minimize, Notifications, Settings, Help, Feedback, CloseSharp, Dashboard } from '@mui/icons-material'
 import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '@/layout'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 import { type ReactElement, useState, type FormEvent } from 'react'
 import { FeedbackForm, UserAvatar } from '@/components'
 import { useAppSelector } from '@/store'

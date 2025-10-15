@@ -2,7 +2,7 @@
 
 import { useState, type ReactElement, useEffect } from 'react'
 import { Avatar, Box, FormHelperText, IconButton, Typography, useTheme } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 import { type User } from '@/types'
 import { useAppSelector } from '@/store'
 import { MoreVert, School } from '@mui/icons-material'
