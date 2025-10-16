@@ -5,7 +5,7 @@ class ChatService extends Service<IChat> {
   constructor() { super('/chat') }
 
   async findUserChats(userId: string) {
-    return this.request(`${this.url}/finduserchats/${userId}`, 'GET')
+    return (await this.request(`${this.url}/finduserchats/${userId}`, 'GET'))
   }
 }
 

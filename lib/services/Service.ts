@@ -29,24 +29,24 @@ export class Service<T> {
         }
     }
 
-    protected getById<K extends T>(id: string): Promise<K> {
-        return this.request(`${this.url}/${id}`, 'GET')
+    protected async getById<K extends T>(id: string): Promise<K> {
+        return await this.request(`${this.url}/${id}`, 'GET')
     }
 
-    protected getAll<K extends T>(): Promise<K[]> {
-        return this.request(this.url, 'GET')
+    protected async getAll<K extends T>(): Promise<K[]> {
+        return await this.request(this.url, 'GET')
     }
 
-    protected post<K extends T>(data: K): Promise<K> {
-        return this.request(this.url, 'POST', data)
+    protected async post<K extends T>(data: K): Promise<K> {
+        return await this.request(this.url, 'POST', data)
     }
 
-    protected patch<K extends T>(id: string, data: K): Promise<K> {
-        return this.request(`${this.url}/${id}`, 'PATCH', data)
+    protected async patch<K extends T>(id: string, data: K): Promise<K> {
+        return await this.request(`${this.url}/${id}`, 'PATCH', data)
     }
 
-    protected delete<K extends T>(id: string): Promise<K> {
-        return this.request(`${this.url}/${id}`, 'DELETE')
+    protected async delete<K extends T>(id: string): Promise<K> {
+        return await this.request(`${this.url}/${id}`, 'DELETE')
     }
 }
     
