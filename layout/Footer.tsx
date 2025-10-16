@@ -1,9 +1,11 @@
+'use client';
+
 import { Avatar, Box, MenuItem, Select, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { FacebookRounded, Instagram, Language, LinkedIn, Twitter } from '@mui/icons-material'
 import { type ReactElement, useEffect } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams } from '@/hooks'
 import { I18N } from '@/utils/i18n/enums'
 import Image from 'next/image'
 

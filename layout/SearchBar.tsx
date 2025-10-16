@@ -1,9 +1,10 @@
+'use client';
 import { Search } from '@mui/icons-material'
 import CustomInput from './CustomInput'
 import { Autocomplete, Box, Typography } from '@mui/material'
 import { useEffect, type ReactElement, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useFetchUsersMutation } from '@/features/user'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 
 export default function SearchBar(): ReactElement {
     const [ fetchUsers, { data: users, isLoading } ] = useFetchUsersMutation()

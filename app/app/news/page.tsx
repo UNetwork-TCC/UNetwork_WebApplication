@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Container, Divider, Link, Modal, Paper, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Button, Divider, Link, Modal, Paper, Stack, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { FilterAndConfig, News } from '@/components'
 import { type ReactElement, useEffect, useState } from 'react'
 import { type news } from '@/types'
@@ -11,7 +11,7 @@ import { useAppSelector } from '@/store'
 
 export default function NewsPage(): ReactElement {
     const theme = useTheme()
-    const matches = useMediaQuery(theme.breakpoints.up('md'))
+    const matches = useMediaQuery(theme.breakpoints.down('md'))
 
     const [ fetchNews, { data: newsData, isLoading } ] = useFetchNewsMutation()
     const [ postNews ] = useCreateNewsMutation()
@@ -44,57 +44,131 @@ export default function NewsPage(): ReactElement {
 
     useEffect(() => {
         (async () => {
-            await fetchNews(null)
+            const result = await fetchNews(null)
+            console.log('News fetched:', result)
         })()
 
-        document.addEventListener('keydown', (e: KeyboardEvent) => {
-            const code: string = e.code
-
-            if (Number(code) === 27) {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' || e.keyCode === 27) {
                 handleClose()
             }
-        })
+        }
+
+        document.addEventListener('keydown', handleKeyDown)
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+        }
     }, [ fetchNews ])
+
+    useEffect(() => {
+        if (newsData) {
+            console.log('News data updated:', newsData)
+        }
+    }, [newsData])
 
     return (
         <>
-            <Box display='flex' flexDirection='column' p={3} mt={5} width='100%' height='100%' fontSize={'1rem'} sx={{ [theme.breakpoints.only('lg')]: { mt: 3 },
-                [theme.breakpoints.only('md')]: { mt: 1 }
-            }}>
-                <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mb: '2%', 
-                    [theme.breakpoints.only('md')]: { m: '0 4rem 0 0rem' } }}>
-                    <Typography sx={{ fontSize: '2rem', color: '#673AB7', fontWeight: 'bold', [theme.breakpoints.only('lg')]: { ml:'5%' } }}>Notícias</Typography>
-                    {user.admin && (
-                        <FilterAndConfig text={'CRIAR NOTICIAS'} handleOpen={handleOpen} />
-                    )}
-                </Container>
-                <Box sx={{ display: 'flex', width: '100%', justifyContent:'center' }}>
-                    <Box sx={{ display: 'flex', gap: 5, flexDirection: 'column', mb: '5%', fontSize: '10px', width: '60%', justifyContent:'center', 
-                        [theme.breakpoints.only('md')]: {
-                            width:'65%'
-                        }
-                    }} >
+            <Box display="flex" justifyContent="center" width="100%" gap={{ md: 2, lg: 3, xl: 4 }}>
+                <Box
+                    width={matches ? '100%' : undefined}
+                    height="100%"
+                    display="flex"
+                    justifyContent="start"
+                    alignItems="center"
+                    flexDirection="column"
+                    sx={{
+                        flex: { md: '1 1 60%', lg: '1 1 50%', xl: '1 1 50%' },
+                        maxWidth: { md: '700px', lg: '700px', xl: '900px' },
+                        px: { xs: 2, md: 3, lg: 3.5, xl: 4 },
+                        py: { xs: 2, md: 3, lg: 3.5, xl: 4 },
+                        mx: { xs: 0, md: 2, lg: 3, xl: 4 }
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            alignItems: { xs: 'flex-start', sm: 'center' },
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            mb: { xs: 2, md: 3, lg: 3.5, xl: 4 },
+                            gap: { xs: 2, sm: 0 }
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                fontSize: { xs: '1.5rem', md: '1.875rem', lg: '2rem', xl: '2.125rem' },
+                                color: 'primary.main',
+                                fontWeight: 700
+                            }}
+                        >
+                            Notícias
+                        </Typography>
+                        {user.admin && (
+                            <FilterAndConfig text={'CRIAR NOTÍCIAS'} handleOpen={handleOpen} />
+                        )}
+                    </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: { xs: 3, md: 4, lg: 5 },
+                            flexDirection: 'column',
+                            width: '100%'
+                        }}
+                    >
                         {isLoading ? (
                             <>
                                 <NewsSkeleton />
                                 <NewsSkeleton />
                                 <NewsSkeleton />
                             </>
-                        ) : newsData?.map(item => (
+                        ) : Array.isArray(newsData) && newsData.length > 0 ? newsData.map(item => (
                             <News
                                 key={item._id}
-                                title={item.name}
+                                title={item.title || item.name}
                                 description={item.description}
                                 date={item.postedAt}
-                                topic='Saúde'
+                                topic={item.topic || 'Saúde'}
                             />
-                        ))}
+                        )) : (
+                            <Box
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                minHeight="20rem"
+                            >
+                                <Typography variant="h6" color="text.secondary">
+                                    Nenhuma notícia disponível no momento.
+                                </Typography>
+                            </Box>
+                        )}
                     </Box>
-                    <Box sx={{ width: '25rem', height: '40rem', display: 'flex', alignItems: 'center', position: 'sticky', top: 75 }}>
-                        <Paper elevation={8} sx={{ width: '80%', height: '90%', borderRadius: '15px', p: '1rem',
-                            [theme.breakpoints.only('lg')]: { ml:'10%', height:'97%', mt:'3%' },
-                            [theme.breakpoints.only('md')]: { ml:'10%', height:'80%', mb:'15%' }
-                        }}>
+                </Box>
+                {!matches && (
+                    <Box
+                        sx={{
+                            flex: { md: '0 0 280px', lg: '0 0 320px', xl: '0 0 360px' },
+                            maxWidth: { md: '280px', lg: '320px', xl: '360px' },
+                            mr: { md: 2, lg: 3, xl: 4 }
+                        }}
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                        pt={{ md: 3, lg: 3.5, xl: 4 }}
+                    >
+                        <Paper
+                            elevation={8}
+                            sx={{
+                                width: '100%',
+                                borderRadius: '15px',
+                                p: { lg: 2.5, xl: 3 },
+                                position: 'sticky',
+                                top: { lg: '1.5rem', xl: '2rem' },
+                                maxHeight: { lg: '600px', xl: '700px' },
+                                overflow: 'auto'
+                            }}
+                        >
                             <Typography sx={{ m: '5% 0 5% 5%', fontWeight: 'bold' }}>Mais Lidas</Typography>
                             <Divider />
                             <Stack sx={{ width: '100%', height: '90%', pt: '1rem', [theme.breakpoints.only('md')]: { gap: 1, pt: 1 } }} gap={2}>
@@ -131,7 +205,7 @@ export default function NewsPage(): ReactElement {
                             </Stack>
                         </Paper>
                     </Box>
-                </Box>
+                )}
             </Box>
 
             <Modal
@@ -142,8 +216,18 @@ export default function NewsPage(): ReactElement {
                 sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 disableAutoFocus
             >
-                <Box p={1} sx={{ height: matches ? '25rem' : '40%', width: '40%', bgcolor: 'background.paper', 
-                    [theme.breakpoints.only('md')]: { height:'28rem' } }} borderRadius={2} >
+                <Box
+                    p={{ xs: 1, sm: 1.5, md: 2 }}
+                    sx={{
+                        height: { xs: 'auto', sm: '28rem', md: matches ? '25rem' : '40%' },
+                        width: { xs: '90%', sm: '70%', md: '40%' },
+                        maxHeight: '90vh',
+                        overflow: 'auto',
+                        bgcolor: 'background.paper',
+                        [theme.breakpoints.only('md')]: { height:'28rem' }
+                    }}
+                    borderRadius={2}
+                >
                     <Box p={0}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" m={'1rem'}>
                             Criar Notícia
@@ -170,7 +254,7 @@ export default function NewsPage(): ReactElement {
                             <Button onClick={handleClose} variant='outlined' fullWidth>
                                 Cancelar
                             </Button>
-                            <Button onClick={postNews} variant='outlined' fullWidth>
+                            <Button onClick={createNews} variant='outlined' fullWidth>
                                 Criar
                             </Button>
                         </Box>

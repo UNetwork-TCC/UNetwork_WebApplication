@@ -1,7 +1,9 @@
+'use client';
+
 import { Circle } from '@mui/icons-material'
 import { Box, Tooltip, Typography } from '@mui/material'
 import { type ReactElement } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 import { useTheme } from '@mui/material'
 
 export default function Shortcut({ 

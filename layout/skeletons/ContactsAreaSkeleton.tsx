@@ -25,11 +25,27 @@ export default function ContactsAreaSkeleton(): ReactElement {
                 <Box sx={{ width: '100%', height: '100%' }} >
                     <Box sx={{ width: '100%', height: '12.5%' }}>
                         <Stack gap={2} sx={{ position: 'sticky', top: '0' }}>
-                            <Box display={'flex'} sx={{ alignItems: 'center', ml: '5%' }}>
-                                <Box sx={{ width: '70%', [theme.breakpoints.only('md')]: { ml:'5%', width:'63%' } }}>
-                                    <Typography variant='h4' sx={{}}>Conversas</Typography>
-                                </Box>
-                                <Box sx={{ width: '25%', display: 'flex', justifyContent: 'space-between' }}>
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    gap: 1,
+                                    pr: 2,
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Typography
+                                    variant='h5'
+                                    sx={{
+                                        fontWeight: 600,
+                                        pl: 2,
+                                        fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                                    }}
+                                >
+                                    Conversas
+                                </Typography>
+                                <Box sx={{ display: 'flex', gap: 1 }}>
                                     <IconButton>
                                         <Add />
                                     </IconButton>
@@ -38,15 +54,13 @@ export default function ContactsAreaSkeleton(): ReactElement {
                                     </IconButton>
                                 </Box>
                             </Box>
-                            <Box sx={{}}>
+                            <Box sx={{ px: 2 }}>
                                 <CustomInput
-                                    width='95%'
                                     bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
                                     color='#673AB7'
                                     iconColor={'white'}
                                     placeholder='Procurar...'
                                     icon={<Search />}
-                                    sx={{ ml: '5%' }}
                                 />
                             </Box>
                         </Stack>

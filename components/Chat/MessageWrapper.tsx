@@ -52,15 +52,15 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
             }}
         >
             {!isLoading ? (
-                messages.map(message => (
-                    <Message 
+                Array.isArray(messages) ? messages.map(message => (
+                    <Message
                         key={message._id}
                         messageInfo={message}
                         text={message.content}
                         sendedAt={message.sendedAt}
                         messageFrom={message.sendedBy !== userId ? 'him' : 'me'}
                     />
-                ))
+                )) : null
             ) : (
                 <>
                     <MessageSkeleton messageFrom='me'/>

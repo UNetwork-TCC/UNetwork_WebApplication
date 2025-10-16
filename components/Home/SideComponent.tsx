@@ -1,8 +1,10 @@
+'use client';
+
 import { type User } from '@/types'
 import { type ReactElement } from 'react'
 import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/hooks'
 import { UserAvatar } from '@/components'
 
 export default function SideComponent({ user }: { user: User | Record<string, unknown> }): ReactElement {

@@ -94,7 +94,10 @@ function RegisterForm(): ReactElement {
 
     return (
         <>
-            <Box width='85.3%' p={2.5}>
+            <Box
+                width={{ xs: '95%', sm: '90%', md: '85.3%' }}
+                p={{ xs: 1.5, sm: 2, md: 2.5 }}
+            >
                 <FormControl sx={{ display: 'flex', gap: 2.5 }}>
                     <Formik
                         initialValues={formInitialValues}
@@ -217,12 +220,43 @@ function RegisterForm(): ReactElement {
 }
 
 function RegisterSide(): ReactElement {
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('lg'))
+
     return (
         <Box width='100%'>
             <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
-                <Typography textAlign='center' variant='h3' color='primary.main' fontWeight={900}>Pronto para se conectar?</Typography>
-                <Typography mb={5} textAlign='center' variant='h6'>Faça seu cadastro e impulsione seu crescimento conosco!</Typography>
-                <img style={{ height: '20rem', width: '30rem' }} src='/assets/svg/Auth/AuthDecoration.svg' />
+                <Typography
+                    textAlign='center'
+                    variant='h3'
+                    color='primary.main'
+                    fontWeight={900}
+                    sx={{
+                        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' }
+                    }}
+                >
+                    Pronto para se conectar?
+                </Typography>
+                <Typography
+                    mb={5}
+                    textAlign='center'
+                    variant='h6'
+                    sx={{
+                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.25rem' }
+                    }}
+                >
+                    Faça seu cadastro e impulsione seu crescimento conosco!
+                </Typography>
+                <img
+                    style={{
+                        height: matches ? '15rem' : '20rem',
+                        width: matches ? '20rem' : '30rem',
+                        maxWidth: '100%',
+                        objectFit: 'contain'
+                    }}
+                    src='/assets/svg/Auth/AuthDecoration.svg'
+                    alt='Register decoration'
+                />
             </Box>
         </Box>
     )
