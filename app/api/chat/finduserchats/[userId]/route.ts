@@ -1,12 +1,13 @@
-import { Controller, Get, Param } from "@/lib/api-framework/decorators";
-import { getHttpHandlers } from "@/lib/api-framework/funcs";
-import { BaseController } from "@/lib/api-framework/models";
-import { ChatRepository } from "@/lib/server/repositories";
-import type { IChat } from "@/types";
+import { Controller, Get, Param } from '@/lib/api-framework/decorators'
+import { getHttpHandlers } from '@/lib/api-framework/funcs'
+import { BaseController } from '@/lib/api-framework/models'
+import { ChatRepository } from '@/lib/server/repositories'
 
 @Controller
 class FindUserChatsController extends BaseController {
-  constructor(private chatRepository = new ChatRepository()) { super() }
+  constructor(private chatRepository = new ChatRepository()) {
+    super()
+  }
 
   @Get
   async findUserChats(@Param('userId') userId: string) {
@@ -14,4 +15,4 @@ class FindUserChatsController extends BaseController {
   }
 }
 
-export const { GET } = getHttpHandlers(FindUserChatsController);
+export const { GET } = getHttpHandlers(FindUserChatsController)

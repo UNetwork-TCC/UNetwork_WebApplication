@@ -7,6 +7,7 @@ Todos os arquivos foram migrados de React Router DOM para Next.js App Router.
 ## Arquivos Migrados ✓
 
 ### Componentes
+
 - ✓ `components/Chat/Contact.tsx`
 - ✓ `components/Home/Shortcut.tsx`
 - ✓ `components/Home/Post.tsx`
@@ -17,6 +18,7 @@ Todos os arquivos foram migrados de React Router DOM para Next.js App Router.
 - ✓ `components/Forum/ForumIcon.tsx`
 
 ### Layout
+
 - ✓ `layout/Header.tsx`
 - ✓ `layout/SearchBar.tsx`
 - ✓ `layout/SideBar.tsx`
@@ -26,11 +28,13 @@ Todos os arquivos foram migrados de React Router DOM para Next.js App Router.
 ## Arquivos Criados
 
 ### Hooks de Compatibilidade
+
 - ✓ `hooks/useNavigate.ts` - Hook que usa `useRouter` do Next.js
 - ✓ `hooks/useParams.ts` - Hook que usa `useParams` do Next.js
 - ✓ `hooks/index.ts` - Exporta todos os hooks
 
 ### Utilitários
+
 - ✓ `constants/index.ts` - Constantes e funções utilitárias (GET_TYPE)
 - ✓ `lib/storage.ts` - Storage adapter para Redux Persist com SSR
 
@@ -45,6 +49,7 @@ Todos os arquivos foram migrados de React Router DOM para Next.js App Router.
 ## Alterações em Todos os Componentes
 
 Cada componente foi atualizado com:
+
 - `'use client';` no topo do arquivo
 - Import de `useNavigate` de `@/hooks` em vez de `react-router-dom`
 - Import de `useParams` de `@/hooks` em vez de `react-router-dom`
@@ -54,6 +59,7 @@ Cada componente foi atualizado com:
 ## Próximos Passos (Opcional)
 
 1. **Remover react-router-dom**: Pode remover a dependência do package.json
+
    ```bash
    npm uninstall react-router-dom
    ```

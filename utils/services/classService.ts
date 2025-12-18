@@ -1,8 +1,10 @@
-import type { IClass } from "@/types";
-import { Service } from "./Service";
+import type { IClass } from '@/types'
+import { Service } from './Service'
 
 class ClassService extends Service<IClass> {
-  constructor() { super('/class') }
+  constructor() {
+    super('/class')
+  }
 }
 
-export const classService = new ClassService();
+export const classService = new ClassService()

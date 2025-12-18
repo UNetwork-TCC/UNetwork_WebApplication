@@ -8,14 +8,14 @@ import MessageSkeleton from './MessageSkeleton'
 import ProfileHeaderSkeleton from './ProfileHeaderSkeleton'
 import ProfilePostsSkeleton from './ProfilePostsSkeleton'
 
-export { 
-    ForumIconSkeleton,
-    PostSkeleton,
-    ForumSkeleton,
-    ContactSkeleton,
-    ContactsAreaSkeleton,
-    MessageSkeleton,
-    NewsSkeleton,
-    ProfileHeaderSkeleton,
-    ProfilePostsSkeleton
+export {
+  ForumIconSkeleton,
+  PostSkeleton,
+  ForumSkeleton,
+  ContactSkeleton,
+  ContactsAreaSkeleton,
+  MessageSkeleton,
+  NewsSkeleton,
+  ProfileHeaderSkeleton,
+  ProfilePostsSkeleton
 }

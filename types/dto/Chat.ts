@@ -1,3 +1,3 @@
 export interface ChatDTO {
-    users: string[]
+  users: string[]
 }

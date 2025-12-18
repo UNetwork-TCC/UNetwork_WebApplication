@@ -15,18 +15,17 @@ declare module '@mui/material' {
   interface CustomTheme extends Theme {
     background?: {
       card?: string
-    },
+    }
 
     constrast?: {
       main: string
     }
-
   }
 
   interface CustomThemeOptions extends ThemeOptions {
     background?: {
       card?: string
-    },
+    }
 
     constrast?: {
       main: string

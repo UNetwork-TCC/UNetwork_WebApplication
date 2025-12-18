@@ -1,6 +1,16 @@
-'use client';
+'use client'
 
-import { Alert, Box, Button, FormControl, Snackbar, TextField, Typography, useMediaQuery, useTheme } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Button,
+  FormControl,
+  Snackbar,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material'
 import { type ReactElement, useState, useEffect } from 'react'
 import { LoadingBackdrop } from '@/layout'
 import { Auth } from '@/components'
@@ -11,159 +21,184 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/navigation'
 
 function LoginForm(): ReactElement {
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().required('Este campo é obrigatório'),
-        password: Yup.string().required('Este campo é obrigatório')
-    })
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required('Este campo é obrigatório'),
+    password: Yup.string().required('Este campo é obrigatório')
+  })
 
-    const [ login, { data, isSuccess: isLoginSuccess, isError: isLoginError } ] = useLoginMutation()
+  const [login, { data, isSuccess: isLoginSuccess, isError: isLoginError }] =
+    useLoginMutation()
 
-    const dispatch = useAppDispatch()
-    const router = useRouter()
+  const dispatch = useAppDispatch()
+  const router = useRouter()
 
-    const [ openLoading, setOpenLoading ] = useState(false)
-    const [ snackbarOpen, setSnackbarOpen ] = useState(false)
+  const [openLoading, setOpenLoading] = useState(false)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
 
-    const handleOpenLoading = (): void => { setOpenLoading(true) }
-    const handleCloseLoading = (): void => { setOpenLoading(false) }
+  const handleOpenLoading = (): void => {
+    setOpenLoading(true)
+  }
+  const handleCloseLoading = (): void => {
+    setOpenLoading(false)
+  }
 
-    const handleSnackbarOpen = (): void => { setSnackbarOpen(true) }
-    const handleSnackbarClose = (): void => { setSnackbarOpen(false) }
+  const handleSnackbarOpen = (): void => {
+    setSnackbarOpen(true)
+  }
+  const handleSnackbarClose = (): void => {
+    setSnackbarOpen(false)
+  }
 
-    useEffect(() => {
-        (async () => {
-            if(isLoginSuccess) {
-                dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
-                router.push('/app')
-            } else if (isLoginError) {
-                handleCloseLoading()
-                handleSnackbarOpen()    
-            }
-        })()
-    }, [ 
-        isLoginSuccess,
-        isLoginError,
-        dispatch,
-        router.push,
-        data 
-    ])
+  useEffect(() => {
+    ;(async () => {
+      if (isLoginSuccess) {
+        dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
+        router.push('/app')
+      } else if (isLoginError) {
+        handleCloseLoading()
+        handleSnackbarOpen()
+      }
+    })()
+  }, [isLoginSuccess, isLoginError, dispatch, router.push, data])
 
-    const handleSubmit = async (user: { email: string, password: string }): Promise<void> => {
-        handleOpenLoading()
+  const handleSubmit = async (user: {
+    email: string
+    password: string
+  }): Promise<void> => {
+    handleOpenLoading()
 
-        try {
-            await login({
-                email: user.email.toLowerCase(),
-                password: user.password
-            })
-
-        } catch (error) {
-            console.log(error)
-            router.push('/app/error')
-        }
+    try {
+      await login({
+        email: user.email.toLowerCase(),
+        password: user.password
+      })
+    } catch (error) {
+      console.log(error)
+      router.push('/app/error')
     }
+  }
 
-    const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
-    return (
-        <>
-            <Box
-                width={{ xs: '95%', sm: '90%', md: '85.3%' }}
-                p={{ xs: 1.5, sm: 2, md: 2.5 }}
-            >
-                <Formik
-                    initialValues={{ email: '', password: '' }}
-                    validationSchema={validationSchema}
-                    style={{ width: '100%' }}
-                    onSubmit={handleSubmit}
+  return (
+    <>
+      <Box
+        width={{ xs: '95%', sm: '90%', md: '85.3%' }}
+        p={{ xs: 1.5, sm: 2, md: 2.5 }}
+      >
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={validationSchema}
+          style={{ width: '100%' }}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <FormControl sx={{ display: 'flex', gap: 2.5 }}>
+                <Box>
+                  <Field
+                    as={TextField}
+                    name="email"
+                    label="Nome de usuário ou email"
+                    required
+                    fullWidth
+                  />
+                  {errors.email && touched.email && (
+                    <p style={{ color: 'red' }}>{errors.email}</p>
+                  )}
+                </Box>
+                <Box gap={2.5}>
+                  <Field
+                    as={TextField}
+                    name="password"
+                    fullWidth
+                    label="Senha"
+                    required
+                    type="password"
+                  />
+                  {errors.password && touched.password && (
+                    <p style={{ color: 'red' }}>{errors.password}</p>
+                  )}
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  mt={2}
+                  alignItems="center"
                 >
-                    {({ errors, touched }) => (
-                        <Form>
-                            <FormControl sx={{ display: 'flex', gap: 2.5 }}>
-                                <Box>
-                                    <Field as={TextField} name='email' label='Nome de usuário ou email' required fullWidth />
-                                    {errors.email && touched.email && (
-                                        <p style={{ color: 'red' }}>{errors.email}</p>
-                                    )}
-                                </Box>
-                                <Box gap={2.5}>
-                                    <Field as={TextField} name='password' fullWidth label='Senha' required type='password' />
-                                    {errors.password && touched.password && (
-                                        <p style={{ color: 'red' }}>{errors.password}</p>
-                                    )}
-                                </Box>
-                                <Box display='flex' justifyContent='space-between' mt={2} alignItems='center'>
-                                    <Button type='submit' variant='contained'>Entrar</Button>
-                                </Box>
-                            </FormControl>
-                        </Form>
-                    )}
-                </Formik>
-            </Box>
-            <LoadingBackdrop
-                // handleClose={handleCloseLoading}
-                open={openLoading}
-            />
-            <Snackbar
-                open={snackbarOpen}
-                onClose={handleSnackbarClose}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                autoHideDuration={5000}
-            >
-                <Alert onClose={handleSnackbarClose} severity='error'>
-                    Usuário e/ou senha incorreta(os)!
-                </Alert>
-            </Snackbar>
-        </>
-    )
+                  <Button type="submit" variant="contained">
+                    Entrar
+                  </Button>
+                </Box>
+              </FormControl>
+            </Form>
+          )}
+        </Formik>
+      </Box>
+      <LoadingBackdrop
+        // handleClose={handleCloseLoading}
+        open={openLoading}
+      />
+      <Snackbar
+        open={snackbarOpen}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        autoHideDuration={5000}
+      >
+        <Alert onClose={handleSnackbarClose} severity="error">
+          Usuário e/ou senha incorreta(os)!
+        </Alert>
+      </Snackbar>
+    </>
+  )
 }
 
 function LoginSide(): ReactElement {
-    const theme = useTheme()
-    const matches = useMediaQuery(theme.breakpoints.down('lg'))
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('lg'))
 
-    return (
-        <Box width='100%'>
-            <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
-                <Typography
-                    textAlign='center'
-                    variant='h3'
-                    color='primary.main'
-                    fontWeight={900}
-                    sx={{
-                        fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' }
-                    }}
-                >
-                    Já tem uma conta?
-                </Typography>
-                <Typography
-                    mb={5}
-                    textAlign='center'
-                    variant='h6'
-                    sx={{
-                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.25rem' }
-                    }}
-                >
-                    Entre e continue se conectando de ponta-a-ponta.
-                </Typography>
-                <img
-                    style={{
-                        height: matches ? '15rem' : '20rem',
-                        width: matches ? '20rem' : '30rem',
-                        maxWidth: '100%',
-                        objectFit: 'contain'
-                    }}
-                    src='/assets/svg/Auth/LoginDecoration.svg'
-                    alt='Login decoration'
-                />
-            </Box>
-        </Box>
-    )
+  return (
+    <Box width="100%">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+      >
+        <Typography
+          textAlign="center"
+          variant="h3"
+          color="primary.main"
+          fontWeight={900}
+          sx={{
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' }
+          }}
+        >
+          Já tem uma conta?
+        </Typography>
+        <Typography
+          mb={5}
+          textAlign="center"
+          variant="h6"
+          sx={{
+            fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.25rem' }
+          }}
+        >
+          Entre e continue se conectando de ponta-a-ponta.
+        </Typography>
+        <img
+          style={{
+            height: matches ? '15rem' : '20rem',
+            width: matches ? '20rem' : '30rem',
+            maxWidth: '100%',
+            objectFit: 'contain'
+          }}
+          src="/assets/svg/Auth/LoginDecoration.svg"
+          alt="Login decoration"
+        />
+      </Box>
+    </Box>
+  )
 }
 
 export default function Login(): ReactElement {
-    return (
-        <Auth formTitle='Log in' form={<LoginForm />} side={<LoginSide />} />
-    )
+  return <Auth formTitle="Log in" form={<LoginForm />} side={<LoginSide />} />
 }

@@ -1,5 +1,5 @@
 export interface MaterialDTO {
-    file: string
-    createdAt: string
-    createdBy: string
+  file: string
+  createdAt: string
+  createdBy: string
 }

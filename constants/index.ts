@@ -4,6 +4,6 @@
  * @returns O status da ação (fulfilled, rejected, pending)
  */
 export const GET_TYPE = (type: string): string => {
-  const parts = type.split('/');
-  return parts[parts.length - 1];
-};
+  const parts = type.split('/')
+  return parts[parts.length - 1]
+}

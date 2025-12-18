@@ -1,8 +1,10 @@
-import type { IMaterial } from "@/types";
-import { Service } from "./Service";
+import type { IMaterial } from '@/types'
+import { Service } from './Service'
 
 class MaterialService extends Service<IMaterial> {
-  constructor() { super('/material') }
+  constructor() {
+    super('/material')
+  }
 }
 
-export const materialService = new MaterialService();
+export const materialService = new MaterialService()

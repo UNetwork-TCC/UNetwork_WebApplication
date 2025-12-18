@@ -108,7 +108,13 @@ export default function ContactsArea({
                   sx={{
                     fontWeight: 600,
                     pl: 3,
-                    fontSize: { xs: '1.25rem', sm: '1.5rem', lg: '1.75rem', xl: '1.75rem', '2xl': '2.25rem' }
+                    fontSize: {
+                      xs: '1.25rem',
+                      sm: '1.5rem',
+                      lg: '1.75rem',
+                      xl: '1.75rem',
+                      '2xl': '2.25rem'
+                    }
                   }}
                 >
                   Conversas
@@ -194,8 +200,20 @@ export default function ContactsArea({
         <Box
           borderRadius={2}
           sx={{
-            minWidth: { xs: '85vw', sm: '75vw', md: '50vw', lg: '40vw', xl: '35vw' },
-            maxWidth: { xs: '90vw', sm: '80vw', md: '60vw', lg: '50vw', xl: '40vw' },
+            minWidth: {
+              xs: '85vw',
+              sm: '75vw',
+              md: '50vw',
+              lg: '40vw',
+              xl: '35vw'
+            },
+            maxWidth: {
+              xs: '90vw',
+              sm: '80vw',
+              md: '60vw',
+              lg: '50vw',
+              xl: '40vw'
+            },
             bgcolor: 'background.paper',
             display: 'flex',
             flexDirection: 'column',

@@ -1,5 +1,5 @@
-declare module "react-animate-style" {
-    export const Animation: any;
+declare module 'react-animate-style' {
+  export const Animation: any
 }
 
 export {}

@@ -1,8 +1,10 @@
-import type { IForum } from "@/types";
-import { Service } from "./Service";
+import type { IForum } from '@/types'
+import { Service } from './Service'
 
 class ForumService extends Service<IForum> {
-  constructor() { super('/forum') }
+  constructor() {
+    super('/forum')
+  }
 }
 
-export const forumService = new ForumService();
+export const forumService = new ForumService()

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
-import { BaseController } from "../models";
-import { createNextRouteHandler } from "../decorators";
+import { BaseController } from '../models'
+import { createNextRouteHandler } from '../decorators'
 
 interface HttpMethods {
   GET: Function
@@ -12,7 +12,7 @@ interface HttpMethods {
 }
 
 function extractHttpMethods<T = BaseController>(controller: T): HttpMethods {
-  return controller as unknown as HttpMethods;
+  return controller as unknown as HttpMethods
 }
 
 /**
@@ -29,7 +29,7 @@ export function createNextRouteHandlers<T extends new (...args: any[]) => any>(
     DELETE: createNextRouteHandler(ControllerClass, 'delete', 'Delete'),
     PATCH: createNextRouteHandler(ControllerClass, 'patch', 'Patch'),
     PUT: createNextRouteHandler(ControllerClass, 'put', 'Put')
-  };
+  }
 }
 
-export default extractHttpMethods;
+export default extractHttpMethods

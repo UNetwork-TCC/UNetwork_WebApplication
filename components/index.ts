@@ -19,8 +19,8 @@ import BigNews from './News/BigNews'
 import News from './News/News'
 import FilterAndConfig from './Misc/FilterAndConfig'
 import AnimateOnScroll from './Misc/AnimateOnScroll'
-import ForumIcon from './Forum/ForumIcon' 
-import ForumWrapper from './Forum/ForumWrapper' 
+import ForumIcon from './Forum/ForumIcon'
+import ForumWrapper from './Forum/ForumWrapper'
 import Shortcut from './Home/Shortcut'
 import ClipComponent from './Home/ClipComponent'
 import FeedbackForm from './Home/FeedbackForm'
@@ -39,43 +39,43 @@ import UserAvatar from './Profile/UserAvatar'
 import ForumDiscussion from './Forum/ForumDiscussion'
 
 export {
-    DiscoverSection,
-    AboutSection,
-    MessageWrapper,
-    ClipComponent,
-    GoogleAuth,
-    ComunitySection,
-    ClipsWrapper,
-    ForumWrapper,
-    ProfileHeader,
-    ForumDiscussion,
-    Message,
-    ChatBar,
-    UserAvatar,
-    LittleNews,
-    RequireAuth,
-    ForumIcon,
-    ProfilePosts,
-    Folder,
-    File,
-    Forum,
-    Shortcut,
-    SideComponent,
-    Contact,
-    Classes,
-    Highlights,
-    Post,
-    Auth,
-    Comment,
-    FolderMaterials,
-    AnimateOnScroll,
-    ContactsArea,
-    ChatArea,
-    TimelinePost,
-    Clips,
-    BigNews,
-    News,
-    FilterAndConfig,
-    FeedbackForm,
-    ContactAppLayout
+  DiscoverSection,
+  AboutSection,
+  MessageWrapper,
+  ClipComponent,
+  GoogleAuth,
+  ComunitySection,
+  ClipsWrapper,
+  ForumWrapper,
+  ProfileHeader,
+  ForumDiscussion,
+  Message,
+  ChatBar,
+  UserAvatar,
+  LittleNews,
+  RequireAuth,
+  ForumIcon,
+  ProfilePosts,
+  Folder,
+  File,
+  Forum,
+  Shortcut,
+  SideComponent,
+  Contact,
+  Classes,
+  Highlights,
+  Post,
+  Auth,
+  Comment,
+  FolderMaterials,
+  AnimateOnScroll,
+  ContactsArea,
+  ChatArea,
+  TimelinePost,
+  Clips,
+  BigNews,
+  News,
+  FilterAndConfig,
+  FeedbackForm,
+  ContactAppLayout
 }

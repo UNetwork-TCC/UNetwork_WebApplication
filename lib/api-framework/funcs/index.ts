@@ -1,6 +1,3 @@
-import getHttpHandlers, { createNextRouteHandlers } from "./getHttpHandlers";
+import getHttpHandlers, { createNextRouteHandlers } from './getHttpHandlers'
 
-export {
-    getHttpHandlers,
-    createNextRouteHandlers
-}
+export { getHttpHandlers, createNextRouteHandlers }

@@ -137,7 +137,12 @@ export default function Home(): ReactElement {
 
   return (
     <>
-      <Box display="flex" justifyContent="center" width="100%" gap={{ md: 2, lg: 3, xl: 4 }}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        width="100%"
+        gap={{ md: 2, lg: 3, xl: 4 }}
+      >
         <Box
           width={matches ? '100%' : undefined}
           height="100%"
@@ -161,7 +166,7 @@ export default function Home(): ReactElement {
             id="inicio"
           >
             {/* <ClipsWrapper /> */}
-            <Box width="100%" >
+            <Box width="100%">
               <form
                 onSubmit={e => {
                   handleSubmit(e)

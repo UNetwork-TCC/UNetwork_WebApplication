@@ -1,4 +1,4 @@
 export interface MessageDTO {
-    content: string
-    sendedBy: string
+  content: string
+  sendedBy: string
 }

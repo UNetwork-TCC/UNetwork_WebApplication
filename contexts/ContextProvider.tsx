@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { type ReactElement, useState, type CSSProperties } from 'react'
 import { appLayoutContext, themeContext, chatContext } from '@/contexts'
@@ -9,95 +9,113 @@ import { darkTheme, lightTheme } from '@/themes'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { setAppLayout, setTheme as setThemeAction } from '@/features/user'
 import { useAppDispatch, useAppSelector } from '@/store'
-export default function ContextProvider({ children } : { children: ReactElement }): ReactElement {
-    const dispatch = useAppDispatch()
+export default function ContextProvider({
+  children
+}: {
+  children: ReactElement
+}): ReactElement {
+  const dispatch = useAppDispatch()
 
-    // Chat Context
+  // Chat Context
 
-    const [ userChats, setUserChats ] = useState<any[]>([])
+  const [userChats, setUserChats] = useState<any[]>([])
 
-    //  Theme Context
+  //  Theme Context
 
-    const themeMode = useAppSelector(state => state.config.theme)
-    const appLayout = useAppSelector(state => state.config.appLayout)
+  const themeMode = useAppSelector(state => state.config.theme)
+  const appLayout = useAppSelector(state => state.config.appLayout)
 
-    const [ theme, setTheme ] = useState(themeMode === 'light' ? lightTheme : darkTheme)
+  const [theme, setTheme] = useState(
+    themeMode === 'light' ? lightTheme : darkTheme
+  )
 
-    const changeTheme = (themeParam: CustomTheme): void => {
-        setTheme(themeParam)
-        dispatch(setThemeAction(themeParam.palette.mode))
-    }
+  const changeTheme = (themeParam: CustomTheme): void => {
+    setTheme(themeParam)
+    dispatch(setThemeAction(themeParam.palette.mode))
+  }
 
-    const themeContextValue = { theme, setTheme: changeTheme }
+  const themeContextValue = { theme, setTheme: changeTheme }
 
-    // Layout Context
+  // Layout Context
 
-    const [ dropdownButtonClicked, setDropdownButtonClicked ] = useState<boolean>(appLayout.sideBar.dropdownButtonClicked || false)
-    const [ shortcutsExpanded, setShortcutsExpanded ] = useState<boolean>(appLayout.sideBar.shortcutsExpanded || true)
+  const [dropdownButtonClicked, setDropdownButtonClicked] = useState<boolean>(
+    appLayout.sideBar.dropdownButtonClicked || false
+  )
+  const [shortcutsExpanded, setShortcutsExpanded] = useState<boolean>(
+    appLayout.sideBar.shortcutsExpanded || true
+  )
 
-    const changeDropdownState = (): void => {
-        setDropdownButtonClicked(prevState => !prevState)
+  const changeDropdownState = (): void => {
+    setDropdownButtonClicked(prevState => !prevState)
 
-        dispatch(setAppLayout({
-            ...appLayout,
-            sideBar: {
-                ...appLayout.sideBar,
-                dropdownButtonClicked: !dropdownButtonClicked
-            }
-        }))
-    }
-
-    const changeShortcutsState = (): void => {
-        setShortcutsExpanded(prevState => !prevState)
-        
-        dispatch(setAppLayout({
-            ...appLayout,
-            sideBar: {
-                ...appLayout.sideBar,
-                shortcutsExpanded: !shortcutsExpanded
-            }
-        }))
-    }
-
-    const [ size, setSize ] = useState<CSSProperties>(appLayout.window.size || {})
-
-    const changeSize = (css: CSSProperties): void => {
-        setSize(css)
-
-        dispatch(setAppLayout({
-            ...appLayout,
-            window: {
-                size: css
-            }
-        }))
-    }
-
-    const appLayoutContextValue = {
+    dispatch(
+      setAppLayout({
+        ...appLayout,
         sideBar: {
-            setDropdownButtonClicked: changeDropdownState,
-            setShortcutsExpanded: changeShortcutsState,
-            dropdownButtonClicked,
-            shortcutsExpanded
-        },
-        
-        window: {
-            size,
-            setSize: changeSize
+          ...appLayout.sideBar,
+          dropdownButtonClicked: !dropdownButtonClicked
         }
-    }
-
-    return (
-        <themeContext.Provider value={themeContextValue}>
-            <ThemeStore>
-                <appLayoutContext.Provider value={appLayoutContextValue}>
-                    <chatContext.Provider value={{ userChats, setUserChats }}>
-                        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
-                            <CssBaseline />
-                            {children}
-                        </GoogleOAuthProvider>
-                    </chatContext.Provider>
-                </appLayoutContext.Provider>
-            </ThemeStore>
-        </themeContext.Provider>
+      })
     )
+  }
+
+  const changeShortcutsState = (): void => {
+    setShortcutsExpanded(prevState => !prevState)
+
+    dispatch(
+      setAppLayout({
+        ...appLayout,
+        sideBar: {
+          ...appLayout.sideBar,
+          shortcutsExpanded: !shortcutsExpanded
+        }
+      })
+    )
+  }
+
+  const [size, setSize] = useState<CSSProperties>(appLayout.window.size || {})
+
+  const changeSize = (css: CSSProperties): void => {
+    setSize(css)
+
+    dispatch(
+      setAppLayout({
+        ...appLayout,
+        window: {
+          size: css
+        }
+      })
+    )
+  }
+
+  const appLayoutContextValue = {
+    sideBar: {
+      setDropdownButtonClicked: changeDropdownState,
+      setShortcutsExpanded: changeShortcutsState,
+      dropdownButtonClicked,
+      shortcutsExpanded
+    },
+
+    window: {
+      size,
+      setSize: changeSize
+    }
+  }
+
+  return (
+    <themeContext.Provider value={themeContextValue}>
+      <ThemeStore>
+        <appLayoutContext.Provider value={appLayoutContextValue}>
+          <chatContext.Provider value={{ userChats, setUserChats }}>
+            <GoogleOAuthProvider
+              clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+            >
+              <CssBaseline />
+              {children}
+            </GoogleOAuthProvider>
+          </chatContext.Provider>
+        </appLayoutContext.Provider>
+      </ThemeStore>
+    </themeContext.Provider>
+  )
 }

@@ -1,7 +1,7 @@
-import { Shortcut } from "./dataTypes"
+import { Shortcut } from './dataTypes'
 
 export interface IUser {
-  username?: string,
+  username?: string
   _id?: string
   name: string
   email: string
@@ -17,7 +17,7 @@ export interface IUser {
   posts: IPost[]
   otherInfo: {
     avatar?: {
-      src: string,
+      src: string
       name: string
     }
     bio?: string
@@ -120,10 +120,10 @@ export interface IPicture {
 }
 
 export interface IMaterial {
-    _id?: string
-    file: string
-    createdAt: string
-    createdBy: string
+  _id?: string
+  file: string
+  createdAt: string
+  createdBy: string
 }
 
 export interface MulterFile extends File {

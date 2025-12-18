@@ -83,16 +83,18 @@ export default function SideBar(): ReactElement {
       width: { md: 20, lg: 24, xl: 25 },
       p: !dropdownButtonClicked ? { md: 0.4, lg: 0.5 } : { md: 0.6, lg: 0.75 },
       top: { md: 3, lg: 8, xl: 10 },
-      left: !dropdownButtonClicked ? { md: '100%', lg: '100%', xl: '100%' } : { md: '100%', lg: '100%', xl: '100%' },
-      transform: !dropdownButtonClicked
-        ? 'translateX(4px)'
-        : 'translateX(4px)',
+      left: !dropdownButtonClicked
+        ? { md: '100%', lg: '100%', xl: '100%' }
+        : { md: '100%', lg: '100%', xl: '100%' },
+      transform: !dropdownButtonClicked ? 'translateX(4px)' : 'translateX(4px)',
       cursor: 'pointer',
       bgcolor: 'primary.main',
       borderRadius: '50%',
       color: 'primary.contrastText',
       transition: 'transform .2s ease-in-out, left .3s ease-in-out',
-      pl: !dropdownButtonClicked ? { md: 0.8, lg: 0.95, xl: 1 } : { md: 0.6, lg: 0.7, xl: 0.75 },
+      pl: !dropdownButtonClicked
+        ? { md: 0.8, lg: 0.95, xl: 1 }
+        : { md: 0.6, lg: 0.7, xl: 0.75 },
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -149,7 +151,8 @@ export default function SideBar(): ReactElement {
             gap: { md: 1.5, lg: 2, xl: 2.5 },
             borderRadius: 2,
             bgcolor: 'transparent',
-            transition: 'background-color .2s ease-in-out, color .2s ease-in-out',
+            transition:
+              'background-color .2s ease-in-out, color .2s ease-in-out',
             cursor: 'pointer',
             willChange: 'background-color, color'
           },
@@ -296,7 +299,11 @@ export default function SideBar(): ReactElement {
                             sx={{
                               userSelect: 'none',
                               cursor: 'pointer',
-                              fontSize: { md: '0.8rem', lg: '0.9rem', xl: '0.95rem' },
+                              fontSize: {
+                                md: '0.8rem',
+                                lg: '0.9rem',
+                                xl: '0.95rem'
+                              },
                               fontWeight: 600
                             }}
                           >
