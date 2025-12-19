@@ -1,12 +1,7 @@
 import { apiSlice } from '@/lib/api'
+import { extractData } from '@/lib/api/helpers'
 import { type IChat } from '@/types'
 import { createSlice } from '@reduxjs/toolkit'
-
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
 
 // Chat Slice
 
@@ -38,12 +33,12 @@ const chatApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     fetchChats: builder.mutation<IChat[], unknown>({
       query: () => '/chat',
-      transformResponse: (response: ApiResponse<IChat[]>) => response.data
+      transformResponse: (response: unknown) => extractData<IChat[]>(response)
     }),
 
     getChat: builder.mutation<IChat, string>({
       query: id => `/chat/${id}`,
-      transformResponse: (response: ApiResponse<IChat>) => response.data
+      transformResponse: (response: unknown) => extractData<IChat>(response)
     }),
 
     createChat: builder.mutation<IChat, Partial<IChat>>({
@@ -52,7 +47,7 @@ const chatApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: chat
       }),
-      transformResponse: (response: ApiResponse<IChat>) => response.data
+      transformResponse: (response: unknown) => extractData<IChat>(response)
     }),
 
     updateChat: builder.mutation<IChat, Partial<IChat>>({
@@ -61,7 +56,7 @@ const chatApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: data
       }),
-      transformResponse: (response: ApiResponse<IChat>) => response.data
+      transformResponse: (response: unknown) => extractData<IChat>(response)
     }),
 
     deleteChat: builder.mutation<IChat, string>({
@@ -69,7 +64,7 @@ const chatApiSlice = apiSlice.injectEndpoints({
         url: `/chat/${id}`,
         method: 'DELETE'
       }),
-      transformResponse: (response: ApiResponse<IChat>) => response.data
+      transformResponse: (response: unknown) => extractData<IChat>(response)
     }),
 
     findUserChats: builder.mutation<IChat[], string>({
@@ -77,7 +72,7 @@ const chatApiSlice = apiSlice.injectEndpoints({
         url: `/chat/finduserchats/${userId}`,
         method: 'GET'
       }),
-      transformResponse: (response: ApiResponse<IChat[]>) => response.data
+      transformResponse: (response: unknown) => extractData<IChat[]>(response)
     })
   })
 })

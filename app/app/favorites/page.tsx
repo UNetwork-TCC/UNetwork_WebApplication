@@ -1,235 +1,453 @@
 'use client'
 
+import { type ReactElement, useState } from 'react'
 import {
-  Avatar,
   Box,
   Typography,
-  Card,
-  Grid,
   Button,
   TextField,
-  FormControl,
-  useTheme
+  InputAdornment,
+  ToggleButton,
+  ToggleButtonGroup,
+  useTheme,
+  useMediaQuery,
+  Snackbar,
+  Alert
 } from '@mui/material'
-import { Add } from '@mui/icons-material'
-import { type ReactElement, useEffect, useState } from 'react'
-import { CustomCheckBox, FormModal } from '@/layout'
-import { Folder } from '@/components'
-import type { folder } from '@/types'
+import { Add, Upload, Search, GridView, ViewList } from '@mui/icons-material'
+import {
+  AddFolderDialog,
+  EmptyState,
+  FolderCard,
+  FileCard
+} from '@/components'
+import type { FolderColor } from '@/components/FavoritePage/AddFolderDialog'
+import type { FileType } from '@/components/FavoritePage/FileCard'
+
+interface Folder {
+  id: string
+  name: string
+  filesCount: number
+  lastModified: string
+  color: FolderColor
+}
+
+interface File {
+  id: string
+  name: string
+  type: FileType
+  size: string
+  lastModified: string
+}
+
+const initialFolders: Folder[] = [
+  {
+    id: '1',
+    name: 'Documentos Importantes',
+    filesCount: 12,
+    lastModified: 'há 2 horas',
+    color: 'purple'
+  },
+  {
+    id: '2',
+    name: 'Fotos de Viagem',
+    filesCount: 48,
+    lastModified: 'há 1 dia',
+    color: 'pink'
+  },
+  {
+    id: '3',
+    name: 'Projetos',
+    filesCount: 7,
+    lastModified: 'há 3 dias',
+    color: 'blue'
+  },
+  {
+    id: '4',
+    name: 'Músicas',
+    filesCount: 156,
+    lastModified: 'há 1 semana',
+    color: 'green'
+  }
+]
+
+const initialFiles: File[] = [
+  {
+    id: '1',
+    name: 'Relatório Anual 2024.pdf',
+    type: 'document',
+    size: '2.4 MB',
+    lastModified: 'Hoje'
+  },
+  {
+    id: '2',
+    name: 'Apresentação.pptx',
+    type: 'document',
+    size: '8.1 MB',
+    lastModified: 'Ontem'
+  },
+  {
+    id: '3',
+    name: 'foto_perfil.jpg',
+    type: 'image',
+    size: '1.2 MB',
+    lastModified: 'há 3 dias'
+  }
+]
 
 export default function FavoritesPage(): ReactElement {
   const theme = useTheme()
-  const [open, setOpen] = useState(false)
-  const [folders, setFolders] = useState<folder[]>([])
-  const [folderAttributes, setFolderAttributes] = useState<folder>({
-    title: '',
-    subtitle: '',
-    visibility: 'public'
-  })
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
 
-  const [checkedButtons, setCheckedButtons] = useState<{
-    public: boolean
-    private: boolean
-  }>({
-    public: true,
-    private: false
-  })
+  const [folders, setFolders] = useState<Folder[]>(initialFolders)
+  const [files] = useState<File[]>(initialFiles)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean
+    message: string
+    severity: 'success' | 'info' | 'error'
+  }>({ open: false, message: '', severity: 'success' })
 
-  const handleOpen = (): void => {
-    setOpen(true)
-  }
-  const handleClose = (): void => {
-    setOpen(false)
-  }
+  const filteredFolders = folders.filter(folder =>
+    folder.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
-  const createFolder = (): void => {
-    // ...
+  const filteredFiles = files.filter(file =>
+    file.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
-    if (folderAttributes.visibility && folderAttributes.title) {
-      setFolders([...folders, folderAttributes])
-      handleClose()
-    } else alert('preencha todos os campos!')
-  }
-
-  useEffect(() => {
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-      const code: any = e.code
-
-      if (Number(code) === 27) {
-        handleClose()
-      }
+  const handleAddFolder = (name: string, color: FolderColor) => {
+    const newFolder: Folder = {
+      id: Date.now().toString(),
+      name,
+      filesCount: 0,
+      lastModified: 'agora',
+      color
+    }
+    setFolders([newFolder, ...folders])
+    setSnackbar({
+      open: true,
+      message: 'Pasta criada com sucesso!',
+      severity: 'success'
     })
-  }, [])
+  }
+
+  const handleDeleteFolder = (id: string) => {
+    setFolders(folders.filter(f => f.id !== id))
+    setSnackbar({
+      open: true,
+      message: 'Pasta excluída',
+      severity: 'success'
+    })
+  }
+
+  const handleViewModeChange = (
+    _: React.MouseEvent<HTMLElement>,
+    newMode: 'grid' | 'list' | null
+  ) => {
+    if (newMode !== null) {
+      setViewMode(newMode)
+    }
+  }
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false })
+  }
+
+  const hasContent = folders.length > 0 || files.length > 0
 
   return (
-    <>
-      <Box
-        display={'flex'}
-        width={'100%'}
-        height={'100%'}
-        alignContent={'center'}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            height: '100%',
-            width: '100%',
-            justifyContent: 'center'
-          }}
-        >
-          <Box p={0} height={'100%'}>
-            <Box height={'100%'}>
-              <Card
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background:
+          'linear-gradient(135deg, rgba(103, 58, 183, 0.05) 0%, rgba(233, 30, 99, 0.03) 50%, rgba(33, 150, 243, 0.02) 100%)',
+        p: { xs: 2, sm: 3, md: 4 }
+      }}
+    >
+      <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
+        {/* Header */}
+        <Box sx={{ mb: 4 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: 2,
+              alignItems: { xs: 'stretch', sm: 'center' },
+              justifyContent: 'space-between'
+            }}
+          >
+            {/* Action Buttons */}
+            <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+              <Button
+                variant="contained"
+                startIcon={<Add />}
+                onClick={() => setIsAddDialogOpen(true)}
                 sx={{
-                  background:
-                    'linear-gradient(45deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3))',
-                  boxShadow: '1px 1px 3px grey',
-                  minHeight: 'calc(100vh - 9.5rem)',
-                  width: '67rem',
-                  display: 'flex',
-                  p: 8,
-                  justifyContent: 'start',
-                  flexDirection: 'column',
-                  [theme.breakpoints.only('md')]: { width: '50rem', pt: 4 },
-                  overflow: 'scroll'
-                  // '::-webkit-scrollbar': { display: 'none' }
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  px: 2.5,
+                  boxShadow: '0 4px 16px rgba(103, 58, 183, 0.25)',
+                  '&:hover': {
+                    boxShadow: '0 6px 20px rgba(103, 58, 183, 0.35)',
+                    transform: 'translateY(-1px)'
+                  },
+                  transition: 'all 0.2s ease'
                 }}
               >
-                <Box
-                  display="flex"
-                  mb={2}
-                  sx={{
-                    cursor: 'pointer',
-                    [theme.breakpoints.only('md')]: { width: '30%' }
-                  }}
-                  width={'22%'}
-                  onClick={handleOpen}
-                >
-                  <Avatar
-                    sx={{
-                      padding: '10px',
-                      margin: '10px',
-                      width: 20,
-                      height: 20,
-                      bgcolor: 'primary.main'
-                    }}
-                  >
-                    <Add sx={{ fontSize: '1em' }} />
-                  </Avatar>
-                  <Typography
-                    position={'relative'}
-                    top={8}
-                    sx={{
-                      [theme.breakpoints.only('lg')]: {
-                        top: 10,
-                        fontSize: '1.2rem'
-                      },
-                      [theme.breakpoints.only('md')]: {
-                        top: 11,
-                        fontSize: '1.1rem'
-                      }
-                    }}
-                  >
-                    Adicionar Pasta
-                  </Typography>
-                </Box>
-                <Typography variant="h4" mb={2}>
-                  Pastas
-                </Typography>
-                <Grid container gap={3} columns={4} width={'auto'}>
-                  {folders.map(e => (
-                    <Folder
-                      title={e.title}
-                      subtitle={!e.subtitle ? e.title : e.subtitle}
-                      key={e.title}
-                    />
-                  ))}
-                </Grid>
-              </Card>
+                Adicionar Pasta
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<Upload />}
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  px: 2.5,
+                  bgcolor: 'background.paper',
+                  '&:hover': {
+                    bgcolor: 'action.hover'
+                  }
+                }}
+              >
+                Upload
+              </Button>
+            </Box>
+
+            {/* Search and View Toggle */}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 1.5,
+                alignItems: 'center',
+                flexWrap: 'wrap'
+              }}
+            >
+              <TextField
+                placeholder="Buscar arquivos..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                size="small"
+                sx={{
+                  minWidth: { xs: '100%', sm: 240 },
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                    bgcolor: 'background.paper',
+                    '&:hover': {
+                      bgcolor: 'action.hover'
+                    },
+                    '&.Mui-focused': {
+                      bgcolor: 'background.paper'
+                    }
+                  }
+                }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search sx={{ color: 'text.secondary' }} />
+                    </InputAdornment>
+                  )
+                }}
+              />
+
+              <ToggleButtonGroup
+                value={viewMode}
+                exclusive
+                onChange={handleViewModeChange}
+                size="small"
+                sx={{
+                  bgcolor: 'background.paper',
+                  borderRadius: 2,
+                  '& .MuiToggleButton-root': {
+                    border: 'none',
+                    borderRadius: 2,
+                    px: 1.5,
+                    '&.Mui-selected': {
+                      bgcolor: 'action.selected'
+                    }
+                  }
+                }}
+              >
+                <ToggleButton value="grid">
+                  <GridView fontSize="small" />
+                </ToggleButton>
+                <ToggleButton value="list">
+                  <ViewList fontSize="small" />
+                </ToggleButton>
+              </ToggleButtonGroup>
             </Box>
           </Box>
         </Box>
-      </Box>
-      <FormModal open={open} onClose={handleClose} title="Nova Pasta" sx={{}}>
-        <>
-          <TextField
-            onChange={e => {
-              setFolderAttributes({
-                ...folderAttributes,
-                title: e.target.value
-              })
-            }}
-            label="Título"
-            value={folderAttributes.title}
-            fullWidth
-          />
-          <TextField
-            onChange={e => {
-              setFolderAttributes({
-                ...folderAttributes,
-                subtitle: e.target.value
-              })
-            }}
-            label="Tópico (opicional)"
-            value={folderAttributes.subtitle}
-            fullWidth
-          />
-          <Typography variant="subtitle2">
-            {' '}
-            Colocar visibilidade para{' '}
-          </Typography>
-          <FormControl>
-            <CustomCheckBox
-              onClick={() => {
-                setCheckedButtons(state => ({
-                  ...state,
-                  public: !state.public
-                }))
-                setFolderAttributes({
-                  ...folderAttributes,
-                  visibility: 'public'
-                })
-              }}
-              checked={checkedButtons.public}
-              caption="Isso deixará sua pasta pública"
-              title="Público"
-            />
-            <CustomCheckBox
-              onClick={() => {
-                setCheckedButtons(state => ({
-                  ...state,
-                  private: !state.private
-                }))
-                setFolderAttributes({
-                  ...folderAttributes,
-                  visibility: 'private'
-                })
-              }}
-              checked={checkedButtons.private}
-              caption="Isso deixará sua pasta privada"
-              title="Privado"
-            />
-          </FormControl>
-          <Box
-            display={'flex'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            gap={3}
-          >
-            <Button onClick={handleClose} variant="outlined" fullWidth>
-              Cancelar
-            </Button>
-            <Button
-              type="submit"
-              onClick={createFolder}
-              variant="outlined"
-              fullWidth
-            >
-              Criar
-            </Button>
+
+        {/* Content */}
+        {!hasContent ? (
+          <EmptyState onAddFolder={() => setIsAddDialogOpen(true)} />
+        ) : (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            {/* Folders Section */}
+            {filteredFolders.length > 0 && (
+              <Box component="section">
+                <Typography
+                  variant="h6"
+                  fontWeight={600}
+                  mb={2.5}
+                  color="text.primary"
+                >
+                  Pastas
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gap: 2.5,
+                    gridTemplateColumns:
+                      viewMode === 'grid'
+                        ? {
+                            xs: '1fr',
+                            sm: 'repeat(2, 1fr)',
+                            md: 'repeat(3, 1fr)',
+                            lg: 'repeat(4, 1fr)'
+                          }
+                        : '1fr'
+                  }}
+                >
+                  {filteredFolders.map((folder, index) => (
+                    <Box
+                      key={folder.id}
+                      sx={{
+                        animationDelay: `${index * 50}ms`
+                      }}
+                    >
+                      <FolderCard
+                        name={folder.name}
+                        filesCount={folder.filesCount}
+                        lastModified={folder.lastModified}
+                        color={folder.color}
+                        onOpen={() =>
+                          setSnackbar({
+                            open: true,
+                            message: `Abrindo pasta: ${folder.name}`,
+                            severity: 'info'
+                          })
+                        }
+                        onRename={() =>
+                          setSnackbar({
+                            open: true,
+                            message: 'Funcionalidade de renomear',
+                            severity: 'info'
+                          })
+                        }
+                        onDelete={() => handleDeleteFolder(folder.id)}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            )}
+
+            {/* Files Section */}
+            {filteredFiles.length > 0 && (
+              <Box component="section">
+                <Typography
+                  variant="h6"
+                  fontWeight={600}
+                  mb={2.5}
+                  color="text.primary"
+                >
+                  Arquivos Recentes
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gap: 2,
+                    gridTemplateColumns:
+                      viewMode === 'grid'
+                        ? {
+                            xs: '1fr',
+                            sm: 'repeat(2, 1fr)',
+                            lg: 'repeat(3, 1fr)'
+                          }
+                        : '1fr'
+                  }}
+                >
+                  {filteredFiles.map((file, index) => (
+                    <Box
+                      key={file.id}
+                      sx={{
+                        animationDelay: `${(filteredFolders.length + index) * 50}ms`
+                      }}
+                    >
+                      <FileCard
+                        name={file.name}
+                        type={file.type}
+                        size={file.size}
+                        lastModified={file.lastModified}
+                        onOpen={() =>
+                          setSnackbar({
+                            open: true,
+                            message: `Abrindo: ${file.name}`,
+                            severity: 'info'
+                          })
+                        }
+                        onDownload={() =>
+                          setSnackbar({
+                            open: true,
+                            message: `Baixando: ${file.name}`,
+                            severity: 'success'
+                          })
+                        }
+                        onDelete={() =>
+                          setSnackbar({
+                            open: true,
+                            message: `Excluído: ${file.name}`,
+                            severity: 'success'
+                          })
+                        }
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            )}
+
+            {/* Empty search results */}
+            {searchQuery &&
+              filteredFolders.length === 0 &&
+              filteredFiles.length === 0 && (
+                <Box sx={{ py: 8, textAlign: 'center' }}>
+                  <Typography color="text.secondary">
+                    Nenhum resultado encontrado para "{searchQuery}"
+                  </Typography>
+                </Box>
+              )}
           </Box>
-        </>
-      </FormModal>
-    </>
+        )}
+
+        {/* Add Folder Dialog */}
+        <AddFolderDialog
+          open={isAddDialogOpen}
+          onClose={() => setIsAddDialogOpen(false)}
+          onAdd={handleAddFolder}
+        />
+
+        {/* Snackbar for notifications */}
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={3000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={snackbar.severity}
+            sx={{ borderRadius: 2 }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </Box>
   )
 }

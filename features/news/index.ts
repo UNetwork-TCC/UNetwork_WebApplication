@@ -1,22 +1,17 @@
 import { type INews } from '@/types'
 import { apiSlice } from '@/lib/api'
-
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
+import { extractData } from '@/lib/api/helpers'
 
 const newsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     fetchNews: builder.mutation<INews[], unknown>({
       query: () => '/news',
-      transformResponse: (response: ApiResponse<INews[]>) => response.data
+      transformResponse: (response: unknown) => extractData<INews[]>(response)
     }),
 
     getNews: builder.mutation<INews[], string>({
       query: id => `/news/${id}`,
-      transformResponse: (response: ApiResponse<INews[]>) => response.data
+      transformResponse: (response: unknown) => extractData<INews[]>(response)
     }),
 
     createNews: builder.mutation<INews, Partial<INews>>({
@@ -25,7 +20,7 @@ const newsApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data
       }),
-      transformResponse: (response: ApiResponse<INews>) => response.data
+      transformResponse: (response: unknown) => extractData<INews>(response)
     }),
 
     updateNews: builder.mutation<INews, Partial<INews>>({
@@ -34,7 +29,7 @@ const newsApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: data
       }),
-      transformResponse: (response: ApiResponse<INews>) => response.data
+      transformResponse: (response: unknown) => extractData<INews>(response)
     }),
 
     deleteNews: builder.mutation<INews, string>({
@@ -42,7 +37,7 @@ const newsApiSlice = apiSlice.injectEndpoints({
         url: `/news/${id}`,
         method: 'DELETE'
       }),
-      transformResponse: (response: ApiResponse<INews>) => response.data
+      transformResponse: (response: unknown) => extractData<INews>(response)
     })
   })
 })

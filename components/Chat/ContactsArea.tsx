@@ -99,10 +99,9 @@ export default function ContactsArea({
   }
 
   useEffect(() => {
-    ;(async () => {
-      await fetchUsers(null)
-    })()
-  }, [fetchUsers])
+    fetchUsers(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>

@@ -1,11 +1,6 @@
 import { apiSlice } from '@/lib/api'
+import { extractData } from '@/lib/api/helpers'
 import { type IMessage } from '@/types'
-
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
 
 // Message API Slice
 
@@ -13,12 +8,12 @@ const messageApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     fetchMessages: builder.mutation<IMessage[], unknown>({
       query: () => '/message',
-      transformResponse: (response: ApiResponse<IMessage[]>) => response.data
+      transformResponse: (response: unknown) => extractData<IMessage[]>(response)
     }),
 
     getMessage: builder.mutation<IMessage, string>({
       query: id => `/message/${id}`,
-      transformResponse: (response: ApiResponse<IMessage>) => response.data
+      transformResponse: (response: unknown) => extractData<IMessage>(response)
     }),
 
     createMessage: builder.mutation<IMessage, Partial<IMessage>>({
@@ -27,7 +22,7 @@ const messageApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: message
       }),
-      transformResponse: (response: ApiResponse<IMessage>) => response.data
+      transformResponse: (response: unknown) => extractData<IMessage>(response)
     }),
 
     updateMessage: builder.mutation<IMessage, Partial<IMessage>>({
@@ -36,7 +31,7 @@ const messageApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: data
       }),
-      transformResponse: (response: ApiResponse<IMessage>) => response.data
+      transformResponse: (response: unknown) => extractData<IMessage>(response)
     }),
 
     deleteMessage: builder.mutation<IMessage, string>({
@@ -44,7 +39,7 @@ const messageApiSlice = apiSlice.injectEndpoints({
         url: `/message/${id}`,
         method: 'DELETE'
       }),
-      transformResponse: (response: ApiResponse<IMessage>) => response.data
+      transformResponse: (response: unknown) => extractData<IMessage>(response)
     })
   })
 })

@@ -25,12 +25,11 @@ export default function SearchBar(): ReactElement {
   }
 
   useEffect(() => {
-    ;(async () => {
-      if (text?.includes('@')) {
-        await fetchUsers(null)
-      }
-    })()
-  }, [fetchUsers, text])
+    if (text?.includes('@')) {
+      fetchUsers(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text])
 
   return (
     <Box component="form" width="100%" onSubmit={handleSubmit}>

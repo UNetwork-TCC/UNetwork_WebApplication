@@ -24,8 +24,7 @@ import {
   useMediaQuery,
   BottomNavigation,
   BottomNavigationAction,
-  useTheme,
-  theme
+  useTheme
 } from '@mui/material'
 import {
   type ReactElement,
@@ -208,10 +207,13 @@ export default function SideBar(): ReactElement {
           <Box
             sx={{
               height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
               position: 'relative',
               top: 0,
               left: 0,
               p: { md: 2, lg: 2.5, xl: 3 },
+              boxSizing: 'border-box',
               width: !dropdownButtonClicked
                 ? { md: '15rem', lg: '18rem', xl: '20rem' }
                 : { md: '5.5rem', lg: '6.5rem', xl: '7rem' },
@@ -225,7 +227,7 @@ export default function SideBar(): ReactElement {
               overflow: 'visible'
             }}
           >
-            <Box position="relative">
+            <Box position="relative" sx={{ flexShrink: 0, height: 0 }}>
               {dropdownButtonClicked ? (
                 <ArrowForwardIos sx={arrowStyle} onClick={toogleDropdown} />
               ) : (
@@ -233,19 +235,20 @@ export default function SideBar(): ReactElement {
               )}
             </Box>
             <Box
-              display="flex"
-              flexDirection="column"
-              height="100%"
-              justifyContent="space-between"
-              overflow="hidden"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flex: '1 1 auto',
+                minHeight: 0,
+                overflow: 'hidden'
+              }}
             >
               <Box
                 display="flex"
                 gap={{ md: 1.5, lg: 2, xl: 2.5 }}
                 flexDirection="column"
-                flex="1 1 auto"
+                flex="1 1 0"
                 minHeight="0"
-                maxHeight="calc(100% - 140px)"
                 overflow="auto"
                 sx={{
                   '::-webkit-scrollbar': {
@@ -336,7 +339,7 @@ export default function SideBar(): ReactElement {
                           display: shortcutsExpanded ? 'flex' : 'none',
                           overflowY: 'auto',
                           overflowX: 'hidden',
-                          gap: 0.5,
+                          gap: 0,
                           '::-webkit-scrollbar': {
                             width: '5px'
                           },
@@ -390,13 +393,11 @@ export default function SideBar(): ReactElement {
               </Box>
               <Stack
                 gap={{ md: 0.5, lg: 0.75, xl: 1 }}
-                mt="auto"
                 pt={{ md: 2, lg: 2.5, xl: 3 }}
                 pb={{ md: 1, lg: 0, xl: 0 }}
-                flex="0 0 auto"
                 sx={{
                   flexShrink: 0,
-                  minHeight: '120px'
+                  flexGrow: 0
                 }}
               >
                 <NavLink icon={<LogoutOutlined />} text="Sair" link={logout} />

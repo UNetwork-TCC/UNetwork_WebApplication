@@ -18,57 +18,100 @@ export default function News({
   const theme = useTheme()
 
   return (
-    <Link sx={{ color: 'black', ':hover': { cursor: 'pointer' } }}>
+    <Link
+      sx={{
+        color: 'text.primary',
+        textDecoration: 'none',
+        ':hover': { cursor: 'pointer' }
+      }}
+    >
       <Paper
-        elevation={8}
+        elevation={4}
         sx={{
-          width: '50rem',
-          borderRadius: 4,
-          [theme.breakpoints.only('md')]: { width: '40rem' }
+          width: '100%',
+          borderRadius: 3,
+          overflow: 'hidden',
+          transition: 'box-shadow 0.2s ease-in-out',
+          ':hover': {
+            boxShadow: theme.shadows[8]
+          }
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            gap: 2,
+            flexDirection: { xs: 'column', sm: 'row' },
             width: '100%',
-            fontSize: '16px',
-            p: 2,
-            borderRadius: 20,
-            [theme.breakpoints.only('lg')]: { fontSize: '13px' },
-            [theme.breakpoints.only('md')]: { fontSize: '10px' }
+            height: { xs: 'auto', sm: '180px', md: '200px' }
           }}
         >
-          <img
-            style={{
-              background: 'gray',
-              width: '45em',
-              height: '15em',
-              borderRadius: 4
+          <Box
+            sx={{
+              flexShrink: 0,
+              width: { xs: '100%', sm: '200px', md: '240px', lg: '280px' },
+              height: { xs: '180px', sm: '100%' },
+              bgcolor: 'grey.400',
+              backgroundImage: img ? `url(${img})` : 'none',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
             }}
-            src={img}
           />
           <Box
             sx={{
-              width: '100%',
+              flex: 1,
+              p: { xs: 2, md: 2.5, lg: 3 },
               display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'space-between',
-              flexDirection: 'column'
+              overflow: 'hidden',
+              minWidth: 0
             }}
           >
-            <Box>
-              <Typography sx={{ color: 'gray', mb: '.25rem' }}>
+            <Box sx={{ overflow: 'hidden' }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'text.secondary',
+                  mb: 0.5,
+                  display: 'block',
+                  fontWeight: 500
+                }}
+              >
                 {topic}
               </Typography>
-              <Typography variant="h6" sx={{ mb: '.5rem' }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  mb: 1,
+                  fontWeight: 600,
+                  fontSize: { xs: '1rem', md: '1.1rem', lg: '1.25rem' },
+                  lineHeight: 1.3,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}
+              >
                 {title}
               </Typography>
-              <Typography variant="caption" sx={{ wordWrap: 'break-word' }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: 'text.secondary',
+                  wordWrap: 'break-word',
+                  display: '-webkit-box',
+                  WebkitLineClamp: { xs: 3, sm: 2, md: 3 },
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}
+              >
                 {description}
               </Typography>
             </Box>
-            <Box>
-              <Typography variant="caption">{date?.toString()}</Typography>
+            <Box sx={{ flexShrink: 0, mt: 1 }}>
+              <Typography variant="caption" color="text.secondary">
+                {date?.toString()}
+              </Typography>
             </Box>
           </Box>
         </Box>

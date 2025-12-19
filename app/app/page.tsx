@@ -2,16 +2,18 @@
 
 import {
   Alert,
-  Avatar,
   Box,
   Snackbar,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  IconButton,
+  TextField,
+  Chip
 } from '@mui/material'
-import { Post, SideComponent } from '@/components'
-import { Add, AttachFile } from '@mui/icons-material'
-import { CustomInput, LoadingBackdrop } from '@/layout'
+import { PostCard, SuggestionsPanel, TrendingPanel } from '@/components'
+import { Add, AttachFile, Mic } from '@mui/icons-material'
+import { LoadingBackdrop } from '@/layout'
 import {
   useEffect,
   type ReactElement,
@@ -28,6 +30,8 @@ import type { MulterFile, IPicture } from '@/types'
 
 export default function Home(): ReactElement {
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'))
 
   const [fetchPosts, { isLoading, data: posts }] = useFetchPostsMutation()
   const [uploadPicture] = useUploadFileMutation()
@@ -38,20 +42,17 @@ export default function Home(): ReactElement {
     text?: string
     picture?: Partial<MulterFile> & Partial<IPicture> & File
   }>()
+  const [inputValue, setInputValue] = useState('')
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('')
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('error')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const user = useAppSelector(state => state.auth.user)
 
-  const handleSnackbarOpen = (): void => {
-    setSnackbarOpen(true)
-  }
   const handleSnackbarClose = (): void => {
     setSnackbarOpen(false)
   }
-
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
@@ -59,14 +60,19 @@ export default function Home(): ReactElement {
 
     if (!postContent?.text && !postContent?.picture) {
       setLoading(false)
-      alert('Você precisa de pelo menos um conteúdo para publicar!')
+      setSnackbarMessage('Você precisa de pelo menos um conteúdo para publicar!')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
       return
     }
 
     let data: any
 
     if ((postContent?.picture?.size ?? 0) >= 5000000) {
-      handleSnackbarOpen()
+      setSnackbarMessage('A imagem colocada excede os limites de tamanho (5MB)!')
+      setSnackbarSeverity('error')
+      setSnackbarOpen(true)
+      setLoading(false)
     } else {
       let picture: any
       const reader = new FileReader()
@@ -102,6 +108,11 @@ export default function Home(): ReactElement {
               posts: [...user.posts, data.postUpdates]
             })
 
+            setPostContent(undefined)
+            setInputValue('')
+            setSnackbarMessage('Post publicado!')
+            setSnackbarSeverity('success')
+            setSnackbarOpen(true)
             setLoading(false)
           })()
         }, 100)
@@ -113,220 +124,317 @@ export default function Home(): ReactElement {
             text: postContent?.text
           }
         })
-      }
 
-      await updateUser({
-        _id: user._id ?? '',
-        posts: [...user.posts, data.postUpdates]
-      })
+        await updateUser({
+          _id: user._id ?? '',
+          posts: [...user.posts, data.postUpdates]
+        })
+
+        setPostContent(undefined)
+        setInputValue('')
+        setSnackbarMessage('Post publicado!')
+        setSnackbarSeverity('success')
+        setSnackbarOpen(true)
+      }
     }
     setLoading(false)
   }
 
   useEffect(() => {
     if (!loading) {
-      ;(async () => {
-        await fetchPosts(null)
-      })()
+      fetchPosts(null)
     }
-  }, [loading, fetchPosts])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading])
 
-  const closeBackdrop = (): void => {
-    setLoading(false)
+  const handleTextChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(e.target.value)
+    setPostContent({ ...postContent, text: e.target.value })
+  }
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setPostContent({ ...postContent, picture: file })
+    }
+  }
+
+  const handleRemoveFile = (): void => {
+    setPostContent({ ...postContent, picture: undefined })
+    const fileInput = document.getElementById('post-file-input') as HTMLInputElement
+    if (fileInput) fileInput.value = ''
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e as unknown as FormEvent)
+    }
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        background:
+          'linear-gradient(135deg, rgba(103, 58, 183, 0.03) 0%, rgba(233, 30, 99, 0.02) 50%, rgba(33, 150, 243, 0.01) 100%)',
+        py: { xs: 2, md: 3 },
+        px: { xs: 2, md: 3 }
+      }}
+    >
       <Box
-        display="flex"
-        justifyContent="center"
-        width="100%"
-        gap={{ md: 2, lg: 3, xl: 4 }}
+        sx={{
+          maxWidth: 1200,
+          mx: 'auto',
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: { md: 3, lg: 4 }
+        }}
       >
-        <Box
-          width={matches ? '100%' : undefined}
-          height="100%"
-          display="flex"
-          justifyContent="start"
-          alignItems="center"
-          flexDirection="column"
-          sx={{
-            flex: { md: '1 1 60%', lg: '1 1 50%', xl: '1 1 50%' },
-            maxWidth: { md: '700px', lg: '700px', xl: '900px' },
-            px: { xs: 2, md: 3, lg: 3.5, xl: 4 },
-            py: { xs: 2, md: 3, lg: 3.5, xl: 4 },
-            mx: { xs: 0, md: 2, lg: 3, xl: 4 }
-          }}
-        >
+        {/* Main Feed */}
+        <Box sx={{ flex: 1, maxWidth: { md: 700, lg: 750 } }}>
+          {/* Create Post */}
           <Box
-            display="flex"
-            flexDirection="column"
-            gap={5}
-            width="100%"
-            id="inicio"
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ mb: 3 }}
           >
-            {/* <ClipsWrapper /> */}
-            <Box width="100%">
-              <form
-                onSubmit={e => {
-                  handleSubmit(e)
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 1.5
+              }}
+            >
+              {/* Mic Button */}
+              <IconButton
+                sx={{
+                  width: 48,
+                  height: 48,
+                  bgcolor: 'primary.main',
+                  color: 'primary.contrastText',
+                  boxShadow: '0 4px 16px rgba(103, 58, 183, 0.25)',
+                  flexShrink: 0,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    bgcolor: 'primary.dark',
+                    transform: 'scale(1.05)',
+                    boxShadow: '0 6px 20px rgba(103, 58, 183, 0.35)'
+                  }
                 }}
               >
-                <CustomInput
-                  onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                    setPostContent({ ...postContent, text: e.target.value })
-                  }}
-                  sx={{ boxShadow: theme.shadows[4] }}
-                  bgcolor={theme.palette.mode === 'light' ? 'white' : undefined}
-                  placeholder="No que estou pensando..."
-                  color={
-                    theme.palette.mode === 'light' ? 'primary.main' : undefined
+                <Mic />
+              </IconButton>
+
+              {/* Input Field */}
+              <Box
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  bgcolor: 'background.paper',
+                  borderRadius: 6,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  px: 2,
+                  py: 0.5,
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    borderColor: 'primary.light'
+                  },
+                  '&:focus-within': {
+                    borderColor: 'primary.main',
+                    boxShadow: '0 0 0 3px rgba(103, 58, 183, 0.1)'
                   }
-                  iconColor="#dbdbdb"
-                  icon={<Add />}
+                }}
+              >
+                <TextField
+                  fullWidth
+                  placeholder="No que estou pensando..."
+                  value={inputValue}
+                  onChange={handleTextChange}
+                  onKeyDown={handleKeyDown}
+                  disabled={loading}
                   multiline
-                />
-                <Box
+                  maxRows={4}
+                  variant="standard"
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'end',
-                    alignItems: 'center',
-                    position: 'relative',
-                    width: '50px',
-                    bottom: { xs: 44, sm: 46, md: 47 },
-                    right: {
-                      xs: '0.5rem',
-                      sm: '3rem',
-                      md: '3.5rem',
-                      lg: '4rem'
+                    '& .MuiInput-root': {
+                      '&:before, &:after': {
+                        display: 'none'
+                      }
+                    },
+                    '& .MuiInputBase-input': {
+                      py: 1
+                    }
+                  }}
+                />
+
+                {/* File Input */}
+                <input
+                  type="file"
+                  id="post-file-input"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+                <IconButton
+                  component="label"
+                  htmlFor="post-file-input"
+                  size="small"
+                  sx={{
+                    color: postContent?.picture ? 'primary.main' : 'text.secondary',
+                    transition: 'all 0.2s',
+                    flexShrink: 0,
+                    '&:hover': {
+                      color: 'primary.main',
+                      bgcolor: 'rgba(103, 58, 183, 0.08)'
                     }
                   }}
                 >
-                  <input
-                    onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        setPostContent({ ...postContent, picture: file })
-                      }
-                    }}
-                    style={{ display: 'none' }}
-                    type="file"
-                    id="file"
-                    accept="image/*"
-                  />
-                  <Box
-                    position="relative"
-                    left="2.5rem"
-                    display="flex"
-                    flexDirection="column"
-                  >
-                    <Avatar
-                      component="label"
-                      htmlFor="file"
-                      sx={{
-                        cursor: 'pointer',
-                        transition: '.3s',
-                        bgcolor: 'primary.main',
-                        ':hover': {
-                          bgcolor: 'primary.light'
-                        },
-                        [theme.breakpoints.only('md')]: {
-                          width: '35px',
-                          height: '35px'
-                        }
-                      }}
-                    >
-                      <AttachFile />
-                    </Avatar>
-                    <Box width="80px" position="relative">
-                      {postContent?.picture && (
-                        <Typography
-                          variant="body2"
-                          position="relative"
-                          right="1.5rem"
-                          top="10px"
-                          noWrap
-                          width="100%"
-                        >
-                          {postContent.picture.name}
-                        </Typography>
-                      )}
-                    </Box>
-                  </Box>
-                </Box>
-              </form>
+                  <AttachFile fontSize="small" />
+                </IconButton>
+
+                {/* Submit Button */}
+                <IconButton
+                  type="submit"
+                  disabled={loading}
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    bgcolor: 'primary.main',
+                    color: 'primary.contrastText',
+                    boxShadow: '0 2px 8px rgba(103, 58, 183, 0.25)',
+                    transition: 'all 0.2s ease',
+                    flexShrink: 0,
+                    ml: 0.5,
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                      transform: 'scale(1.05)'
+                    },
+                    '&.Mui-disabled': {
+                      bgcolor: 'action.disabledBackground',
+                      color: 'action.disabled'
+                    }
+                  }}
+                >
+                  <Add fontSize="small" />
+                </IconButton>
+              </Box>
             </Box>
+
+            {/* Selected File Indicator */}
+            {postContent?.picture && (
+              <Box sx={{ mt: 1.5, ml: 8 }}>
+                <Chip
+                  label={postContent.picture.name}
+                  size="small"
+                  onDelete={handleRemoveFile}
+                  sx={{
+                    maxWidth: 250,
+                    '& .MuiChip-label': {
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis'
+                    }
+                  }}
+                />
+              </Box>
+            )}
           </Box>
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            width="100%"
-            mt={{ xs: 2, md: 3, lg: 4, xl: 5 }}
-          >
+
+          {/* Posts List */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {isLoading ? (
               <>
                 <PostSkeleton />
                 <PostSkeleton />
                 <PostSkeleton />
               </>
-            ) : Array.isArray(posts) ? (
+            ) : Array.isArray(posts) && posts.length > 0 ? (
               posts
                 .slice(0)
                 .reverse()
-                .map(post => (
-                  <Post
+                .map((post, index) => (
+                  <PostCard
                     key={post._id}
                     id={post._id ?? ''}
                     content={post.content}
                     date={post.postedAt}
                     postedBy={post.postedBy}
+                    index={index}
                   />
                 ))
-            ) : null}
+            ) : (
+              <Box
+                sx={{
+                  py: 8,
+                  textAlign: 'center',
+                  bgcolor: 'background.paper',
+                  borderRadius: 4,
+                  border: '1px solid',
+                  borderColor: 'divider'
+                }}
+              >
+                <Typography color="text.secondary">
+                  Nenhum post encontrado. Seja o primeiro a publicar!
+                </Typography>
+              </Box>
+            )}
           </Box>
         </Box>
-        {!matches && (
+
+        {/* Sidebar */}
+        {!isMobile && (
           <Box
             sx={{
-              flex: { md: '0 0 280px', lg: '0 0 320px', xl: '0 0 360px' },
-              maxWidth: { md: '280px', lg: '320px', xl: '360px' },
-              mr: { md: 2, lg: 3, xl: 4 }
+              width: { md: 280, lg: 300 },
+              flexShrink: 0,
+              alignSelf: 'flex-start',
+              position: 'sticky',
+              top: 16,
+              maxHeight: 'calc(100vh - 120px)',
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              pr: 0.5,
+              pb: 2,
+              '&::-webkit-scrollbar': {
+                width: 4
+              },
+              '&::-webkit-scrollbar-track': {
+                background: 'transparent'
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'rgba(103, 58, 183, 0.2)',
+                borderRadius: 2
+              },
+              '&::-webkit-scrollbar-thumb:hover': {
+                background: 'rgba(103, 58, 183, 0.4)'
+              }
             }}
-            display="flex"
-            justifyContent="center"
-            alignItems="flex-start"
-            pt={{ md: 3, lg: 3.5, xl: 4 }}
           >
-            <Box
-              bgcolor="background.paper"
-              borderRadius={5}
-              width="100%"
-              boxShadow={theme.shadows[15]}
-              p={{ md: 2.5, lg: 3, xl: 3.5 }}
-              sx={{
-                position: 'sticky',
-                top: { md: '1rem', lg: '1.5rem', xl: '2rem' },
-                minHeight: { md: '14rem', lg: '15rem', xl: '16rem' }
-              }}
-            >
-              <SideComponent user={user} />
-            </Box>
+            <SuggestionsPanel />
+            <TrendingPanel />
           </Box>
         )}
       </Box>
+
+      {/* Snackbar */}
       <Snackbar
         open={snackbarOpen}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         autoHideDuration={3000}
       >
-        <Alert onClose={handleSnackbarClose} severity="error">
-          A imagem colocada excede os limites de tamanho (32mb)!
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbarSeverity}
+          sx={{ borderRadius: 2 }}
+        >
+          {snackbarMessage}
         </Alert>
       </Snackbar>
-      <LoadingBackdrop open={loading} handleClose={closeBackdrop} />
-    </>
+
+      <LoadingBackdrop open={loading} handleClose={() => setLoading(false)} />
+    </Box>
   )
 }

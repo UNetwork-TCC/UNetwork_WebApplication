@@ -1,23 +1,18 @@
 import { apiSlice } from '@/lib/api'
+import { extractData } from '@/lib/api/helpers'
 import { type IPost } from '@/types'
 import { type MulterFile } from '../../types/models'
 
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
-
 const postApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    fetchPosts: builder.mutation<IPost[], any>({
+    fetchPosts: builder.mutation<IPost[], unknown>({
       query: () => '/post',
-      transformResponse: (response: ApiResponse<IPost[]>) => response.data
+      transformResponse: (response: unknown) => extractData<IPost[]>(response)
     }),
 
     getPost: builder.mutation<IPost, string>({
       query: id => `/post/${id}`,
-      transformResponse: (response: ApiResponse<IPost>) => response.data
+      transformResponse: (response: unknown) => extractData<IPost>(response)
     }),
 
     createPost: builder.mutation<

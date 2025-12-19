@@ -214,26 +214,26 @@ export default function AppLayout({
               </Box>
             )}
             <Box
-              height="100%"
-              display="flex"
-              justifyContent="center"
-              width="100%"
+              sx={{
+                flex: 1,
+                minHeight: 0,
+                display: 'flex',
+                width: '100%'
+              }}
             >
               {!matches && <SideBar />}
               <Box
-                overflow="auto"
-                // height='92.5vh'
-                width={'100%'}
-                sx={
-                  matches
-                    ? {
-                        overflowX: 'hidden',
-                        '::-webkit-scrollbar': {
-                          display: 'none'
-                        }
-                      }
-                    : {}
-                }
+                sx={{
+                  flex: 1,
+                  minWidth: 0,
+                  overflow: 'auto',
+                  ...(matches && {
+                    overflowX: 'hidden',
+                    '::-webkit-scrollbar': {
+                      display: 'none'
+                    }
+                  })
+                }}
               >
                 {children}
               </Box>

@@ -28,8 +28,16 @@ export default function RequireAuth({
     // Debug - remover depois
     console.log('[RequireAuth] isLoading:', isLoading, 'token:', !!token, 'user:', !!user?._id)
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('persist:auth')
-      console.log('[RequireAuth] localStorage persist:auth:', stored ? JSON.parse(stored) : null)
+      try {
+        const stored = localStorage.getItem('persist:auth')
+        if (stored) {
+          console.log('[RequireAuth] localStorage persist:auth:', JSON.parse(stored))
+        }
+      } catch (e) {
+        console.error('[RequireAuth] Erro ao parsear localStorage:', e)
+        // Limpar dados corrompidos
+        localStorage.removeItem('persist:auth')
+      }
     }
   }, [isLoading, token, user])
 

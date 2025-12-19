@@ -8,6 +8,10 @@ import Classes from './Classes/Classes'
 import Post from './Home/Post'
 import ClipsWrapper from './Home/ClipsWrapper'
 import Folder from './FavoritePage/Folder'
+import AddFolderDialog from './FavoritePage/AddFolderDialog'
+import EmptyState from './FavoritePage/EmptyState'
+import FolderCard from './FavoritePage/FolderCard'
+import FileCard from './FavoritePage/FileCard'
 import Clips from './Timeline/Clips'
 import Comment from './Timeline/Comment'
 import TimelinePost from './Timeline/Post'
@@ -34,6 +38,10 @@ import Highlights from './Profile/Highlights'
 import ProfilePosts from './Profile/ProfilePosts'
 import RequireAuth from './Auth/RequireAuth'
 import SideComponent from './Home/SideComponent'
+import PostCard from './Home/PostCard'
+import CreatePostInput from './Home/CreatePostInput'
+import SuggestionsPanel from './Home/SuggestionsPanel'
+import TrendingPanel from './Home/TrendingPanel'
 import Forum from './Forum/Forum'
 import UserAvatar from './Profile/UserAvatar'
 import ForumDiscussion from './Forum/ForumDiscussion'
@@ -57,10 +65,18 @@ export {
   ForumIcon,
   ProfilePosts,
   Folder,
+  AddFolderDialog,
+  EmptyState,
+  FolderCard,
+  FileCard,
   File,
   Forum,
   Shortcut,
   SideComponent,
+  PostCard,
+  CreatePostInput,
+  SuggestionsPanel,
+  TrendingPanel,
   Contact,
   Classes,
   Highlights,

@@ -1,12 +1,7 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { type IUser } from '@/types'
 import { apiSlice } from '@/lib/api'
-
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
+import { extractData } from '@/lib/api/helpers'
 
 const obj = {}
 
@@ -65,9 +60,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: { ...credentials }
       }),
-      transformResponse: (
-        response: ApiResponse<{ user: IUser; token: string }>
-      ) => response.data
+      transformResponse: (response: unknown) =>
+        extractData<{ user: IUser; token: string }>(response)
     }),
 
     signup: builder.mutation<
@@ -84,7 +78,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: { ...credentials }
       }),
-      transformResponse: (response: ApiResponse<IUser>) => response.data
+      transformResponse: (response: unknown) => extractData<IUser>(response)
     })
   })
 })

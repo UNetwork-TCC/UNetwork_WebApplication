@@ -1,11 +1,6 @@
 import { type IPicture } from '@/types'
 import { apiSlice } from '@/lib/api'
-
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
+import { extractData } from '@/lib/api/helpers'
 
 interface filetype {
   userId: string
@@ -36,14 +31,13 @@ const pictureApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: formData
       }),
-      transformResponse: (
-        response: ApiResponse<{ file: filetype & { _id?: string }; src?: string }>
-      ) => response.data
+      transformResponse: (response: unknown) =>
+        extractData<{ file: filetype & { _id?: string }; src?: string }>(response)
     }),
 
     getFileData: builder.mutation<IPicture, string>({
       query: pictureId => `/files/${pictureId}`,
-      transformResponse: (response: ApiResponse<IPicture>) => response.data
+      transformResponse: (response: unknown) => extractData<IPicture>(response)
     }),
 
     deleteFile: builder.mutation<unknown, string>({
@@ -51,7 +45,7 @@ const pictureApiSlice = apiSlice.injectEndpoints({
         url: `/files/${pictureId}`,
         method: 'DELETE'
       }),
-      transformResponse: (response: ApiResponse<unknown>) => response.data
+      transformResponse: (response: unknown) => extractData<unknown>(response)
     })
   })
 })

@@ -149,17 +149,15 @@ export default function ForumHome(): ReactElement {
   }
 
   useEffect(() => {
-    ;(async () => {
-      await fetchForums(null)
-    })()
-  }, [fetchForums])
+    fetchForums(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
-    ;(async () => {
-      if (!loadingOpen) {
-        await fetchForums(null)
-      }
-    })()
+    if (!loadingOpen) {
+      fetchForums(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingOpen])
 
   return (

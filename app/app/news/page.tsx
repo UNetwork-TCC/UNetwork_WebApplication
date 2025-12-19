@@ -58,10 +58,9 @@ export default function NewsPage(): ReactElement {
   }
 
   useEffect(() => {
-    ;(async () => {
-      const result = await fetchNews(null)
+    fetchNews(null).then(result => {
       console.log('News fetched:', result)
-    })()
+    })
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' || e.keyCode === 27) {
@@ -74,7 +73,8 @@ export default function NewsPage(): ReactElement {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [fetchNews])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (newsData) {
@@ -188,149 +188,71 @@ export default function NewsPage(): ReactElement {
             pt={{ md: 3, lg: 3.5, xl: 4 }}
           >
             <Paper
-              elevation={8}
+              elevation={4}
               sx={{
                 width: '100%',
-                borderRadius: '15px',
-                p: { lg: 2.5, xl: 3 },
+                borderRadius: 3,
+                p: { md: 2, lg: 2.5, xl: 3 },
                 position: 'sticky',
-                top: { lg: '1.5rem', xl: '2rem' },
-                maxHeight: { lg: '600px', xl: '700px' },
-                overflow: 'auto'
+                top: { md: '1rem', lg: '1.5rem', xl: '2rem' }
               }}
             >
-              <Typography sx={{ m: '5% 0 5% 5%', fontWeight: 'bold' }}>
+              <Typography
+                sx={{
+                  fontWeight: 'bold',
+                  mb: 2,
+                  fontSize: { md: '1rem', lg: '1.1rem' }
+                }}
+              >
                 Mais Lidas
               </Typography>
               <Divider />
-              <Stack
-                sx={{
-                  width: '100%',
-                  height: '90%',
-                  pt: '1rem',
-                  [theme.breakpoints.only('md')]: { gap: 1, pt: 1 }
-                }}
-                gap={2}
-              >
-                <Link
-                  sx={{
-                    color: 'black',
-                    display: 'flex',
-                    width: '100%',
-                    height: '15%',
-                    alignItems: 'center',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Typography variant="h5" sx={{ mr: '5%', color: 'gray' }}>
-                    1
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      [theme.breakpoints.only('md')]: { fontSize: '1.1rem' }
-                    }}
-                  >
-                    Titulo da noticia mais curtida
-                  </Typography>
-                </Link>
-                <Divider />
-
-                <Link
-                  sx={{
-                    color: 'black',
-                    display: 'flex',
-                    width: '100%',
-                    height: '15%',
-                    alignItems: 'center',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Typography variant="h5" sx={{ mr: '5%', color: 'gray' }}>
-                    2
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      [theme.breakpoints.only('md')]: { fontSize: '1.1rem' }
-                    }}
-                  >
-                    Titulo da segunda noticia mais curtida
-                  </Typography>
-                </Link>
-                <Divider />
-
-                <Link
-                  sx={{
-                    color: 'black',
-                    display: 'flex',
-                    width: '100%',
-                    height: '15%',
-                    alignItems: 'center',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Typography variant="h5" sx={{ mr: '5%', color: 'gray' }}>
-                    3
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      [theme.breakpoints.only('md')]: { fontSize: '1.1rem' }
-                    }}
-                  >
-                    Titulo da terceira noticia mais curtida
-                  </Typography>
-                </Link>
-                <Divider />
-
-                <Link
-                  sx={{
-                    color: 'black',
-                    display: 'flex',
-                    width: '100%',
-                    height: '15%',
-                    alignItems: 'center',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Typography variant="h5" sx={{ mr: '5%', color: 'gray' }}>
-                    4
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      [theme.breakpoints.only('md')]: { fontSize: '1.1rem' }
-                    }}
-                  >
-                    Titulo da quarta noticia mais curtida
-                  </Typography>
-                </Link>
-                <Divider />
-
-                <Link
-                  sx={{
-                    color: 'black',
-                    display: 'flex',
-                    width: '100%',
-                    height: '15%',
-                    alignItems: 'center',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <Typography variant="h5" sx={{ mr: '5%', color: 'gray' }}>
-                    5
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      [theme.breakpoints.only('md')]: { fontSize: '1.1rem' }
-                    }}
-                  >
-                    Titulo da noticia mais curtida
-                  </Typography>
-                </Link>
-                <Divider />
+              <Stack sx={{ pt: 2 }} gap={1.5}>
+                {[1, 2, 3, 4, 5].map(num => (
+                  <Box key={num}>
+                    <Link
+                      sx={{
+                        color: 'text.primary',
+                        textDecoration: 'none',
+                        display: 'flex',
+                        width: '100%',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        py: 0.5,
+                        ':hover': {
+                          color: 'primary.main'
+                        }
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          mr: 2,
+                          color: 'text.secondary',
+                          minWidth: '24px',
+                          fontSize: { md: '1.1rem', lg: '1.25rem' }
+                        }}
+                      >
+                        {num}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { md: '0.9rem', lg: '1rem' },
+                          lineHeight: 1.4
+                        }}
+                      >
+                        {num === 2
+                          ? 'Titulo da segunda noticia mais curtida'
+                          : num === 3
+                            ? 'Titulo da terceira noticia mais curtida'
+                            : num === 4
+                              ? 'Titulo da quarta noticia mais curtida'
+                              : 'Titulo da noticia mais curtida'}
+                      </Typography>
+                    </Link>
+                    {num < 5 && <Divider sx={{ mt: 1.5 }} />}
+                  </Box>
+                ))}
               </Stack>
             </Paper>
           </Box>

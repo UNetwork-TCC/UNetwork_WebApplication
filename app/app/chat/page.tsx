@@ -22,10 +22,11 @@ export default function ChatPage(): ReactElement {
   const [findUserChats, { data: chats, isLoading }] = useFindUserChatsMutation()
 
   useEffect(() => {
-    ;(async () => {
-      await findUserChats(userId ?? '')
-    })()
-  }, [findUserChats, userId])
+    if (userId) {
+      findUserChats(userId)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId])
 
   return (
     <Box sx={{ width: '100%', height: '100%', display: 'flex' }}>

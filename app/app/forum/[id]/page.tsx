@@ -3,14 +3,15 @@
 import { Forum } from '@/components'
 import { useGetForumMutation } from '@/features/forum'
 import { LoadingBackdrop } from '@/layout'
-import { type Forum as ForumInterface } from '@/types'
-import { useEffect, type ReactElement } from 'react'
+import { type IForum } from '@/types'
+import { use, useEffect, type ReactElement } from 'react'
 
 export default function ForumPage({
-  params: { id }
+  params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }): ReactElement {
+  const { id } = use(params)
   const [getForum, { data: forum, isLoading }] = useGetForumMutation()
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function ForumPage({
       {isLoading ? (
         <LoadingBackdrop open={true} handleClose={() => {}} />
       ) : (
-        <Forum forum={forum as ForumInterface} />
+        <Forum forum={forum as IForum} />
       )}
     </>
   )

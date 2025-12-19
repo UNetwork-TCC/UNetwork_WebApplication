@@ -28,7 +28,7 @@ export default function Shortcut({
           height: 60,
           display: 'flex',
           alignItems: 'center',
-          mb: 2.5,
+          mb: 0,
           gap: 2,
           borderRadius: 2,
           bgcolor: 'transparent',

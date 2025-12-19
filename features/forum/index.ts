@@ -1,22 +1,17 @@
 import { apiSlice } from '@/lib/api'
+import { extractData } from '@/lib/api/helpers'
 import { type IForum } from '@/types'
-
-interface ApiResponse<T> {
-  message: string
-  data: T
-  status: number
-}
 
 const forumApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     fetchForums: builder.mutation<IForum[], unknown>({
       query: () => '/forum',
-      transformResponse: (response: ApiResponse<IForum[]>) => response.data
+      transformResponse: (response: unknown) => extractData<IForum[]>(response)
     }),
 
     getForum: builder.mutation<IForum, string>({
       query: id => `/forum/${id}`,
-      transformResponse: (response: ApiResponse<IForum>) => response.data
+      transformResponse: (response: unknown) => extractData<IForum>(response)
     }),
 
     createForum: builder.mutation<IForum, Partial<IForum>>({
@@ -25,7 +20,7 @@ const forumApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: forum
       }),
-      transformResponse: (response: ApiResponse<IForum>) => response.data
+      transformResponse: (response: unknown) => extractData<IForum>(response)
     }),
 
     updateForum: builder.mutation<IForum, Partial<IForum>>({
@@ -34,7 +29,7 @@ const forumApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: data
       }),
-      transformResponse: (response: ApiResponse<IForum>) => response.data
+      transformResponse: (response: unknown) => extractData<IForum>(response)
     }),
 
     deleteForum: builder.mutation<IForum, string>({
@@ -42,7 +37,7 @@ const forumApiSlice = apiSlice.injectEndpoints({
         url: `/forum/${id}`,
         method: 'DELETE'
       }),
-      transformResponse: (response: ApiResponse<IForum>) => response.data
+      transformResponse: (response: unknown) => extractData<IForum>(response)
     })
   })
 })
