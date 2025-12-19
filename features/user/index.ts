@@ -1,6 +1,12 @@
 import { apiSlice } from '@/lib/api'
-import { type AppLayout, type User } from '@/types'
+import { type AppLayout, type IUser } from '@/types'
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
+
+interface ApiResponse<T> {
+  message: string
+  data: T
+  status: number
+}
 // INITIAL VALUES
 
 const appLayout: AppLayout = {
@@ -45,27 +51,31 @@ export const configSlice = createSlice({
 
 const userApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    fetchUsers: builder.mutation<User[], unknown>({
-      query: () => '/user'
+    fetchUsers: builder.mutation<IUser[], unknown>({
+      query: () => '/user',
+      transformResponse: (response: ApiResponse<IUser[]>) => response.data
     }),
 
-    getUser: builder.mutation<User, string>({
-      query: id => `/user/${id}`
+    getUser: builder.mutation<IUser, string>({
+      query: id => `/user/${id}`,
+      transformResponse: (response: ApiResponse<IUser>) => response.data
     }),
 
-    updateUser: builder.mutation<User, Partial<User>>({
+    updateUser: builder.mutation<IUser, Partial<IUser>>({
       query: ({ _id, ...data }) => ({
         url: `/user/${_id}`,
         method: 'PATCH',
         body: data
-      })
+      }),
+      transformResponse: (response: ApiResponse<IUser>) => response.data
     }),
 
-    deleteUser: builder.mutation<User, string>({
+    deleteUser: builder.mutation<IUser, string>({
       query: id => ({
         url: `/user/${id}`,
         method: 'DELETE'
-      })
+      }),
+      transformResponse: (response: ApiResponse<IUser>) => response.data
     })
   })
 })

@@ -14,11 +14,12 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material'
-import { useState, type ReactElement, useEffect } from 'react'
+import { useState, type ReactElement, useEffect, useCallback } from 'react'
 import { Contact } from '@/components'
 import { type Chat, type contact } from '@/types'
 import { useFetchUsersMutation } from '@/features/user'
 import { ContactSkeleton } from '@/layout/skeletons'
+import { useSocket, useMessageNotifications } from '@/contexts'
 
 export default function ContactsArea({
   chats,
@@ -32,6 +33,12 @@ export default function ContactsArea({
   const theme = useTheme()
 
   const [fetchUsers, { isLoading, data: users }] = useFetchUsersMutation()
+  const { onlineUsers } = useSocket()
+
+  // Estado para contagem de mensagens não lidas por chat
+  const [unreadCounts, setUnreadCounts] = useState<Map<string, number>>(
+    new Map()
+  )
 
   const usersChat = Array.isArray(chats)
     ? chats
@@ -67,6 +74,28 @@ export default function ContactsArea({
       setContacts([...Contacts, ContactsAttributes])
       handleClose()
     } else alert('preencha todos os campos!')
+  }
+
+  // Handler para notificações de novas mensagens
+  const handleMessageNotification = useCallback(
+    (data: { chatId: string; message: any; senderId: string }) => {
+      // Incrementar contador de mensagens não lidas para este chat
+      setUnreadCounts(prev => {
+        const newMap = new Map(prev)
+        const currentCount = newMap.get(data.chatId) || 0
+        newMap.set(data.chatId, currentCount + 1)
+        return newMap
+      })
+    },
+    []
+  )
+
+  // Ouvir notificações de novas mensagens
+  useMessageNotifications(handleMessageNotification)
+
+  // Verificar se um usuário está online
+  const isUserOnline = (odId: string): boolean => {
+    return onlineUsers.has(odId)
   }
 
   useEffect(() => {
@@ -164,22 +193,46 @@ export default function ContactsArea({
                       id => users?.filter((user: any) => user._id === id)[0]
                     )
 
-                    console.log(usersToChat)
-
                     return Array.isArray(usersToChat)
                       ? usersToChat
                           .map((user, index) => ({ user, chat: chats[index] }))
                           .filter(({ user, chat }) => user && chat)
-                          .map(({ user, chat }) => (
-                            <Contact
-                              key={chat._id}
-                              chat={chat}
-                              user={{
-                                username: user?.username,
-                                otherInfo: { avatar: user?.otherInfo?.avatar }
-                              }}
-                            />
-                          ))
+                          .map(({ user, chat }) => {
+                            const unreadCount = unreadCounts.get(chat._id!) || 0
+                            const online = isUserOnline(user?._id || '')
+
+                            return (
+                              <Box key={chat._id} sx={{ position: 'relative' }}>
+                                {/* Indicador de online */}
+                                {online && (
+                                  <Box
+                                    sx={{
+                                      position: 'absolute',
+                                      left: '4.2rem',
+                                      top: '2.2rem',
+                                      width: 12,
+                                      height: 12,
+                                      bgcolor: '#4caf50',
+                                      borderRadius: '50%',
+                                      border: '2px solid',
+                                      borderColor: 'background.paper',
+                                      zIndex: 1
+                                    }}
+                                  />
+                                )}
+                                <Contact
+                                  chat={chat}
+                                  user={{
+                                    username: user?.username,
+                                    otherInfo: { avatar: user?.otherInfo?.avatar }
+                                  }}
+                                  notification={
+                                    unreadCount > 0 ? unreadCount : undefined
+                                  }
+                                />
+                              </Box>
+                            )
+                          })
                       : null
                   })()
                 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(e => (

@@ -51,15 +51,26 @@ function LoginForm(): ReactElement {
 
   useEffect(() => {
     ;(async () => {
-      if (isLoginSuccess) {
-        dispatch(setCredentials({ user: data?.user, accessToken: data?.token }))
+      if (isLoginSuccess && data) {
+        console.log('[Login] Login success! Data:', data)
+        // A API retorna { message, data: { user, token }, status }
+        const responseData = (data as any).data || data
+        const user = responseData.user
+        const token = responseData.token
+        console.log('[Login] Dispatching setCredentials with:', { user, accessToken: token })
+        dispatch(setCredentials({ user, accessToken: token }))
+
+        // Aguarda um pouco para o redux-persist salvar no localStorage
+        await new Promise(resolve => setTimeout(resolve, 200))
+
+        console.log('[Login] Navegando para /app...')
         router.push('/app')
       } else if (isLoginError) {
         handleCloseLoading()
         handleSnackbarOpen()
       }
     })()
-  }, [isLoginSuccess, isLoginError, dispatch, router.push, data])
+  }, [isLoginSuccess, isLoginError, dispatch, router, data])
 
   const handleSubmit = async (user: {
     email: string

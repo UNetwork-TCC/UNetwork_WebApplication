@@ -1,14 +1,20 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { type User } from '@/types'
+import { type IUser } from '@/types'
 import { apiSlice } from '@/lib/api'
+
+interface ApiResponse<T> {
+  message: string
+  data: T
+  status: number
+}
 
 const obj = {}
 
 const initialState: {
-  user: User
+  user: IUser
   token: string | undefined
 } = {
-  user: obj as User,
+  user: obj as IUser,
   token: undefined
 }
 
@@ -20,7 +26,7 @@ export const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ user?: User; accessToken?: string }>
+      action: PayloadAction<{ user?: IUser; accessToken?: string }>
     ) => {
       const { user, accessToken } = action.payload
 
@@ -34,7 +40,7 @@ export const authSlice = createSlice({
     },
 
     logOut: state => {
-      state.user = obj as User
+      state.user = obj as IUser
       state.token = ''
     }
   }
@@ -46,9 +52,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     login: builder.mutation<
       {
-        user: User
+        user: IUser
         token: string
-        message: string
       },
       {
         email: string
@@ -59,11 +64,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: '/user/login',
         method: 'POST',
         body: { ...credentials }
-      })
+      }),
+      transformResponse: (
+        response: ApiResponse<{ user: IUser; token: string }>
+      ) => response.data
     }),
 
     signup: builder.mutation<
-      User,
+      IUser,
       {
         name: string
         email: string
@@ -75,7 +83,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: '/user',
         method: 'POST',
         body: { ...credentials }
-      })
+      }),
+      transformResponse: (response: ApiResponse<IUser>) => response.data
     })
   })
 })

@@ -3,7 +3,7 @@
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistedStore } from '@/store'
-import { ContextProvider } from '@/contexts'
+import { ContextProvider, SocketProvider } from '@/contexts'
 import { ReactElement } from 'react'
 import { CssBaseline } from '@mui/material'
 import { lightTheme } from '@/themes'
@@ -20,7 +20,9 @@ export function Providers({
       <PersistGate loading={null} persistor={persistedStore}>
         <ThemeProvider theme={lightTheme}>
           <CssBaseline />
-          <ContextProvider>{children}</ContextProvider>
+          <SocketProvider>
+            <ContextProvider>{children}</ContextProvider>
+          </SocketProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

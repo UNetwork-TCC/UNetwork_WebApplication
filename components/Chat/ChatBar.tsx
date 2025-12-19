@@ -7,11 +7,15 @@ import {
   type ReactElement,
   useState,
   type FormEvent,
-  type MouseEvent
+  type MouseEvent,
+  useEffect,
+  useRef,
+  useCallback
 } from 'react'
 import { useCreateMessageMutation } from '@/features/message'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { setMessages, useUpdateChatMutation } from '@/features/chat'
+import { useSocket } from '@/contexts'
 
 export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
   const theme = useTheme()
@@ -19,6 +23,8 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
   const dispatch = useAppDispatch()
 
   const [text, setText] = useState('')
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const isTypingRef = useRef(false)
 
   const [createMessage] = useCreateMessageMutation()
   const [updateChat] = useUpdateChatMutation()
@@ -28,11 +34,46 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
   const user = useAppSelector(state => state.auth.user)
   const messages = useAppSelector(state => state.chat.messages)
 
-  // const [ sendMessage ]
+  const { sendMessage: sendSocketMessage, setTyping, isConnected } = useSocket()
 
   const onEmojiClick = (emojiObject: any): void => {
     setText(prevInput => prevInput + emojiObject.emoji)
   }
+
+  // Controlar indicador de digitando com debounce
+  const handleTyping = useCallback(() => {
+    if (!isConnected) return
+
+    // Se não estava digitando, emitir que começou
+    if (!isTypingRef.current) {
+      isTypingRef.current = true
+      setTyping(chatId, true)
+    }
+
+    // Limpar timeout anterior
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current)
+    }
+
+    // Definir novo timeout para parar de "digitar" após 2 segundos de inatividade
+    typingTimeoutRef.current = setTimeout(() => {
+      isTypingRef.current = false
+      setTyping(chatId, false)
+    }, 2000)
+  }, [chatId, setTyping, isConnected])
+
+  // Limpar timeout ao desmontar
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current)
+      }
+      // Garantir que pare de digitar ao sair
+      if (isTypingRef.current) {
+        setTyping(chatId, false)
+      }
+    }
+  }, [chatId, setTyping])
 
   const handleSubmit = (
     e: FormEvent<HTMLFormElement> & MouseEvent<HTMLButtonElement>
@@ -40,37 +81,45 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
     ;(async () => {
       e.preventDefault()
 
-      if (!text) return
+      if (!text.trim()) return
 
-      dispatch(
-        setMessages([
-          ...messages,
-          {
-            content: text,
-            sendedBy: user._id,
-            sendedIn: chatId,
-            sendedAt: new Date().getHours() + ':' + new Date().getMinutes(),
-            type: 'text'
-          }
-        ])
-      )
+      // Parar indicador de digitando imediatamente ao enviar
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current)
+      }
+      if (isTypingRef.current) {
+        isTypingRef.current = false
+        setTyping(chatId, false)
+      }
 
-      setText('')
+      const messageTime = new Date().getHours() + ':' + new Date().getMinutes()
 
-      const { data }: any = await createMessage({
-        content: text,
+      const newMessage = {
+        content: text.trim(),
         sendedBy: user._id,
         sendedIn: chatId,
-        sendedAt: new Date().getHours() + ':' + new Date().getMinutes(),
-        type: 'text'
-      })
+        sendedAt: messageTime,
+        type: 'text' as const
+      }
 
-      const a = await updateChat({
+      // Atualizar UI localmente primeiro (otimistic update)
+      dispatch(setMessages([...messages, newMessage]))
+
+      // Limpar input
+      setText('')
+
+      // Enviar via Socket.io para tempo real
+      if (isConnected) {
+        sendSocketMessage(chatId, newMessage)
+      }
+
+      // Persistir no banco de dados
+      const { data }: any = await createMessage(newMessage)
+
+      await updateChat({
         _id: chatId,
         messages: [data.newMessage]
       })
-
-      console.log(a)
     })()
   }
 
@@ -133,6 +182,13 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
           value={text}
           onChange={e => {
             setText(e.target.value)
+            handleTyping()
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              handleSubmit(e as any)
+            }
           }}
         />
         <Box mr={2}>

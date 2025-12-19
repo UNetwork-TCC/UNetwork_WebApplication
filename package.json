@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "node server.js",
+    "dev:next": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
+    "start:next": "next start",
     "lint": "next lint"
   },
   "lint-staged": {
-    "*": "prettier --igonre-unknown --write"
+    "*": "prettier --ignore-unknown --write"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -54,12 +56,13 @@
     "react-i18next": "^13.0.2",
     "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "web-vitals": "^2.1.4",
     "yup": "^1.2.0",
     "zod": "^3.24.2"

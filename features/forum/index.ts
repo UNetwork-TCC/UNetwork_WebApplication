@@ -1,37 +1,48 @@
 import { apiSlice } from '@/lib/api'
-import { type Forum } from '@/types'
+import { type IForum } from '@/types'
+
+interface ApiResponse<T> {
+  message: string
+  data: T
+  status: number
+}
 
 const forumApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    fetchForums: builder.mutation<Forum[], unknown>({
-      query: () => '/forum'
+    fetchForums: builder.mutation<IForum[], unknown>({
+      query: () => '/forum',
+      transformResponse: (response: ApiResponse<IForum[]>) => response.data
     }),
 
-    getForum: builder.mutation<Forum, string>({
-      query: id => `/forum/${id}`
+    getForum: builder.mutation<IForum, string>({
+      query: id => `/forum/${id}`,
+      transformResponse: (response: ApiResponse<IForum>) => response.data
     }),
 
-    createForum: builder.mutation<Forum, Partial<Forum>>({
+    createForum: builder.mutation<IForum, Partial<IForum>>({
       query: forum => ({
         url: '/forum',
         method: 'POST',
         body: forum
-      })
+      }),
+      transformResponse: (response: ApiResponse<IForum>) => response.data
     }),
 
-    updateForum: builder.mutation<Forum, Partial<Forum>>({
+    updateForum: builder.mutation<IForum, Partial<IForum>>({
       query: ({ _id, ...data }) => ({
         url: '/forum',
         method: 'PATCH',
         body: data
-      })
+      }),
+      transformResponse: (response: ApiResponse<IForum>) => response.data
     }),
 
-    deleteForum: builder.mutation<Forum, string>({
+    deleteForum: builder.mutation<IForum, string>({
       query: id => ({
         url: `/forum/${id}`,
         method: 'DELETE'
-      })
+      }),
+      transformResponse: (response: ApiResponse<IForum>) => response.data
     })
   })
 })

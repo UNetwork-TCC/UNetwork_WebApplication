@@ -1,5 +1,11 @@
-import { type Picture } from '@/types'
+import { type IPicture } from '@/types'
 import { apiSlice } from '@/lib/api'
+
+interface ApiResponse<T> {
+  message: string
+  data: T
+  status: number
+}
 
 interface filetype {
   userId: string
@@ -14,7 +20,7 @@ interface filetype {
 const pictureApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     uploadFile: builder.mutation<
-      { file: filetype & { _id?: string }; message: string },
+      { file: filetype & { _id?: string }; src?: string },
       {
         userId: string
         file64Based: string
@@ -29,18 +35,23 @@ const pictureApiSlice = apiSlice.injectEndpoints({
         url: '/files',
         method: 'POST',
         body: formData
-      })
+      }),
+      transformResponse: (
+        response: ApiResponse<{ file: filetype & { _id?: string }; src?: string }>
+      ) => response.data
     }),
 
-    getFileData: builder.mutation<Picture, string>({
-      query: pictureId => `/files/${pictureId}`
+    getFileData: builder.mutation<IPicture, string>({
+      query: pictureId => `/files/${pictureId}`,
+      transformResponse: (response: ApiResponse<IPicture>) => response.data
     }),
 
-    deleteFile: builder.mutation<any, string>({
+    deleteFile: builder.mutation<unknown, string>({
       query: pictureId => ({
         url: `/files/${pictureId}`,
         method: 'DELETE'
-      })
+      }),
+      transformResponse: (response: ApiResponse<unknown>) => response.data
     })
   })
 })

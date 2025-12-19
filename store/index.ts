@@ -3,7 +3,7 @@ import { authReducer, authSlice } from '@/features/auth'
 import { configReducer, configSlice } from '@/features/user'
 import { persistStore, persistReducer } from 'redux-persist'
 import { apiSlice } from '@/lib/api'
-import storage from 'redux-persist/lib/storage'
+import storage from '@/lib/storage'
 import { chatReducer, chatSlice } from '@/features/chat'
 
 import {
@@ -12,14 +12,24 @@ import {
   useSelector
 } from 'react-redux'
 
-const persistConfig = {
-  key: process.env.NEXT_PUBLIC_REDUX_PERSIST_STORE_KEY,
+const authPersistConfig = {
+  key: 'auth',
   storage
 }
 
-const persistAuthReducer = persistReducer(persistConfig, authReducer)
-const persistChatReducer = persistReducer(persistConfig, chatReducer)
-const persistConfigReducer = persistReducer(persistConfig, configReducer)
+const chatPersistConfig = {
+  key: 'chat',
+  storage
+}
+
+const configPersistConfig = {
+  key: 'config',
+  storage
+}
+
+const persistAuthReducer = persistReducer(authPersistConfig, authReducer)
+const persistChatReducer = persistReducer(chatPersistConfig, chatReducer)
+const persistConfigReducer = persistReducer(configPersistConfig, configReducer)
 
 const store = configureStore({
   reducer: {

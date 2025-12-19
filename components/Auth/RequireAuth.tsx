@@ -1,32 +1,55 @@
 'use client'
 
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement } from 'react'
+import { useAppSelector } from '@/store'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function RequireAuth({
   children
 }: {
   children: ReactElement
 }): ReactElement | null {
-  const [token, setToken] = useState<string | null>(null)
+  const router = useRouter()
+  const token = useAppSelector(state => state.auth.token)
+  const user = useAppSelector(state => state.auth.user)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const fetchToken = async () => {
-      const token = await getToken()
-      setToken(token)
-    }
+    // Aguarda um tick para garantir que o Redux Persist hidratou
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 100)
 
-    fetchToken()
+    return () => clearTimeout(timer)
   }, [])
 
-  const getToken = async (): Promise<string | null> => {
-    const token = await (await fetch('/api/auth/token')).text()
-    return token
-  }
+  useEffect(() => {
+    // Debug - remover depois
+    console.log('[RequireAuth] isLoading:', isLoading, 'token:', !!token, 'user:', !!user?._id)
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('persist:auth')
+      console.log('[RequireAuth] localStorage persist:auth:', stored ? JSON.parse(stored) : null)
+    }
+  }, [isLoading, token, user])
 
-  if (token) {
-    return children
-  } else {
-    // location.href = '/auth/login'
+  useEffect(() => {
+    // Só redirecionar após carregar e se não tiver autenticação
+    if (!isLoading && !token && !user?._id) {
+      console.log('[RequireAuth] Redirecionando para login...')
+      router.push('/auth/login')
+    }
+  }, [isLoading, token, user, router])
+
+  // Enquanto carrega, não renderiza nada
+  if (isLoading) {
     return null
   }
+
+  // Se não tem token nem usuário, não renderizar (vai redirecionar)
+  if (!token && !user?._id) {
+    return null
+  }
+
+  return children
 }

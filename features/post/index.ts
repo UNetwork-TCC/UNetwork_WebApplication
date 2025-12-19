@@ -1,19 +1,27 @@
 import { apiSlice } from '@/lib/api'
-import { type Post } from '@/types'
+import { type IPost } from '@/types'
 import { type MulterFile } from '../../types/models'
+
+interface ApiResponse<T> {
+  message: string
+  data: T
+  status: number
+}
 
 const postApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    fetchPosts: builder.mutation<Post[], any>({
-      query: () => '/post'
+    fetchPosts: builder.mutation<IPost[], any>({
+      query: () => '/post',
+      transformResponse: (response: ApiResponse<IPost[]>) => response.data
     }),
 
-    getPost: builder.mutation<Post, string>({
-      query: id => `/post/${id}`
+    getPost: builder.mutation<IPost, string>({
+      query: id => `/post/${id}`,
+      transformResponse: (response: ApiResponse<IPost>) => response.data
     }),
 
     createPost: builder.mutation<
-      Post,
+      IPost,
       {
         postedBy: string
         postedIn: 'feed' | 'chat' | 'class'
@@ -30,7 +38,7 @@ const postApiSlice = apiSlice.injectEndpoints({
       })
     }),
 
-    updatePost: builder.mutation<Post, Partial<Post>>({
+    updatePost: builder.mutation<IPost, Partial<IPost>>({
       query: ({ _id, ...data }) => ({
         url: `/post/${_id}`,
         method: 'PATCH',
@@ -38,7 +46,7 @@ const postApiSlice = apiSlice.injectEndpoints({
       })
     }),
 
-    deletePost: builder.mutation<Post, string>({
+    deletePost: builder.mutation<IPost, string>({
       query: id => ({
         url: `/post/${id}`,
         method: 'DELETE'
