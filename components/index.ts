@@ -45,6 +45,10 @@ import TrendingPanel from './Home/TrendingPanel'
 import Forum from './Forum/Forum'
 import UserAvatar from './Profile/UserAvatar'
 import ForumDiscussion from './Forum/ForumDiscussion'
+import CreateForumDialog from './Forum/CreateForumDialog'
+import ForumTopicCard from './Forum/ForumTopicCard'
+import ForumTopicView from './Forum/ForumTopicView'
+import NewsArticleCard from './News/NewsArticleCard'
 
 export {
   DiscoverSection,
@@ -93,5 +97,9 @@ export {
   News,
   FilterAndConfig,
   FeedbackForm,
-  ContactAppLayout
+  ContactAppLayout,
+  CreateForumDialog,
+  ForumTopicCard,
+  ForumTopicView,
+  NewsArticleCard
 }

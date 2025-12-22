@@ -3,36 +3,59 @@
 import {
   Box,
   Button,
-  Divider,
-  Link,
-  Modal,
-  Paper,
-  Stack,
   TextField,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  InputAdornment,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+  Alert,
+  Snackbar,
+  Badge
 } from '@mui/material'
-import { FilterAndConfig, News } from '@/components'
 import { type ReactElement, useEffect, useState } from 'react'
 import { type news } from '@/types'
 import { NewsSkeleton } from '@/layout/skeletons'
 import { useCreateNewsMutation, useFetchNewsMutation } from '@/features/news'
-import { Alert } from '@mui/material'
 import { useAppSelector } from '@/store'
+import {
+  Search,
+  Add,
+  TrendingUp,
+  Close,
+  Article
+} from '@mui/icons-material'
+import NewsArticleCard from '@/components/News/NewsArticleCard'
+
+const categories = ['Todos', 'Tecnologia', 'Carreira', 'Design', 'Mercado', 'Saúde', 'Escola', 'Eventos']
+
+const mostReadNews = [
+  { id: '1', title: '10 linguagens de programação mais usadas em 2024' },
+  { id: '2', title: 'Como conseguir seu primeiro emprego em TI' },
+  { id: '3', title: 'Inteligência Artificial: o que esperar do futuro' },
+  { id: '4', title: 'Dicas para melhorar sua produtividade' },
+  { id: '5', title: 'O impacto da tecnologia na educação' }
+]
 
 export default function NewsPage(): ReactElement {
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [fetchNews, { data: newsData, isLoading }] = useFetchNewsMutation()
-  const [postNews] = useCreateNewsMutation()
+  const [postNews, { isLoading: isCreating }] = useCreateNewsMutation()
 
   const user = useAppSelector(state => state.auth.user)
 
-  const [alertDisplay, setAlertDisplay] = useState<string>('none')
-  const [open, setOpen] = useState(false)
-  const [NewsAttributes, setNewsAttributes] = useState<news>({
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('Todos')
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' })
+  const [newsForm, setNewsForm] = useState<news>({
     title: '',
     description: '',
     visibility: 'public',
@@ -40,298 +63,624 @@ export default function NewsPage(): ReactElement {
     image: '',
     file: ''
   })
-
-  const handleOpen = (): void => {
-    setOpen(true)
-  }
-  const handleClose = (): void => {
-    setOpen(false)
-  }
-
-  const createNews = (): void => {
-    ;(async () => {
-      if (NewsAttributes.title) {
-        await postNews(NewsAttributes)
-        handleClose()
-      } else setAlertDisplay('flex')
-    })()
-  }
+  const [formErrors, setFormErrors] = useState({ title: false, description: false })
 
   useEffect(() => {
-    fetchNews(null).then(result => {
-      console.log('News fetched:', result)
-    })
+    fetchNews(null)
+  }, [fetchNews])
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' || e.keyCode === 27) {
-        handleClose()
+  const handleCreateNews = async (): Promise<void> => {
+    const errors = {
+      title: !newsForm.title.trim(),
+      description: !newsForm.description.trim()
+    }
+    setFormErrors(errors)
+
+    if (errors.title || errors.description) return
+
+    try {
+      await postNews(newsForm)
+      setDialogOpen(false)
+      setNewsForm({
+        title: '',
+        description: '',
+        visibility: 'public',
+        topic: 'Outro',
+        image: '',
+        file: ''
+      })
+      setSnackbar({ open: true, message: 'Notícia criada com sucesso!', severity: 'success' })
+      fetchNews(null)
+    } catch (error) {
+      setSnackbar({ open: true, message: 'Erro ao criar notícia', severity: 'error' })
+    }
+  }
+
+  const handleShare = async (title: string, description: string): Promise<void> => {
+    const shareText = `📰 ${title}\n\n${description}\n\n🔗 UNetwork News`
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text: shareText })
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          await navigator.clipboard.writeText(shareText)
+          setSnackbar({ open: true, message: 'Conteúdo copiado!', severity: 'success' })
+        }
       }
+    } else {
+      await navigator.clipboard.writeText(shareText)
+      setSnackbar({ open: true, message: 'Conteúdo copiado!', severity: 'success' })
     }
+  }
 
-    document.addEventListener('keydown', handleKeyDown)
+  // Filter news based on search and category
+  const filteredNews = Array.isArray(newsData)
+    ? newsData.filter((article: any) => {
+        const matchesSearch =
+          article.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          article.description?.toLowerCase().includes(searchQuery.toLowerCase())
+        const matchesCategory =
+          selectedCategory === 'Todos' || article.topic === selectedCategory
+        return matchesSearch && matchesCategory
+      })
+    : []
 
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
-    if (newsData) {
-      console.log('News data updated:', newsData)
-    }
-  }, [newsData])
+  const featuredNews = filteredNews[0]
+  const otherNews = filteredNews.slice(1)
 
   return (
     <>
       <Box
-        display="flex"
-        justifyContent="center"
-        width="100%"
-        gap={{ md: 2, lg: 3, xl: 4 }}
+        sx={{
+          minHeight: '100vh',
+          p: { xs: 2, sm: 3, md: 4 },
+          background: 'linear-gradient(135deg, #f5f7fa 0%, #e8eaf6 100%)'
+        }}
       >
-        <Box
-          width={matches ? '100%' : undefined}
-          height="100%"
-          display="flex"
-          justifyContent="start"
-          alignItems="center"
-          flexDirection="column"
-          sx={{
-            flex: { md: '1 1 60%', lg: '1 1 50%', xl: '1 1 50%' },
-            maxWidth: { md: '700px', lg: '700px', xl: '900px' },
-            px: { xs: 2, md: 3, lg: 3.5, xl: 4 },
-            py: { xs: 2, md: 3, lg: 3.5, xl: 4 },
-            mx: { xs: 0, md: 2, lg: 3, xl: 4 }
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', sm: 'row' },
-              alignItems: { xs: 'flex-start', sm: 'center' },
-              justifyContent: 'space-between',
-              width: '100%',
-              mb: { xs: 2, md: 3, lg: 3.5, xl: 4 },
-              gap: { xs: 2, sm: 0 }
-            }}
-          >
+        <Box maxWidth="1200px" mx="auto">
+          {/* Header */}
+          <Box mb={4}>
             <Typography
+              variant="h3"
               sx={{
-                fontSize: {
-                  xs: '1.5rem',
-                  md: '1.875rem',
-                  lg: '2rem',
-                  xl: '2.125rem'
-                },
-                color: 'primary.main',
-                fontWeight: 700
+                fontWeight: 800,
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+                background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 50%, #e91e63 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                mb: 1
               }}
             >
               Notícias
             </Typography>
-            {user.admin && (
-              <FilterAndConfig
-                text={'CRIAR NOTÍCIAS'}
-                handleOpen={handleOpen}
-              />
-            )}
+            <Typography color="text.secondary">
+              Fique por dentro das últimas novidades
+            </Typography>
           </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              gap: { xs: 3, md: 4, lg: 5 },
-              flexDirection: 'column',
-              width: '100%'
-            }}
-          >
-            {isLoading ? (
-              <>
-                <NewsSkeleton />
-                <NewsSkeleton />
-                <NewsSkeleton />
-              </>
-            ) : Array.isArray(newsData) && newsData.length > 0 ? (
-              newsData.map(item => (
-                <News
-                  key={item._id}
-                  title={item.title || item.name}
-                  description={item.description}
-                  date={item.postedAt}
-                  topic={item.topic || 'Saúde'}
+
+          {/* Search and Filters */}
+          <Box mb={4}>
+            <Box
+              display="flex"
+              flexDirection={{ xs: 'column', sm: 'row' }}
+              gap={2}
+              mb={3}
+              alignItems={{ xs: 'stretch', sm: 'center' }}
+            >
+              <TextField
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar notícias..."
+                size="small"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search sx={{ color: 'text.secondary' }} />
+                    </InputAdornment>
+                  )
+                }}
+                sx={{
+                  maxWidth: { xs: '100%', sm: 400 },
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 3,
+                    bgcolor: 'rgba(255,255,255,0.8)',
+                    backdropFilter: 'blur(10px)',
+                    '& fieldset': {
+                      borderColor: 'rgba(103, 58, 183, 0.1)'
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'rgba(103, 58, 183, 0.3)'
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: 'primary.main'
+                    }
+                  }
+                }}
+              />
+
+              {user?.admin && (
+                <Button
+                  variant="contained"
+                  startIcon={<Add />}
+                  onClick={() => setDialogOpen(true)}
+                  sx={{
+                    borderRadius: 3,
+                    textTransform: 'none',
+                    fontWeight: 600,
+                    px: 3,
+                    background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+                    boxShadow: '0 4px 15px rgba(103, 58, 183, 0.3)',
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)',
+                      boxShadow: '0 6px 20px rgba(103, 58, 183, 0.4)'
+                    }
+                  }}
+                >
+                  Criar Notícia
+                </Button>
+              )}
+            </Box>
+
+            {/* Category filters */}
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              gap={1}
+              sx={{
+                overflowX: { xs: 'auto', sm: 'visible' },
+                pb: { xs: 1, sm: 0 },
+                '&::-webkit-scrollbar': { display: 'none' }
+              }}
+            >
+              {categories.map((category) => (
+                <Chip
+                  key={category}
+                  label={category}
+                  onClick={() => setSelectedCategory(category)}
+                  sx={{
+                    borderRadius: 5,
+                    fontWeight: 500,
+                    transition: 'all 0.3s ease',
+                    flexShrink: 0,
+                    ...(selectedCategory === category
+                      ? {
+                          bgcolor: 'primary.main',
+                          color: 'white',
+                          boxShadow: '0 4px 12px rgba(103, 58, 183, 0.3)',
+                          '&:hover': {
+                            bgcolor: 'primary.dark'
+                          }
+                        }
+                      : {
+                          bgcolor: 'rgba(255,255,255,0.8)',
+                          border: '1px solid rgba(103, 58, 183, 0.1)',
+                          '&:hover': {
+                            bgcolor: 'rgba(103, 58, 183, 0.08)'
+                          }
+                        })
+                  }}
                 />
-              ))
-            ) : (
+              ))}
+            </Box>
+          </Box>
+
+          {/* Main Content */}
+          <Box
+            display="grid"
+            gridTemplateColumns={{ xs: '1fr', lg: '2fr 1fr' }}
+            gap={4}
+          >
+            {/* News Articles */}
+            <Box>
+              {isLoading ? (
+                <Box display="flex" flexDirection="column" gap={3}>
+                  <NewsSkeleton />
+                  <NewsSkeleton />
+                  <NewsSkeleton />
+                </Box>
+              ) : filteredNews.length > 0 ? (
+                <Box display="flex" flexDirection="column" gap={3}>
+                  {/* Featured Article */}
+                  {featuredNews && (
+                    <NewsArticleCard
+                      title={featuredNews.title || featuredNews.name}
+                      description={featuredNews.description}
+                      category={featuredNews.topic || 'Geral'}
+                      image={featuredNews.image}
+                      date={featuredNews.postedAt}
+                      views={featuredNews.views}
+                      readTime={featuredNews.readTime || '5 min'}
+                      featured
+                      onShare={() => handleShare(featuredNews.title, featuredNews.description)}
+                    />
+                  )}
+
+                  {/* Other Articles */}
+                  {otherNews.map((article: any, index: number) => (
+                    <Box
+                      key={article._id || index}
+                      sx={{
+                        animation: 'fadeInUp 0.5s ease forwards',
+                        animationDelay: `${index * 100}ms`,
+                        opacity: 0,
+                        '@keyframes fadeInUp': {
+                          from: {
+                            opacity: 0,
+                            transform: 'translateY(20px)'
+                          },
+                          to: {
+                            opacity: 1,
+                            transform: 'translateY(0)'
+                          }
+                        }
+                      }}
+                    >
+                      <NewsArticleCard
+                        title={article.title || article.name}
+                        description={article.description}
+                        category={article.topic || 'Geral'}
+                        image={article.image}
+                        date={article.postedAt}
+                        views={article.views}
+                        readTime={article.readTime || '5 min'}
+                        onShare={() => handleShare(article.title, article.description)}
+                      />
+                    </Box>
+                  ))}
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    textAlign: 'center',
+                    py: 8,
+                    px: 3,
+                    borderRadius: 4,
+                    bgcolor: 'rgba(255,255,255,0.6)',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 80,
+                      height: 80,
+                      borderRadius: '50%',
+                      bgcolor: 'rgba(103, 58, 183, 0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      mx: 'auto',
+                      mb: 2
+                    }}
+                  >
+                    <Article sx={{ fontSize: 40, color: 'primary.main', opacity: 0.6 }} />
+                  </Box>
+                  <Typography variant="h6" fontWeight={600} mb={0.5}>
+                    {searchQuery || selectedCategory !== 'Todos'
+                      ? 'Nenhuma notícia encontrada'
+                      : 'Nenhuma notícia disponível'}
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {searchQuery || selectedCategory !== 'Todos'
+                      ? 'Tente ajustar seus filtros'
+                      : 'Volte em breve para novidades!'}
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+
+            {/* Sidebar */}
+            {!isMobile && (
               <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                minHeight="20rem"
+                sx={{
+                  position: 'sticky',
+                  top: 16,
+                  alignSelf: 'flex-start',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 3
+                }}
               >
-                <Typography variant="h6" color="text.secondary">
-                  Nenhuma notícia disponível no momento.
-                </Typography>
+                {/* Most Read */}
+                <Box
+                  sx={{
+                    borderRadius: 3,
+                    background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(103, 58, 183, 0.1)',
+                    p: 3
+                  }}
+                >
+                  <Box display="flex" alignItems="center" gap={1} mb={3}>
+                    <TrendingUp sx={{ color: 'primary.main' }} />
+                    <Typography variant="h6" fontWeight={600}>
+                      Mais Lidas
+                    </Typography>
+                  </Box>
+
+                  <Box display="flex" flexDirection="column" gap={1}>
+                    {mostReadNews.map((item, index) => (
+                      <Box
+                        key={item.id}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 2,
+                          p: 1.5,
+                          borderRadius: 2,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            bgcolor: 'rgba(103, 58, 183, 0.05)',
+                            '& .news-title': {
+                              color: 'primary.main'
+                            }
+                          }
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 28,
+                            height: 28,
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontWeight: 700,
+                            fontSize: '0.875rem',
+                            flexShrink: 0,
+                            ...(index === 0
+                              ? { background: 'linear-gradient(135deg, #ffd700 0%, #ff9800 100%)', color: 'white' }
+                              : index === 1
+                                ? { background: 'linear-gradient(135deg, #9e9e9e 0%, #757575 100%)', color: 'white' }
+                                : index === 2
+                                  ? { background: 'linear-gradient(135deg, #cd7f32 0%, #8b4513 100%)', color: 'white' }
+                                  : { bgcolor: 'grey.200', color: 'text.secondary' })
+                          }}
+                        >
+                          {index + 1}
+                        </Box>
+                        <Typography
+                          className="news-title"
+                          sx={{
+                            fontSize: '0.875rem',
+                            lineHeight: 1.4,
+                            transition: 'color 0.2s ease',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+
+                {/* Categories Summary */}
+                <Box
+                  sx={{
+                    borderRadius: 3,
+                    background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(103, 58, 183, 0.1)',
+                    p: 3
+                  }}
+                >
+                  <Typography variant="h6" fontWeight={600} mb={2}>
+                    Categorias
+                  </Typography>
+
+                  <Box display="flex" flexDirection="column" gap={0.5}>
+                    {categories.slice(1).map((category) => {
+                      const count = Array.isArray(newsData)
+                        ? newsData.filter((n: any) => n.topic === category).length
+                        : 0
+
+                      return (
+                        <Box
+                          key={category}
+                          onClick={() => setSelectedCategory(category)}
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            p: 1.5,
+                            borderRadius: 2,
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            '&:hover': {
+                              bgcolor: 'rgba(103, 58, 183, 0.05)',
+                              '& .cat-name': {
+                                color: 'primary.main'
+                              }
+                            }
+                          }}
+                        >
+                          <Typography
+                            className="cat-name"
+                            sx={{
+                              fontSize: '0.9rem',
+                              transition: 'color 0.2s ease'
+                            }}
+                          >
+                            {category}
+                          </Typography>
+                          <Chip
+                            label={count}
+                            size="small"
+                            sx={{
+                              height: 22,
+                              fontSize: '0.75rem',
+                              bgcolor: 'grey.100'
+                            }}
+                          />
+                        </Box>
+                      )
+                    })}
+                  </Box>
+                </Box>
               </Box>
             )}
           </Box>
         </Box>
-        {!matches && (
-          <Box
-            sx={{
-              flex: { md: '0 0 280px', lg: '0 0 320px', xl: '0 0 360px' },
-              maxWidth: { md: '280px', lg: '320px', xl: '360px' },
-              mr: { md: 2, lg: 3, xl: 4 }
-            }}
-            display="flex"
-            justifyContent="center"
-            alignItems="flex-start"
-            pt={{ md: 3, lg: 3.5, xl: 4 }}
-          >
-            <Paper
-              elevation={4}
-              sx={{
-                width: '100%',
-                borderRadius: 3,
-                p: { md: 2, lg: 2.5, xl: 3 },
-                position: 'sticky',
-                top: { md: '1rem', lg: '1.5rem', xl: '2rem' }
-              }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: 'bold',
-                  mb: 2,
-                  fontSize: { md: '1rem', lg: '1.1rem' }
-                }}
-              >
-                Mais Lidas
-              </Typography>
-              <Divider />
-              <Stack sx={{ pt: 2 }} gap={1.5}>
-                {[1, 2, 3, 4, 5].map(num => (
-                  <Box key={num}>
-                    <Link
-                      sx={{
-                        color: 'text.primary',
-                        textDecoration: 'none',
-                        display: 'flex',
-                        width: '100%',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        py: 0.5,
-                        ':hover': {
-                          color: 'primary.main'
-                        }
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          mr: 2,
-                          color: 'text.secondary',
-                          minWidth: '24px',
-                          fontSize: { md: '1.1rem', lg: '1.25rem' }
-                        }}
-                      >
-                        {num}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: { md: '0.9rem', lg: '1rem' },
-                          lineHeight: 1.4
-                        }}
-                      >
-                        {num === 2
-                          ? 'Titulo da segunda noticia mais curtida'
-                          : num === 3
-                            ? 'Titulo da terceira noticia mais curtida'
-                            : num === 4
-                              ? 'Titulo da quarta noticia mais curtida'
-                              : 'Titulo da noticia mais curtida'}
-                      </Typography>
-                    </Link>
-                    {num < 5 && <Divider sx={{ mt: 1.5 }} />}
-                  </Box>
-                ))}
-              </Stack>
-            </Paper>
-          </Box>
-        )}
       </Box>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        disableAutoFocus
+      {/* Create News Dialog */}
+      <Dialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 4,
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(245,247,250,0.98) 100%)',
+            overflow: 'hidden'
+          }
+        }}
       >
+        {/* Header */}
         <Box
-          p={{ xs: 1, sm: 1.5, md: 2 }}
           sx={{
-            height: { xs: 'auto', sm: '28rem', md: matches ? '25rem' : '40%' },
-            width: { xs: '90%', sm: '70%', md: '40%' },
-            maxHeight: '90vh',
-            overflow: 'auto',
-            bgcolor: 'background.paper',
-            [theme.breakpoints.only('md')]: { height: '28rem' }
+            background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+            px: 3,
+            py: 2.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
           }}
-          borderRadius={2}
         >
-          <Box p={0}>
-            <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              m={'1rem'}
-            >
-              Criar Notícia
-            </Typography>
-          </Box>
-          <Box display={'flex'} flexDirection={'column'} p={2} gap={2}>
-            <TextField
-              onChange={e => {
-                setNewsAttributes({ ...NewsAttributes, title: e.target.value })
-              }}
-              id="outline-basic"
-              label="Título"
-              value={NewsAttributes.title}
-              fullWidth
-            />
-            <Divider sx={{ m: '1rem 0' }} />
-            <TextField
-              onChange={e => {
-                setNewsAttributes({
-                  ...NewsAttributes,
-                  description: e.target.value
-                })
-              }}
-              id="outline-basic"
-              label="Descrição"
-              value={NewsAttributes.description}
-              fullWidth
-            />
-            <Alert sx={{ display: alertDisplay }} severity="error">
-              Preencha todos os campos!
-            </Alert>
+          <Box display="flex" alignItems="center" gap={1.5}>
             <Box
-              display={'flex'}
-              alignItems={'center'}
-              justifyContent={'center'}
-              gap={3}
-              marginTop={'3rem'}
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: 2,
+                bgcolor: 'rgba(255,255,255,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
-              <Button onClick={handleClose} variant="outlined" fullWidth>
-                Cancelar
-              </Button>
-              <Button onClick={createNews} variant="outlined" fullWidth>
-                Criar
-              </Button>
+              <Article sx={{ color: 'white', fontSize: 22 }} />
+            </Box>
+            <Box>
+              <Typography variant="h6" sx={{ color: 'white', fontWeight: 700, fontSize: '1.1rem' }}>
+                Criar Notícia
+              </Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem' }}>
+                Compartilhe informações importantes
+              </Typography>
             </Box>
           </Box>
+          <IconButton onClick={() => setDialogOpen(false)} sx={{ color: 'white' }}>
+            <Close />
+          </IconButton>
         </Box>
-      </Modal>
+
+        <DialogContent sx={{ p: 3 }}>
+          <Box display="flex" flexDirection="column" gap={3}>
+            <TextField
+              label="Título"
+              value={newsForm.title}
+              onChange={(e) => {
+                setNewsForm({ ...newsForm, title: e.target.value })
+                setFormErrors(prev => ({ ...prev, title: false }))
+              }}
+              placeholder="Digite o título da notícia"
+              fullWidth
+              required
+              error={formErrors.title}
+              helperText={formErrors.title ? 'Campo obrigatório' : ''}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2.5,
+                  bgcolor: 'rgba(103, 58, 183, 0.02)'
+                }
+              }}
+            />
+
+            <TextField
+              label="Descrição"
+              value={newsForm.description}
+              onChange={(e) => {
+                setNewsForm({ ...newsForm, description: e.target.value })
+                setFormErrors(prev => ({ ...prev, description: false }))
+              }}
+              placeholder="Descreva a notícia em detalhes..."
+              fullWidth
+              required
+              multiline
+              rows={4}
+              error={formErrors.description}
+              helperText={formErrors.description ? 'Campo obrigatório' : ''}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2.5,
+                  bgcolor: 'rgba(103, 58, 183, 0.02)'
+                }
+              }}
+            />
+          </Box>
+        </DialogContent>
+
+        <Box
+          sx={{
+            px: 3,
+            py: 2.5,
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: 1.5,
+            borderTop: '1px solid',
+            borderColor: 'divider'
+          }}
+        >
+          <Button
+            onClick={() => setDialogOpen(false)}
+            variant="outlined"
+            sx={{ borderRadius: 2.5, textTransform: 'none', px: 3 }}
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleCreateNews}
+            variant="contained"
+            disabled={isCreating}
+            sx={{
+              borderRadius: 2.5,
+              textTransform: 'none',
+              px: 4,
+              fontWeight: 600,
+              background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)'
+              }
+            }}
+          >
+            Criar Notícia
+          </Button>
+        </Box>
+      </Dialog>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+          severity={snackbar.severity}
+          sx={{ borderRadius: 2 }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   )
 }
