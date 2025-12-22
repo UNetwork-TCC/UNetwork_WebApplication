@@ -7,9 +7,9 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
-  Modal,
-  Switch,
+  Dialog,
+  DialogContent,
+  IconButton,
   TextField,
   Typography,
   useMediaQuery,
@@ -24,7 +24,14 @@ import {
 } from 'react'
 import { useNavigate, useParams } from '@/hooks'
 import UserAvatar from './UserAvatar'
-import { AddPhotoAlternate } from '@mui/icons-material'
+import {
+  AddPhotoAlternate,
+  Edit,
+  Close,
+  Message,
+  PersonAdd,
+  PersonRemove
+} from '@mui/icons-material'
 import { LoadingBackdrop } from '@/layout'
 import { setCredentials } from '@/features/auth'
 import { useUploadFileMutation } from '@/features/file'
@@ -34,6 +41,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
   const { id } = useParams()
 
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [updateUser] = useUpdateUserMutation()
   const [uploadPicture] = useUploadFileMutation()
@@ -61,8 +69,6 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
     bio: userState.otherInfo?.bio ?? '',
     account: 'public'
   })
-
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
 
   const follow = (): void => {
     ;(async () => {
@@ -151,152 +157,416 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
     height: '100%',
     width: '100%',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'conver',
-    resize: 'both'
+    backgroundSize: 'cover',
+    objectFit: 'cover'
   }
+
+  // Usa userState se for o próprio perfil, senão usa user da API
+  const displayUser = onwedAccount ? { ...user, ...userState } : user
+
+  const stats = [
+    { value: displayUser?.posts?.length ?? 0, label: 'Publicações' },
+    { value: displayUser?.followers?.length ?? 0, label: 'Seguidores' },
+    { value: 0, label: 'Seguindo' }
+  ]
 
   return (
     <>
       <Box
-        p={3}
-        width="100%"
-        display="flex"
-        flexDirection={!matches ? 'row' : 'column'}
-        gap={!matches ? 8 : 5}
-      >
-        <UserAvatar
-          user={user}
-          sx={{
-            height: '10rem',
-            width: '10rem',
-            borderRadius: '50%',
-            fontSize: '3rem'
-          }}
-        />
-        <Box width="100%" display="flex" flexDirection="column" gap={2.5}>
-          <Box display="flex" gap={4}>
-            <Typography position="relative" top="7.5px">
-              @{user?.username}
-            </Typography>
-            {onwedAccount ? (
-              <Button
-                onClick={() => {
-                  setOpen(true)
-                }}
-                variant="contained"
-              >
-                Editar Perfil
-              </Button>
-            ) : (
-              <>
-                {followingUser ? (
-                  <Button onClick={unfollow} variant="contained">
-                    Desseguir
-                  </Button>
-                ) : (
-                  <Button onClick={follow} variant="contained">
-                    Seguir
-                  </Button>
-                )}
-                <Button onClick={sendMessage} variant="contained">
-                  Enviar Mensagem
-                </Button>
-              </>
-            )}
-          </Box>
-          <Box display="flex" gap={4}>
-            <Box gap={1.5} display="flex">
-              <Typography>Publicações</Typography>
-              <b>{user?.posts?.length}</b>
-            </Box>
-            <Box gap={1.5} display="flex">
-              <Typography>Seguidores</Typography>
-              <b>{user?.followers?.length}</b>
-            </Box>
-            <Box gap={1.5} display="flex">
-              <Typography>Seguindo</Typography>
-              <b>0</b>
-            </Box>
-          </Box>
-          <Box width="50%">
-            <Typography fontWeight={900}>{user?.name}</Typography>
-            <Typography whiteSpace="pre-wrap">
-              {user?.otherInfo?.bio}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-      <Modal
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        open={open}
-        onClose={(): void => {
-          setOpen(false)
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 3
         }}
       >
-        <Card
-          component="form"
-          onSubmit={updateProfile}
+        {/* Header com Avatar e Info */}
+        <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            height: '50%',
-            width: '50%',
-            p: 4
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: { xs: 'center', md: 'flex-start' },
+            gap: { xs: 3, md: 4 },
+            p: { xs: 2, md: 3 },
+            borderRadius: 4,
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(103, 58, 183, 0.08)'
           }}
         >
-          <Box width="100%" display="flex" gap={3}>
-            <Box
-              component="label"
-              htmlFor="user_avatar"
-              sx={{ cursor: 'pointer' }}
+          {/* Avatar com borda */}
+          <Box
+            sx={{
+              position: 'relative',
+              p: 0.5,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+              boxShadow: '0 8px 32px rgba(103, 58, 183, 0.25)'
+            }}
+          >
+            <Avatar
+              sx={{
+                width: { xs: 120, md: 150 },
+                height: { xs: 120, md: 150 },
+                border: '4px solid white',
+                bgcolor: 'primary.main',
+                fontSize: { xs: '2.5rem', md: '3rem' }
+              }}
             >
-              <Avatar
+              {displayUser?.otherInfo?.avatar?.src ? (
+                <img
+                  src={displayUser?.otherInfo?.avatar?.src}
+                  alt={displayUser?.username}
+                  style={imgStyle}
+                />
+              ) : (
+                displayUser?.username?.[0]?.toUpperCase()
+              )}
+            </Avatar>
+          </Box>
+
+          {/* Info Section */}
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: { xs: 'center', md: 'flex-start' },
+              gap: 2,
+              textAlign: { xs: 'center', md: 'left' }
+            }}
+          >
+            {/* Nome e Username */}
+            <Box>
+              <Typography
+                variant="h5"
                 sx={{
-                  height: '10rem',
-                  width: '10rem',
-                  borderRadius: '50%',
-                  fontSize: '3rem',
-                  bgcolor: 'primary.main'
+                  fontWeight: 700,
+                  color: 'text.primary',
+                  mb: 0.5
                 }}
               >
-                {userAvatar ? (
-                  <img
-                    src={userAvatar}
-                    alt={'Imagem de ' + user?.username}
-                    style={imgStyle}
-                  />
-                ) : user?.otherInfo?.avatar?.src ? (
-                  <img
-                    src={user?.otherInfo?.avatar?.src}
-                    alt={'Imagem de ' + user?.username}
-                    style={imgStyle}
-                  />
-                ) : (
-                  user?.username?.[0]
-                )}
-              </Avatar>
-              <Avatar
+                {displayUser?.name || (displayUser?.username ? displayUser.username.charAt(0).toUpperCase() + displayUser.username.slice(1) : 'Carregando...')}
+              </Typography>
+              <Typography
                 sx={{
-                  height: '3rem',
-                  width: '3rem',
+                  color: 'text.secondary',
+                  fontSize: '0.95rem'
+                }}
+              >
+                @{displayUser?.username || '...'}
+              </Typography>
+            </Box>
+
+            {/* Stats */}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: { xs: 3, md: 5 },
+                py: 1
+              }}
+            >
+              {stats.map((stat, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: { xs: '1.25rem', md: '1.5rem' },
+                      color: 'text.primary',
+                      lineHeight: 1.2
+                    }}
+                  >
+                    {stat.value.toLocaleString('pt-BR')}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: '0.8rem',
+                      color: 'text.secondary'
+                    }}
+                  >
+                    {stat.label}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+
+            {/* Botões de ação */}
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 1.5,
+                flexWrap: 'wrap',
+                justifyContent: { xs: 'center', md: 'flex-start' }
+              }}
+            >
+              {onwedAccount ? (
+                <Button
+                  onClick={() => setOpen(true)}
+                  variant="outlined"
+                  startIcon={<Edit sx={{ fontSize: 18 }} />}
+                  sx={{
+                    borderRadius: 3,
+                    textTransform: 'none',
+                    fontWeight: 600,
+                    px: 3,
+                    py: 1,
+                    borderColor: 'primary.main',
+                    color: 'primary.main',
+                    borderWidth: 2,
+                    '&:hover': {
+                      borderWidth: 2,
+                      bgcolor: 'rgba(103, 58, 183, 0.04)',
+                      borderColor: 'primary.dark'
+                    }
+                  }}
+                >
+                  Editar Perfil
+                </Button>
+              ) : (
+                <>
+                  {followingUser ? (
+                    <Button
+                      onClick={unfollow}
+                      variant="outlined"
+                      startIcon={<PersonRemove sx={{ fontSize: 18 }} />}
+                      sx={{
+                        borderRadius: 3,
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        px: 3,
+                        py: 1,
+                        borderColor: 'grey.400',
+                        color: 'text.secondary',
+                        '&:hover': {
+                          borderColor: 'error.main',
+                          color: 'error.main',
+                          bgcolor: 'rgba(211, 47, 47, 0.04)'
+                        }
+                      }}
+                    >
+                      Seguindo
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={follow}
+                      variant="contained"
+                      startIcon={<PersonAdd sx={{ fontSize: 18 }} />}
+                      sx={{
+                        borderRadius: 3,
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        px: 3,
+                        py: 1,
+                        background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+                        boxShadow: '0 4px 15px rgba(103, 58, 183, 0.3)',
+                        '&:hover': {
+                          background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)',
+                          boxShadow: '0 6px 20px rgba(103, 58, 183, 0.4)'
+                        }
+                      }}
+                    >
+                      Seguir
+                    </Button>
+                  )}
+                  <Button
+                    onClick={sendMessage}
+                    variant="outlined"
+                    startIcon={<Message sx={{ fontSize: 18 }} />}
+                    sx={{
+                      borderRadius: 3,
+                      textTransform: 'none',
+                      fontWeight: 600,
+                      px: 3,
+                      py: 1,
+                      borderColor: 'primary.main',
+                      color: 'primary.main',
+                      borderWidth: 2,
+                      '&:hover': {
+                        borderWidth: 2,
+                        bgcolor: 'rgba(103, 58, 183, 0.04)'
+                      }
+                    }}
+                  >
+                    Mensagem
+                  </Button>
+                </>
+              )}
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Bio Section */}
+        <Box
+          sx={{
+            p: 2.5,
+            borderRadius: 3,
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(103, 58, 183, 0.08)'
+          }}
+        >
+          <Typography
+            sx={{
+              color: displayUser?.otherInfo?.bio ? 'text.primary' : 'text.secondary',
+              fontSize: '0.95rem',
+              lineHeight: 1.6,
+              whiteSpace: 'pre-wrap'
+            }}
+          >
+            {displayUser?.otherInfo?.bio || 'Nenhuma bio adicionada ainda. Clique em editar perfil para adicionar uma descrição.'}
+          </Typography>
+        </Box>
+      </Box>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 4,
+            overflow: 'hidden'
+          }
+        }}
+      >
+        {/* Header do Dialog */}
+        <Box
+          sx={{
+            background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+            p: 2.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <Box display="flex" alignItems="center" gap={2}>
+            <Box
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: 2,
+                bgcolor: 'rgba(255,255,255,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <Edit sx={{ color: 'white', fontSize: 22 }} />
+            </Box>
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ color: 'white', fontWeight: 700, fontSize: '1.1rem' }}
+              >
+                Editar Perfil
+              </Typography>
+              <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem' }}>
+                Atualize suas informações
+              </Typography>
+            </Box>
+          </Box>
+          <IconButton onClick={() => setOpen(false)} sx={{ color: 'white' }}>
+            <Close />
+          </IconButton>
+        </Box>
+
+        <DialogContent sx={{ p: 3 }}>
+          <Box
+            component="form"
+            onSubmit={updateProfile}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
+          >
+            {/* Avatar Section */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 2
+              }}
+            >
+              <Box
+                component="label"
+                htmlFor="user_avatar"
+                sx={{
+                  cursor: 'pointer',
                   position: 'relative',
-                  bottom: '3rem',
-                  left: '7.5rem',
-                  cursor: 'pointer'
+                  '&:hover .avatar-overlay': {
+                    opacity: 1
+                  }
                 }}
               >
+                <Box
+                  sx={{
+                    p: 0.5,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)'
+                  }}
+                >
+                  <Avatar
+                    sx={{
+                      width: 120,
+                      height: 120,
+                      border: '4px solid white',
+                      bgcolor: 'primary.main',
+                      fontSize: '2.5rem'
+                    }}
+                  >
+                    {userAvatar ? (
+                      <img
+                        src={userAvatar}
+                        alt={'Imagem de ' + user?.username}
+                        style={imgStyle}
+                      />
+                    ) : user?.otherInfo?.avatar?.src ? (
+                      <img
+                        src={user?.otherInfo?.avatar?.src}
+                        alt={'Imagem de ' + user?.username}
+                        style={imgStyle}
+                      />
+                    ) : (
+                      user?.username?.[0]?.toUpperCase()
+                    )}
+                  </Avatar>
+                </Box>
+                <Box
+                  className="avatar-overlay"
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    bgcolor: 'primary.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '3px solid white',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    transition: 'all 0.2s ease',
+                    '&:hover': {
+                      transform: 'scale(1.1)'
+                    }
+                  }}
+                >
+                  <AddPhotoAlternate sx={{ fontSize: 18, color: 'white' }} />
+                </Box>
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>): void => {
                     const file = e.target.files?.[0]
-
                     const reader = new FileReader()
-
                     setTimeout(() => {
                       reader.addEventListener('load', () => {
                         setUserAvatar(reader.result as string)
                       })
-
                       reader.readAsDataURL(file as File)
                     }, 1000)
                   }}
@@ -305,65 +575,90 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                   type="file"
                   accept="image/*"
                 />
-                <AddPhotoAlternate />
-              </Avatar>
-              <Box>
-                <Typography variant="body2">Conta privada</Typography>
-                <Switch sx={{ position: 'relative', right: 12 }} />
               </Box>
+              <Typography variant="body2" color="text.secondary">
+                Clique para alterar a foto
+              </Typography>
             </Box>
-            <Box display="flex" gap={2} flexDirection="column" width="100%">
-              <Box>
-                <TextField
-                  onChange={e => {
-                    setUserUpdateInfo({
-                      ...userUpdateInfo,
-                      username: e.currentTarget.value
-                    })
-                  }}
-                  helperText={userUpdateInfo?.username?.length + '/30'}
-                  value={userUpdateInfo?.username}
-                  fullWidth
-                  label="Nome de usuário (@)"
-                  inputProps={{ maxLength: 30 }}
-                />
-              </Box>
-              <TextField
-                onChange={e => {
-                  if (userUpdateInfo.bio.length < 150) {
-                    setUserUpdateInfo({
-                      ...userUpdateInfo,
-                      bio: e.currentTarget.value
-                    })
-                  }
-                }}
-                multiline
-                helperText={userUpdateInfo?.bio?.length + '/150'}
-                value={userUpdateInfo?.bio}
-                fullWidth
-                label="Biografia"
-                inputProps={{ maxLength: 150 }}
-              />
-            </Box>
-          </Box>
-          <Box height="100%" display="flex" justifyContent="flex-end" mt={3}>
-            <Box display="flex" alignItems="end" gap={3}>
-              <Button type="submit" onClick={updateProfile} variant="contained">
-                Confirmar
-              </Button>
+
+            {/* Form Fields */}
+            <TextField
+              onChange={e => {
+                setUserUpdateInfo({
+                  ...userUpdateInfo,
+                  username: e.currentTarget.value
+                })
+              }}
+              helperText={`${userUpdateInfo?.username?.length || 0}/30`}
+              value={userUpdateInfo?.username}
+              fullWidth
+              label="Nome de usuário (@)"
+              inputProps={{ maxLength: 30 }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2
+                }
+              }}
+            />
+
+            <TextField
+              onChange={e => {
+                if (userUpdateInfo.bio.length < 150) {
+                  setUserUpdateInfo({
+                    ...userUpdateInfo,
+                    bio: e.currentTarget.value
+                  })
+                }
+              }}
+              multiline
+              rows={3}
+              helperText={`${userUpdateInfo?.bio?.length || 0}/150`}
+              value={userUpdateInfo?.bio}
+              fullWidth
+              label="Biografia"
+              inputProps={{ maxLength: 150 }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2
+                }
+              }}
+            />
+
+            {/* Buttons */}
+            <Box display="flex" gap={2} justifyContent="flex-end" mt={1}>
               <Button
-                type="submit"
-                onClick={() => {
-                  setOpen(false)
-                }}
+                onClick={() => setOpen(false)}
                 variant="outlined"
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  px: 3
+                }}
               >
                 Cancelar
               </Button>
+              <Button
+                type="submit"
+                onClick={updateProfile}
+                variant="contained"
+                sx={{
+                  borderRadius: 2,
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  px: 3,
+                  background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)'
+                  }
+                }}
+              >
+                Salvar alterações
+              </Button>
             </Box>
           </Box>
-        </Card>
-      </Modal>
+        </DialogContent>
+      </Dialog>
       <LoadingBackdrop open={openLoading} />
     </>
   )
