@@ -66,6 +66,7 @@ export interface IChat {
   _id?: string
   users: string[]
   messages: IMessage[]
+  lastMessageAt?: Date
 }
 
 export interface IPost {

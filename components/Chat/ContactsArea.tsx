@@ -294,14 +294,48 @@ export default function ContactsArea({
             >
               {!isLoading
                 ? (() => {
-                    const usersToChat = usersChat.map(
-                      id => users?.filter((user: any) => user._id === id)[0]
-                    )
+                    // Ordenar chats pela última mensagem (mais recente primeiro)
+                    const sortedChats = [...chats].sort((a, b) => {
+                      // Função para obter a data da última atividade do chat
+                      const getLastActivityDate = (chat: Chat): number => {
+                        // Prioridade 1: lastMessageAt
+                        if (chat.lastMessageAt) {
+                          return new Date(chat.lastMessageAt).getTime()
+                        }
+                        // Prioridade 2: última mensagem do array
+                        if (chat.messages && chat.messages.length > 0) {
+                          const lastMessage = chat.messages[chat.messages.length - 1]
+                          if (lastMessage?.sendedAt) {
+                            return new Date(lastMessage.sendedAt).getTime()
+                          }
+                        }
+                        // Prioridade 3: data de criação (extraída do _id MongoDB)
+                        if (chat._id) {
+                          const timestamp = parseInt(chat._id.substring(0, 8), 16) * 1000
+                          return timestamp
+                        }
+                        return 0
+                      }
 
-                    return Array.isArray(usersToChat)
-                      ? usersToChat
-                          .map((user, index) => ({ user, chat: chats[index] }))
-                          .filter(({ user, chat }) => user && chat)
+                      // Decrescente: mais recente primeiro
+                      return getLastActivityDate(b) - getLastActivityDate(a)
+                    })
+
+                    // Debug: log para verificar ordenação
+                    console.log('[ContactsArea] Chats ordenados:', sortedChats.map(c => ({
+                      id: c._id,
+                      lastMessageAt: c.lastMessageAt,
+                      messagesCount: c.messages?.length,
+                      lastMsg: c.messages?.[c.messages?.length - 1]?.sendedAt
+                    })))
+
+                    return sortedChats
+                      .map(chat => {
+                        const oderId = chat.users.find(id => id !== userId)
+                        const user = users?.find((u: any) => u._id === oderId)
+                        return { user, chat }
+                      })
+                      .filter(({ user, chat }) => user && chat)
                           .filter(({ user }) => {
                             // Filtrar por texto de busca
                             if (!contactSearchText || contactSearchText.length < 2) return true
@@ -347,7 +381,6 @@ export default function ContactsArea({
                               </Box>
                             )
                           })
-                      : null
                   })()
                 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(e => (
                     <ContactSkeleton key={e} />

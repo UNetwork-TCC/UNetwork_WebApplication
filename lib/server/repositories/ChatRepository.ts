@@ -10,10 +10,10 @@ export class ChatRepository extends BaseRepository<IChat> {
   }
 
   async findUserChats(userId: string) {
-    // Buscar todos os chats do usuário, ordenados por mais recente (pelo _id)
+    // Buscar todos os chats do usuário, ordenados pela última mensagem
     return await this.fetchAll(
       { users: { $in: [userId] } },
-      { limit: 100, sort: { _id: -1 } }
+      { limit: 100, sort: { lastMessageAt: -1 } }
     )
   }
 
@@ -25,10 +25,13 @@ export class ChatRepository extends BaseRepository<IChat> {
   }
 
   async addMessage(chatId: string, message: any) {
-    // Usar $push para adicionar mensagem ao array (não sobrescrever)
+    // Usar $push para adicionar mensagem ao array e atualizar lastMessageAt
     return await this.entity.findByIdAndUpdate(
       chatId,
-      { $push: { messages: message } },
+      {
+        $push: { messages: message },
+        $set: { lastMessageAt: new Date() }
+      },
       { new: true }
     ).lean()
   }

@@ -2,7 +2,8 @@ import mongoose from 'mongoose'
 
 const chatSchema = new mongoose.Schema({
   users: { type: Array, required: true },
-  messages: { type: Array, required: true, default: [] }
+  messages: { type: Array, required: true, default: [] },
+  lastMessageAt: { type: Date, default: Date.now }
 })
 
 const chatModel =
