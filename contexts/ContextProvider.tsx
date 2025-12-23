@@ -1,7 +1,7 @@
 'use client'
 
-import { type ReactElement, useState, type CSSProperties } from 'react'
-import { appLayoutContext, themeContext, chatContext } from '@/contexts'
+import { type ReactElement, useState, useEffect, type CSSProperties } from 'react'
+import { appLayoutContext, themeContext, chatContext, NotificationProvider } from '@/contexts'
 import { ThemeStore } from '@/layout'
 import { CssBaseline, type CustomTheme } from '@mui/material'
 import { darkTheme, lightTheme } from '@/themes'
@@ -28,6 +28,11 @@ export default function ContextProvider({
   const [theme, setTheme] = useState(
     themeMode === 'light' ? lightTheme : darkTheme
   )
+
+  // Sincronizar tema quando themeMode do Redux mudar
+  useEffect(() => {
+    setTheme(themeMode === 'light' ? lightTheme : darkTheme)
+  }, [themeMode])
 
   const changeTheme = (themeParam: CustomTheme): void => {
     setTheme(themeParam)
@@ -107,12 +112,14 @@ export default function ContextProvider({
       <ThemeStore>
         <appLayoutContext.Provider value={appLayoutContextValue}>
           <chatContext.Provider value={{ userChats, setUserChats }}>
-            <GoogleOAuthProvider
-              clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
-            >
-              <CssBaseline />
-              {children}
-            </GoogleOAuthProvider>
+            <NotificationProvider>
+              <GoogleOAuthProvider
+                clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+              >
+                <CssBaseline />
+                {children}
+              </GoogleOAuthProvider>
+            </NotificationProvider>
           </chatContext.Provider>
         </appLayoutContext.Provider>
       </ThemeStore>

@@ -10,6 +10,26 @@ export class ChatRepository extends BaseRepository<IChat> {
   }
 
   async findUserChats(userId: string) {
-    return await this.fetchAll({ users: { $in: [userId] } })
+    // Buscar todos os chats do usuário, ordenados por mais recente (pelo _id)
+    return await this.fetchAll(
+      { users: { $in: [userId] } },
+      { limit: 100, sort: { _id: -1 } }
+    )
+  }
+
+  async findChatBetweenUsers(userIds: string[]) {
+    // Buscar chat existente entre os usuários (independente da ordem)
+    return await this.entity.findOne({
+      users: { $all: userIds, $size: userIds.length }
+    }).lean()
+  }
+
+  async addMessage(chatId: string, message: any) {
+    // Usar $push para adicionar mensagem ao array (não sobrescrever)
+    return await this.entity.findByIdAndUpdate(
+      chatId,
+      { $push: { messages: message } },
+      { new: true }
+    ).lean()
   }
 }

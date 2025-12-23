@@ -11,13 +11,15 @@ import {
   Menu,
   MenuItem,
   Snackbar,
-  Alert
+  Alert,
+  useTheme
 } from '@mui/material'
 import { MoreVert, Share, Add, ArrowBack } from '@mui/icons-material'
 import { type IForum, type IMessage, type User } from '@/types'
 import { useGetUserMutation } from '@/features/user'
 import { useCreateMessageMutation } from '@/features/message'
 import { useAppSelector } from '@/store'
+import { getOverlay } from '@/themes'
 
 interface ForumTopicViewProps {
   forum: IForum
@@ -102,6 +104,8 @@ export default function ForumTopicView({
   forum,
   onBack
 }: ForumTopicViewProps): ReactElement {
+  const theme = useTheme()
+  const mode = theme.palette.mode
   const [newComment, setNewComment] = useState('')
   const [comments, setComments] = useState<IMessage[]>([])
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' })
@@ -220,9 +224,9 @@ export default function ForumTopicView({
       <Box
         sx={{
           borderRadius: 4,
-          bgcolor: 'rgba(255, 255, 255, 0.7)',
+          bgcolor: getOverlay(mode, 'cardBg'),
           backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255, 255, 255, 0.4)',
+          border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
           p: 3
         }}
       >
@@ -308,7 +312,8 @@ export default function ForumTopicView({
                   width: 32,
                   height: 32,
                   marginLeft: i > 0 ? -1 : 0,
-                  border: '2px solid white',
+                  border: '2px solid',
+                  borderColor: 'background.paper',
                   bgcolor: 'grey.300',
                   fontSize: '0.75rem'
                 }}
@@ -323,13 +328,14 @@ export default function ForumTopicView({
                   height: 32,
                   marginLeft: -1,
                   borderRadius: '50%',
-                  bgcolor: 'grey.200',
+                  bgcolor: mode === 'light' ? 'grey.200' : 'grey.700',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '0.75rem',
                   color: 'text.secondary',
-                  border: '2px solid white'
+                  border: '2px solid',
+                  borderColor: 'background.paper'
                 }}
               >
                 +{participantsCount - 3}
@@ -345,9 +351,9 @@ export default function ForumTopicView({
         onSubmit={handleSubmitComment}
         sx={{
           borderRadius: 4,
-          bgcolor: 'rgba(255, 255, 255, 0.7)',
+          bgcolor: getOverlay(mode, 'cardBg'),
           backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255, 255, 255, 0.4)',
+          border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
           p: 2
         }}
       >
@@ -396,9 +402,9 @@ export default function ForumTopicView({
       <Box
         sx={{
           borderRadius: 4,
-          bgcolor: 'rgba(255, 255, 255, 0.7)',
+          bgcolor: getOverlay(mode, 'cardBg'),
           backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255, 255, 255, 0.4)',
+          border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
           overflow: 'hidden',
           '& > *:not(:last-child)': {
             borderBottom: '1px solid',

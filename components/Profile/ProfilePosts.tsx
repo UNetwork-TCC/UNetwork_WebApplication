@@ -6,9 +6,11 @@ import { type ReactElement } from 'react'
 import UserAvatar from './UserAvatar'
 import { useNavigate } from '@/hooks'
 import { ImageNotSupported } from '@mui/icons-material'
+import { getGradient, getOverlay } from '@/themes'
 
 export default function ProfilePosts({ user }: { user: User }): ReactElement {
   const theme = useTheme()
+  const mode = theme.palette.mode
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   if (!user?.posts?.length) {
@@ -18,9 +20,9 @@ export default function ProfilePosts({ user }: { user: User }): ReactElement {
           p: 6,
           textAlign: 'center',
           borderRadius: 3,
-          background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+          background: getGradient(mode, 'card'),
           backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(103, 58, 183, 0.08)'
+          border: `1px solid ${getOverlay(mode, 'cardBorder')}`
         }}
       >
         <ImageNotSupported sx={{ fontSize: 48, color: 'text.secondary', opacity: 0.5, mb: 2 }} />
@@ -165,7 +167,8 @@ function ProfilePost({
               width: 40,
               height: 40,
               mb: 1,
-              border: '2px solid white'
+              border: '2px solid',
+              borderColor: 'background.paper'
             }}
           />
           <Typography

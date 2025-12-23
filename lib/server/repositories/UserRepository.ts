@@ -16,6 +16,24 @@ export class UserRepository extends BaseRepository<IUser> {
   async getFollowers(id: string): Promise<ResponseDTO<UserDTO>> {
     return await User.findById(id).populate('followers')
   }
+
+  async search(query: string, limit: number = 10): Promise<IUser[]> {
+    if (!query || query.length < 2) {
+      return []
+    }
+
+    const regex = new RegExp(query, 'i')
+    return await User.find({
+      $or: [
+        { username: { $regex: regex } },
+        { name: { $regex: regex } },
+        { email: { $regex: regex } }
+      ]
+    })
+      .select('-password')
+      .limit(limit)
+      .lean()
+  }
   async login(email: string, password: string) {
     const user = await User.findOne({ email })
 

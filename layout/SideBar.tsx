@@ -30,19 +30,23 @@ import {
   type ReactElement,
   useState,
   useContext,
-  type SyntheticEvent
+  type SyntheticEvent,
+  useEffect
 } from 'react'
 import { Shortcut } from '@/components'
 import { useNavigate } from '@/hooks'
 import { type MouseEvent } from 'react'
 import { appLayoutContext, themeContext } from '@/contexts'
-import { darkTheme, lightTheme } from '@/themes'
+import { darkTheme, lightTheme, getOverlay } from '@/themes'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { logOut } from '@/features/auth'
 import { setChatId, setMessages } from '@/features/chat'
+import { usePathname } from 'next/navigation'
 
 export default function SideBar(): ReactElement {
   const theme = useTheme()
+  const mode = theme.palette.mode
+  const pathname = usePathname()
 
   const user = useAppSelector(state => state.auth.user)
 
@@ -118,6 +122,14 @@ export default function SideBar(): ReactElement {
     }, 1500)
   }
 
+  // Helper para verificar se o link está ativo
+  const isLinkActive = (link: string): boolean => {
+    if (link === '/app') {
+      return pathname === '/app'
+    }
+    return pathname.startsWith(link)
+  }
+
   function NavLink({
     icon,
     text,
@@ -127,6 +139,8 @@ export default function SideBar(): ReactElement {
     text: string
     link: string | (() => void) | (() => Promise<void>)
   }): ReactElement {
+    const isActive = typeof link === 'string' && isLinkActive(link)
+
     return (
       <Box
         onClick={
@@ -149,7 +163,8 @@ export default function SideBar(): ReactElement {
             mb: { md: 0.5, lg: 0.75, xl: 1 },
             gap: { md: 1.5, lg: 2, xl: 2.5 },
             borderRadius: 2,
-            bgcolor: 'transparent',
+            bgcolor: isActive ? getOverlay(mode, 'primaryMedium') : 'transparent',
+            color: isActive ? 'primary.main' : 'inherit',
             transition:
               'background-color .2s ease-in-out, color .2s ease-in-out',
             cursor: 'pointer',
@@ -176,7 +191,7 @@ export default function SideBar(): ReactElement {
           <Typography
             sx={{
               fontSize: { md: '0.875rem', lg: '1rem', xl: '1.0625rem' },
-              fontWeight: 500,
+              fontWeight: isActive ? 600 : 500,
               whiteSpace: 'nowrap'
             }}
           >
@@ -189,7 +204,19 @@ export default function SideBar(): ReactElement {
 
   const matches = useMediaQuery(theme.breakpoints.down('md'))
 
-  const [value, setValue] = useState(location.href.split('/')[4])
+  // Extrair o valor atual da rota para o BottomNavigation
+  const getBottomNavValue = (): string => {
+    if (pathname === '/app') return ''
+    const segments = pathname.split('/')
+    return segments[2] || ''
+  }
+
+  const [value, setValue] = useState(getBottomNavValue())
+
+  // Sincronizar o valor quando a rota mudar
+  useEffect(() => {
+    setValue(getBottomNavValue())
+  }, [pathname])
 
   const handleChange = (_event: SyntheticEvent, newValue: string): void => {
     if (newValue === 'theme') {

@@ -73,6 +73,18 @@ const chatApiSlice = apiSlice.injectEndpoints({
         method: 'GET'
       }),
       transformResponse: (response: unknown) => extractData<IChat[]>(response)
+    }),
+
+    addMessageToChat: builder.mutation<
+      IChat,
+      { chatId: string; message: Partial<IChat['messages'][0]> }
+    >({
+      query: ({ chatId, message }) => ({
+        url: `/chat/addmessage/${chatId}`,
+        method: 'POST',
+        body: { message }
+      }),
+      transformResponse: (response: unknown) => extractData<IChat>(response)
     })
   })
 })
@@ -88,5 +100,6 @@ export const {
   useCreateChatMutation,
   useUpdateChatMutation,
   useDeleteChatMutation,
-  useFindUserChatsMutation
+  useFindUserChatsMutation,
+  useAddMessageToChatMutation
 } = chatApiSlice

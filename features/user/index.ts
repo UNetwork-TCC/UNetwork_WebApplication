@@ -72,6 +72,15 @@ const userApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE'
       }),
       transformResponse: (response: unknown) => extractData<IUser>(response)
+    }),
+
+    fetchUsersByIds: builder.mutation<IUser[], string[]>({
+      query: ids => ({
+        url: '/user/batch',
+        method: 'POST',
+        body: { ids }
+      }),
+      transformResponse: (response: unknown) => extractData<IUser[]>(response)
     })
   })
 })
@@ -84,6 +93,7 @@ export const configReducer = configSlice.reducer
 export const {
   useDeleteUserMutation,
   useFetchUsersMutation,
+  useFetchUsersByIdsMutation,
   useGetUserMutation,
   useUpdateUserMutation
 } = userApiSlice

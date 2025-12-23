@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { type ReactElement, type ReactNode } from 'react'
 
 export default function ChatArea({
@@ -6,23 +6,23 @@ export default function ChatArea({
 }: {
   children: ReactNode
 }): ReactElement {
+  const theme = useTheme()
+
   return (
     <Box
       sx={{
-        pt: '3%',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        width: '100%',
         overflow: 'hidden',
-        '::-webkit-scrollbar': { display: 'none' }
+        bgcolor: 'background.default',
+        [theme.breakpoints.down('md')]: {
+          height: '100dvh'
+        }
       }}
-      // position='sticky'
-      display="flex"
-      alignItems="start"
-      height="100%"
-      maxHeight="100%"
-      width="100%"
     >
-      <Box width="100%" height={'100%'}>
-        {children}
-      </Box>
+      {children}
     </Box>
   )
 }

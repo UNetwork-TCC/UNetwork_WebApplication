@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '100vh',
     width: '100vw',
     overflowX: 'hidden',
-    background: theme.palette.mode === 'dark' ? '#1F1B24' : 'none'
+    background: theme.palette.mode === 'dark' ? '#0d0d0d' : 'none'
   },
 
   wrapper: {
@@ -64,8 +64,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     background:
       theme.palette.mode === 'light'
         ? 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3))'
-        : 'linear-gradient(to right bottom, rgba(80, 80, 80, 0.1), rgba(80, 80, 80, 0.3))',
-    boxShadow: '5px 5px 10px black',
+        : '#121212',
+    boxShadow:
+      theme.palette.mode === 'light'
+        ? '5px 5px 10px black'
+        : '5px 5px 20px rgba(0, 0, 0, 0.5)',
     transition: '.3s ease-in-out'
   },
 

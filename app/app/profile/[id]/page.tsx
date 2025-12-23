@@ -3,20 +3,49 @@
 import { ProfileHeader, ProfilePosts } from '@/components'
 import { useGetUserMutation } from '@/features/user'
 import { ProfileHeaderSkeleton, ProfilePostsSkeleton } from '@/layout/skeletons'
-import { Box, Container, Tab, Tabs, Typography } from '@mui/material'
-import { useEffect, type ReactElement, useState } from 'react'
+import { Box, Container, Tab, Tabs, Typography, useTheme } from '@mui/material'
+import { useEffect, type ReactElement, useState, use } from 'react'
 import { type User } from '@/types'
 import { GridView, Bookmark, FavoriteBorder } from '@mui/icons-material'
+import { getGradient, getOverlay } from '@/themes'
 
-export default function ProfilePage({ id }: { id: string }): ReactElement {
+export default function ProfilePage({
+  params
+}: {
+  params: Promise<{ id: string }>
+}): ReactElement {
+  const { id } = use(params)
+  const theme = useTheme()
+  const mode = theme.palette.mode
   const [getUser, { isLoading }] = useGetUserMutation()
   const [user, setUser] = useState<User | null>(null)
   const [activeTab, setActiveTab] = useState(0)
 
   useEffect(() => {
     ;(async () => {
-      const response: any = await getUser(id ?? '')
-      setUser(response.data)
+      try {
+        const response: any = await getUser(id ?? '')
+        console.log('[ProfilePage] getUser response:', response)
+
+        // Verificar se há erro
+        if (response.error) {
+          console.error('[ProfilePage] Erro da API:', response.error)
+          return
+        }
+
+        // Extrair dados: response.data é o resultado do transformResponse
+        // que já aplicou extractData, então deve ser o usuário diretamente
+        const userData = response.data
+        console.log('[ProfilePage] userData:', userData)
+
+        if (userData && userData._id) {
+          setUser(userData)
+        } else {
+          console.error('[ProfilePage] Dados do usuário inválidos:', userData)
+        }
+      } catch (error) {
+        console.error('[ProfilePage] Erro ao buscar usuário:', error)
+      }
     })()
   }, [getUser, id])
 
@@ -33,7 +62,7 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
       sx={{
         width: '100%',
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #e8eaf6 100%)'
+        background: getGradient(mode, 'background')
       }}
     >
       <Container
@@ -50,9 +79,9 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
               sx={{
                 p: 2,
                 borderRadius: 3,
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+                background: getGradient(mode, 'card'),
                 backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(103, 58, 183, 0.08)'
+                border: `1px solid ${getOverlay(mode, 'cardBorder')}`
               }}
             >
               <Box display="flex" gap={3} justifyContent="center">
@@ -81,9 +110,9 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
             <Box
               sx={{
                 borderRadius: 3,
-                background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+                background: getGradient(mode, 'card'),
                 backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(103, 58, 183, 0.08)',
+                border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
                 overflow: 'hidden'
               }}
             >
@@ -108,7 +137,7 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
                       color: 'primary.main'
                     },
                     '&:hover': {
-                      bgcolor: 'rgba(103, 58, 183, 0.04)'
+                      bgcolor: getOverlay(mode, 'primarySoft')
                     }
                   }
                 }}
@@ -132,9 +161,9 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
                   p: 6,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+                  background: getGradient(mode, 'card'),
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(103, 58, 183, 0.08)'
+                  border: `1px solid ${getOverlay(mode, 'cardBorder')}`
                 }}
               >
                 <Bookmark sx={{ fontSize: 48, color: 'text.secondary', opacity: 0.5, mb: 2 }} />
@@ -152,9 +181,9 @@ export default function ProfilePage({ id }: { id: string }): ReactElement {
                   p: 6,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+                  background: getGradient(mode, 'card'),
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(103, 58, 183, 0.08)'
+                  border: `1px solid ${getOverlay(mode, 'cardBorder')}`
                 }}
               >
                 <FavoriteBorder sx={{ fontSize: 48, color: 'text.secondary', opacity: 0.5, mb: 2 }} />

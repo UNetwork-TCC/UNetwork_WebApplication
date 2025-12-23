@@ -30,6 +30,7 @@ import {
   Article
 } from '@mui/icons-material'
 import NewsArticleCard from '@/components/News/NewsArticleCard'
+import { getGradient, getOverlay } from '@/themes'
 
 const categories = ['Todos', 'Tecnologia', 'Carreira', 'Design', 'Mercado', 'Saúde', 'Escola', 'Eventos']
 
@@ -135,7 +136,7 @@ export default function NewsPage(): ReactElement {
         sx={{
           minHeight: '100vh',
           p: { xs: 2, sm: 3, md: 4 },
-          background: 'linear-gradient(135deg, #f5f7fa 0%, #e8eaf6 100%)'
+          background: getGradient(theme.palette.mode, 'background')
         }}
       >
         <Box maxWidth="1200px" mx="auto">
@@ -146,7 +147,9 @@ export default function NewsPage(): ReactElement {
               sx={{
                 fontWeight: 800,
                 fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-                background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 50%, #e91e63 100%)',
+                background: theme.palette.mode === 'light'
+                  ? 'linear-gradient(135deg, #673ab7 0%, #9c27b0 50%, #e91e63 100%)'
+                  : 'linear-gradient(135deg, #b39ddb 0%, #ce93d8 50%, #f48fb1 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -185,13 +188,13 @@ export default function NewsPage(): ReactElement {
                   maxWidth: { xs: '100%', sm: 400 },
                   '& .MuiOutlinedInput-root': {
                     borderRadius: 3,
-                    bgcolor: 'rgba(255,255,255,0.8)',
+                    bgcolor: getOverlay(theme.palette.mode, 'cardBg'),
                     backdropFilter: 'blur(10px)',
                     '& fieldset': {
-                      borderColor: 'rgba(103, 58, 183, 0.1)'
+                      borderColor: getOverlay(theme.palette.mode, 'cardBorder')
                     },
                     '&:hover fieldset': {
-                      borderColor: 'rgba(103, 58, 183, 0.3)'
+                      borderColor: getOverlay(theme.palette.mode, 'primaryMedium')
                     },
                     '&.Mui-focused fieldset': {
                       borderColor: 'primary.main'
@@ -210,11 +213,11 @@ export default function NewsPage(): ReactElement {
                     textTransform: 'none',
                     fontWeight: 600,
                     px: 3,
-                    background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
-                    boxShadow: '0 4px 15px rgba(103, 58, 183, 0.3)',
+                    background: getGradient(theme.palette.mode, 'primary'),
+                    boxShadow: `0 4px 15px ${getOverlay(theme.palette.mode, 'primaryStrong')}`,
                     '&:hover': {
-                      background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)',
-                      boxShadow: '0 6px 20px rgba(103, 58, 183, 0.4)'
+                      background: getGradient(theme.palette.mode, 'primaryHover'),
+                      boxShadow: `0 6px 20px ${getOverlay(theme.palette.mode, 'primaryStrong')}`
                     }
                   }}
                 >
@@ -247,17 +250,17 @@ export default function NewsPage(): ReactElement {
                     ...(selectedCategory === category
                       ? {
                           bgcolor: 'primary.main',
-                          color: 'white',
-                          boxShadow: '0 4px 12px rgba(103, 58, 183, 0.3)',
+                          color: theme.palette.mode === 'light' ? 'white' : 'primary.contrastText',
+                          boxShadow: `0 4px 12px ${getOverlay(theme.palette.mode, 'primaryStrong')}`,
                           '&:hover': {
                             bgcolor: 'primary.dark'
                           }
                         }
                       : {
-                          bgcolor: 'rgba(255,255,255,0.8)',
-                          border: '1px solid rgba(103, 58, 183, 0.1)',
+                          bgcolor: getOverlay(theme.palette.mode, 'cardBg'),
+                          border: `1px solid ${getOverlay(theme.palette.mode, 'cardBorder')}`,
                           '&:hover': {
-                            bgcolor: 'rgba(103, 58, 183, 0.08)'
+                            bgcolor: getOverlay(theme.palette.mode, 'primarySoft')
                           }
                         })
                   }}
@@ -337,7 +340,7 @@ export default function NewsPage(): ReactElement {
                     py: 8,
                     px: 3,
                     borderRadius: 4,
-                    bgcolor: 'rgba(255,255,255,0.6)',
+                    bgcolor: getOverlay(theme.palette.mode, 'backdrop'),
                     backdropFilter: 'blur(10px)'
                   }}
                 >
@@ -346,7 +349,7 @@ export default function NewsPage(): ReactElement {
                       width: 80,
                       height: 80,
                       borderRadius: '50%',
-                      bgcolor: 'rgba(103, 58, 183, 0.1)',
+                      bgcolor: getOverlay(theme.palette.mode, 'primarySoft'),
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -386,9 +389,9 @@ export default function NewsPage(): ReactElement {
                 <Box
                   sx={{
                     borderRadius: 3,
-                    background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+                    background: getGradient(theme.palette.mode, 'card'),
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(103, 58, 183, 0.1)',
+                    border: `1px solid ${getOverlay(theme.palette.mode, 'cardBorder')}`,
                     p: 3
                   }}
                 >
@@ -412,7 +415,7 @@ export default function NewsPage(): ReactElement {
                           cursor: 'pointer',
                           transition: 'all 0.2s ease',
                           '&:hover': {
-                            bgcolor: 'rgba(103, 58, 183, 0.05)',
+                            bgcolor: getOverlay(theme.palette.mode, 'primarySoft'),
                             '& .news-title': {
                               color: 'primary.main'
                             }
@@ -436,7 +439,7 @@ export default function NewsPage(): ReactElement {
                                 ? { background: 'linear-gradient(135deg, #9e9e9e 0%, #757575 100%)', color: 'white' }
                                 : index === 2
                                   ? { background: 'linear-gradient(135deg, #cd7f32 0%, #8b4513 100%)', color: 'white' }
-                                  : { bgcolor: 'grey.200', color: 'text.secondary' })
+                                  : { bgcolor: theme.palette.mode === 'light' ? 'grey.200' : 'grey.700', color: 'text.secondary' })
                           }}
                         >
                           {index + 1}
@@ -464,9 +467,9 @@ export default function NewsPage(): ReactElement {
                 <Box
                   sx={{
                     borderRadius: 3,
-                    background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+                    background: getGradient(theme.palette.mode, 'card'),
                     backdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(103, 58, 183, 0.1)',
+                    border: `1px solid ${getOverlay(theme.palette.mode, 'cardBorder')}`,
                     p: 3
                   }}
                 >
@@ -493,7 +496,7 @@ export default function NewsPage(): ReactElement {
                             cursor: 'pointer',
                             transition: 'all 0.2s ease',
                             '&:hover': {
-                              bgcolor: 'rgba(103, 58, 183, 0.05)',
+                              bgcolor: getOverlay(theme.palette.mode, 'primarySoft'),
                               '& .cat-name': {
                                 color: 'primary.main'
                               }
@@ -515,7 +518,7 @@ export default function NewsPage(): ReactElement {
                             sx={{
                               height: 22,
                               fontSize: '0.75rem',
-                              bgcolor: 'grey.100'
+                              bgcolor: theme.palette.mode === 'light' ? 'grey.100' : 'grey.800'
                             }}
                           />
                         </Box>
@@ -538,7 +541,7 @@ export default function NewsPage(): ReactElement {
         PaperProps={{
           sx: {
             borderRadius: 4,
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(245,247,250,0.98) 100%)',
+            background: getGradient(theme.palette.mode, 'card'),
             overflow: 'hidden'
           }
         }}
@@ -546,7 +549,7 @@ export default function NewsPage(): ReactElement {
         {/* Header */}
         <Box
           sx={{
-            background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+            background: getGradient(theme.palette.mode, 'primary'),
             px: 3,
             py: 2.5,
             display: 'flex',
@@ -599,7 +602,7 @@ export default function NewsPage(): ReactElement {
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 2.5,
-                  bgcolor: 'rgba(103, 58, 183, 0.02)'
+                  bgcolor: getOverlay(theme.palette.mode, 'primarySoft')
                 }
               }}
             />
@@ -621,7 +624,7 @@ export default function NewsPage(): ReactElement {
               sx={{
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 2.5,
-                  bgcolor: 'rgba(103, 58, 183, 0.02)'
+                  bgcolor: getOverlay(theme.palette.mode, 'primarySoft')
                 }
               }}
             />
@@ -655,9 +658,9 @@ export default function NewsPage(): ReactElement {
               textTransform: 'none',
               px: 4,
               fontWeight: 600,
-              background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+              background: getGradient(theme.palette.mode, 'primary'),
               '&:hover': {
-                background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)'
+                background: getGradient(theme.palette.mode, 'primaryHover')
               }
             }}
           >

@@ -5,7 +5,8 @@ import {
   Box,
   Typography,
   Chip,
-  IconButton
+  IconButton,
+  useTheme
 } from '@mui/material'
 import {
   AccessTime,
@@ -13,6 +14,7 @@ import {
   BookmarkBorder,
   Share
 } from '@mui/icons-material'
+import { getOverlay, getGradient } from '@/themes'
 
 interface NewsArticleCardProps {
   title: string
@@ -62,6 +64,8 @@ export default function NewsArticleCard({
   onBookmark,
   onClick
 }: NewsArticleCardProps): ReactElement {
+  const theme = useTheme()
+  const mode = theme.palette.mode
   const categoryColor = getCategoryColor(category)
 
   if (featured) {
@@ -72,13 +76,13 @@ export default function NewsArticleCard({
           position: 'relative',
           overflow: 'hidden',
           borderRadius: 3,
-          background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+          background: getGradient(mode, 'card'),
           backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(103, 58, 183, 0.1)',
+          border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
           cursor: 'pointer',
           transition: 'all 0.3s ease',
           '&:hover': {
-            boxShadow: '0 20px 40px rgba(103, 58, 183, 0.15)',
+            boxShadow: `0 20px 40px ${getOverlay(mode, 'primaryStrong')}`,
             transform: 'translateY(-4px)',
             '& .featured-image': {
               transform: 'scale(1.15)'
@@ -245,13 +249,13 @@ export default function NewsArticleCard({
         position: 'relative',
         overflow: 'hidden',
         borderRadius: 3,
-        background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
+        background: getGradient(mode, 'card'),
         backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(103, 58, 183, 0.1)',
+        border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
         cursor: 'pointer',
         transition: 'all 0.3s ease',
         '&:hover': {
-          boxShadow: '0 15px 30px rgba(103, 58, 183, 0.12)',
+          boxShadow: `0 15px 30px ${getOverlay(mode, 'primaryMedium')}`,
           transform: 'translateY(-3px)',
           '& .card-image': {
             transform: 'scale(1.2)'

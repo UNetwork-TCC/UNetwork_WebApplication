@@ -2,9 +2,11 @@
 
 import { Forum } from '@/components'
 import { useGetForumMutation } from '@/features/forum'
-import { LoadingBackdrop } from '@/layout'
+import { LoadingBackdrop, Breadcrumb } from '@/layout'
 import { type IForum } from '@/types'
 import { use, useEffect, type ReactElement } from 'react'
+import { Box } from '@mui/material'
+import { ForumOutlined } from '@mui/icons-material'
 
 export default function ForumPage({
   params
@@ -20,12 +22,26 @@ export default function ForumPage({
     })()
   }, [getForum, id])
 
+  const breadcrumbItems = [
+    {
+      label: 'Forums',
+      href: '/app/forum',
+      icon: <ForumOutlined sx={{ fontSize: 18, mr: 0.5 }} />
+    },
+    {
+      label: (forum as IForum)?.name || 'Topico'
+    }
+  ]
+
   return (
     <>
       {isLoading ? (
         <LoadingBackdrop open={true} handleClose={() => {}} />
       ) : (
-        <Forum forum={forum as IForum} />
+        <Box sx={{ p: { xs: 2, md: 3 } }}>
+          <Breadcrumb items={breadcrumbItems} />
+          <Forum forum={forum as IForum} />
+        </Box>
       )}
     </>
   )

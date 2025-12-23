@@ -8,6 +8,12 @@ import {
   useChatMessages,
   useMessageNotifications
 } from './socketContext'
+import {
+  NotificationProvider,
+  useNotifications,
+  NotificationContext,
+  type Notification
+} from './notificationContext'
 
 export {
   themeContext,
@@ -17,5 +23,10 @@ export {
   SocketProvider,
   useSocket,
   useChatMessages,
-  useMessageNotifications
+  useMessageNotifications,
+  NotificationProvider,
+  useNotifications,
+  NotificationContext
 }
+
+export type { Notification }

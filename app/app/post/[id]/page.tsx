@@ -1,16 +1,17 @@
 'use client'
 
-import { type ReactElement, useEffect } from 'react'
+import { type ReactElement, useEffect, use } from 'react'
 import { Post } from '@/components'
 import { useGetPostMutation } from '@/features/post'
 import { PostSkeleton } from '@/layout/skeletons'
 import { Box } from '@mui/material'
 
 export default function PostPage({
-  params: { id }
+  params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }): ReactElement {
+  const { id } = use(params)
   const [getPost, { data: post, isLoading }] = useGetPostMutation()
 
   useEffect(() => {

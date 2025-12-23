@@ -94,6 +94,16 @@ export function Param(paramName?: string) {
   }
 }
 
+// Implementação do decorator Query para capturar query params (searchParams)
+export function Query(paramName?: string) {
+  return function (target: any, propertyKey: string, parameterIndex: number) {
+    const existing: Record<number, string | true> =
+      Reflect.getMetadata('query', target, propertyKey) || {}
+    existing[parameterIndex] = paramName ?? true
+    Reflect.defineMetadata('query', existing, target, propertyKey)
+  }
+}
+
 // Armazenamento de controladores instanciados
 const controllerInstances = new Map<any, any>()
 
@@ -183,10 +193,35 @@ function getArgumentsFromRequest(
     if (paramMetadata[i]) {
       const paramName = paramMetadata[i]
       if (paramName && requestData.params) {
-        args[i] = requestData.params[paramName]
+        args[i] = (requestData.params as any)[paramName]
       } else {
         // Se não especificar nome do parâmetro, passar todos os parâmetros
         args[i] = requestData.params
+      }
+      continue
+    }
+
+    // Verificar se existe um decorator Query para este parâmetro
+    const queryMetadata =
+      Reflect.getMetadata('query', target, methodName) ||
+      (prototype
+        ? Reflect.getMetadata('query', prototype, methodName)
+        : undefined) ||
+      {}
+    if (queryMetadata[i]) {
+      const queryName = queryMetadata[i]
+      // searchParams já é resolvido como URLSearchParams no contexto
+      const searchParams = requestData.searchParams as URLSearchParams
+      if (queryName && typeof queryName === 'string' && searchParams) {
+        // Retorna o valor específico do query param
+        args[i] = searchParams.get(queryName)
+      } else if (searchParams) {
+        // Retorna todos os query params como objeto
+        const queryObj: Record<string, string> = {}
+        searchParams.forEach((value: string, key: string) => {
+          queryObj[key] = value
+        })
+        args[i] = queryObj
       }
       continue
     }

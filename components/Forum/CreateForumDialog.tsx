@@ -15,7 +15,8 @@ import {
   IconButton,
   Typography,
   Alert,
-  Chip
+  Chip,
+  useTheme
 } from '@mui/material'
 import {
   AddPhotoAlternate,
@@ -24,6 +25,7 @@ import {
   ImageOutlined
 } from '@mui/icons-material'
 import { type Topic } from '@/types'
+import { getGradient, getOverlay } from '@/themes'
 
 interface CreateForumDialogProps {
   open: boolean
@@ -38,6 +40,8 @@ export default function CreateForumDialog({
   onSubmit,
   isLoading = false
 }: CreateForumDialogProps): ReactElement {
+  const theme = useTheme()
+  const mode = theme.palette.mode
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [topic, setTopic] = useState<Topic>('Outro')
@@ -99,9 +103,11 @@ export default function CreateForumDialog({
       PaperProps={{
         sx: {
           borderRadius: 4,
-          background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(245,247,250,0.95) 100%)',
+          bgcolor: 'background.paper',
           backdropFilter: 'blur(20px)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+          boxShadow: mode === 'dark'
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+            : '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
           overflow: 'hidden'
         }
       }}
@@ -109,7 +115,7 @@ export default function CreateForumDialog({
       {/* Header with gradient */}
       <Box
         sx={{
-          background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
+          background: getGradient(mode, 'primary'),
           px: 3,
           py: 2.5,
           display: 'flex',
@@ -192,14 +198,14 @@ export default function CreateForumDialog({
             sx={{
               '& .MuiOutlinedInput-root': {
                 borderRadius: 2.5,
-                bgcolor: 'rgba(103, 58, 183, 0.02)',
+                bgcolor: getOverlay(mode, 'primarySoft'),
                 transition: 'all 0.2s ease',
                 '&:hover': {
-                  bgcolor: 'rgba(103, 58, 183, 0.04)'
+                  bgcolor: getOverlay(mode, 'primaryMedium')
                 },
                 '&.Mui-focused': {
-                  bgcolor: 'white',
-                  boxShadow: '0 0 0 3px rgba(103, 58, 183, 0.1)'
+                  bgcolor: 'background.paper',
+                  boxShadow: `0 0 0 3px ${getOverlay(mode, 'primaryMedium')}`
                 }
               }
             }}
@@ -217,12 +223,12 @@ export default function CreateForumDialog({
               label="Categoria *"
               sx={{
                 borderRadius: 2.5,
-                bgcolor: 'rgba(103, 58, 183, 0.02)',
+                bgcolor: getOverlay(mode, 'primarySoft'),
                 '&:hover': {
-                  bgcolor: 'rgba(103, 58, 183, 0.04)'
+                  bgcolor: getOverlay(mode, 'primaryMedium')
                 },
                 '&.Mui-focused': {
-                  bgcolor: 'white'
+                  bgcolor: 'background.paper'
                 }
               }}
               MenuProps={{
@@ -230,12 +236,15 @@ export default function CreateForumDialog({
                   sx: {
                     borderRadius: 2,
                     mt: 1,
-                    boxShadow: '0 10px 40px rgba(0,0,0,0.1)'
+                    bgcolor: 'background.paper',
+                    boxShadow: mode === 'dark'
+                      ? '0 10px 40px rgba(0,0,0,0.5)'
+                      : '0 10px 40px rgba(0,0,0,0.1)'
                   }
                 }
               }}
             >
-              <ListSubheader sx={{ bgcolor: 'rgba(103, 58, 183, 0.05)', fontWeight: 600 }}>
+              <ListSubheader sx={{ bgcolor: getOverlay(mode, 'primarySoft'), fontWeight: 600 }}>
                 Escola
               </ListSubheader>
               <MenuItem value="Escola">Escola</MenuItem>
@@ -245,19 +254,19 @@ export default function CreateForumDialog({
               <MenuItem value="Funcionários">Funcionários</MenuItem>
               <MenuItem value="Eventos">Eventos</MenuItem>
               <MenuItem value="TCC">TCC</MenuItem>
-              <ListSubheader sx={{ bgcolor: 'rgba(103, 58, 183, 0.05)', fontWeight: 600 }}>
+              <ListSubheader sx={{ bgcolor: getOverlay(mode, 'primarySoft'), fontWeight: 600 }}>
                 Cursos
               </ListSubheader>
               <MenuItem value="Desenvolvimento de Sistemas">Desenvolvimento de Sistemas</MenuItem>
               <MenuItem value="Administração">Administração</MenuItem>
               <MenuItem value="Nutrição">Nutrição</MenuItem>
               <MenuItem value="Enfermagem">Enfermagem</MenuItem>
-              <ListSubheader sx={{ bgcolor: 'rgba(103, 58, 183, 0.05)', fontWeight: 600 }}>
+              <ListSubheader sx={{ bgcolor: getOverlay(mode, 'primarySoft'), fontWeight: 600 }}>
                 Vida
               </ListSubheader>
               <MenuItem value="Vida Pessoal">Vida Pessoal</MenuItem>
               <MenuItem value="Carreira">Carreira</MenuItem>
-              <ListSubheader sx={{ bgcolor: 'rgba(103, 58, 183, 0.05)', fontWeight: 600 }}>
+              <ListSubheader sx={{ bgcolor: getOverlay(mode, 'primarySoft'), fontWeight: 600 }}>
                 Outro
               </ListSubheader>
               <MenuItem value="Outro">Outro</MenuItem>
@@ -282,14 +291,14 @@ export default function CreateForumDialog({
             sx={{
               '& .MuiOutlinedInput-root': {
                 borderRadius: 2.5,
-                bgcolor: 'rgba(103, 58, 183, 0.02)',
+                bgcolor: getOverlay(mode, 'primarySoft'),
                 transition: 'all 0.2s ease',
                 '&:hover': {
-                  bgcolor: 'rgba(103, 58, 183, 0.04)'
+                  bgcolor: getOverlay(mode, 'primaryMedium')
                 },
                 '&.Mui-focused': {
-                  bgcolor: 'white',
-                  boxShadow: '0 0 0 3px rgba(103, 58, 183, 0.1)'
+                  bgcolor: 'background.paper',
+                  boxShadow: `0 0 0 3px ${getOverlay(mode, 'primaryMedium')}`
                 }
               }
             }}
@@ -310,7 +319,7 @@ export default function CreateForumDialog({
                 position: 'relative',
                 borderRadius: 3,
                 overflow: 'hidden',
-                border: '2px solid rgba(103, 58, 183, 0.2)'
+                border: `2px solid ${getOverlay(mode, 'primaryMedium')}`
               }}
             >
               <Box
@@ -347,7 +356,8 @@ export default function CreateForumDialog({
                   position: 'absolute',
                   bottom: 8,
                   left: 8,
-                  bgcolor: 'rgba(255,255,255,0.9)',
+                  bgcolor: mode === 'dark' ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)',
+                  color: mode === 'dark' ? 'white' : 'inherit',
                   maxWidth: 200
                 }}
               />
@@ -365,13 +375,13 @@ export default function CreateForumDialog({
                 py: 3,
                 px: 2,
                 borderRadius: 3,
-                border: '2px dashed rgba(103, 58, 183, 0.3)',
-                bgcolor: 'rgba(103, 58, 183, 0.02)',
+                border: `2px dashed ${getOverlay(mode, 'primaryStrong')}`,
+                bgcolor: getOverlay(mode, 'primarySoft'),
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 '&:hover': {
                   borderColor: 'primary.main',
-                  bgcolor: 'rgba(103, 58, 183, 0.05)'
+                  bgcolor: getOverlay(mode, 'primaryMedium')
                 }
               }}
             >
@@ -408,7 +418,7 @@ export default function CreateForumDialog({
           gap: 1.5,
           borderTop: '1px solid',
           borderColor: 'divider',
-          bgcolor: 'rgba(0,0,0,0.01)'
+          bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)'
         }}
       >
         <Button
@@ -419,11 +429,11 @@ export default function CreateForumDialog({
             textTransform: 'none',
             px: 3,
             fontWeight: 500,
-            borderColor: 'rgba(0,0,0,0.2)',
+            borderColor: mode === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
             color: 'text.secondary',
             '&:hover': {
-              borderColor: 'rgba(0,0,0,0.3)',
-              bgcolor: 'rgba(0,0,0,0.02)'
+              borderColor: mode === 'dark' ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)',
+              bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)'
             }
           }}
         >
@@ -438,14 +448,14 @@ export default function CreateForumDialog({
             textTransform: 'none',
             px: 4,
             fontWeight: 600,
-            background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
-            boxShadow: '0 4px 15px rgba(103, 58, 183, 0.3)',
+            background: getGradient(mode, 'primary'),
+            boxShadow: `0 4px 15px ${getOverlay(mode, 'primaryStrong')}`,
             '&:hover': {
-              background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)',
-              boxShadow: '0 6px 20px rgba(103, 58, 183, 0.4)'
+              background: getGradient(mode, 'primaryHover'),
+              boxShadow: `0 6px 20px ${getOverlay(mode, 'primaryStrong')}`
             },
             '&.Mui-disabled': {
-              background: 'rgba(0,0,0,0.12)'
+              background: mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)'
             }
           }}
         >

@@ -81,7 +81,14 @@ export default function AppLayout({
         justifyContent="center"
         alignItems="center"
       >
-        <Box display="flex" flexDirection="column" className={classes.body}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          className={classes.body}
+          sx={{
+            background: theme.palette.mode === 'dark' ? '#0d0d0d' : 'none'
+          }}
+        >
           {theme.palette.mode === 'light' && (
             <Image
               width={500}
@@ -107,12 +114,20 @@ export default function AppLayout({
                     height: '95vh',
                     width: '95vw',
                     borderRadius: '1rem',
+                    background:
+                      theme.palette.mode === 'light'
+                        ? 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3))'
+                        : '#121212',
                     ...size
                   }
                 : {
                     height: '100vh',
                     width: '100vw',
-                    borderRadius: '0'
+                    borderRadius: '0',
+                    background:
+                      theme.palette.mode === 'light'
+                        ? 'linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3))'
+                        : '#121212'
                   }
             }
           >
@@ -120,7 +135,9 @@ export default function AppLayout({
               <Header minimize={minimize} maximize={maximize} close={close} />
             ) : (
               <Box
-                bgcolor={theme.palette.mode === 'light' ? 'white' : '#221f24'}
+                bgcolor={
+                  theme.palette.mode === 'light' ? 'white' : '#1a1a1a'
+                }
               >
                 <Box p="1.25rem" display="flex" gap={1} alignItems="center">
                   <IconButton
@@ -161,7 +178,7 @@ export default function AppLayout({
                         // ) }}
                         >
                           <Avatar
-                            sx={{ background: 'white', color: 'grey.400' }}
+                            sx={{ background: theme.palette.mode === 'dark' ? theme.palette.background.paper : 'white', color: 'grey.400' }}
                           >
                             <UserAvatar
                               user={user}
@@ -190,7 +207,7 @@ export default function AppLayout({
                       //     true
                       // ) }}
                       >
-                        <Avatar sx={{ background: 'white', color: 'grey.400' }}>
+                        <Avatar sx={{ background: theme.palette.mode === 'dark' ? theme.palette.background.paper : 'white', color: 'grey.400' }}>
                           <UserAvatar
                             user={user}
                             sx={{

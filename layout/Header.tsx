@@ -13,7 +13,11 @@ import {
   Modal,
   Snackbar,
   Typography,
-  useTheme
+  useTheme,
+  Popover,
+  Button,
+  Chip,
+  alpha
 } from '@mui/material'
 import {
   FilterNone,
@@ -24,13 +28,18 @@ import {
   Help,
   Feedback,
   CloseSharp,
-  Dashboard
+  Dashboard,
+  NotificationsOff,
+  DoneAll,
+  Delete,
+  Circle
 } from '@mui/icons-material'
 import { CustomLink, CustomMenu, UNetworkModal, SearchBar } from '@/layout'
 import { useNavigate } from '@/hooks'
 import { type ReactElement, useState, type FormEvent } from 'react'
 import { FeedbackForm, UserAvatar } from '@/components'
 import { useAppSelector } from '@/store'
+import { useNotifications, type Notification } from '@/contexts'
 
 export default function Header({
   minimize,
@@ -74,6 +83,44 @@ export default function Header({
   }
 
   const user = useAppSelector(state => state.auth.user)
+  const { notifications, unreadCount, markAsRead, markAllAsRead, removeNotification } = useNotifications()
+
+  const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null)
+  const notificationOpen = Boolean(notificationAnchor)
+
+  const handleNotificationClick = (event: React.MouseEvent<HTMLElement>): void => {
+    setNotificationAnchor(event.currentTarget)
+  }
+
+  const handleNotificationClose = (): void => {
+    setNotificationAnchor(null)
+  }
+
+  const formatNotificationTime = (date: Date): string => {
+    const now = new Date()
+    const diffMs = now.getTime() - new Date(date).getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMins / 60)
+    const diffDays = Math.floor(diffHours / 24)
+
+    if (diffMins < 1) return 'Agora'
+    if (diffMins < 60) return `${diffMins}min`
+    if (diffHours < 24) return `${diffHours}h`
+    if (diffDays < 7) return `${diffDays}d`
+    return new Date(date).toLocaleDateString('pt-BR')
+  }
+
+  const getNotificationIcon = (type: Notification['type']): string => {
+    const icons: Record<Notification['type'], string> = {
+      message: 'Mensagem',
+      like: 'Curtida',
+      follow: 'Seguiu',
+      comment: 'Comentario',
+      mention: 'Mencao',
+      system: 'Sistema'
+    }
+    return icons[type]
+  }
 
   const handleFeedback = (): void => {
     handleModalOpen()
@@ -158,8 +205,6 @@ export default function Header({
     handleMenuClose()
   }
 
-  const notification = true
-
   const action = (
     <IconButton
       size="small"
@@ -174,7 +219,7 @@ export default function Header({
   return (
     <>
       <Box>
-        <Box bgcolor={theme.palette.mode === 'light' ? 'white' : '#221f24'}>
+        <Box bgcolor={theme.palette.mode === 'light' ? 'white' : '#1a1a1a'}>
           <Box
             width="100%"
             gap={2}
@@ -278,44 +323,43 @@ export default function Header({
               alignItems="center"
             >
               <Box sx={{ [theme.breakpoints.only('md')]: { mt: '8%' } }}>
-                {' '}
-                {notification ? (
-                  <Badge badgeContent="+99" color="primary">
-                    <IconButton
+                <Badge
+                  badgeContent={unreadCount > 99 ? '99+' : unreadCount}
+                  color="error"
+                  invisible={unreadCount === 0}
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      fontSize: '0.7rem',
+                      fontWeight: 700,
+                      minWidth: 18,
+                      height: 18,
+                      borderRadius: '9px',
+                      padding: '0 4px'
+                    }
+                  }}
+                >
+                  <IconButton
+                    sx={{
+                      [theme.breakpoints.only('md')]: {
+                        width: '3rem',
+                        mt: '20%',
+                        height: '2rem'
+                      }
+                    }}
+                    onClick={handleNotificationClick}
+                  >
+                    <Avatar
                       sx={{
                         [theme.breakpoints.only('md')]: {
-                          width: '3rem',
-                          mt: '20%',
-                          height: '2rem'
+                          width: '2.5rem',
+                          height: '2.5rem'
                         }
                       }}
-                      onClick={e => {
-                        handleClick(e, ['Message1', 'Message2'])
-                      }}
                     >
-                      <Avatar
-                        sx={{
-                          [theme.breakpoints.only('md')]: {
-                            width: '2.5rem',
-                            height: '2.5rem'
-                          }
-                        }}
-                      >
-                        <Notifications />
-                      </Avatar>
-                    </IconButton>
-                  </Badge>
-                ) : (
-                  <IconButton
-                    onClick={e => {
-                      handleClick(e, ['Message1', 'Message2'])
-                    }}
-                  >
-                    <Avatar>
                       <Notifications />
                     </Avatar>
                   </IconButton>
-                )}
+                </Badge>
               </Box>
               <Box sx={{ [theme.breakpoints.only('md')]: { pt: '5%' } }}>
                 <IconButton
@@ -336,7 +380,7 @@ export default function Header({
                 >
                   <Avatar
                     sx={{
-                      background: 'white',
+                      background: theme.palette.mode === 'dark' ? theme.palette.background.paper : 'white',
                       color: 'grey.400',
                       [theme.breakpoints.only('md')]: {
                         height: '2.5rem',
@@ -476,6 +520,219 @@ export default function Header({
         autoHideDuration={3000}
         action={action}
       />
+
+      {/* Notifications Popover */}
+      <Popover
+        open={notificationOpen}
+        anchorEl={notificationAnchor}
+        onClose={handleNotificationClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        PaperProps={{
+          sx: {
+            width: { xs: 320, sm: 380 },
+            maxHeight: 480,
+            borderRadius: 3,
+            overflow: 'hidden',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.12)'
+          }
+        }}
+      >
+        {/* Header */}
+        <Box
+          sx={{
+            p: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+            background: theme.palette.mode === 'light'
+              ? 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)'
+              : 'linear-gradient(135deg, #311b92 0%, #4a148c 100%)'
+          }}
+        >
+          <Box display="flex" alignItems="center" gap={1}>
+            <Notifications sx={{ color: 'white', fontSize: 22 }} />
+            <Typography sx={{ fontWeight: 700, color: 'white' }}>
+              Notificacoes
+            </Typography>
+            {unreadCount > 0 && (
+              <Chip
+                label={unreadCount}
+                size="small"
+                sx={{
+                  height: 22,
+                  bgcolor: 'rgba(255,255,255,0.2)',
+                  color: 'white',
+                  fontWeight: 700,
+                  fontSize: '0.75rem'
+                }}
+              />
+            )}
+          </Box>
+          {notifications.length > 0 && (
+            <IconButton
+              size="small"
+              onClick={markAllAsRead}
+              sx={{
+                color: 'rgba(255,255,255,0.8)',
+                '&:hover': { color: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+              }}
+              title="Marcar todas como lidas"
+            >
+              <DoneAll fontSize="small" />
+            </IconButton>
+          )}
+        </Box>
+
+        {/* Content */}
+        <Box sx={{ maxHeight: 360, overflow: 'auto' }}>
+          {notifications.length === 0 ? (
+            <Box
+              sx={{
+                p: 4,
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 1.5
+              }}
+            >
+              <Box
+                sx={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: '50%',
+                  bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.primary.main, 0.1) : 'grey.100',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <NotificationsOff sx={{ fontSize: 32, color: theme.palette.mode === 'dark' ? 'primary.main' : 'grey.400', opacity: 0.6 }} />
+              </Box>
+              <Typography variant="body1" fontWeight={600} color="text.secondary">
+                Nenhuma notificacao
+              </Typography>
+              <Typography variant="body2" color="text.disabled">
+                Voce esta em dia!
+              </Typography>
+            </Box>
+          ) : (
+            notifications.map((notification) => (
+              <Box
+                key={notification.id}
+                onClick={() => {
+                  markAsRead(notification.id)
+                  if (notification.link) {
+                    navigate(notification.link)
+                    handleNotificationClose()
+                  }
+                }}
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  gap: 1.5,
+                  cursor: 'pointer',
+                  borderBottom: '1px solid',
+                  borderColor: 'divider',
+                  bgcolor: notification.read ? 'transparent' : 'action.hover',
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    bgcolor: 'action.selected'
+                  }
+                }}
+              >
+                <Box sx={{ position: 'relative' }}>
+                  <Avatar
+                    src={notification.avatar}
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      bgcolor: 'primary.main'
+                    }}
+                  >
+                    {notification.title[0]}
+                  </Avatar>
+                  {!notification.read && (
+                    <Circle
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        fontSize: 12,
+                        color: 'primary.main'
+                      }}
+                    />
+                  )}
+                </Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.25 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        fontWeight: notification.read ? 500 : 700,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {notification.title}
+                    </Typography>
+                    <Chip
+                      label={getNotificationIcon(notification.type)}
+                      size="small"
+                      sx={{
+                        height: 18,
+                        fontSize: '0.65rem',
+                        bgcolor: theme.palette.mode === 'dark' ? alpha(theme.palette.primary.main, 0.1) : 'grey.100',
+                        color: 'text.secondary'
+                      }}
+                    />
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      lineHeight: 1.4,
+                      mb: 0.5
+                    }}
+                  >
+                    {notification.description}
+                  </Typography>
+                  <Typography variant="caption" color="text.disabled">
+                    {formatNotificationTime(notification.createdAt)}
+                  </Typography>
+                </Box>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    removeNotification(notification.id)
+                  }}
+                  sx={{
+                    opacity: 0.5,
+                    '&:hover': { opacity: 1, color: 'error.main' }
+                  }}
+                >
+                  <Close fontSize="small" />
+                </IconButton>
+              </Box>
+            ))
+          )}
+        </Box>
+      </Popover>
     </>
   )
 }

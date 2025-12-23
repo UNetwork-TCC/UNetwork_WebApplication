@@ -77,15 +77,18 @@ export default function Contact({
         <Box display={'flex'}>
           <Box sx={{ width: '90%', maxWidth: '90%' }}>
             <Typography variant="caption" noWrap>
-              {chat?.messages?.length > 0
-                ? chat?.messages?.[chat.messages.length - 1]?.sendedBy ===
-                  loggedUser._id
-                  ? 'Você: ' +
-                    chat?.messages?.[chat.messages.length - 1].content
-                  : user.username +
-                    ': ' +
-                    chat?.messages?.[chat.messages.length - 1]?.content
-                : 'Nenhuma mensagem enviada'}
+              {(() => {
+                // Filtrar mensagens válidas (remover nulls)
+                const validMessages = chat?.messages?.filter(m => m && m.content) ?? []
+                if (validMessages.length === 0) {
+                  return 'Nenhuma mensagem enviada'
+                }
+                const lastMessage = validMessages[validMessages.length - 1]
+                const prefix = lastMessage.sendedBy === loggedUser._id
+                  ? 'Você: '
+                  : user.username + ': '
+                return prefix + lastMessage.content
+              })()}
             </Typography>
           </Box>
           <Box sx={{ width: '10%', display: 'flex', justifyContent: 'center' }}>

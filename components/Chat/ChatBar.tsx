@@ -1,6 +1,6 @@
 'use client'
 
-import { IconButton, InputBase, Box, useTheme } from '@mui/material'
+import { IconButton, InputBase, Box, useTheme, alpha, ClickAwayListener } from '@mui/material'
 import { Send, ImageOutlined, EmojiEmotions } from '@mui/icons-material'
 import EmojiPicker from 'emoji-picker-react'
 import {
@@ -14,7 +14,7 @@ import {
 } from 'react'
 import { useCreateMessageMutation } from '@/features/message'
 import { useAppDispatch, useAppSelector } from '@/store'
-import { setMessages, useUpdateChatMutation } from '@/features/chat'
+import { setMessages, useAddMessageToChatMutation } from '@/features/chat'
 import { useSocket } from '@/contexts'
 
 export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
@@ -27,7 +27,7 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
   const isTypingRef = useRef(false)
 
   const [createMessage] = useCreateMessageMutation()
-  const [updateChat] = useUpdateChatMutation()
+  const [addMessageToChat] = useAddMessageToChatMutation()
 
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
@@ -92,7 +92,8 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
         setTyping(chatId, false)
       }
 
-      const messageTime = new Date().getHours() + ':' + new Date().getMinutes()
+      const now = new Date()
+      const messageTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
 
       const newMessage = {
         content: text.trim(),
@@ -114,71 +115,77 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
       }
 
       // Persistir no banco de dados
-      const { data }: any = await createMessage(newMessage)
+      const result: any = await createMessage(newMessage)
 
-      await updateChat({
-        _id: chatId,
-        messages: [data.newMessage]
-      })
+      // result.data é a mensagem criada (já extraída pelo transformResponse)
+      if (result.data) {
+        // Usar o novo endpoint que faz $push ao invés de sobrescrever
+        await addMessageToChat({
+          chatId,
+          message: result.data
+        })
+      }
     })()
   }
 
   return (
     <Box
-      m={2}
-      height="3.5rem"
-      width="97%"
       sx={{
-        [theme.breakpoints.only('lg')]: {
-          height: '3rem'
-        },
-        [theme.breakpoints.only('md')]: {
-          height: '2.5rem',
-          width: '94%'
-        }
+        flexShrink: 0,
+        p: { xs: 1.5, sm: 2 },
+        bgcolor: 'background.default'
       }}
     >
       <Box
-        boxShadow={theme.shadows[3]}
         component="form"
         onSubmit={handleSubmit}
         sx={{
           display: 'flex',
           alignItems: 'center',
-          bgcolor: 'background.card',
-          borderRadius: 3.5,
-          p: 0.5,
-          height: '100%',
-
-          [theme.breakpoints.only('lg')]: {
-            borderRadius: 2.5,
-            p: 0
-          },
-
-          [theme.breakpoints.only('md')]: {
-            borderRadius: 2.5
-          },
-
-          [theme.breakpoints.down('md')]: {
-            mr: 2
+          gap: 1,
+          bgcolor: theme.palette.mode === 'dark'
+            ? alpha(theme.palette.common.white, 0.05)
+            : theme.palette.grey[100],
+          borderRadius: '28px',
+          px: { xs: 1.5, sm: 2 },
+          py: 0.5,
+          border: '1px solid',
+          borderColor: theme.palette.mode === 'dark'
+            ? alpha(theme.palette.common.white, 0.1)
+            : theme.palette.grey[200],
+          transition: 'border-color 0.2s',
+          '&:focus-within': {
+            borderColor: 'primary.main'
           }
         }}
       >
+        <IconButton
+          component="label"
+          htmlFor="file"
+          size="small"
+          sx={{
+            color: 'text.secondary',
+            '&:hover': { color: 'primary.main' }
+          }}
+        >
+          <ImageOutlined sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }} />
+          <input
+            type="file"
+            id="file"
+            accept="image/*"
+            style={{ display: 'none' }}
+          />
+        </IconButton>
+
         <InputBase
           sx={{
             flex: 1,
-            fontSize: '1rem',
-            ml: 2,
-            [theme.breakpoints.only('lg')]: {
-              ml: 1.7,
-              fontSize: '1.2rem'
-            },
-            [theme.breakpoints.only('md')]: {
-              ml: 1.5,
-              fontSize: '1rem'
+            fontSize: { xs: '0.9rem', sm: '1rem' },
+            '& input': {
+              py: 1
             }
           }}
-          placeholder={'Digite sua mensagem...'}
+          placeholder="Digite sua mensagem..."
           value={text}
           onChange={e => {
             setText(e.target.value)
@@ -191,110 +198,63 @@ export default function ChatBar({ chatId }: { chatId: string }): ReactElement {
             }
           }}
         />
-        <Box mr={2}>
-          <input
-            type="file"
-            id="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-          />
-          <IconButton component="label" htmlFor="file">
-            <ImageOutlined
-              sx={{
-                [theme.breakpoints.only('lg')]: {
-                  mr: 0.5
-                },
-                [theme.breakpoints.only('md')]: {
-                  fontSize: '1.3rem',
-                  mr: 0
-                }
-              }}
-            />
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, position: 'relative' }}>
+          <IconButton
+            type="button"
+            aria-label="Emoji"
+            onClick={() => setShowEmojiPicker(val => !val)}
+            size="small"
+            sx={{
+              color: showEmojiPicker ? 'primary.main' : 'text.secondary',
+              '&:hover': { color: 'primary.main' }
+            }}
+          >
+            <EmojiEmotions sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }} />
           </IconButton>
 
           <IconButton
-            sx={{ mr: 1 }}
-            type="button"
-            aria-label="Emoji"
-            onClick={() => {
-              setShowEmojiPicker(val => !val)
-            }}
-            size="large"
-          >
-            <EmojiEmotions
-              sx={{
-                [theme.breakpoints.only('lg')]: {
-                  mr: 0
-                },
-                [theme.breakpoints.only('md')]: {
-                  fontSize: '1.3rem',
-                  mr: 0
-                }
-              }}
-            />
-          </IconButton>
-          <IconButton
             onClick={handleSubmit}
+            disabled={!text.trim()}
             sx={{
-              bgcolor: 'primary.main',
-              color: 'white',
-              ':hover': { bgcolor: 'primary.main', opacity: '80%' }
+              bgcolor: text.trim() ? 'primary.main' : 'action.disabledBackground',
+              color: text.trim() ? 'white' : 'action.disabled',
+              width: { xs: 36, sm: 40 },
+              height: { xs: 36, sm: 40 },
+              transition: 'all 0.2s',
+              '&:hover': {
+                bgcolor: text.trim() ? 'primary.dark' : 'action.disabledBackground'
+              }
             }}
-            size="small"
           >
-            <Send
-              sx={{
-                [theme.breakpoints.only('lg')]: {
-                  fontSize: '1.3rem',
-                  m: '0.1rem'
-                },
-                [theme.breakpoints.only('md')]: {
-                  fontSize: '1rem',
-                  m: '0.1rem'
-                }
-              }}
-            />
+            <Send sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }} />
           </IconButton>
         </Box>
       </Box>
 
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: '11%',
-          [theme.breakpoints.only('lg')]: {
-            bottom: '20%'
-          }
-        }}
-      >
-        {showEmojiPicker && (
-          <Box>
-            <Box
-              onClick={() => {
-                setShowEmojiPicker(false)
-              }}
-              sx={{
-                ml: '15.5%',
-                width: '69%',
-                mt: '7%',
-                height: '75%',
-                position: 'fixed',
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-                zIndex: 2
-              }}
+      {/* Emoji Picker */}
+      {showEmojiPicker && (
+        <ClickAwayListener onClickAway={() => setShowEmojiPicker(false)}>
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: { xs: 70, sm: 80 },
+              right: { xs: 16, sm: 24 },
+              zIndex: 1000,
+              boxShadow: theme.shadows[8],
+              borderRadius: 2,
+              overflow: 'hidden'
+            }}
+          >
+            <EmojiPicker
+              onEmojiClick={onEmojiClick}
+              autoFocusSearch={false}
+              width={320}
+              height={400}
             />
-            <Box sx={{ position: 'relative', zIndex: 3 }}>
-              <EmojiPicker
-                onEmojiClick={onEmojiClick}
-                autoFocusSearch={false}
-              />
-            </Box>
           </Box>
-        )}
-      </Box>
+        </ClickAwayListener>
+      )}
     </Box>
   )
 }

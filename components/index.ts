@@ -33,6 +33,7 @@ import ContactAppLayout from './Home/Contact'
 import Message from './Chat/Message'
 import MessageWrapper from './Chat/MessageWrapper'
 import ChatBar from './Chat/ChatBar'
+import ChatHeader from './Chat/ChatHeader'
 import ProfileHeader from './Profile/ProfileHeader'
 import Highlights from './Profile/Highlights'
 import ProfilePosts from './Profile/ProfilePosts'
@@ -101,5 +102,6 @@ export {
   CreateForumDialog,
   ForumTopicCard,
   ForumTopicView,
-  NewsArticleCard
+  NewsArticleCard,
+  ChatHeader
 }

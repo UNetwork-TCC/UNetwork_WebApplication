@@ -13,26 +13,59 @@ const StyledMenu = styled((props?: Record<string, any>) => (
     }}
     {...props}
     open={props?.open ?? false}
+    slotProps={{
+      backdrop: {
+        sx: {
+          backgroundColor: (theme: any) =>
+            theme.palette.mode === 'light'
+              ? 'rgba(0, 0, 0, 0.3)'
+              : 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    }}
   />
 ))(({ theme }) => ({
   '& .MuiPaper-root': {
-    borderRadius: 6,
+    borderRadius: 12,
     marginTop: theme.spacing(1),
-    minWidth: 180,
+    minWidth: 200,
     color:
       theme.palette.mode === 'light'
         ? 'rgb(55, 65, 81)'
         : theme.palette.grey[300],
+    backgroundColor:
+      theme.palette.mode === 'light'
+        ? theme.palette.background.paper
+        : theme.palette.grey[900],
     boxShadow:
-      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+      theme.palette.mode === 'light'
+        ? '0 4px 20px rgba(0, 0, 0, 0.15)'
+        : '0 4px 20px rgba(0, 0, 0, 0.4)',
+    border: `1px solid ${
+      theme.palette.mode === 'light'
+        ? 'rgba(0, 0, 0, 0.08)'
+        : 'rgba(255, 255, 255, 0.08)'
+    }`,
     '& .MuiMenu-list': {
-      padding: '4px 0'
+      padding: '8px'
     },
     '& .MuiMenuItem-root': {
+      borderRadius: 8,
+      padding: '10px 16px',
+      marginBottom: 2,
+      '&:last-child': {
+        marginBottom: 0
+      },
       '& .MuiSvgIcon-root': {
-        fontSize: 18,
+        fontSize: 20,
         color: theme.palette.text.secondary,
         marginRight: theme.spacing(1.5)
+      },
+      '&:hover': {
+        backgroundColor:
+          theme.palette.mode === 'light'
+            ? alpha(theme.palette.primary.main, 0.08)
+            : alpha(theme.palette.primary.main, 0.16)
       },
       '&:active': {
         backgroundColor: alpha(

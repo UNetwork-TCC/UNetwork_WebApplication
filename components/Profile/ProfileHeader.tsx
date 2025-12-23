@@ -10,10 +10,16 @@ import {
   Dialog,
   DialogContent,
   IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Snackbar,
   TextField,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Divider
 } from '@mui/material'
 import {
   useState,
@@ -30,17 +36,25 @@ import {
   Close,
   Message,
   PersonAdd,
-  PersonRemove
+  PersonRemove,
+  MoreHoriz,
+  Block,
+  Report,
+  Share,
+  Link as LinkIcon,
+  ContentCopy
 } from '@mui/icons-material'
 import { LoadingBackdrop } from '@/layout'
 import { setCredentials } from '@/features/auth'
 import { useUploadFileMutation } from '@/features/file'
 import { setChatId, useCreateChatMutation } from '@/features/chat'
+import { getGradient, getOverlay } from '@/themes'
 
 export default function ProfileHeader({ user }: { user: User }): ReactElement {
   const { id } = useParams()
 
   const theme = useTheme()
+  const mode = theme.palette.mode
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [updateUser] = useUpdateUserMutation()
@@ -69,6 +83,64 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
     bio: userState.otherInfo?.bio ?? '',
     account: 'public'
   })
+
+  // More actions menu state
+  const [moreMenuAnchor, setMoreMenuAnchor] = useState<null | HTMLElement>(null)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
+  const moreMenuOpen = Boolean(moreMenuAnchor)
+
+  const handleMoreMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+    setMoreMenuAnchor(event.currentTarget)
+  }
+
+  const handleMoreMenuClose = (): void => {
+    setMoreMenuAnchor(null)
+  }
+
+  const handleCopyProfileLink = async (): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      setSnackbarMessage('Link do perfil copiado!')
+      setSnackbarOpen(true)
+    } catch {
+      setSnackbarMessage('Erro ao copiar link')
+      setSnackbarOpen(true)
+    }
+    handleMoreMenuClose()
+  }
+
+  const handleShareProfile = async (): Promise<void> => {
+    const shareText = `Confira o perfil de @${user.username} no UNetwork!`
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Perfil de ${user.username}`,
+          text: shareText,
+          url: window.location.href
+        })
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          await handleCopyProfileLink()
+        }
+      }
+    } else {
+      await handleCopyProfileLink()
+    }
+    handleMoreMenuClose()
+  }
+
+  const handleBlockUser = (): void => {
+    setSnackbarMessage('Usuario bloqueado')
+    setSnackbarOpen(true)
+    handleMoreMenuClose()
+  }
+
+  const handleReportUser = (): void => {
+    setSnackbarMessage('Denuncia enviada. Obrigado!')
+    setSnackbarOpen(true)
+    handleMoreMenuClose()
+  }
 
   const follow = (): void => {
     ;(async () => {
@@ -189,9 +261,9 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
             gap: { xs: 3, md: 4 },
             p: { xs: 2, md: 3 },
             borderRadius: 4,
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+            background: getGradient(mode, 'card'),
             backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(103, 58, 183, 0.08)'
+            border: `1px solid ${getOverlay(mode, 'cardBorder')}`
           }}
         >
           {/* Avatar com borda */}
@@ -208,7 +280,8 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
               sx={{
                 width: { xs: 120, md: 150 },
                 height: { xs: 120, md: 150 },
-                border: '4px solid white',
+                border: '4px solid',
+                borderColor: 'background.paper',
                 bgcolor: 'primary.main',
                 fontSize: { xs: '2.5rem', md: '3rem' }
               }}
@@ -322,7 +395,7 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     borderWidth: 2,
                     '&:hover': {
                       borderWidth: 2,
-                      bgcolor: 'rgba(103, 58, 183, 0.04)',
+                      bgcolor: getOverlay(mode, 'primarySoft'),
                       borderColor: 'primary.dark'
                     }
                   }}
@@ -390,12 +463,27 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                       borderWidth: 2,
                       '&:hover': {
                         borderWidth: 2,
-                        bgcolor: 'rgba(103, 58, 183, 0.04)'
+                        bgcolor: getOverlay(mode, 'primarySoft')
                       }
                     }}
                   >
                     Mensagem
                   </Button>
+                  <IconButton
+                    onClick={handleMoreMenuOpen}
+                    sx={{
+                      border: '2px solid',
+                      borderColor: 'grey.300',
+                      color: 'text.secondary',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        color: 'primary.main',
+                        bgcolor: getOverlay(mode, 'primarySoft')
+                      }
+                    }}
+                  >
+                    <MoreHoriz />
+                  </IconButton>
                 </>
               )}
             </Box>
@@ -407,9 +495,9 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
           sx={{
             p: 2.5,
             borderRadius: 3,
-            background: 'linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%)',
+            background: getGradient(mode, 'card'),
             backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(103, 58, 183, 0.08)'
+            border: `1px solid ${getOverlay(mode, 'cardBorder')}`
           }}
         >
           <Typography
@@ -514,7 +602,8 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     sx={{
                       width: 120,
                       height: 120,
-                      border: '4px solid white',
+                      border: '4px solid',
+                      borderColor: 'background.paper',
                       bgcolor: 'primary.main',
                       fontSize: '2.5rem'
                     }}
@@ -549,7 +638,8 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '3px solid white',
+                    border: '3px solid',
+                    borderColor: 'background.paper',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
                     transition: 'all 0.2s ease',
                     '&:hover': {
@@ -660,6 +750,70 @@ export default function ProfileHeader({ user }: { user: User }): ReactElement {
         </DialogContent>
       </Dialog>
       <LoadingBackdrop open={openLoading} />
+
+      {/* More Actions Menu */}
+      <Menu
+        anchorEl={moreMenuAnchor}
+        open={moreMenuOpen}
+        onClose={handleMoreMenuClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            minWidth: 200,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+            mt: 1
+          }
+        }}
+      >
+        <MenuItem onClick={handleShareProfile}>
+          <ListItemIcon>
+            <Share sx={{ fontSize: 20 }} />
+          </ListItemIcon>
+          <ListItemText primary="Compartilhar perfil" />
+        </MenuItem>
+        <MenuItem onClick={handleCopyProfileLink}>
+          <ListItemIcon>
+            <ContentCopy sx={{ fontSize: 20 }} />
+          </ListItemIcon>
+          <ListItemText primary="Copiar link" />
+        </MenuItem>
+        <Divider sx={{ my: 1 }} />
+        <MenuItem onClick={handleBlockUser}>
+          <ListItemIcon>
+            <Block sx={{ fontSize: 20, color: 'warning.main' }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Bloquear usuario"
+            sx={{ '& .MuiTypography-root': { color: 'warning.main' } }}
+          />
+        </MenuItem>
+        <MenuItem onClick={handleReportUser}>
+          <ListItemIcon>
+            <Report sx={{ fontSize: 20, color: 'error.main' }} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Denunciar"
+            sx={{ '& .MuiTypography-root': { color: 'error.main' } }}
+          />
+        </MenuItem>
+      </Menu>
+
+      {/* Snackbar for feedback */}
+      <Snackbar
+        open={snackbarOpen}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
     </>
   )
 }

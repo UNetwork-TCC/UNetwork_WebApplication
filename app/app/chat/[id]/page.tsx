@@ -3,9 +3,6 @@
 import {
   Box,
   Divider,
-  IconButton,
-  MenuItem,
-  Skeleton,
   Typography,
   useMediaQuery,
   useTheme
@@ -15,20 +12,9 @@ import {
   ChatArea,
   ContactsArea,
   MessageWrapper,
-  UserAvatar
+  ChatHeader
 } from '@/components'
-import { CustomMenu } from '@/layout'
-import {
-  Search,
-  Settings,
-  AccountBox,
-  FmdGood,
-  Block,
-  Delete,
-  Report,
-  ArrowBack
-} from '@mui/icons-material'
-import { type ReactElement, useState, useEffect } from 'react'
+import { type ReactElement, useState, useEffect, use } from 'react'
 import {
   setChatId,
   setMessages,
@@ -39,104 +25,127 @@ import { useAppDispatch, useAppSelector } from '@/store'
 import { IUser, type IChat } from '@/types'
 import { ContactsAreaSkeleton } from '@/layout/skeletons'
 import { useGetUserMutation } from '@/features/user'
-
 import { useRouter } from 'next/navigation'
 
 export default function ChatPage({
-  params: { id }
+  params
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }): ReactElement {
+  const { id } = use(params)
   const theme = useTheme()
   const chatId = useAppSelector(state => state.chat.id)
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const loggedUser = useAppSelector(state => state.auth.user)
 
   const [findUserChats, { data: chats, isLoading }] = useFindUserChatsMutation()
   const [getChat] = useGetChatMutation()
   const [getUser, { isLoading: isLoadingUser }] = useGetUserMutation()
 
-  const [chatUser, setChatUser] = useState<IUser | null>()
+  const [chatUser, setChatUser] = useState<IUser | null>(null)
 
   const userId = useAppSelector(state => state.auth.user._id)
 
-  const onClickEvents = {
-    item1: () => {
-      console.log('oi')
-      handleClose()
-    },
-
-    item2: () => {
-      console.log('tcchau')
-      handleClose()
-    },
-
-    item4: () => {
-      handleClose()
-    }
-  }
-
-  const handleClose = (): void => {
-    setAnchorEl(null)
-  }
-
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [menuContent, setMenuContent] = useState<React.ReactNode>(null)
-
-  const openCustonMenu = Boolean(anchorEl)
-
-  const handleClick = (
-    e: any,
-    elements: string[],
-    onClickEventListeners = elements.map(() => handleClose),
-    icons: React.ReactNode[] = []
-  ): void => {
-    const mapedElements = elements.map((el, i) => (
-      <MenuItem onClick={onClickEventListeners[i]} key={i} disableRipple>
-        {icons && icons[i]}
-        {el}
-      </MenuItem>
-    ))
-
-    setMenuContent(mapedElements)
-
-    setAnchorEl(e.currentTarget)
-  }
-
-  const handleCloseCustonMenu = (): void => {
-    setAnchorEl(null)
+  const handleBack = (): void => {
+    dispatch(setMessages([]))
+    dispatch(setChatId(''))
+    router.push('/app/chat')
   }
 
   useEffect(() => {
-    ;(async () => {
-      await findUserChats(userId ?? '')
-    })()
+    if (userId) {
+      findUserChats(userId)
+    }
   }, [findUserChats, userId])
 
   useEffect(() => {
-    ;(async () => {
-      const { data }: any = await getChat(id ?? '')
+    if (!id) return
 
-      const chatUserId = data.users?.filter(
-        (idUser: any) => idUser !== userId
-      )[0]
+    const loadChatUser = async () => {
+      const { data }: any = await getChat(id)
+      if (!data?.users) return
 
-      const { data: user }: any = await getUser(chatUserId)
-      setChatUser(user)
-    })()
-  }, [id])
+      const chatUserId = data.users.find((uid: string) => uid !== userId)
+      if (chatUserId) {
+        const { data: user }: any = await getUser(chatUserId)
+        setChatUser(user)
+      }
+    }
+
+    loadChatUser()
+  }, [id, userId, getChat, getUser])
 
   useEffect(() => {
-    if (chatId) {
+    if (chatId && chatId !== id) {
       router.push('/app/chat/' + chatId)
     }
-  }, [chatId, router.push])
+  }, [chatId, id, router])
+
+  // Componente do chat ativo
+  const ActiveChat = () => (
+    <ChatArea>
+      <ChatHeader
+        user={chatUser}
+        isLoading={isLoadingUser}
+        onBack={handleBack}
+        showBackButton={isMobile}
+      />
+      <MessageWrapper id={id} />
+      <ChatBar chatId={id} />
+    </ChatArea>
+  )
+
+  // Estado vazio (sem chat selecionado)
+  const EmptyChat = () => (
+    <Box
+      sx={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        bgcolor: 'background.default'
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          gap: 3,
+          p: 4,
+          textAlign: 'center',
+          animation: 'float 3s ease-in-out infinite',
+          '@keyframes float': {
+            '0%, 100%': { transform: 'translateY(0)' },
+            '50%': { transform: 'translateY(-10px)' }
+          }
+        }}
+      >
+        <img
+          src="/assets/svg/Chat/chatbg.svg"
+          alt="Selecione uma conversa"
+          style={{ maxWidth: '200px', opacity: 0.8 }}
+        />
+        <Typography
+          variant="h5"
+          sx={{ color: 'text.secondary', fontWeight: 500 }}
+        >
+          Selecione uma conversa
+        </Typography>
+        <Typography variant="body2" color="text.disabled">
+          Escolha um contato para começar a conversar
+        </Typography>
+      </Box>
+    </Box>
+  )
 
   return (
-    <Box sx={{ width: '100%', height: '100%', display: 'flex' }}>
-      {!matches ? (
+    <Box sx={{ width: '100%', height: '100%', display: 'flex', overflow: 'hidden' }}>
+      {/* Desktop: Mostra lista de contatos + chat */}
+      {!isMobile && (
         <>
           {isLoading ? (
             <ContactsAreaSkeleton />
@@ -144,334 +153,28 @@ export default function ChatPage({
             <ContactsArea
               userId={userId ?? ''}
               chats={chats ?? ([] as IChat[])}
-              sx={
-                matches
-                  ? {
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }
-                  : {}
-              }
             />
           )}
-          <Divider
-            orientation="vertical"
-            role="presentation"
-            flexItem
-            sx={{ height: '100%' }}
-          />
-          {id ? (
-            <ChatArea>
-              <Box
-                sx={{
-                  width: '100%',
-                  height: '5%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  p: '0 3%',
-                  pb: '4%'
-                }}
-              >
-                <UserAvatar
-                  user={chatUser === loggedUser ? loggedUser : chatUser ?? {}}
-                  isLoading={isLoadingUser}
-                  variant="rounded"
-                  sx={{
-                    borderRadius: 5,
-                    height: '3.5rem',
-                    width: '3.5rem',
-                    [theme.breakpoints.only('lg')]: {
-                      height: '3rem',
-                      width: '3rem',
-                      borderRadius: 3
-                    },
-                    [theme.breakpoints.only('md')]: {
-                      height: '2.8rem',
-                      width: '2.8rem',
-                      borderRadius: 2.5
-                    }
-                  }}
-                />
-                <Box sx={{ width: '100%' }}>
-                  <Typography
-                    noWrap
-                    sx={{
-                      fontSize: '1.5rem',
-                      ml: '2%',
-                      [theme.breakpoints.only('lg')]: {
-                        fontSize: '1.4rem'
-                      },
-                      [theme.breakpoints.only('md')]: {
-                        fontSize: '1.3rem'
-                      }
-                    }}
-                  >
-                    {isLoadingUser ? (
-                      <Skeleton variant="text" width="50%" />
-                    ) : (
-                      chatUser?.name
-                    )}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '5%',
-                    [theme.breakpoints.only('lg')]: {
-                      gap: 2
-                    },
-                    [theme.breakpoints.only('md')]: {
-                      gap: 1.8
-                    }
-                  }}
-                  gap={3}
-                >
-                  {/* <IconButton sx={{}}>
-                                        <LocalPhone sx={{ fontSize: '1.75rem', color: 'gray',
-                                            [theme.breakpoints.only('lg')]: {
-                                                fontSize:'1.5rem'
-                                            },
-                                            [theme.breakpoints.only('md')]: {
-                                                fontSize:'1.3rem'
-                                            }
-                                    
-                                        }} />
-                                    </IconButton> */}
-                  <IconButton
-                    sx={{}}
-                    onClick={e => {
-                      handleClick(
-                        e,
-                        [
-                          'Ver Contato',
-                          'Pesquisar',
-                          'Fixar',
-                          'Limpar conversa',
-                          'Denunciar',
-                          'Bloquear'
-                        ],
-                        [
-                          onClickEvents.item1,
-                          onClickEvents.item2,
-                          () => {},
-                          onClickEvents.item4
-                        ],
-                        [
-                          <AccountBox key={null} />,
-                          <Search key={null} />,
-                          <FmdGood key={null} />,
-                          <Delete key={null} />,
-                          <Report key={null} />,
-                          <Block key={null} />
-                        ]
-                      )
-                    }}
-                  >
-                    <Settings
-                      sx={{
-                        fontSize: '2rem',
-                        color: 'gray',
-                        [theme.breakpoints.only('lg')]: {
-                          fontSize: '1.8rem'
-                        },
-                        [theme.breakpoints.only('md')]: {
-                          fontSize: '1.6rem'
-                        }
-                      }}
-                    />
-                  </IconButton>
-                </Box>
-              </Box>
-              <Divider flexItem />
-              {/* MessageWrapper */}
-              <MessageWrapper id={id} />
-              {/* end */}
-              <Divider flexItem sx={{}} />
-              <ChatBar chatId={id} />
-              <CustomMenu
-                anchorEl={anchorEl}
-                open={openCustonMenu}
-                onClose={handleCloseCustonMenu}
-              >
-                {menuContent}
-              </CustomMenu>
-            </ChatArea>
-          ) : (
-            !matches && (
-              <Box
-                height="100%"
-                width="100%"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  flexDirection="column"
-                  gap={5}
-                  sx={{
-                    animation: 'anim 3s ease-in-out infinite alternate',
-                    '@keyframes anim': {
-                      '0%': {
-                        transform: 'translateY(-5%)'
-                      },
-
-                      '100%': {
-                        transform: 'translateY(0)'
-                      }
-                    }
-                  }}
-                >
-                  <img
-                    src="/assets/svg/Chat/chatbg.svg"
-                    style={{
-                      height: '70%',
-                      width: '70%'
-                    }}
-                  />
-                  <Typography variant="h4">Selecione uma conversa!</Typography>
-                </Box>
-              </Box>
-            )
-          )}
+          <Divider orientation="vertical" flexItem />
+          {id ? <ActiveChat /> : <EmptyChat />}
         </>
-      ) : (
+      )}
+
+      {/* Mobile: Mostra lista de contatos OU chat */}
+      {isMobile && (
         <>
-          {isLoading && !id ? (
-            <ContactsAreaSkeleton />
+          {!id ? (
+            isLoading ? (
+              <ContactsAreaSkeleton />
+            ) : (
+              <ContactsArea
+                userId={userId ?? ''}
+                chats={chats ?? ([] as IChat[])}
+                sx={{ width: '100%', height: '100%' }}
+              />
+            )
           ) : (
-            <>
-              {!id ? (
-                <ContactsArea
-                  userId={userId ?? ''}
-                  chats={chats ?? ([] as IChat[])}
-                  sx={
-                    matches
-                      ? {
-                          width: '100%',
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }
-                      : {}
-                  }
-                />
-              ) : (
-                <ChatArea>
-                  <Box
-                    sx={{
-                      position: 'sticky',
-                      width: '100%',
-                      height: '10%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      p: '2% 5%',
-                      pb: '4%'
-                    }}
-                  >
-                    <UserAvatar
-                      user={chatUser ?? {}}
-                      isLoading={isLoadingUser}
-                      variant="rounded"
-                      sx={{
-                        borderRadius: 5,
-                        height: '3.5rem',
-                        width: '3.5rem'
-                      }}
-                    />
-                    <Box sx={{ width: '100%' }}>
-                      <Typography noWrap sx={{ fontSize: '1.5rem', ml: '3%' }}>
-                        {isLoadingUser ? (
-                          <Skeleton variant="text" width="50%" />
-                        ) : (
-                          chatUser?.name
-                        )}
-                      </Typography>
-                    </Box>
-                    <Box
-                      gap={1}
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '5%',
-                        position: 'relative',
-                        right: 20
-                      }}
-                    >
-                      <IconButton
-                        sx={{
-                          position: 'relative',
-                          right: 20
-                        }}
-                        onClick={() => {
-                          dispatch(setMessages([]))
-                          dispatch(setChatId(''))
-                          router.push('/app/chat')
-                        }}
-                      >
-                        <ArrowBack sx={{ fontSize: '2rem', color: 'gray' }} />
-                      </IconButton>
-                      <IconButton
-                        sx={{
-                          position: 'relative',
-                          right: 15
-                        }}
-                        onClick={e => {
-                          handleClick(
-                            e,
-                            [
-                              'Ver Contato',
-                              'Pesquisar',
-                              'Fixar',
-                              'Limpar conversa',
-                              'Denunciar',
-                              'Bloquear'
-                            ],
-                            [
-                              onClickEvents.item1,
-                              onClickEvents.item2,
-                              () => {},
-                              onClickEvents.item4
-                            ],
-                            [
-                              <AccountBox key={null} />,
-                              <Search key={null} />,
-                              <FmdGood key={null} />,
-                              <Delete key={null} />,
-                              <Report key={null} />,
-                              <Block key={null} />
-                            ]
-                          )
-                        }}
-                      >
-                        <Settings sx={{ fontSize: '2rem', color: 'gray' }} />
-                      </IconButton>
-                    </Box>
-                  </Box>
-                  <Divider flexItem />
-                  {/* MessageWrapper */}
-                  <MessageWrapper id={id} />
-                  {/* end */}
-                  <Divider flexItem sx={{}} />
-                  <ChatBar chatId={id} />
-                  <CustomMenu
-                    anchorEl={anchorEl}
-                    open={openCustonMenu}
-                    onClose={handleCloseCustonMenu}
-                  >
-                    {menuContent}
-                  </CustomMenu>
-                </ChatArea>
-              )}
-            </>
+            <ActiveChat />
           )}
         </>
       )}

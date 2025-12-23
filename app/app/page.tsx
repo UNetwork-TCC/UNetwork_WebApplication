@@ -45,7 +45,9 @@ export default function Home(): ReactElement {
   const [inputValue, setInputValue] = useState('')
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [snackbarMessage, setSnackbarMessage] = useState<string>('')
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('error')
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>(
+    'error'
+  )
   const [loading, setLoading] = useState<boolean>(false)
 
   const user = useAppSelector(state => state.auth.user)
@@ -60,7 +62,9 @@ export default function Home(): ReactElement {
 
     if (!postContent?.text && !postContent?.picture) {
       setLoading(false)
-      setSnackbarMessage('Você precisa de pelo menos um conteúdo para publicar!')
+      setSnackbarMessage(
+        'Você precisa de pelo menos um conteúdo para publicar!'
+      )
       setSnackbarSeverity('error')
       setSnackbarOpen(true)
       return
@@ -69,7 +73,9 @@ export default function Home(): ReactElement {
     let data: any
 
     if ((postContent?.picture?.size ?? 0) >= 5000000) {
-      setSnackbarMessage('A imagem colocada excede os limites de tamanho (5MB)!')
+      setSnackbarMessage(
+        'A imagem colocada excede os limites de tamanho (5MB)!'
+      )
       setSnackbarSeverity('error')
       setSnackbarOpen(true)
       setLoading(false)
@@ -161,7 +167,9 @@ export default function Home(): ReactElement {
 
   const handleRemoveFile = (): void => {
     setPostContent({ ...postContent, picture: undefined })
-    const fileInput = document.getElementById('post-file-input') as HTMLInputElement
+    const fileInput = document.getElementById(
+      'post-file-input'
+    ) as HTMLInputElement
     if (fileInput) fileInput.value = ''
   }
 
@@ -177,7 +185,9 @@ export default function Home(): ReactElement {
       sx={{
         minHeight: '100vh',
         background:
-          'linear-gradient(135deg, rgba(103, 58, 183, 0.03) 0%, rgba(233, 30, 99, 0.02) 50%, rgba(33, 150, 243, 0.01) 100%)',
+          theme.palette.mode === 'light'
+            ? 'linear-gradient(135deg, rgba(103, 58, 183, 0.03) 0%, rgba(233, 30, 99, 0.02) 50%, rgba(33, 150, 243, 0.01) 100%)'
+            : 'transparent',
         py: { xs: 2, md: 3 },
         px: { xs: 2, md: 3 }
       }}
@@ -194,11 +204,7 @@ export default function Home(): ReactElement {
         {/* Main Feed */}
         <Box sx={{ flex: 1, maxWidth: { md: 700, lg: 750 } }}>
           {/* Create Post */}
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{ mb: 3 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ mb: 3 }}>
             <Box
               sx={{
                 display: 'flex',
@@ -283,7 +289,9 @@ export default function Home(): ReactElement {
                   htmlFor="post-file-input"
                   size="small"
                   sx={{
-                    color: postContent?.picture ? 'primary.main' : 'text.secondary',
+                    color: postContent?.picture
+                      ? 'primary.main'
+                      : 'text.secondary',
                     transition: 'all 0.2s',
                     flexShrink: 0,
                     '&:hover': {

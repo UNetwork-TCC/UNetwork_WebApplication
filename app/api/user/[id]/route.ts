@@ -19,8 +19,8 @@ export class UserController extends BaseController {
   }
 
   @Get
-  @JwtAuth(['admin', 'user'])
   async getUserById(@Param('id') id: string) {
+    // Perfil é público - qualquer um pode visualizar
     return await this.userRepository.findById(id)
   }
 

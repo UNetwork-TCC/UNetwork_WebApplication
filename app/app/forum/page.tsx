@@ -1,7 +1,7 @@
 'use client'
 
 import { Search, Add, Forum as ForumIcon } from '@mui/icons-material'
-import { LoadingBackdrop, WarningModal } from '@/layout'
+import { LoadingBackdrop, WarningModal, Breadcrumb } from '@/layout'
 import {
   Box,
   Button,
@@ -9,8 +9,10 @@ import {
   TextField,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  alpha
 } from '@mui/material'
+import { getGradient, getOverlay } from '@/themes'
 import { useEffect, type ReactElement, useState, type ChangeEvent } from 'react'
 import {
   CreateForumDialog,
@@ -30,6 +32,7 @@ import { useUploadFileMutation } from '@/features/file'
 
 export default function ForumHome(): ReactElement {
   const theme = useTheme()
+  const mode = theme.palette.mode
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const user = useAppSelector(state => state.auth.user)
@@ -140,11 +143,17 @@ export default function ForumHome(): ReactElement {
         sx={{
           flex: 1,
           p: { xs: 2, sm: 3, md: 4 },
-          background: 'linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%)',
+          bgcolor: 'background.default',
           minHeight: '100vh'
         }}
       >
         <Box maxWidth="800px" mx="auto">
+          <Breadcrumb
+            items={[
+              { label: 'Fóruns', onClick: () => setSelectedForumId(null) },
+              { label: (selectedForum as IForum)?.title || 'Tópico' }
+            ]}
+          />
           {isLoadingForum ? (
             <LoadingBackdrop open={true} handleClose={() => {}} />
           ) : (
@@ -164,7 +173,7 @@ export default function ForumHome(): ReactElement {
         sx={{
           flex: 1,
           p: { xs: 2, sm: 3, md: 4 },
-          background: 'linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%)',
+          bgcolor: 'background.default',
           minHeight: '100vh',
           overflowX: 'hidden'
         }}
@@ -194,21 +203,21 @@ export default function ForumHome(): ReactElement {
                 '& .MuiOutlinedInput-root': {
                   height: 52,
                   borderRadius: 3,
-                  bgcolor: 'rgba(255, 255, 255, 0.8)',
+                  bgcolor: mode === 'dark' ? alpha(theme.palette.background.paper, 0.8) : 'rgba(255, 255, 255, 0.8)',
                   backdropFilter: 'blur(10px)',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+                  boxShadow: mode === 'dark' ? '0 2px 12px rgba(0,0,0,0.2)' : '0 2px 12px rgba(0,0,0,0.04)',
                   '& fieldset': {
-                    border: '1px solid rgba(103, 58, 183, 0.1)'
+                    border: `1px solid ${getOverlay(mode, 'primarySoft')}`
                   },
                   '&:hover': {
-                    bgcolor: 'rgba(255, 255, 255, 0.9)',
+                    bgcolor: mode === 'dark' ? alpha(theme.palette.background.paper, 0.9) : 'rgba(255, 255, 255, 0.9)',
                     '& fieldset': {
-                      borderColor: 'rgba(103, 58, 183, 0.2)'
+                      borderColor: getOverlay(mode, 'primaryMedium')
                     }
                   },
                   '&.Mui-focused': {
-                    bgcolor: 'white',
-                    boxShadow: '0 4px 20px rgba(103, 58, 183, 0.1)',
+                    bgcolor: 'background.paper',
+                    boxShadow: `0 4px 20px ${getOverlay(mode, 'primaryMedium')}`,
                     '& fieldset': {
                       borderColor: 'primary.main',
                       borderWidth: 2
@@ -231,12 +240,12 @@ export default function ForumHome(): ReactElement {
                 fontWeight: 600,
                 fontSize: '0.95rem',
                 letterSpacing: '0.3px',
-                background: 'linear-gradient(135deg, #673ab7 0%, #9c27b0 100%)',
-                boxShadow: '0 4px 15px rgba(103, 58, 183, 0.3)',
+                background: getGradient(mode, 'primary'),
+                boxShadow: `0 4px 15px ${getOverlay(mode, 'primaryStrong')}`,
                 transition: 'all 0.2s ease',
                 '&:hover': {
-                  background: 'linear-gradient(135deg, #5e35b1 0%, #8e24aa 100%)',
-                  boxShadow: '0 6px 20px rgba(103, 58, 183, 0.4)',
+                  background: getGradient(mode, 'primaryHover'),
+                  boxShadow: `0 6px 20px ${getOverlay(mode, 'primaryStrong')}`,
                   transform: 'translateY(-1px)'
                 },
                 '&:active': {
@@ -275,7 +284,7 @@ export default function ForumHome(): ReactElement {
                 px={3}
                 sx={{
                   borderRadius: 4,
-                  bgcolor: 'rgba(255, 255, 255, 0.5)',
+                  bgcolor: mode === 'dark' ? alpha(theme.palette.background.paper, 0.5) : 'rgba(255, 255, 255, 0.5)',
                   backdropFilter: 'blur(8px)'
                 }}
               >
@@ -284,7 +293,7 @@ export default function ForumHome(): ReactElement {
                     width: 80,
                     height: 80,
                     borderRadius: '50%',
-                    bgcolor: 'rgba(103, 58, 183, 0.1)',
+                    bgcolor: getOverlay(mode, 'primaryMedium'),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

@@ -22,6 +22,12 @@ class ChatController extends BaseController {
 
   @PostMethod
   async createChat(@Body() body: ChatDTO) {
+    // Verificar se já existe um chat entre esses usuários
+    const existingChat = await this.chatRepository.findChatBetweenUsers(body.users)
+    if (existingChat) {
+      // Retornar o chat existente ao invés de criar duplicado
+      return existingChat
+    }
     return await this.chatRepository.create(body)
   }
 }

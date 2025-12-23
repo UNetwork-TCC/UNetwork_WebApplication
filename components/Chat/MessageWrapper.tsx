@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Typography, useTheme, alpha } from '@mui/material'
 import { type ReactElement, useEffect, useRef, useCallback } from 'react'
 import Message from './Message'
 import { setMessages, useGetChatMutation } from '@/features/chat'
@@ -17,8 +17,6 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
 
   const dispatch = useAppDispatch()
 
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
-
   const userId = useAppSelector(state => state.auth.user._id)
   const messages = useAppSelector(state => state.chat.messages)
 
@@ -32,8 +30,13 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
   // Handler para novas mensagens via Socket
   const handleNewMessage = useCallback(
     (message: IMessage) => {
+      if (!message || !message.content) return
+
+      // Filtrar mensagens válidas antes de verificar duplicatas
+      const validMessages = messages.filter(m => m && m.content)
+
       // Verificar se a mensagem já existe (evitar duplicatas)
-      const messageExists = messages.some(
+      const messageExists = validMessages.some(
         m =>
           m._id === message._id ||
           (m.content === message.content &&
@@ -42,7 +45,7 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
       )
 
       if (!messageExists) {
-        dispatch(setMessages([...messages, message]))
+        dispatch(setMessages([...validMessages, message]))
       }
     },
     [messages, dispatch]
@@ -51,23 +54,40 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
   // Ouvir mensagens em tempo real
   useChatMessages(id, handleNewMessage)
 
-  // Carregar mensagens iniciais e entrar na sala
+  // Carregar mensagens iniciais quando o chat mudar
   useEffect(() => {
-    ;(async () => {
-      const { data }: any = await getChat(id)
-      dispatch(setMessages(data?.messages ?? []))
-    })()
+    if (!id) return
 
-    // Entrar na sala do chat
+    // Limpar mensagens antigas antes de carregar novas
+    dispatch(setMessages([]))
+
+    const loadMessages = async () => {
+      const result: any = await getChat(id)
+      const chatData = result.data
+      const msgs = chatData?.messages ?? []
+
+      // Filtrar mensagens válidas (remover nulls e mensagens sem conteúdo)
+      const validMsgs = msgs.filter((m: any) => m && m.content)
+      dispatch(setMessages(validMsgs))
+    }
+
+    loadMessages()
+  }, [id, getChat, dispatch])
+
+  // Gerenciar entrada/saída da sala de chat
+  useEffect(() => {
+    if (!id) return
+
+    // Entrar na sala do chat quando conectado
     if (isConnected) {
       joinChatRoom(id)
     }
 
-    // Cleanup: sair da sala ao desmontar
+    // Cleanup: sair da sala ao desmontar ou mudar de chat
     return () => {
       leaveChatRoom(id)
     }
-  }, [getChat, id, isConnected, joinChatRoom, leaveChatRoom, dispatch])
+  }, [id, isConnected, joinChatRoom, leaveChatRoom])
 
   // Re-entrar na sala quando reconectar
   useEffect(() => {
@@ -88,38 +108,44 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
   return (
     <Box
       sx={{
-        p: 4,
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
         gap: 1,
         width: '100%',
-        height: '85%',
-        position: 'sticky',
-        display: 'flex',
-        overflow: 'scroll',
+        overflowY: 'auto',
         overflowX: 'hidden',
-        alignItems: 'start',
-        flexDirection: 'column',
-
-        [theme.breakpoints.down('lg')]: {
-          height: '80%'
+        px: { xs: 2, sm: 3, md: 4 },
+        py: 2,
+        '&::-webkit-scrollbar': {
+          width: '6px'
         },
-
-        [theme.breakpoints.down('md')]: {
-          height: '80%'
+        '&::-webkit-scrollbar-track': {
+          bgcolor: 'transparent'
+        },
+        '&::-webkit-scrollbar-thumb': {
+          bgcolor: 'action.hover',
+          borderRadius: '3px',
+          '&:hover': {
+            bgcolor: 'action.selected'
+          }
         }
       }}
     >
       {!isLoading ? (
         <>
           {Array.isArray(messages)
-            ? messages.map((message, index) => (
-                <Message
-                  key={message._id || `msg-${index}`}
-                  messageInfo={message}
-                  text={message.content}
-                  sendedAt={message.sendedAt}
-                  messageFrom={message.sendedBy !== userId ? 'him' : 'me'}
-                />
-              ))
+            ? messages
+                .filter(message => message && message.content)
+                .map((message, index) => (
+                  <Message
+                    key={message._id || `msg-${index}`}
+                    messageInfo={message}
+                    text={message.content}
+                    sendedAt={message.sendedAt}
+                    messageFrom={message.sendedBy !== userId ? 'him' : 'me'}
+                  />
+                ))
             : null}
 
           {/* Indicador de digitando */}
@@ -129,10 +155,18 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                p: 1,
-                borderRadius: 2,
-                bgcolor: 'action.hover',
-                animation: 'fadeIn 0.3s ease-in-out'
+                px: 2,
+                py: 1,
+                borderRadius: '20px 20px 20px 4px',
+                bgcolor: theme.palette.mode === 'dark'
+                  ? alpha(theme.palette.common.white, 0.08)
+                  : theme.palette.grey[100],
+                width: 'fit-content',
+                animation: 'fadeIn 0.3s ease-in-out',
+                '@keyframes fadeIn': {
+                  from: { opacity: 0, transform: 'translateY(10px)' },
+                  to: { opacity: 1, transform: 'translateY(0)' }
+                }
               }}
             >
               <Box
@@ -140,8 +174,8 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
                   display: 'flex',
                   gap: 0.5,
                   '& span': {
-                    width: 8,
-                    height: 8,
+                    width: 6,
+                    height: 6,
                     borderRadius: '50%',
                     bgcolor: 'text.secondary',
                     animation: 'bounce 1.4s ease-in-out infinite'
@@ -151,11 +185,7 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
                   '& span:nth-of-type(3)': { animationDelay: '0.4s' },
                   '@keyframes bounce': {
                     '0%, 60%, 100%': { transform: 'translateY(0)' },
-                    '30%': { transform: 'translateY(-4px)' }
-                  },
-                  '@keyframes fadeIn': {
-                    from: { opacity: 0 },
-                    to: { opacity: 1 }
+                    '30%': { transform: 'translateY(-3px)' }
                   }
                 }}
               >
@@ -163,7 +193,7 @@ export default function MessageWrapper({ id }: { id: string }): ReactElement {
                 <span />
                 <span />
               </Box>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
                 {currentTypingUsers.length === 1
                   ? `${currentTypingUsers[0].username} está digitando...`
                   : 'Digitando...'}

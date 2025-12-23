@@ -1,110 +1,87 @@
 'use client'
 
-import { UserAvatar } from '@/components'
-import { useGetUserMutation } from '@/features/user'
-import { type Message as MessageInterface, type User } from '@/types'
-import { useTheme } from '@mui/material'
-import { Box, type SxProps, Typography } from '@mui/material'
-import { type ReactElement, useEffect } from 'react'
+import { type Message as MessageInterface } from '@/types'
+import { useTheme, alpha } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { type ReactElement } from 'react'
+import { DoneAll } from '@mui/icons-material'
 
 export default function Message({
   text,
   messageFrom = 'me',
-  sendedAt = '00:00',
-  messageInfo
+  sendedAt = '00:00'
 }: {
   text: string
   messageFrom?: 'me' | 'him'
   sendedAt?: string | 'Agora há pouco'
   messageInfo: MessageInterface
 }): ReactElement {
-  const [getUser, { data: user }] = useGetUserMutation()
-
-  const obj = {}
-
   const theme = useTheme()
-
-  let messageStyle: SxProps = {
-    boxShadow: theme.shadows[2],
-    borderRadius: 2,
-    p: 2
-  }
-
-  if (messageFrom === 'me')
-    messageStyle = {
-      ...messageStyle,
-      bgcolor: theme.palette.primary.dark,
-      color: 'white'
-    }
-  else
-    messageStyle = {
-      ...messageStyle,
-      bgcolor:
-        theme.palette.mode === 'dark'
-          ? '#444047'
-          : theme.palette.background.paper
-    }
-
-  useEffect(() => {
-    ;(async () => {
-      if (messageInfo.sendedBy) await getUser(messageInfo.sendedBy)
-    })()
-  }, [getUser, messageInfo.sendedBy])
+  const isMe = messageFrom === 'me'
 
   return (
-    <Box width="100%">
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: isMe ? 'flex-end' : 'flex-start',
+        width: '100%',
+        mb: 0.5
+      }}
+    >
       <Box
-        display="flex"
-        justifyContent={messageFrom === 'him' ? 'start' : 'end'}
-        width="100%"
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="end"
-          maxWidth="60%"
-          sx={messageStyle}
-        >
-          <Typography fontSize={'1em'}>{text}</Typography>
-          <Box
-            display="flex"
-            justifyContent={messageFrom === 'him' ? 'start' : 'end'}
-          >
-            <Typography fontSize="0.7rem" variant="caption">
-              {sendedAt}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        display="flex"
-        width="100%"
-        position="relative"
-        left={messageFrom === 'me' ? '99%' : ''}
         sx={{
-          [theme.breakpoints.down('md')]: {
-            left: messageFrom === 'me' ? '96%' : ''
-          }
+          maxWidth: { xs: '85%', sm: '75%', md: '65%' },
+          minWidth: '80px',
+          bgcolor: isMe
+            ? theme.palette.primary.main
+            : theme.palette.mode === 'dark'
+              ? alpha(theme.palette.common.white, 0.08)
+              : theme.palette.grey[100],
+          color: isMe ? 'white' : 'text.primary',
+          borderRadius: isMe ? '20px 20px 4px 20px' : '20px 20px 20px 4px',
+          px: 2,
+          py: 1.25,
+          boxShadow: theme.shadows[1],
+          position: 'relative',
+          wordBreak: 'break-word'
         }}
       >
-        <UserAvatar
-          user={user ?? (obj as User)}
+        <Typography
           sx={{
-            position: 'relative',
-            height: 25,
-            width: 25,
-            bottom: 15,
-            right: 5,
-            [theme.breakpoints.only('lg')]: {
-              height: 20,
-              width: 20
-            },
-            [theme.breakpoints.only('md')]: {
-              height: 17.5,
-              width: 17.5
-            }
+            fontSize: { xs: '0.9rem', md: '0.95rem' },
+            lineHeight: 1.4,
+            whiteSpace: 'pre-wrap'
           }}
-        />
+        >
+          {text}
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: 0.5,
+            mt: 0.5
+          }}
+        >
+          <Typography
+            variant="caption"
+            sx={{
+              fontSize: '0.65rem',
+              color: isMe ? 'rgba(255,255,255,0.7)' : 'text.secondary'
+            }}
+          >
+            {sendedAt}
+          </Typography>
+          {isMe && (
+            <DoneAll
+              sx={{
+                fontSize: '0.85rem',
+                color: 'rgba(255,255,255,0.7)'
+              }}
+            />
+          )}
+        </Box>
       </Box>
     </Box>
   )

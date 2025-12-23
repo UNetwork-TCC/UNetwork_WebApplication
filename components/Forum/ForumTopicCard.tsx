@@ -7,13 +7,15 @@ import {
   Typography,
   IconButton,
   Menu,
-  MenuItem
+  MenuItem,
+  useTheme
 } from '@mui/material'
 import { MoreVert } from '@mui/icons-material'
 import { red } from '@mui/material/colors'
 import { type User } from '@/types'
 import { useGetUserMutation } from '@/features/user'
 import { useAppSelector } from '@/store'
+import { getOverlay } from '@/themes'
 
 interface ForumTopicCardProps {
   id: string
@@ -34,6 +36,8 @@ export default function ForumTopicCard({
   onClick,
   onDelete
 }: ForumTopicCardProps): ReactElement {
+  const theme = useTheme()
+  const mode = theme.palette.mode
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const menuOpen = Boolean(anchorEl)
 
@@ -71,13 +75,13 @@ export default function ForumTopicCard({
         gap: 2,
         p: 2,
         borderRadius: 3,
-        bgcolor: 'rgba(255, 255, 255, 0.6)',
+        bgcolor: getOverlay(mode, 'cardBg'),
         backdropFilter: 'blur(8px)',
-        border: '1px solid rgba(255, 255, 255, 0.4)',
+        border: `1px solid ${getOverlay(mode, 'cardBorder')}`,
         cursor: 'pointer',
         transition: 'all 0.2s ease',
         '&:hover': {
-          bgcolor: 'rgba(255, 255, 255, 0.8)',
+          bgcolor: mode === 'light' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(55, 48, 70, 0.9)',
           '& .forum-title': {
             color: 'primary.main'
           },
