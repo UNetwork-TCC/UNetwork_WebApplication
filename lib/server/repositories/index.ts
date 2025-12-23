@@ -1,4 +1,4 @@
-export { UserRepository } from './UserRepository'
+export { UserRepository } from './userRepository'
 export { BaseRepository } from './BaseRepository'
-export { ChatRepository } from './ChatRepository'
+export { ChatRepository } from './chatRepository'
 export { MessageRepository } from './MessageRepository'
