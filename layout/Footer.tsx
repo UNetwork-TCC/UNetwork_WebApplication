@@ -176,7 +176,7 @@ export default function Footer(): ReactElement {
       }}
     >
       <Image
-        src="/assets/svg/Footer/FooterBackground.svg"
+        src="/assets/svg/Home/FooterBackground.svg"
         alt="FooterBackground"
         width={0}
         height={0}
